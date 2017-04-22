@@ -182,13 +182,9 @@ class VAE():
         # np.array -> np.array
         return self.decode(sample_gaussian(*self.encode(x)))
 
-    def save(self, saver, sufix_file_saver_name):
+    def save(self, saver, suffix_file_saver_name):
 
-        #outfile = os.path.join(settings.METAGRAPH_DIR, "{}_vae_{}".format(
-        #    sufix_file_saver_name + self.datetime, "_".join(map(str, self.architecture))))
-
-        outfile = os.path.join(self.path_to_meta + sufix_file_saver_name)
-        # saver.export_meta_graph(outfile + '.meta')
+        outfile = os.path.join(self.path_to_meta, suffix_file_saver_name)
         saver.save(self.session, outfile, global_step=self.step)
 
     def generate_batch(self, n_samples):
@@ -206,12 +202,8 @@ class VAE():
 
         self.save(saver, suffix) if save_bool else None
 
-    #def close_logs(self):
-    #    self.logger.flush()
-    #    self.logger.close()
-
     def train(self, X, max_iter=np.inf, save_bool=True, suffix_files_generated=" ",
-              iters_to_save=1000, iters_to_show_error=100):
+              iter_to_save=1000, iters_to_show_error=100):
 
         """
         :param iters_to_show_error:
@@ -248,7 +240,7 @@ class VAE():
                     print("round {} --> avg cost: ".format(i), err_train/iters_to_show_error)
                     err_train = 0  # Reinitialzing the counting error
 
-                if i % iters_to_save == 0:
+                if i % iter_to_save == 0:
                     self.save(saver, suffix_files_generated)
 
                 if i >= max_iter:

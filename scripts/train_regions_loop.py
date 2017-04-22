@@ -8,7 +8,6 @@ from lib.vae import VAE
 from lib.mri import stack_NORAD
 from lib import utils
 
-
 # Hyperparameters and architecture for all the regions
 HYPERPARAMS = {
     "batch_size": 16,
@@ -19,7 +18,7 @@ HYPERPARAMS = {
     "squashing": tf.nn.sigmoid,
 }
 
-#region_voxels_index = mri_atlas.get_super_region_to_voxels()[region_name]
+# region_voxels_index = mri_atlas.get_super_region_to_voxels()[region_name]
 dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
 
 list_regions = settings.list_regions_evaluated
@@ -35,7 +34,7 @@ def init_session_folders(architecture):
     path_to_general_out_folder = os.path.join(settings.path_to_project, "out")
     iden_session = own_datetime + " arch: " + "_".join(map(str, (architecture)))
     path_session_folder = os.path.join(path_to_general_out_folder,
-                                            iden_session)
+                                       iden_session)
 
     path_to_images = os.path.join(path_session_folder, "images")
     path_to_logs = os.path.join(path_session_folder, "logs")
@@ -45,7 +44,7 @@ def init_session_folders(architecture):
     create_directories([path_session_folder, path_to_images,
                         path_to_logs, path_to_meta, path_to_grad_desc_error])
 
-   rrrrrr return path_session_folder
+    return path_session_folder
 
 architecture = [1000, 800, 500, 100]
 path_session_folder = init_session_folders(architecture)
@@ -65,6 +64,6 @@ for region_selected in list_regions:
 
     region_suffix = 'region_' + str(region_selected) + "_"
 
-    v.train(region_voxels_values, max_iter=1000,
-            save_bool=True, suffix_files_generated=region_suffix, iter_to_save=1000, iters_to_show_error=100)
+    v.train(region_voxels_values, max_iter=100,
+            save_bool=True, suffix_files_generated=region_suffix, iter_to_save=100, iters_to_show_error=100)
     print("Trained!")
