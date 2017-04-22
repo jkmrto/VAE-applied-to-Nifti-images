@@ -9,6 +9,13 @@ def get_batch_from_samples(X, Y, batch_size):
     return X[index, :], Y[index]
 
 
+def print_dictionary(path_to_file, dictionary):
+    file = open(path_to_file, 'w')
+    for key, value in dictionary.items():
+        file.write("{0}: {1}\n".format(str(key), str(value)))
+    file.close()
+
+
 def print_session_description(path_to_file, session_descriptor):
     file = open(path_to_file, 'w')
     for key, value in session_descriptor.items():

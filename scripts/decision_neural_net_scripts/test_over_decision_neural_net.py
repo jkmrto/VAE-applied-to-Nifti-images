@@ -1,6 +1,7 @@
 from lib.neural_net.decision_neural_net import DecisionNeuralNet
 from lib.aux_functionalities.os_aux import create_directories
-from sklearn.metrics import roc_curve
+from lib.aux_functionalities.functions import print_dictionary
+from sklearn import metrics
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
@@ -33,6 +34,7 @@ path_to_main_results_output = os.path.join(path_to_session_folder, "post_train")
 path_to_own_results_output = os.path.join(path_to_main_results_output, "TestUsingTestData")
 path_to_results_file = os.path.join(path_to_own_results_output, "results.csv")
 path_to_roc_png = os.path.join(path_to_own_results_output, "curva_roc.png")
+path_to_resume_file = os.path.join(path_to_own_results_output, "resume.txt")
 create_directories([path_to_main_results_output, path_to_own_results_output])
 
 tf.reset_default_graph()
@@ -50,9 +52,13 @@ y_obtained = v.forward_propagation(X_test, y_test)[0]
 
 results = np.concatenate((y_test, y_obtained))
 
-[fpr, tpr, thresholds] = roc_curve(y_test, y_obtained)
+precision = metrics.average_precision_score(y_test, y_obtained)
+auc = metrics.roc_auc_score(y_test, y_obtained)
+output_dic = {"precision": precision,
+              "area under the curve": auc}
+print_dictionary(path_to_resume_file, output_dic)
 
+[fpr, tpr, thresholds] = metrics.roc_curve(y_test, y_obtained)
 np.savetxt(path_to_results_file, results, delimiter=',')
-
 plt.plot(fpr, tpr, linestyle='--')
 plt.savefig(path_to_roc_png)
