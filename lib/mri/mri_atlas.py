@@ -9,12 +9,12 @@ def load_atlas_mri():
     img = nib.load(settings.atlas_path)
     img_data = img.get_data()
     atlasdata = img_data.flatten()
-    bckvoxels = np.where(atlasdata != 0)
-    atlasdata = atlasdata[bckvoxels]
+    bckvoxels = np.where(atlasdata != 0) #Sacamos los indices que no son 0
+    atlasdata = atlasdata[bckvoxels] # Mapeamos aplicando los indices
     vals = np.unique(atlasdata)
     reg_idx = {}  # reg_idx contiene los indices de cada region
     for i in range(1, max(vals) + 1):
-        reg_idx[i] = np.where(atlasdata == i)[0]
+        reg_idx[i] = np.where(atlasdata == i)[0] # Saca los indices
 
     return reg_idx
 

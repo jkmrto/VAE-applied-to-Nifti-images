@@ -22,17 +22,18 @@ path_to_session_folder = os.path.join(settings.path_to_project,
                                       svm_test_name,
                                       root_session_folder_name)
 path_to_cv = os.path.join(path_to_session_folder, cv_session_folder_name)
-path_to_test_labels = os.path.join(path_to_cv, "y_train.csv")
-path_to_test_data = os.path.join(path_to_cv, "X_train.csv") # Data already normalized
+path_to_test_labels = os.path.join(path_to_cv, "y_test.csv")
+path_to_test_data = os.path.join(path_to_cv, "X_test.csv") # Data already normalized
 X_test = np.genfromtxt(path_to_test_data, delimiter=',')
 y_test = np.genfromtxt(path_to_test_labels, delimiter=',')
 y_test = np.reshape(y_test, (y_test.shape[0], 1))
 
 path_to_meta_files = os.path.join(path_to_session_folder, "meta")
-path_to_results_output = os.path.join(path_to_session_folder, "post_train")
-path_to_results_file = os.path.join(path_to_results_output, "results.csv")
-path_to_roc_png = os.path.join(path_to_results_output, "curva_roc.png")
-create_directories([path_to_results_output])
+path_to_main_results_output = os.path.join(path_to_session_folder, "post_train")
+path_to_own_results_output = os.path.join(path_to_main_results_output, "TestUsingTestData")
+path_to_results_file = os.path.join(path_to_own_results_output, "results.csv")
+path_to_roc_png = os.path.join(path_to_own_results_output, "curva_roc.png")
+create_directories([path_to_main_results_output, path_to_own_results_output])
 
 tf.reset_default_graph()
 sess = tf.Session()

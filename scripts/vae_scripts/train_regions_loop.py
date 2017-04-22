@@ -1,5 +1,6 @@
 import tensorflow as tf
 from lib.aux_functionalities.os_aux import create_directories
+from lib.aux_functionalities.functions import generate_session_descriptor
 from datetime import datetime
 import settings
 import os
@@ -8,10 +9,11 @@ from lib.vae import VAE
 from lib.mri import stack_NORAD
 from lib import utils
 
-# Hyperparameters and architecture for all the regions
+# EN ESTE SCRIPT NO SE NORMALIZA EL VALOR DE LOS VOXELES
+max_iter = 200
 HYPERPARAMS = {
     "batch_size": 16,
-    "learning_rate": 5E-5,
+    "learning_rate": 5E-6,
     "dropout": 0.9,
     "lambda_l2_reg": 1E-5,
     "nonlinearity": tf.nn.elu,
@@ -20,9 +22,7 @@ HYPERPARAMS = {
 
 # region_voxels_index = mri_atlas.get_super_region_to_voxels()[region_name]
 dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
-
 list_regions = settings.list_regions_evaluated
-
 
 def init_session_folders(architecture):
     """
@@ -32,7 +32,8 @@ def init_session_folders(architecture):
     """
     own_datetime = datetime.now().strftime(r"%d_%m_%_Y_%H:%M")
     path_to_general_out_folder = os.path.join(settings.path_to_project, "out")
-    iden_session = own_datetime + " arch: " + "_".join(map(str, (architecture)))
+    iden_session = "VOXELEs_NO_NORMALIZADOS-" + own_datetime + \
+                   " arch: " + "_".join(map(str, (architecture)))
     path_session_folder = os.path.join(path_to_general_out_folder,
                                        iden_session)
 
@@ -46,8 +47,13 @@ def init_session_folders(architecture):
 
     return path_session_folder
 
+
 architecture = [1000, 800, 500, 100]
 path_session_folder = init_session_folders(architecture)
+session_descriptor_data = {"voxeles normalized": "NO",
+                           "max_iter": max_iter}
+session_descriptor_data.update(HYPERPARAMS)
+generate_session_descriptor(path_session_folder, session_descriptor_data)
 
 for region_selected in list_regions:
     # Here we have the index of the voxels of the selected region
@@ -56,7 +62,7 @@ for region_selected in list_regions:
     # We map the voxels indexes to his voxels value, which is stored in the Stacked previously loaded
     # First map and the normalize to the unit the value of the pixels
     region_voxels_values = dict_norad['stack'][:, region_voxels_index]
-    region_voxels_values, max_denormalize = utils.normalize_array(region_voxels_values)
+    # region_voxels_values, max_denormalize = utils.normalize_array(region_voxels_values)
 
     architecture = [len(region_voxels_index), 1000, 800, 500, 100]
     tf.reset_default_graph()
@@ -64,6 +70,6 @@ for region_selected in list_regions:
 
     region_suffix = 'region_' + str(region_selected) + "_"
 
-    v.train(region_voxels_values, max_iter=100,
+    v.train(region_voxels_values, max_iter=max_iter,
             save_bool=True, suffix_files_generated=region_suffix, iter_to_save=100, iters_to_show_error=100)
     print("Trained!")

@@ -3,9 +3,7 @@ import sys
 from datetime import datetime
 import numpy as np
 import tensorflow as tf
-from numpy import inf
 import lib.loss_function as loss
-import settings
 from lib.math_utils import sample_gaussian
 from lib.neural_net.layers import Dense
 from lib.aux_functionalities.os_aux import create_directories
@@ -18,18 +16,11 @@ class VAE():
     see: Kingma & Welling - Auto-Encoding Variational Bayes
     (http://arxiv.org/abs/1312.6114)
     """
-    hyper_params = {
-        "batch_size": 10,
-        "learning_rate": 1E-3,
-        "dropout": 1.,
-        "lambda_l2_reg": 0.,
-        "nonlinearity": tf.nn.elu,
-        "squashing": tf.nn.sigmoid
-    }
 
     RESTORE_KEY = "restore"
 
-    def __init__(self, architecture, hyperparams, meta_graph=None, path_to_session=None):
+    def __init__(self, architecture=None, hyperparams=None, meta_graph=None,
+                 path_to_session=None):
         """(Re)build a symmetric VAE model with given:
 
             * architecture (list of nodes per encoder layer); e.g.
@@ -39,13 +30,15 @@ class VAE():
             * hyperparameters (optional dictionary of updates to `DEFAULTS`)
         """
 
-        self.architecture = architecture
-        self.hyper_params.update(hyperparams)
-        print("Hyperparamers indicated: " + str(VAE.hyper_params))
-
         self.session = tf.Session()
+        self.hyper_params = hyperparams
+        self.session_descritpor = {}
 
-        if not meta_graph: # new model
+        if not meta_graph:  # new model
+            self.architecture = architecture
+            self.hyper_params.update(hyperparams)
+
+            print("Hyperparamers indicated: " + str(self.hyper_params))
             self.init_session_folders(path_to_session)
             assert len(self.architecture) > 2, \
                 "Architecture must have more layers! (input, 1+ hidden, latent)"
@@ -55,14 +48,14 @@ class VAE():
                 tf.add_to_collection(VAE.RESTORE_KEY, handle)
             self.session.run(tf.global_variables_initializer())
 
-        else: # restore saved model
+        else:  # restore saved model
             tf.train.import_meta_graph(meta_graph + ".meta").restore(self.session, meta_graph)
             handles = self.session.graph.get_collection_ref(VAE.RESTORE_KEY)
 
         print(handles)
         (self.x_in, self.dropout_, self.z_mean, self.z_log_sigma,
-        self.x_reconstructed, self.z_, self.x_reconstructed_,
-        self.cost, self.global_step, self.train_op) = handles[0:10]
+         self.x_reconstructed, self.z_, self.x_reconstructed_,
+         self.cost, self.global_step, self.train_op) = handles[0:10]
 
     def init_session_folders(self, path_to_session):
         """
@@ -125,10 +118,10 @@ class VAE():
 
         # decoding / "generative": p(x|z)
         decoding = [Dense("decoding", hidden_size, dropout, self.hyper_params['nonlinearity'])
-                    for hidden_size in self.architecture[1:-1]] # assumes symmetry
+                    for hidden_size in self.architecture[1:-1]]  # assumes symmetry
 
         # final reconstruction: restore original dims, squash outputs [0, 1]
-        decoding.insert(0, Dense( # prepend as outermost function
+        decoding.insert(0, Dense(  # prepend as outermost function
             "x_decoding", self.architecture[0], dropout, self.hyper_params['squashing']))
         x_reconstructed = tf.identity(compose_all(decoding)(z), name="x_reconstructed")
 
@@ -140,8 +133,8 @@ class VAE():
             optimizer = tf.train.AdamOptimizer(self.hyper_params['learning_rate'])
             tvars = tf.trainable_variables()
             grads_and_vars = optimizer.compute_gradients(cost, tvars)
-            clipped = [(tf.clip_by_value(grad, -5, 5), tvar) # gradient clipping
-                    for grad, tvar in grads_and_vars]
+            clipped = [(tf.clip_by_value(grad, -5, 5), tvar)  # gradient clipping
+                       for grad, tvar in grads_and_vars]
             train_op = optimizer.apply_gradients(clipped, global_step=global_step,
                                                  name="minimize_cost")
 
@@ -149,8 +142,8 @@ class VAE():
         # defaults to prior z ~ N(0, I)
         with tf.name_scope("latent_in"):
             z_ = tf.placeholder_with_default(tf.random_normal([1, self.architecture[-1]]),
-                                            shape=[None, self.architecture[-1]],
-                                            name="latent_in")
+                                             shape=[None, self.architecture[-1]],
+                                             name="latent_in")
         x_reconstructed_ = compose_all(decoding)(z_)
 
         return (x_in, dropout, z_mean, z_log_sigma, x_reconstructed,
@@ -172,7 +165,7 @@ class VAE():
         feed_dict = dict()
         if zs is not None:
             is_tensor = lambda x: hasattr(x, "eval")
-            zs = (self.session.run(zs) if is_tensor(zs) else zs) # coerce to np.array
+            zs = (self.session.run(zs) if is_tensor(zs) else zs)  # coerce to np.array
             feed_dict.update({self.z_: zs})
         # else, zs defaults to draw from conjugate prior z ~ N(0, I)
         return self.session.run(self.x_reconstructed_, feed_dict=feed_dict)
@@ -237,14 +230,14 @@ class VAE():
                 gradient_descent_log.write("{0},{1}\n".format(i, cost))
 
                 if i % iters_to_show_error == 0:
-                    print("round {} --> avg cost: ".format(i), err_train/iters_to_show_error)
+                    print("round {} --> avg cost: ".format(i), err_train / iters_to_show_error)
                     err_train = 0  # Reinitialzing the counting error
 
                 if i % iter_to_save == 0:
                     self.save(saver, suffix_files_generated)
 
                 if i >= max_iter:
-                    self.training_end(saver, save_bool, err_train/iters_to_show_error, i, suffix_files_generated)
+                    self.training_end(saver, save_bool, err_train / iters_to_show_error, i, suffix_files_generated)
                     break
 
         except(KeyboardInterrupt):
@@ -258,9 +251,9 @@ class VAE():
 
 
 
-# restore saved model
-       #     model_datetime, model_name = os.path.basename(meta_graph).split("_vae_")
-       #     self.datetime = "{}_reloaded".format(model_datetime)
-       #     *model_architecture, _ = re.split("_|-", model_name)
-       #     self.architecture = [int(n) for n in model_architecture]
+        # restore saved model
+        #     model_datetime, model_name = os.path.basename(meta_graph).split("_vae_")
+        #     self.datetime = "{}_reloaded".format(model_datetime)
+        #     *model_architecture, _ = re.split("_|-", model_name)
+        #     self.architecture = [int(n) for n in model_architecture]
         #    meta_graph = os.path.abspath(meta_graph)

@@ -14,7 +14,7 @@ def load_svm_output_score(score_file, plot_hist=False):
     dic['range'] = dic['max'] - dic['min']
     dic['data_normalize'] = (my_data - dic['min']) / dic['range']
     dic['data_normalize'] = dic['data_normalize'].transpose()
-    dic['data_row'] = my_data.transpose()
+    dic['raw'] = my_data.transpose()
 
     if plot_hist:
         plt.hist(dic['data_normalize'].flatten())
