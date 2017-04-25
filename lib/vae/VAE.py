@@ -209,7 +209,7 @@ class VAE():
         err_train = 0
 
         path_to_file = os.path.join(self.path_to_grad_desc_error,
-                                    suffix_files_generated + "log")
+                                    suffix_files_generated + ".log")
         gradient_descent_log = open(path_to_file, "w")
 
         try:
@@ -238,16 +238,16 @@ class VAE():
 
                 if i >= max_iter:
                     self.training_end(saver, save_bool, err_train / iters_to_show_error, i, suffix_files_generated)
+                    gradient_descent_log.close()
                     break
 
         except(KeyboardInterrupt):
+            gradient_descent_log.close()
             print("final avg cost (@ step {} = epoch {}): {}".format(
                 i, X.train.epochs_completed, err_train / i))
             now = datetime.now().isoformat()[11:]
             print("------- Training end: {} -------\n".format(now))
             sys.exit(0)
-
-
 
 
 

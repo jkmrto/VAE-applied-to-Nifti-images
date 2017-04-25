@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 
+
 def sample_gaussian(mu, log_sigma):
     """(Differentiably!) draw sample from Gaussian with given shape, subject to random noise epsilon"""
     with tf.name_scope("sample_gaussian"):
