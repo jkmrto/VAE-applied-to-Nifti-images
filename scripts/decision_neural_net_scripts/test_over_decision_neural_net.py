@@ -8,12 +8,12 @@ import tensorflow as tf
 import settings
 import os
 
-id_autoencoder_session = "01_04_2017_00:00 arch: 1000_800_500_100"
+id_autoencoder_session = "25_04_2017_20:51 arch: 1000_800_500_100"
 output_project_folder = "out"
 main_test_folder_autoencoder_session = "post_train"
-svm_test_name = "first_test"
+svm_test_name = "second_test"
 score_file_name = "patient_score_per_region.log"
-root_session_folder_name = "neural_net-2017_04_22-17:53-42_21_1"
+root_session_folder_name = "neural_net-2017_04_26-00:21-116_58_1"
 cv_session_folder_name = "cv_data"
 
 path_to_session_folder = os.path.join(settings.path_to_project,

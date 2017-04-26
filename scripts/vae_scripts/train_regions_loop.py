@@ -38,11 +38,22 @@ def init_session_folders(architecture):
            path_to_grad_desc_error_images
 
 
-# EN ESTE SCRIPT NO SE NORMALIZA EL VALOR DE LOS VOXELES
-max_iter = 200
+def plot_grad_desc_error_per_region(path_to_grad_desc_error, region_selected,
+                                    path_to_grad_desc_error_images):
+    path_to_grad_desc_error_region_log = os.path.join(
+        path_to_grad_desc_error, "region_{}.log".format(region_selected))
+    path_to_grad_desc_error_region_image = os.path.join(
+        path_to_grad_desc_error_images, "region_{}.png".format(region_selected))
+
+    functions.plot_x_y_from_file_with_title(
+        "Region {}".format(region_selected), path_to_grad_desc_error_region_log,
+        path_to_grad_desc_error_region_image)
+
+
+# SESSION CONFIGURATION
 HYPERPARAMS = {
     "batch_size": 16,
-    "learning_rate": 5E-4,
+    "learning_rate": 1E-5,
     "dropout": 0.9,
     "lambda_l2_reg": 1E-5,
     "nonlinearity": tf.nn.elu,
@@ -51,10 +62,12 @@ HYPERPARAMS = {
 
 bool_normalized = True
 max_denormalize = 1
+regions_used = "all"
+max_iter = 1500
 
 # region_voxels_index = mri_atlas.get_super_region_to_voxels()[region_name]
 dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
-list_regions = settings.list_regions_evaluated
+region_voxels_index_per_region = mri_atlas.load_atlas_mri()
 
 architecture = [1000, 800, 500, 100]
 path_session_folder, path_to_grad_desc_error, \
@@ -65,13 +78,17 @@ session_descriptor_data = {"voxeles normalized": str(bool_normalized),
                            "max_iter": max_iter,
                            "voxels normalized by": str(max_denormalize),
                            "architecture:": "input_" + "_".join(
-                               str(x) for x in architecture)}
+                               str(x) for x in architecture),
+                           "regions used": str(regions_used)}
 session_descriptor_data.update(HYPERPARAMS)
-
 generate_session_descriptor(path_session_folder, session_descriptor_data)
 
-# Here we have the index of the voxels of the selected region
-region_voxels_index_per_region = mri_atlas.load_atlas_mri()
+# LIST REGIONS SELECTION
+list_regions = []
+if regions_used == "all":
+    list_regions = region_voxels_index_per_region.keys()
+elif regions_used == "most important":
+    list_regions = settings.list_regions_evaluated
 
 for region_selected in list_regions:
     print("Region Nº {} selected".format(region_selected))
@@ -96,13 +113,7 @@ for region_selected in list_regions:
             iter_to_save=100, iters_to_show_error=100)
 
     # Script para pintar
-
     print("Region {} Trained!".format(region_selected))
-    path_to_grad_desc_error_region_log = os.path.join(
-        path_to_grad_desc_error, "region_{}.log".format(region_selected))
-    path_to_grad_desc_error_region_image = os.path.join(
-        path_to_grad_desc_error_images, "region_{}.png".format(region_selected))
 
-    functions.plot_x_y_from_file_with_title(
-        "Region {}".format(region_selected),path_to_grad_desc_error_region_log,
-        path_to_grad_desc_error_region_image)
+    plot_grad_desc_error_per_region(path_to_grad_desc_error, region_selected,
+                                    path_to_grad_desc_error_images)

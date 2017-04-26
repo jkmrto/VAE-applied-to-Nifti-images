@@ -8,6 +8,7 @@ from lib.math_utils import sample_gaussian
 from lib.neural_net.layers import Dense
 from lib.aux_functionalities.os_aux import create_directories
 from lib.utils import compose_all
+from lib.aux_functionalities.functions import get_batch_from_samples_unsupervised
 
 
 class VAE():
@@ -180,13 +181,6 @@ class VAE():
         outfile = os.path.join(self.path_to_meta, suffix_file_saver_name)
         saver.save(self.session, outfile, global_step=self.step)
 
-    def generate_batch(self, n_samples):
-
-        l = np.arange(0, n_samples)
-        batch_idx = [l[i:i + self.hyper_params['batch_size']] for i in
-                     range(0, len(l), self.hyper_params['batch_size'])]
-        return batch_idx
-
     def training_end(self, saver, save_bool, err_train, i, suffix):
 
         print("final avg cost %1.5f" % (err_train / i))
@@ -198,13 +192,6 @@ class VAE():
     def train(self, X, max_iter=np.inf, save_bool=True, suffix_files_generated=" ",
               iter_to_save=1000, iters_to_show_error=100):
 
-        """
-        :param iters_to_show_error:
-        :param X:
-        :param max_iter:
-        :param save_bool:
-        :param iters_to_save:
-        """
         saver = tf.train.Saver(tf.global_variables()) if save_bool else None
         err_train = 0
 
@@ -216,11 +203,13 @@ class VAE():
             now = datetime.now().isoformat()[11:]
             print("------- Training begin: {} -------\n".format(now))
             i = 0
+            last_avg_cost = 0
             while True:  # Se ejecuta hasta condicion i>max_iter -> break
 
                 # batch selector
-                index = np.random.choice(range(X.shape[0]), self.hyper_params['batch_size'], replace=False)
-                x = X[index.tolist(), :]
+                x = get_batch_from_samples_unsupervised(
+                    X,self.hyper_params['batch_size'])
+
 
                 feed_dict = {self.x_in: x, self.dropout_: self.hyper_params['dropout']}
                 fetches = [self.x_reconstructed, self.cost, self.global_step, self.train_op]
@@ -230,14 +219,16 @@ class VAE():
                 gradient_descent_log.write("{0},{1}\n".format(i, cost))
 
                 if i % iters_to_show_error == 0:
-                    print("round {} --> avg cost: ".format(i), err_train / iters_to_show_error)
-                    err_train = 0  # Reinitialzing the counting error
+                    last_avg_cost = err_train / iters_to_show_error
+                    print("round {} --> avg cost: ".format(i), last_avg_cost)
+                    err_train = 0  # Reset the counting error
 
                 if i % iter_to_save == 0:
                     self.save(saver, suffix_files_generated)
 
                 if i >= max_iter:
-                    self.training_end(saver, save_bool, err_train / iters_to_show_error, i, suffix_files_generated)
+                    self.training_end(saver, save_bool, last_avg_cost, i,
+                                      suffix_files_generated)
                     gradient_descent_log.close()
                     break
 
@@ -246,14 +237,6 @@ class VAE():
             print("final avg cost (@ step {} = epoch {}): {}".format(
                 i, X.train.epochs_completed, err_train / i))
             now = datetime.now().isoformat()[11:]
+            gradient_descent_log.close()
             print("------- Training end: {} -------\n".format(now))
             sys.exit(0)
-
-
-
-        # restore saved model
-        #     model_datetime, model_name = os.path.basename(meta_graph).split("_vae_")
-        #     self.datetime = "{}_reloaded".format(model_datetime)
-        #     *model_architecture, _ = re.split("_|-", model_name)
-        #     self.architecture = [int(n) for n in model_architecture]
-        #    meta_graph = os.path.abspath(meta_graph)

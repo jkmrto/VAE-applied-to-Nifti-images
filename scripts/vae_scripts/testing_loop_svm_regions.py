@@ -12,9 +12,11 @@ from sklearn import metrics
 from lib import utils
 from lib.aux_functionalities import os_aux
 
-
+# SVM CONFIGURATION
 architecture = [1000, 800, 500, 100]
-test_name = "first_test"
+test_name = "second_test"
+regions_used = "all"
+
 HYPERPARAMS = {
     "batch_size": 128,
     "learning_rate": 5E-4,
@@ -26,9 +28,8 @@ HYPERPARAMS = {
 
 
 dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
-list_regions = settings.list_regions_evaluated
 
-iden_session = "01_04_2017_00:00 arch: 1000_800_500_100"
+iden_session = "25_04_2017_20:51 arch: 1000_800_500_100"
 path_to_session = os.path.join(settings.path_to_general_out_folder, iden_session)
 path_to_meta_folder = os.path.join(path_to_session, "meta")
 path_to_main_test = os.path.join(path_to_session, "post_train")
@@ -38,6 +39,12 @@ create_directories([path_to_main_test, path_to_particular_test])
 score_file = open(path_to_particular_test + "/patient_score_per_region.log", "w")
 labels_file = open(path_to_particular_test + "/patient_labels_per_region.log", "w") # Currently unused
 
+
+list_regions = []
+if regions_used == "all":
+    list_regions = range(1, 117, 1) # 117 regions en total
+elif regions_used == "most important":
+    list_regions = settings.list_regions_evaluated
 
 for region_selected in list_regions:
 
@@ -49,9 +56,9 @@ for region_selected in list_regions:
     X_train = region_voxels_values
     Y_train = region_voxels_label
 
-    suffix = 'region_' + str(region_selected) + "_"
-    savefile = os.path.join(path_to_meta_folder, suffix + "-3000")
-    metafile = os.path.join(path_to_meta_folder, suffix + "-3000.meta")
+    suffix = 'region_' + str(region_selected)
+    savefile = os.path.join(path_to_meta_folder, suffix + "-1500")
+    metafile = os.path.join(path_to_meta_folder, suffix + "-1500.meta")
     print("Loading the file {}".format(metafile))
 
     tf.reset_default_graph()
