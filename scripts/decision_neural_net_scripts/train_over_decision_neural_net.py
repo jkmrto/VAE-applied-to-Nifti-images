@@ -9,8 +9,8 @@ import tensorflow as tf
 from datetime import datetime
 from sklearn.model_selection import train_test_split
 
-
-svm_test_name = "second_test"
+iden_session = "02_05_2017_21:09 arch: 1000_800_500_100_2"
+svm_test_name = "test_svm_important"
 
 # Neural net configuration
 HYPERPARAMS = {
@@ -23,15 +23,13 @@ HYPERPARAMS = {
 }
 
 max_iter = 100000
-
-id_autoencoder_session = "25_04_2017_20:51 arch: 1000_800_500_100"
 output_project_folder = "out"
 main_test_folder_autoencoder_session = "post_train"
 
 score_file_name = "patient_score_per_region.log"
 path_to_svm_test = os.path.join(settings.path_to_project,
                                 output_project_folder,
-                                id_autoencoder_session,
+                                iden_session,
                                 main_test_folder_autoencoder_session,
                                 svm_test_name)
 

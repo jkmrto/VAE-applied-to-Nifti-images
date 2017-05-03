@@ -13,23 +13,15 @@ from lib import utils
 from lib.aux_functionalities import os_aux
 
 # SVM CONFIGURATION
-architecture = [1000, 800, 500, 100]
-test_name = "second_test"
-regions_used = "all"
-
-HYPERPARAMS = {
-    "batch_size": 128,
-    "learning_rate": 5E-4,
-    "dropout": 0.9,
-    "lambda_l2_reg": 1E-5,
-    "nonlinearity": tf.nn.elu,
-    "squashing": tf.nn.sigmoid
-}
-
+iden_session = "02_05_2017_21:09 arch: 1000_800_500_100_2"
+#iden_session = "03_05_2017_08:12 arch: 1000_800_500_100"
+test_name = "test_without_pre_records"
+#regions_used = "all"
+regions_used = "most important"
+iter_to_meta_load = 1000
 
 dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
 
-iden_session = "25_04_2017_20:51 arch: 1000_800_500_100"
 path_to_session = os.path.join(settings.path_to_general_out_folder, iden_session)
 path_to_meta_folder = os.path.join(path_to_session, "meta")
 path_to_main_test = os.path.join(path_to_session, "post_train")
@@ -38,7 +30,8 @@ create_directories([path_to_main_test, path_to_particular_test])
 
 score_file = open(path_to_particular_test + "/patient_score_per_region.log", "w")
 labels_file = open(path_to_particular_test + "/patient_labels_per_region.log", "w") # Currently unused
-
+per_region_accuracy_file = open(os.path.join(path_to_particular_test,
+                                "per_region_accuracy.log"), "w")
 
 list_regions = []
 if regions_used == "all":
@@ -57,8 +50,8 @@ for region_selected in list_regions:
     Y_train = region_voxels_label
 
     suffix = 'region_' + str(region_selected)
-    savefile = os.path.join(path_to_meta_folder, suffix + "-1500")
-    metafile = os.path.join(path_to_meta_folder, suffix + "-1500.meta")
+    savefile = os.path.join(path_to_meta_folder, suffix + "-{}".format(iter_to_meta_load))
+    metafile = os.path.join(path_to_meta_folder, suffix + "-{}.meta".format(iter_to_meta_load))
     print("Loading the file {}".format(metafile))
 
     tf.reset_default_graph()
@@ -67,12 +60,12 @@ for region_selected in list_regions:
     new_saver.restore(sess, savefile)
 
     # Hyperparameters and architecture is not used in loading setup
-    v = VAE.VAE(architecture, HYPERPARAMS, meta_graph=savefile)
+    v = VAE.VAE( meta_graph=savefile)
 
     print("Coding training data")
     code_train = v.encode(X_train)  # [mu, sigma]
-    print("Coding test data")
-    code_test = v.encode(X_train)  # [mu, sigma]
+ #   print("Coding test data")
+ #   code_test = v.encode(X_train)  # [mu, sigma]
 
     # Fitting SVM
     print("Training SVM")
@@ -83,18 +76,21 @@ for region_selected in list_regions:
     print("Evaluating test samples")
     dec = clf.decision_function(code_train[0])
 
-    print(len(dec))
+    # Post scritp to print accuracy per region
+    dec_normalize = dec
+    dec_normalize[dec_normalize < 0] = 0
+    dec_normalize[dec_normalize > 0] = 1
+
+    region_accuracy = metrics.accuracy_score(Y_train, dec_normalize)
+    per_region_accuracy_file.write("region_{0},{1}\n".format(region_selected,
+                                                           region_accuracy))
+    per_region_accuracy_file.flush()
 
     score_file.write("region_{0}".format(region_selected))
 
     for out in dec:
         score_file.write(",{}".format(out))
     score_file.write("\n")
-
-
-
-
-
 
 # X_train, X_test, y_train, y_test = train_test_split(region_voxels_values, region_voxels_label,
 #                                                   test_size=0.0, random_state=0)

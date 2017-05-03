@@ -53,7 +53,7 @@ def plot_grad_desc_error_per_region(path_to_grad_desc_error, region_selected,
 # SESSION CONFIGURATION
 HYPERPARAMS = {
     "batch_size": 16,
-    "learning_rate": 1E-5,
+    "learning_rate": 5E-6,
     "dropout": 0.9,
     "lambda_l2_reg": 1E-5,
     "nonlinearity": tf.nn.elu,
@@ -63,7 +63,7 @@ HYPERPARAMS = {
 bool_normalized = True
 max_denormalize = 1
 regions_used = "all"
-max_iter = 1500
+max_iter = 5000
 
 # region_voxels_index = mri_atlas.get_super_region_to_voxels()[region_name]
 dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
@@ -110,7 +110,7 @@ for region_selected in list_regions:
 
     v.train(region_voxels_values, max_iter=max_iter,
             save_bool=True, suffix_files_generated=region_suffix,
-            iter_to_save=100, iters_to_show_error=100)
+            iter_to_save=500, iters_to_show_error=100)
 
     # Script para pintar
     print("Region {} Trained!".format(region_selected))
