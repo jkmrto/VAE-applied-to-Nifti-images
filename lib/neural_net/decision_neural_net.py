@@ -12,7 +12,8 @@ RESTORE_KEY = 'key'
 
 
 class DecisionNeuralNet():
-    def __init__(self, architecture=None, hyperparams=None, meta_graph=None, root_path=""):
+    def __init__(self, architecture=None, hyperparams=None, meta_graph=None,
+                 root_path=""):
         self.architecture = architecture
         self.hyperparams = hyperparams
         self.session = tf.Session()
@@ -103,30 +104,32 @@ class DecisionNeuralNet():
                      range(0, len(l), self.hyperparams['batch_size'])]
         return batch_idx
 
-    def save(self, saver, sufix_file_saver_name):
+    def save(self, saver):
 
         outfile = self.path_to_meta + "/"
         saver.save(self.session, outfile, global_step=self.step)
 
-    def training_end(self, saver, save_bool, err_train, i, sufix):
+    def training_end(self, saver, save_bool, last_avg_cost):
 
-        print("final avg cost %1.5f" % (err_train / i))
+        print("final avg cost %1.5f" % (last_avg_cost))
         now = datetime.now().isoformat()[11:]
         print("------- Training end: {} -------\n".format(now))
 
-        self.save(saver, sufix) if save_bool else None
+        self.save(saver) if save_bool else None
 
     def train(self, X, Y, max_iter=1000, save_bool=True, iter_to_show_error=100,
-              iter_to_save=1000, suffix_files_generated=""):
+              iter_to_save=1000, path_to_grad_error_log_file_name=""):
 
         saver = tf.train.Saver(tf.global_variables()) if save_bool else None
         err_train = 0
 
-        #  gradiente_descent_log = open("neural_net_grad.log", "w")
+        if not (path_to_grad_error_log_file_name == ""):
+            gradient_descent_log = open(path_to_grad_error_log_file_name, "w")
 
         try:
             now = datetime.now().isoformat()[11:]
             print("------- Training begin: {} -------\n".format(now))
+            last_avg_cost = 0
 
             while True:  # Se ejecuta hasta condicion i>max_iter -> break
 
@@ -141,23 +144,24 @@ class DecisionNeuralNet():
                 cost, i, _, y_obtained, y_true = self.session.run(fetches, feed_dict)
 
                 err_train += cost
-                #    gradiente_descent_log.write("{0},{1}\n".format(i, cost))
+                if not (path_to_grad_error_log_file_name == ""):
+                    gradient_descent_log.write("{0},{1}\n".format(i, cost))
 
                 if i % iter_to_show_error == 0:
-                    print("round {} --> avg cost: ".format(i), err_train / iter_to_show_error)
+                    last_avg_cost = err_train / iter_to_show_error
+                    print("round {} --> avg cost: ".format(i), last_avg_cost)
                     err_train = 0  # Reinitialzing the counting error
 
-                    if i % iter_to_save == 0:
-                        if save_bool:
-                            self.save(saver, suffix_files_generated)
+                if i % iter_to_save == 0:
+                    if save_bool:
+                        self.save(saver)
 
                 if i >= max_iter:
+                    self.training_end(saver, save_bool, last_avg_cost)
+                    if not (path_to_grad_error_log_file_name == ""):
+                        gradient_descent_log.close()
                     break
-                    # self.training_end(saver, save_bool, err_train / iters_to_show_error, i, sufix_files_generated)
-                    # try:
-                    # self.close_logs()
-                    # except AttributeError:  # not logging
-                    # continue
+
 
         except(KeyboardInterrupt):
             print("final avg cost (@ step {} = epoch {}): {}".format(

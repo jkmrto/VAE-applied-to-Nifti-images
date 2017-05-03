@@ -59,8 +59,5 @@ def clear_meta_folder(iden_vae_session):
                 os.remove(os.path.join(path_to_meta_folder, file))
 
 
-
-
-
 iden_vae_session = "03_05_2017_08:12 arch: 1000_800_500_100"
 clear_meta_folder(iden_vae_session)

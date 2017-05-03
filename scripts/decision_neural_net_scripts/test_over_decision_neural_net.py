@@ -8,13 +8,18 @@ import tensorflow as tf
 import settings
 import os
 
-iden_session = "02_05_2017_21:09 arch: 1000_800_500_100_2"
+iter = 300000
+iden_session = "03_05_2017_08:12 arch: 1000_800_500_100"
+root_session_folder_name = "neural_net-2017_05_03-22:09-42_21_1"
+test_name = "svm"
+
 output_project_folder = "out"
 main_test_folder_autoencoder_session = "post_train"
-test_name = "test_svm_important"
+#test_name = "test_svm_important"
+
 score_file_name = "patient_score_per_region.log"
-root_session_folder_name = "neural_net-2017_05_03-00:00-42_21_1"
 cv_session_folder_name = "cv_data"
+
 
 path_to_session_folder = os.path.join(settings.path_to_project,
                                       output_project_folder,
@@ -39,8 +44,8 @@ create_directories([path_to_main_results_output, path_to_own_results_output])
 
 tf.reset_default_graph()
 sess = tf.Session()
-metafile = os.path.join(path_to_meta_files, "-100000.meta")
-savefile = os.path.join(path_to_meta_files, "-100000")
+metafile = os.path.join(path_to_meta_files, "-{}.meta".format(iter))
+savefile = os.path.join(path_to_meta_files, "-{}".format(iter))
 new_saver = tf.train.import_meta_graph(metafile)
 new_saver.restore(sess, savefile)
 

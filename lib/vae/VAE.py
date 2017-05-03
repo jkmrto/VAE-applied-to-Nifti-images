@@ -181,9 +181,9 @@ class VAE():
         outfile = os.path.join(self.path_to_meta, suffix_file_saver_name)
         saver.save(self.session, outfile, global_step=self.step)
 
-    def training_end(self, saver, save_bool, err_train, i, suffix):
+    def training_end(self, saver, save_bool, last_avg_cost, suffix):
 
-        print("final avg cost %1.5f" % (err_train / i))
+        print("final avg cost %1.5f" % (last_avg_cost))
         now = datetime.now().isoformat()[11:]
         print("------- Training end: {} -------\n".format(now))
 
@@ -224,10 +224,11 @@ class VAE():
                     err_train = 0  # Reset the counting error
 
                 if i % iter_to_save == 0:
-                    self.save(saver, suffix_files_generated)
+                    if save_bool:
+                        self.save(saver, suffix_files_generated)
 
                 if i >= max_iter:
-                    self.training_end(saver, save_bool, last_avg_cost, i,
+                    self.training_end(saver, save_bool, last_avg_cost,
                                       suffix_files_generated)
                     gradient_descent_log.close()
                     break

@@ -63,7 +63,7 @@ HYPERPARAMS = {
 bool_normalized = True
 max_denormalize = 1
 regions_used = "all"
-max_iter = 5000
+max_iter = 200
 
 # region_voxels_index = mri_atlas.get_super_region_to_voxels()[region_name]
 dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'

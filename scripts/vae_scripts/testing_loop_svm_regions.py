@@ -10,15 +10,17 @@ from lib.mri import stack_NORAD
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
 from lib import utils
+from lib.aux_functionalities import functions
+import copy
 from lib.aux_functionalities import os_aux
 
 # SVM CONFIGURATION
-iden_session = "02_05_2017_21:09 arch: 1000_800_500_100_2"
-#iden_session = "03_05_2017_08:12 arch: 1000_800_500_100"
-test_name = "test_without_pre_records"
+#iden_session = "02_05_2017_21:09 arch: 1000_800_500_100_2"
+iden_session = "03_05_2017_08:12 arch: 1000_800_500_100"
+test_name = "svm"
 #regions_used = "all"
 regions_used = "most important"
-iter_to_meta_load = 1000
+iter_to_meta_load = 5000
 
 dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
 
@@ -73,15 +75,12 @@ for region_selected in list_regions:
     clf.fit(code_train[0], Y_train)    # Solo usando las media pq el codificador devuelve media y desviacion
 
     # Testing time
-    print("Evaluating test samples")
+    print("Evaluating train samples")
     dec = clf.decision_function(code_train[0])
 
-    # Post scritp to print accuracy per region
-    dec_normalize = dec
-    dec_normalize[dec_normalize < 0] = 0
-    dec_normalize[dec_normalize > 0] = 1
-
-    region_accuracy = metrics.accuracy_score(Y_train, dec_normalize)
+    dec_label = functions.assign_binary_labels_based_on_threshold(
+        copy.copy(dec), 0)
+    region_accuracy = metrics.accuracy_score(Y_train, dec_label)
     per_region_accuracy_file.write("region_{0},{1}\n".format(region_selected,
                                                            region_accuracy))
     per_region_accuracy_file.flush()
