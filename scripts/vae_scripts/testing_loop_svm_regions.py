@@ -2,7 +2,8 @@ import tensorflow as tf
 from sklearn import svm
 from lib.aux_functionalities.os_aux import create_directories
 import os
-from sklearn.metrics import confusion_matrix
+from lib import svm_hub
+from lib import region_selector_hub
 from lib.mri import mri_atlas
 import settings
 from lib.vae import VAE
@@ -31,15 +32,11 @@ path_to_particular_test = os.path.join(path_to_main_test, test_name)
 create_directories([path_to_main_test, path_to_particular_test])
 
 score_file = open(path_to_particular_test + "/patient_score_per_region.log", "w")
-labels_file = open(path_to_particular_test + "/patient_labels_per_region.log", "w") # Currently unused
 per_region_accuracy_file = open(os.path.join(path_to_particular_test,
                                 "per_region_accuracy.log"), "w")
 
-list_regions = []
-if regions_used == "all":
-    list_regions = range(1, 117, 1) # 117 regions en total
-elif regions_used == "most important":
-    list_regions = settings.list_regions_evaluated
+# SELECTING REGIONS TO BE EVALUATED
+list_regions = region_selector_hub.select_regions_to_evaluate(regions_used)
 
 for region_selected in list_regions:
 
@@ -66,30 +63,15 @@ for region_selected in list_regions:
 
     print("Coding training data")
     code_train = v.encode(X_train)  # [mu, sigma]
- #   print("Coding test data")
- #   code_test = v.encode(X_train)  # [mu, sigma]
 
     # Fitting SVM
-    print("Training SVM")
-    clf = svm.SVC(decision_function_shape='ovr', kernel='linear')
-    clf.fit(code_train[0], Y_train)    # Solo usando las media pq el codificador devuelve media y desviacion
+    score = svm_hub.fit_svm_and_get_decision_for_requiered_data(
+        code_train[0], Y_train, code_train[0])
 
-    # Testing time
-    print("Evaluating train samples")
-    dec = clf.decision_function(code_train[0])
+    svm_hub.per_region_evaluation(score, Y_train, per_region_accuracy_file,
+                          region_selected)
 
-    dec_label = functions.assign_binary_labels_based_on_threshold(
-        copy.copy(dec), 0)
-    region_accuracy = metrics.accuracy_score(Y_train, dec_label)
-    per_region_accuracy_file.write("region_{0},{1}\n".format(region_selected,
-                                                           region_accuracy))
-    per_region_accuracy_file.flush()
+    svm_hub.log_scores_per_region(score, score_file, region_selected)
 
-    score_file.write("region_{0}".format(region_selected))
-
-    for out in dec:
-        score_file.write(",{}".format(out))
-    score_file.write("\n")
-
-# X_train, X_test, y_train, y_test = train_test_split(region_voxels_values, region_voxels_label,
-#                                                   test_size=0.0, random_state=0)
+score_file.close()
+per_region_accuracy_file.close()

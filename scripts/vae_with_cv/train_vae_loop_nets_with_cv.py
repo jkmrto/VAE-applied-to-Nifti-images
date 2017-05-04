@@ -1,6 +1,7 @@
 import tensorflow as tf
 from lib.aux_functionalities.os_aux import create_directories
 from lib.aux_functionalities.functions import generate_session_descriptor
+from lib import region_selector_hub
 from datetime import datetime
 from lib.aux_functionalities import functions
 import settings
@@ -96,6 +97,7 @@ dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
 train_index = generate_and_store_train_and_test_index(dict_norad['stack'],
                                                       cv_rate, path_to_cv)
 
+
 # SESSION DESCRIPTOR CREATION
 session_descriptor_data = {"voxeles normalized": str(bool_normalized),
                            "max_iter": max_iter,
@@ -106,13 +108,11 @@ session_descriptor_data = {"voxeles normalized": str(bool_normalized),
 session_descriptor_data.update(HYPERPARAMS)
 generate_session_descriptor(path_session_folder, session_descriptor_data)
 
-# LIST REGIONS SELECTION
-list_regions = []
-if regions_used == "all":
-    list_regions = region_voxels_index_per_region.keys()
-elif regions_used == "most important":
-    list_regions = settings.list_regions_evaluated
 
+# LIST REGIONS SELECTION
+list_regions = region_selector_hub.select_regions_to_evaluate(regions_used)
+
+# LOOP OVER REGIONS
 for region_selected in list_regions:
     print("Region Nº {} selected".format(region_selected))
     voxels_index = region_voxels_index_per_region[region_selected]

@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a70bc70e-9f0d-404b-b0fa-698d01cb0e18" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/train_vae_loop_nets_with_cv.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/svm_hub.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vae_with_cv/svm_over_coding_data_with_cv.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/mri/stack_NORAD.py" afterPath="$PROJECT_DIR$/lib/mri/stack_NORAD.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/majority_vote.py" afterPath="$PROJECT_DIR$/scripts/majority_vote.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/vae_scripts/testing_loop_svm_regions.py" afterPath="$PROJECT_DIR$/scripts/vae_scripts/testing_loop_svm_regions.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/vae_with_cv/train_vae_loop_nets_with_cv.py" afterPath="$PROJECT_DIR$/scripts/vae_with_cv/train_vae_loop_nets_with_cv.py" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,37 +24,13 @@
     <favorites_list name="VAE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.44035533">
+    <splitter split-orientation="horizontal" split-proportion="0.45401555">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="VAE.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/lib/vae/VAE.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="3689">
-                  <caret line="227" column="24" lean-forward="false" selection-start-line="227" selection-start-column="24" selection-end-line="227" selection-end-column="24" />
-                  <folding>
-                    <element signature="e#0#9#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="decision_neural_net.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/lib/neural_net/decision_neural_net.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1904">
-                  <caret line="120" column="65" lean-forward="false" selection-start-line="120" selection-start-column="34" selection-end-line="120" selection-end-column="65" />
-                  <folding>
-                    <element signature="e#0#23#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="train_regions_loop.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/scripts/vae_scripts/train_regions_loop.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="221">
+                <state relative-caret-position="493">
                   <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
@@ -62,23 +39,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="test_over_decision_neural_net.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/scripts/decision_neural_net_scripts/test_over_decision_neural_net.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="561">
-                  <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="76" />
-                  <folding>
-                    <element signature="e#0#64#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="testing_loop_svm_regions.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/scripts/vae_scripts/testing_loop_svm_regions.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="68">
-                  <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="56" />
+                <state relative-caret-position="1037">
+                  <caret line="76" column="32" lean-forward="false" selection-start-line="76" selection-start-column="32" selection-end-line="76" selection-end-column="32" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                   </folding>
@@ -86,10 +51,52 @@
               </provider>
             </entry>
           </file>
+          <file leaf-file-name="svm_hub.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/lib/svm_hub.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="328">
+                  <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#23#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="per_reg_acc.log" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/out/04_05_2017_19:05 arch: 1000_800_500_100/post_train/svm/train_out/per_reg_acc.log">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="0">
+                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="classification.py" pinned="false" current-in-tab="false">
+            <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/sklearn/metrics/classification.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="221">
+                  <caret line="171" column="0" lean-forward="false" selection-start-line="171" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="region_selector_hub.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/lib/region_selector_hub.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="221">
+                  <caret line="13" column="23" lean-forward="false" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file leaf-file-name="majority_vote.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/scripts/majority_vote.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="396">
+                <state relative-caret-position="663">
                   <caret line="49" column="37" lean-forward="false" selection-start-line="49" selection-start-column="37" selection-end-line="49" selection-end-column="37" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
@@ -99,10 +106,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="train_over_decision_neural_net.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="train_over_decision_neural_net.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/scripts/decision_neural_net_scripts/train_over_decision_neural_net.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="518">
+                <state relative-caret-position="1496">
                   <caret line="98" column="5" lean-forward="false" selection-start-line="98" selection-start-column="0" selection-end-line="101" selection-end-column="25" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
@@ -125,7 +132,7 @@
           <file leaf-file-name="functions.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/lib/aux_functionalities/functions.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="119">
+                <state relative-caret-position="51">
                   <caret line="7" column="45" lean-forward="false" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="74" />
                   <folding>
                     <element signature="e#0#18#0" expanded="true" />
@@ -138,11 +145,11 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="train_vae_loop_nets_with_cv.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/scripts/train_vae_loop_nets_with_cv.py">
+          <file leaf-file-name="train_vae_loop_nets_with_cv.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv/train_vae_loop_nets_with_cv.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="238">
-                  <caret line="123" column="62" lean-forward="false" selection-start-line="123" selection-start-column="62" selection-end-line="123" selection-end-column="62" />
+                <state relative-caret-position="680">
+                  <caret line="52" column="65" lean-forward="false" selection-start-line="52" selection-start-column="41" selection-end-line="52" selection-end-column="65" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                   </folding>
@@ -150,8 +157,20 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="train_index_to_stack.csv" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/train_index_to_stack.csv">
+          <file leaf-file-name="svm_over_coding_data_with_cv.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv/svm_over_coding_data_with_cv.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="408">
+                  <caret line="39" column="43" lean-forward="false" selection-start-line="39" selection-start-column="43" selection-end-line="39" selection-end-column="43" />
+                  <folding>
+                    <element signature="e#0#23#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="patient_score_per_region.log" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/out/04_05_2017_19:05 arch: 1000_800_500_100/post_train/svm/patient_score_per_region.log">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="0">
                   <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -163,7 +182,7 @@
           <file leaf-file-name="stack_NORAD.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/lib/mri/stack_NORAD.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="561">
+                <state relative-caret-position="714">
                   <caret line="46" column="1" lean-forward="false" selection-start-line="46" selection-start-column="1" selection-end-line="46" selection-end-column="1" />
                   <folding>
                     <marker date="1493914318210" expanded="true" signature="1005:1335" ph="..." />
@@ -175,18 +194,8 @@
           <file leaf-file-name="_split.py" pinned="false" current-in-tab="false">
             <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/sklearn/model_selection/_split.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="68">
+                <state relative-caret-position="26775">
                   <caret line="1598" column="4" lean-forward="false" selection-start-line="1598" selection-start-column="4" selection-end-line="1598" selection-end-column="4" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="per_region_accuracy.log" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/out/03_05_2017_08:12 arch: 1000_800_500_100/post_train/svm/per_region_accuracy.log">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -195,7 +204,7 @@
           <file leaf-file-name="test_over_decision_neural_net.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/scripts/decision_neural_net_scripts/test_over_decision_neural_net.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="187">
+                <state relative-caret-position="51">
                   <caret line="11" column="56" lean-forward="false" selection-start-line="11" selection-start-column="56" selection-end-line="11" selection-end-column="56" />
                   <folding>
                     <element signature="e#0#64#0" expanded="true" />
@@ -276,12 +285,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/test_svm.py" />
-        <option value="$PROJECT_DIR$/training_script.py" />
-        <option value="$PROJECT_DIR$/testing_svm_one_region.py" />
-        <option value="$PROJECT_DIR$/training_one_region.py" />
-        <option value="$PROJECT_DIR$/Resultados.log" />
-        <option value="$PROJECT_DIR$/train_regions_loop.py" />
         <option value="$PROJECT_DIR$/testing_loop_svm_regions.py" />
         <option value="$PROJECT_DIR$/scripts/print_gradient_descent_log.py" />
         <option value="$PROJECT_DIR$/lib/mri/atlas_mri_settings.py" />
@@ -316,7 +319,6 @@
         <option value="$PROJECT_DIR$/out/02_05_2017_21:09 arch: 1000_800_500_100_2/post_train/test_without_pre_records/per_region_accuracy.log" />
         <option value="$PROJECT_DIR$/scripts/delete_pre_final_meta_data.py" />
         <option value="$PROJECT_DIR$/lib/aux_functionalities/functions.py" />
-        <option value="$PROJECT_DIR$/scripts/vae_scripts/testing_loop_svm_regions.py" />
         <option value="$PROJECT_DIR$/scripts/decision_neural_net_scripts/test_over_decision_neural_net.py" />
         <option value="$PROJECT_DIR$/lib/vae/VAE.py" />
         <option value="$PROJECT_DIR$/lib/neural_net/decision_neural_net.py" />
@@ -327,6 +329,13 @@
         <option value="$PROJECT_DIR$/test_index_to_stack.csv" />
         <option value="$PROJECT_DIR$/train_index_to_stack.csv" />
         <option value="$PROJECT_DIR$/scripts/train_vae_loop_nets_with_cv.py" />
+        <option value="$PROJECT_DIR$/region_selector_hub.py" />
+        <option value="$PROJECT_DIR$/scripts/vae_with_cv/train_vae_loop_nets_with_cv.py" />
+        <option value="$PROJECT_DIR$/lib/region_selector_hub.py" />
+        <option value="$PROJECT_DIR$/out/04_05_2017_19:05 arch: 1000_800_500_100/post_train/svm/per_region_accuracy.log" />
+        <option value="$PROJECT_DIR$/scripts/vae_scripts/testing_loop_svm_regions.py" />
+        <option value="$PROJECT_DIR$/lib/svm_hub.py" />
+        <option value="$PROJECT_DIR$/scripts/vae_with_cv/svm_over_coding_data_with_cv.py" />
       </list>
     </option>
   </component>
@@ -372,7 +381,175 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vae_with_cv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vae_scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="out" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="04_05_2017_19:05 arch: 1000_800_500_100" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="out" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="04_05_2017_19:05 arch: 1000_800_500_100" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="post_train" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="svm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="out" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="04_05_2017_19:05 arch: 1000_800_500_100" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="post_train" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="svm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="train_out" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="out" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="04_05_2017_19:05 arch: 1000_800_500_100" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="post_train" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="svm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test_out" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="out" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -388,18 +565,18 @@
     <property name="add_unversioned_files" value="$PROJECT_DIR$/out/01_04_2017_00:00 arch: 1000_800_500_100/post_train/first_test/neural_net-2017_04_22-17:53-42_21_1/post_train/curva_roc.png&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/png/desc_grad_graph/grad_desc_region_11.png&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/out/01_04_2017_00:00 arch: 1000_800_500_100/test/first_test/patient_score_per_region.log&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/png/desc_grad_graph/grad_desc_region_6.png&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/README.md&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/png/desc_grad_graph/grad_desc_region_4.png" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/data" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib" />
+      <recent name="$PROJECT_DIR$/scripts/vae_with_cv" />
       <recent name="$PROJECT_DIR$/scripts" />
       <recent name="$PROJECT_DIR$/scripts/vae_scripts" />
       <recent name="$PROJECT_DIR$/scripts/decision_neural_net_scripts" />
-      <recent name="$PROJECT_DIR$/scripts/plot_scripts" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.train_vae_loop_nets_with_cv">
+  <component name="RunManager" selected="Python.svm_over_coding_data_with_cv">
     <configuration default="false" name="train_over_decision_neural_net" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -413,23 +590,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="VAE" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/decision_neural_net_scripts/train_over_decision_neural_net.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="test_over_decision_neural_net" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts/decision_neural_net_scripts" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="VAE" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/decision_neural_net_scripts/test_over_decision_neural_net.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -480,7 +640,24 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="VAE" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/train_vae_loop_nets_with_cv.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/vae_with_cv/train_vae_loop_nets_with_cv.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="svm_over_coding_data_with_cv" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts/vae_with_cv" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="VAE" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/vae_with_cv/svm_over_coding_data_with_cv.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -624,18 +801,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.train_over_decision_neural_net" />
-      <item index="1" class="java.lang.String" itemvalue="Python.test_over_decision_neural_net" />
-      <item index="2" class="java.lang.String" itemvalue="Python.train_regions_loop" />
-      <item index="3" class="java.lang.String" itemvalue="Python.majority_vote" />
-      <item index="4" class="java.lang.String" itemvalue="Python.train_vae_loop_nets_with_cv" />
+      <item index="1" class="java.lang.String" itemvalue="Python.train_regions_loop" />
+      <item index="2" class="java.lang.String" itemvalue="Python.majority_vote" />
+      <item index="3" class="java.lang.String" itemvalue="Python.train_vae_loop_nets_with_cv" />
+      <item index="4" class="java.lang.String" itemvalue="Python.svm_over_coding_data_with_cv" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.train_vae_loop_nets_with_cv" />
-        <item index="1" class="java.lang.String" itemvalue="Python.majority_vote" />
-        <item index="2" class="java.lang.String" itemvalue="Python.train_regions_loop" />
-        <item index="3" class="java.lang.String" itemvalue="Python.train_over_decision_neural_net" />
-        <item index="4" class="java.lang.String" itemvalue="Python.test_over_decision_neural_net" />
+        <item index="0" class="java.lang.String" itemvalue="Python.svm_over_coding_data_with_cv" />
+        <item index="1" class="java.lang.String" itemvalue="Python.train_vae_loop_nets_with_cv" />
+        <item index="2" class="java.lang.String" itemvalue="Python.majority_vote" />
+        <item index="3" class="java.lang.String" itemvalue="Python.train_regions_loop" />
+        <item index="4" class="java.lang.String" itemvalue="Python.train_over_decision_neural_net" />
       </list>
     </recent_temporary>
   </component>
@@ -682,7 +859,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25692964" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32821077" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20255864" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2521097" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18565401" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32964134" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39872068" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -733,54 +910,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/out/01_04_2017_00:00 arch: 1000_800_500_100/post_train/first_test/neural_net-2017_04_22-15:09-42_21_1/post_train/curva_roc.png" />
-    <entry file="file://$PROJECT_DIR$/out/01_04_2017_00:00 arch: 1000_800_500_100/post_train/first_test/neural_net-2017_04_22-15:09-42_21_1/post_train/results.csv" />
-    <entry file="file://$PROJECT_DIR$/scripts/svm_score_aux_functions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="4" lean-forward="false" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/VAE_scripts.py" />
-    <entry file="file://$PROJECT_DIR$/lib/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="22" column="4" lean-forward="false" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/vae_scripts/testing_svm_one_region.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="32" column="31" lean-forward="false" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mri/load_data_script_importante.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mri/mri_atlas.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="69" lean-forward="false" selection-start-line="12" selection-start-column="69" selection-end-line="12" selection-end-column="69" />
-          <folding>
-            <element signature="e#0#58#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/mri/mri_atlas_settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="24" lean-forward="false" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/out/01_04_2017_00:00 arch: 1000_800_500_100/post_train/first_test/neural_net-2017_04_22-17:53-42_21_1/post_train/TestUsingTestData/curva_roc.png" />
     <entry file="file://$PROJECT_DIR$/settings.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -809,7 +938,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -825,9 +953,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
           <caret line="34" column="54" lean-forward="false" selection-start-line="34" selection-start-column="54" selection-end-line="34" selection-end-column="54" />
-          <folding>
-            <element signature="e#0#9#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -835,9 +960,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="11" column="49" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#9#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -878,10 +1000,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="15" column="54" lean-forward="false" selection-start-line="15" selection-start-column="54" selection-end-line="15" selection-end-column="54" />
-          <folding>
-            <element signature="e#0#9#0" expanded="false" />
-            <element signature="e#61#200#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -897,13 +1015,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/decision_neural_net_scripts/test_over_decision_neural_net.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
+        <state relative-caret-position="51">
           <caret line="11" column="56" lean-forward="false" selection-start-line="11" selection-start-column="56" selection-end-line="11" selection-end-column="56" />
           <folding>
             <element signature="e#0#64#0" expanded="true" />
@@ -927,16 +1044,6 @@
           <caret line="227" column="24" lean-forward="false" selection-start-line="227" selection-start-column="24" selection-end-line="227" selection-end-column="24" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/vae_scripts/testing_loop_svm_regions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="56" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -982,7 +1089,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/majority_vote.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
+        <state relative-caret-position="663">
           <caret line="49" column="37" lean-forward="false" selection-start-line="49" selection-start-column="37" selection-end-line="49" selection-end-column="37" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -993,7 +1100,7 @@
     </entry>
     <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/sklearn/model_selection/_split.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
+        <state relative-caret-position="26775">
           <caret line="1598" column="4" lean-forward="false" selection-start-line="1598" selection-start-column="4" selection-end-line="1598" selection-end-column="4" />
           <folding />
         </state>
@@ -1001,7 +1108,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/vae_scripts/train_regions_loop.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
+        <state relative-caret-position="493">
           <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
@@ -1011,7 +1118,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/mri/stack_NORAD.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
+        <state relative-caret-position="714">
           <caret line="46" column="1" lean-forward="false" selection-start-line="46" selection-start-column="1" selection-end-line="46" selection-end-column="1" />
           <folding>
             <marker date="1493914318210" expanded="true" signature="1005:1335" ph="..." />
@@ -1021,7 +1128,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/aux_functionalities/functions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
+        <state relative-caret-position="51">
           <caret line="7" column="45" lean-forward="false" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="74" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
@@ -1033,13 +1140,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="1" lean-forward="false" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/train_index_to_stack.csv" />
+    <entry file="file://$PROJECT_DIR$/test_index_to_stack.csv" />
+    <entry file="file://$PROJECT_DIR$/out/04_05_2017_19:01 arch: 1000_800_500_100/cv/train_index_to_stack.csv" />
+    <entry file="file://$PROJECT_DIR$/out/04_05_2017_19:01 arch: 1000_800_500_100/cv/test_index_to_stack.csv" />
     <entry file="file://$PROJECT_DIR$/scripts/decision_neural_net_scripts/train_over_decision_neural_net.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="518">
+        <state relative-caret-position="1496">
           <caret line="98" column="5" lean-forward="false" selection-start-line="98" selection-start-column="0" selection-end-line="101" selection-end-column="25" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -1048,7 +1158,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_index_to_stack.csv">
+    <entry file="file://$PROJECT_DIR$/lib/region_selector_hub.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="23" lean-forward="false" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv/train_vae_loop_nets_with_cv.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="52" column="65" lean-forward="false" selection-start-line="52" selection-start-column="41" selection-end-line="52" selection-end-column="65" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/04_05_2017_19:05 arch: 1000_800_500_100/post_train/svm/patient_score_per_region.log">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1056,18 +1184,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_index_to_stack.csv">
+    <entry file="file://$PROJECT_DIR$/out/04_05_2017_19:05 arch: 1000_800_500_100/post_train/svm/per_region_accuracy.log">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/vae_scripts/testing_loop_svm_regions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1037">
+          <caret line="76" column="32" lean-forward="false" selection-start-line="76" selection-start-column="32" selection-end-line="76" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/sklearn/metrics/classification.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="171" column="0" lean-forward="false" selection-start-line="171" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/train_vae_loop_nets_with_cv.py">
+    <entry file="file://$PROJECT_DIR$/lib/svm_hub.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="123" column="62" lean-forward="false" selection-start-line="123" selection-start-column="62" selection-end-line="123" selection-end-column="62" />
+        <state relative-caret-position="328">
+          <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/04_05_2017_19:05 arch: 1000_800_500_100/post_train/svm/train_out/per_reg_acc.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv/svm_over_coding_data_with_cv.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="39" column="43" lean-forward="false" selection-start-line="39" selection-start-column="43" selection-end-line="39" selection-end-column="43" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
