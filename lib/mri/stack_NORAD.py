@@ -44,4 +44,4 @@ def test():
     plt.imshow(out[:, 50, :], cmap='gray')
 
     img = nib.Nifti1Image(out, np.eye(4))
-test()
+#test()

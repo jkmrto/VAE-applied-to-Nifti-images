@@ -17,19 +17,21 @@ def make_binary(data):
 
     return data
 
-id_autoencoder_session = "01_04_2017_00:00 arch: 1000_800_500_100"
+idi_session = "03_05_2017_08:12 arch: 1000_800_500_100"
 output_project_folder = "out"
 main_test_folder_autoencoder_session = "post_train"
-svm_test_name = "first_test"
+svm_folder_name = "svm"
 score_file_name = "patient_score_per_region.log"
+majority_vote_session_folder_name = "majority_vote"
+
 path_to_svm_test = os.path.join(settings.path_to_project,
                                 output_project_folder,
-                                id_autoencoder_session,
+                                idi_session,
                                 main_test_folder_autoencoder_session,
-                                svm_test_name)
+                                svm_folder_name)
 path_score_file = os.path.join(path_to_svm_test, score_file_name)
 
-majority_vote_session_folder_name = "majority_vote"
+
 path_to_majority_vote_session = os.path.join(path_to_svm_test,
                                              majority_vote_session_folder_name)
 create_directories( [path_to_majority_vote_session])
@@ -51,6 +53,7 @@ print_dictionary(path_to_resume_file, output_dic)
 
 [fpr, tpr, thresholds] = roc_curve(patients_labels, means)
 
+plt.figure()
 plt.plot(fpr, tpr, linestyle='--')
 plt.savefig(path_to_roc_png)
 
