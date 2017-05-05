@@ -89,7 +89,7 @@ class DecisionNeuralNet():
 
         return x_in, y_true, y_obtained, dropout, cost, global_step, train_op
 
-    def forward_propagation(self, x, y):
+    def forward_propagation(self, x):
         """Probabilistic encoder from inputs to latent distribution parameters;
         a.k.a. inference network q(z|x)
         """

@@ -82,7 +82,7 @@ cv_rate = 0.6  # cv_rate training data and (1 - cv_rate) test data
 bool_normalized = True
 max_denormalize = 1
 regions_used = "all"
-max_iter = 200
+max_iter = 1500
 
 region_voxels_index_per_region = mri_atlas.load_atlas_mri()
 

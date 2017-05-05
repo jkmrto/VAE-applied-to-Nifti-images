@@ -14,12 +14,12 @@ from lib.aux_functionalities import functions
 # SVM CONFIGURATION
 # iden_session = "02_05_2017_21:09 arch: 1000_800_500_100_2"
 # iden_session = "03_05_2017_08:12 arch: 1000_800_500_100"
-iden_session = "04_05_2017_19:05 arch: 1000_800_500_100"
+iden_session = "05_05_2017_08:19 arch: 1000_800_500_100"
 
 test_name = "svm"
-# regions_used = "all"
-regions_used = "three"
-iter_to_meta_load = 200
+regions_used = "all"
+#regions_used = "three"
+iter_to_meta_load = 1500
 
 # PATH INITIALIZATION
 path_to_session = os.path.join(settings.path_to_general_out_folder,

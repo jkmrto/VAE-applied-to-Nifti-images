@@ -25,3 +25,16 @@ create_directories([path_to_general_out_folder])
 stack_path_GM = path_to_project + "/data/stack_NORAD_GM.mat"
 stack_path_WM = path_to_project + "/data/stack_NORAD_WM.mat"
 atlas_path = path_to_project + "/data/" + "ratlas116_MRI.nii"
+
+# AUTOENCODER SESSION FOLDER AND FILES ASSOCIATED
+main_test_folder_autoencoder_session = "post_train"
+main_cv_vae_session = "cv"
+
+
+# SVM DEFAULT FOLDERS NAME AND FILES GENERATED
+svm_file_name_per_region_accuracy = "per_reg_acc.log"
+svm_file_name_scores_file_name = "scores.log"
+svm_folder_name_test_out = "test_out"
+svm_folder_name_train_out = "train_out"
+
+# DECISION NEURAL NET

@@ -52,8 +52,7 @@ new_saver.restore(sess, savefile)
 v = DecisionNeuralNet(root_path=path_to_session_folder,
                       meta_graph=savefile)
 # Taking the first element of the list returned
-y_obtained = v.forward_propagation(X_test, y_test)[0]
-
+y_obtained = v.forward_propagation(X_test)[0]
 
 results = np.concatenate((y_test, y_obtained))
 
