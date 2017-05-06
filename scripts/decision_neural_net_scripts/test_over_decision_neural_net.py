@@ -6,6 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 import settings
+from lib.evaluation_utils import evaluation_output
 import os
 
 iter = 300000
@@ -54,15 +55,8 @@ v = DecisionNeuralNet(root_path=path_to_session_folder,
 # Taking the first element of the list returned
 y_obtained = v.forward_propagation(X_test)[0]
 
-results = np.concatenate((y_test, y_obtained))
 
-precision = metrics.average_precision_score(y_test, y_obtained)
-auc = metrics.roc_auc_score(y_test, y_obtained)
-output_dic = {"precision": precision,
-              "area under the curve": auc}
-print_dictionary(path_to_resume_file, output_dic)
-
-[fpr, tpr, thresholds] = metrics.roc_curve(y_test, y_obtained)
-np.savetxt(path_to_results_file, results, delimiter=',')
-plt.plot(fpr, tpr, linestyle='--')
-plt.savefig(path_to_roc_png)
+evaluation_output(path_to_resume_file,
+                  path_to_roc_png,
+                  path_to_results_file,
+                  y_obtained, y_test)

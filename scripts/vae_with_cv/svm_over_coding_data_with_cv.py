@@ -1,5 +1,5 @@
 import tensorflow as tf
-from lib import svm_hub
+from lib import svm_utils
 from lib.aux_functionalities.os_aux import create_directories
 import os
 from lib.mri import mri_atlas
@@ -53,7 +53,7 @@ test_per_reg_acc = open(path_to_test_per_reg_acc, "w")
 
 
 # LOADING INDEX TO CV
-train_index, test_index = svm_hub.get_train_and_test_index_from_files(path_to_cv)
+train_index, test_index = svm_utils.get_train_and_test_index_from_files(path_to_cv)
 
 
 # LOADING THE DATA
@@ -99,14 +99,14 @@ for reg_select in list_regions:
     code_train = v.encode(X_train)  # [mu, sigma]
     code_test = v.encode(X_test)  # [mu, sigma]
 
-    score_train, score_test = svm_hub.fit_svm_and_get_decision_for_requiered_data(
+    score_train, score_test = svm_utils.fit_svm_and_get_decision_for_requiered_data(
         code_train[0], Y_train, code_test[0])
 
-    svm_hub.per_region_evaluation(score_train, Y_train, train_per_reg_acc, reg_select)
-    svm_hub.per_region_evaluation(score_test, Y_test, test_per_reg_acc, reg_select)
+    svm_utils.per_region_evaluation(score_train, Y_train, train_per_reg_acc, reg_select)
+    svm_utils.per_region_evaluation(score_test, Y_test, test_per_reg_acc, reg_select)
 
-    svm_hub.log_scores(score_train, train_scores_file, reg_select)
-    svm_hub.log_scores(score_test, test_scores_file, reg_select)
+    svm_utils.log_scores(score_train, train_scores_file, reg_select)
+    svm_utils.log_scores(score_test, test_scores_file, reg_select)
 
 train_scores_file.close()
 test_scores_file.close()

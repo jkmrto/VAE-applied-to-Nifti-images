@@ -37,15 +37,8 @@ def generate_session_descriptor(path_session_folder, session_descriptor_data):
     print_dictionary(path_to_file_session_descriptor, session_descriptor_data)
 
 
-def plot_x_y_from_file_with_title(
-        graph_title, path_to_log, path_where_to_save_png):
-    """
-    The file passed should be in csv formant,
-    :param graph_title:
-    :param path_to_log:
-    :param path_where_to_save_png:
-    :return:
-    """
+def load_csv_file_iter_to_error(path_to_log):
+
     file = open(path_to_log, 'r')
 
     iter = []
@@ -55,6 +48,20 @@ def plot_x_y_from_file_with_title(
         iter.append(int(iter_aux))
         error.append(float(error_aux))
 
+    file.close()
+    return iter, error
+
+
+def plot_x_y_from_file_with_title(
+        graph_title, path_to_log, path_where_to_save_png):
+    """
+    The file passed should be in csv formant,
+    :param graph_title:
+    :param path_to_log:
+    :param path_where_to_save_png:
+    :return:
+    """
+    iter, error = load_csv_file_iter_to_error(path_to_log)
     plt.figure()
     plt.plot(error)
     plt.title(graph_title)

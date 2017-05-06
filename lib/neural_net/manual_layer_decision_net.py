@@ -11,6 +11,20 @@ import os
 RESTORE_KEY = 'key'
 
 
+def wbVars(fan_in: int, fan_out: int):
+    """Helper to initialize weights and biases, via He's adaptation
+    of Xavier init for ReLUs: https://arxiv.org/abs/1502.01852
+    """
+    # (int, int) -> (tf.Variable, tf.Variable)
+    stddev = tf.cast((2 / fan_in) ** 0.5, tf.float32)
+
+    initial_w = tf.random_normal([fan_in, fan_out], stddev=stddev)
+    initial_b = tf.zeros([fan_out])
+
+    return (tf.Variable(initial_w, trainable=True, name="weights"),
+            tf.Variable(initial_b, trainable=True, name="biases"))
+
+
 class DecisionNeuralNet():
     def __init__(self, architecture=None, hyperparams=None, meta_graph=None,
                  root_path=""):
@@ -63,16 +77,20 @@ class DecisionNeuralNet():
         # return l1_loss(x_true, x_obtained)
 
     def __build_graph(self):
+        alpha = 0.1
 
         x_in = tf.placeholder(tf.float32, shape=[None, self.architecture[0]], name="x")
         y_true = tf.placeholder(tf.float32, shape=[None, self.architecture[-1]], name="y")
         dropout = tf.placeholder_with_default(1., shape=[], name="dropout")
 
-        # encoding / "recognition": q(z|x) ->  outer -> inner
-        dense_layers = [Dense("net", hidden_size, dropout, self.hyperparams['nonlinearity'])
-                        for hidden_size in reversed(self.architecture)]
+        w, b = wbVars(self.architecture[0], self.architecture[1])
+        layer_1_pre_activation = tf.add(tf.matmul(x_in, w), b)
+        layer_1 = tf.maximum(alpha*layer_1_pre_activation, layer_1_pre_activation)
 
-        y_obtained = compose_all(dense_layers)(x_in)
+        w, b = wbVars(self.architecture[1], self.architecture[2])
+        y_obtained_pre_activation = tf.add(tf.matmul(layer_1, w), b)
+        y_obtained = tf.maximum(alpha*y_obtained_pre_activation,
+                                y_obtained_pre_activation)
 
         global_step = tf.Variable(0, trainable=False)
 
@@ -137,7 +155,7 @@ class DecisionNeuralNet():
                     gradient_descent_log.write("{0},{1}\n".format(i, cost))
 
                 if i % iter_to_show_error == 0:
-                    last_avg_cost = err_train / iter_to_show_error
+                    last_avg_cost = err_train / iter_to_show_error / self.hyperparams['batch_size']
                     print("round {} --> avg cost: ".format(i), last_avg_cost)
                     err_train = 0  # Reinitialzing the counting error
 
@@ -174,21 +192,3 @@ class DecisionNeuralNet():
         if i % step_to_save == 0:
             if save_bool:
                 self.save(saver)
-
-
-def __load_svm_score_file():
-    dir = os.getcwd()
-    file_name = '/Resultados_lineal_todas_regiones.log'
-    svm_output_file = open(dir + file_name)
-
-    svm_output_region_index = []
-    svm_output = []
-    for line in svm_output_file:
-        print(line)
-        region_index, tail = line.split(':')
-        head, score = tail.split(' ')
-        svm_output_region_index.append(region_index)
-        svm_output.append(float(score.replace('\n', '')))
-
-    return svm_output, svm_output_region_index
-
