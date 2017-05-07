@@ -88,12 +88,16 @@ v = DecisionNeuralNet(root_path=path_decision_session_folder,
 score_train = v.forward_propagation(X_train)[0]
 score_test = v.forward_propagation(X_test)[0]
 
-evaluation_output(os.path.join(path_to_train_out, RESUME_FILE_NAME),
-                  os.path.join(path_to_train_out, CURVE_ROC_FILE_NAME),
-                  os.path.join(path_to_train_out, FILE_TRUE_TO_GET_PER_PATIENT),
-                  score_train, Y_train)
+# Train evaluation
+threshold = evaluation_output(os.path.join(path_to_train_out, RESUME_FILE_NAME),
+                              os.path.join(path_to_train_out,
+                                           CURVE_ROC_FILE_NAME),
+                              os.path.join(path_to_train_out,
+                                           FILE_TRUE_TO_GET_PER_PATIENT),
+                              score_train, Y_train)
 
+# Test evaluation
 evaluation_output(os.path.join(path_to_test_out, RESUME_FILE_NAME),
                   os.path.join(path_to_test_out, CURVE_ROC_FILE_NAME),
                   os.path.join(path_to_test_out, FILE_TRUE_TO_GET_PER_PATIENT),
-                  score_test, Y_test)
+                  score_test, Y_test, thresholds_establised=threshold)

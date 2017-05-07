@@ -68,9 +68,5 @@ def plot_x_y_from_file_with_title(
     plt.savefig(path_where_to_save_png, dpi = 200)
 
 
-def assign_binary_labels_based_on_threshold(scores, threshold):
-    scores[scores < threshold] = 0
-    scores[scores > threshold] = 1
 
-    return  scores
 
