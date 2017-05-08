@@ -20,7 +20,27 @@ def get_label_per_patient(path_to_cv_folder):
     patients_labels = load_patients_labels()  # 417x1
     train_index, test_index = get_train_and_test_index_from_files(
         path_to_cv_folder)
+
     Y_train = patients_labels[train_index]
     Y_test = patients_labels[test_index]
 
     return Y_train, Y_test
+
+
+def generate_and_store_train_and_test_index(stack, cv_rate, path_to_cv):
+    """This functions stores the index to the stack images.
+    This approaches allows us to point with the indes, avoiding store all
+    the data again.
+    """
+    train_index = numpy.random.choice(range(stack.shape[0]),
+                                   int(cv_rate * stack.shape[0]), replace=False)
+    train_index.sort()
+    test_index = [index for index in range(0, stack.shape[0], 1) if
+                  index not in train_index]
+
+    numpy.savetxt(os.path.join(path_to_cv, "train_index_to_stack.csv"),
+                  train_index, delimiter=',')
+    numpy.savetxt(os.path.join(path_to_cv, "test_index_to_stack.csv"),
+                  test_index, delimiter=',')
+
+    return train_index, test_index

@@ -7,7 +7,7 @@ import settings
 from lib.vae import VAE
 from lib.mri import stack_NORAD
 from sklearn.model_selection import train_test_split
-from lib import region_selector_hub
+
 from lib import utils
 from lib.aux_functionalities import functions
 

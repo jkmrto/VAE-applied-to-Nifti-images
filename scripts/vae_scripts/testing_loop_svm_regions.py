@@ -2,7 +2,7 @@ import tensorflow as tf
 from lib.aux_functionalities.os_aux import create_directories
 import os
 from lib import svm_utils
-from lib import region_selector_hub
+from lib import session_helper
 from lib.mri import mri_atlas
 import settings
 from lib.vae import VAE
@@ -36,7 +36,7 @@ region_voxels_label = dict_norad['labels']
 Y_train = region_voxels_label
 
 # SELECTING REGIONS TO BE EVALUATED
-list_regions = region_selector_hub.select_regions_to_evaluate(regions_used)
+list_regions = session_helper.select_regions_to_evaluate(regions_used)
 
 for region_selected in list_regions:
     region_voxels_index = atlas_mri[region_selected]

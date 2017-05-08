@@ -1,6 +1,0 @@
-learning_rate: 5e-06
-nonlinearity: <function elu at 0x7f3361959b70>
-dropout: 0.9
-lambda_l2_reg: 1e-05
-batch_size: 16
-squashing: <function sigmoid at 0x7f3361af9b70>

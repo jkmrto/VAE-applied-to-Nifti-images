@@ -1,16 +1,16 @@
 import tensorflow as tf
 from lib.aux_functionalities.os_aux import create_directories
-from lib.aux_functionalities.functions import generate_session_descriptor
-from lib import region_selector_hub
+from lib.session_helper import generate_session_descriptor
+from lib import session_helper
 from datetime import datetime
-from lib.aux_functionalities import functions
+from lib.session_helper import plot_grad_desc_error_per_region
+from lib.cv_utils import generate_and_store_train_and_test_index
 import settings
 import os
 from lib.mri import mri_atlas
 from lib.vae import VAE
 from lib.mri import stack_NORAD
 from lib import utils
-import numpy as np
 
 
 def init_session_folders(architecture):
@@ -41,33 +41,6 @@ def init_session_folders(architecture):
            path_to_grad_desc_error_images, path_to_cv
 
 
-def generate_and_store_train_and_test_index(stack, cv_rate, path_to_cv):
-    train_index = np.random.choice(range(stack.shape[0]),
-                                   int(cv_rate * stack.shape[0]), replace=False)
-    train_index.sort()
-    test_index = [index for index in range(0, stack.shape[0], 1) if
-                  index not in train_index]
-
-    np.savetxt(os.path.join(path_to_cv, "train_index_to_stack.csv"), train_index,
-               delimiter=',')
-    np.savetxt(os.path.join(path_to_cv, "test_index_to_stack.csv"), test_index,
-               delimiter=',')
-
-    return train_index  # only returning train_index because it an unsupervesid learning method
-
-
-def plot_grad_desc_error_per_region(path_to_grad_desc_error, region_selected,
-                                    path_to_grad_desc_error_images):
-    path_to_grad_desc_error_region_log = os.path.join(
-        path_to_grad_desc_error, "region_{}.log".format(region_selected))
-    path_to_grad_desc_error_region_image = os.path.join(
-        path_to_grad_desc_error_images, "region_{}.png".format(region_selected))
-
-    functions.plot_x_y_from_file_with_title(
-        "Region {}".format(region_selected), path_to_grad_desc_error_region_log,
-        path_to_grad_desc_error_region_image)
-
-
 # SESSION CONFIGURATION
 HYPERPARAMS = {
     "batch_size": 16,
@@ -80,7 +53,6 @@ HYPERPARAMS = {
 
 cv_rate = 0.6  # cv_rate training data and (1 - cv_rate) test data
 bool_normalized = True
-max_denormalize = 1
 regions_used = "all"
 max_iter = 1500
 
@@ -101,7 +73,7 @@ train_index = generate_and_store_train_and_test_index(dict_norad['stack'],
 # SESSION DESCRIPTOR CREATION
 session_descriptor_data = {"voxeles normalized": str(bool_normalized),
                            "max_iter": max_iter,
-                           "voxels normalized by": str(max_denormalize),
+                           "voxels normalized by": str(bool_normalized),
                            "architecture:": "input_" + "_".join(
                                str(x) for x in after_input_architecture),
                            "regions used": str(regions_used)}
@@ -110,7 +82,7 @@ generate_session_descriptor(path_session_folder, session_descriptor_data)
 
 
 # LIST REGIONS SELECTION
-list_regions = region_selector_hub.select_regions_to_evaluate(regions_used)
+list_regions = session_helper.select_regions_to_evaluate(regions_used)
 
 # LOOP OVER REGIONS
 for region_selected in list_regions:

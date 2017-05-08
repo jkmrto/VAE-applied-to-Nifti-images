@@ -14,13 +14,6 @@ def evaluation_output(path_to_resume_file, path_to_roc_png,
     [fpr, tpr, thresholds_roc] = metrics.roc_curve(y_test, y_obtained)
     plot_roc_curve(fpr, tpr, path_to_roc_png)
 
-    print("false positive rate")
-    print(fpr)
-    print("true positive rate")
-    print(tpr)
-    print("thresholds")
-    print(thresholds_roc)
-
     if thresholds_establised == None:
         threshold = get_thresholds_from_roc_curve(fpr, tpr, thresholds_roc)
     else:
@@ -28,9 +21,6 @@ def evaluation_output(path_to_resume_file, path_to_roc_png,
 
     scores_labeled = assign_binary_labels_based_on_threshold(
         y_obtained, threshold)
-
-    print(y_test)
-    print(scores_labeled)
 
     accuracy = metrics.accuracy_score(y_test, scores_labeled)
     f1_score = metrics.f1_score(y_test, scores_labeled)

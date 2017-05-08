@@ -23,20 +23,6 @@ def print_dictionary(path_to_file, dictionary):
         file.write("{0}: {1}\n".format(str(key), str(value)))
     file.close()
 
-
-def print_session_description(path_to_file, session_descriptor):
-    file = open(path_to_file, 'w')
-    for key, value in session_descriptor.items():
-        file.write("{0}: {1}\n".format(str(key), str(value)))
-    file.close()
-
-
-def generate_session_descriptor(path_session_folder, session_descriptor_data):
-    path_to_file_session_descriptor = \
-        os.path.join(path_session_folder, "session_descriptor.txt")
-    print_dictionary(path_to_file_session_descriptor, session_descriptor_data)
-
-
 def load_csv_file_iter_to_error(path_to_log):
 
     file = open(path_to_log, 'r')

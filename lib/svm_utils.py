@@ -3,6 +3,7 @@ from sklearn import metrics
 from lib.aux_functionalities import functions
 from matplotlib import pyplot as plt
 import os
+from lib import evaluation_utils as evaluation
 import numpy
 import copy
 
@@ -23,7 +24,7 @@ def fit_svm_and_get_decision_for_requiered_data(X_train, Y_train, X_test,
 
 def per_region_evaluation(score, true_label, per_region_accuracy_file,
                           region_selected):
-    dec_label = functions.assign_binary_labels_based_on_threshold(
+    dec_label = evaluation.assign_binary_labels_based_on_threshold(
         copy.copy(score), 0)
 
     region_accuracy = metrics.accuracy_score(true_label, dec_label)
