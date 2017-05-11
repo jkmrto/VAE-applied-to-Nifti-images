@@ -8,7 +8,9 @@ def evaluation_output(path_to_resume_file, path_to_roc_png,
                       path_to_results_file, y_obtained,  y_test,
                       thresholds_establised=None):
 
-    results = np.concatenate((y_test, y_obtained))
+    print(y_test.shape)
+    print(y_obtained.shape)
+    results = np.concatenate(([y_test], [y_obtained]))
     np.savetxt(path_to_results_file, results, delimiter=',')
 
     [fpr, tpr, thresholds_roc] = metrics.roc_curve(y_test, y_obtained)

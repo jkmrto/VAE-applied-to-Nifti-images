@@ -9,21 +9,8 @@ from lib.aux_functionalities.os_aux import create_directories
 from scripts.vae_with_cv_GM_and_WM import session_settings
 from lib import session_helper as session
 from scripts.vae_with_cv_GM_and_WM import session_settings
+from scripts.vae_with_cv_GM_and_WM import svm_session_settings as svm_session
 from lib.mri import stack_NORAD
-
-folder_combined_wm_and_gm_code_data_as_input_to_svm = \
-    "output_combining_wm_and_gm_code_data_as_input_to_svm"
-
-folder_one_svm_for_gm_and_other_to_wm = \
-    "output_no_combining_gm_wm,_evaluating_separately"
-
-folder_gm_single_output = "gm_output"
-
-folder_wm_single_output = "wm_output"
-
-per_reg_acc = "per_reg_acc.log"
-
-scores = "scores.log"
 
 
 def generate_log_files_for_svm_execution(path_to_storage_folder):
@@ -40,9 +27,9 @@ def generate_log_files_for_svm_execution(path_to_storage_folder):
                                        "scores.log")
 
     path_to_train_per_reg_acc = os.path.join(path_to_train_results_folder,
-                                             per_reg_acc)
+                                             svm_session.per_reg_acc)
     path_to_test_per_reg_acc = os.path.join(path_to_test_results_folder,
-                                            per_reg_acc)
+                                            svm_session.per_reg_acc)
     log_hub = {}
     log_hub['train'] = {}
     log_hub["test"] = {}
@@ -88,19 +75,20 @@ def init_svm_session_folders(path_to_post_encoding_folder, GM_session_id,
     path_svm_session_folder = os.path.join(path_to_post_encoding_folder,
                                            iden_session)
 
-    # Output folders
+    # Output folders (SVM SESSION FOLDERS)
     path_to_combined_output = os.path.join(path_svm_session_folder,
-                                           folder_combined_wm_and_gm_code_data_as_input_to_svm)
+        svm_session.folder_combined_wm_and_gm_code_data_as_input_to_svm)
 
     path_to_separate_output = os.path.join(path_svm_session_folder,
-                                           folder_one_svm_for_gm_and_other_to_wm)
+        svm_session.folder_one_svm_for_gm_and_other_to_wm)
 
     path_to_separate_gm_output = os.path.join(path_to_separate_output,
-                                              folder_gm_single_output)
-    path_to_separata_wm_output = os.path.join(path_to_separate_output,
-                                              folder_wm_single_output)
+        svm_session.folder_gm_single_output)
 
-    # Path towards the data to be loaded
+    path_to_separata_wm_output = os.path.join(path_to_separate_output,
+        svm_session.folder_wm_single_output)
+
+    # Path towards the data to be loaded (AUTOENCODER SESSION FOLDERS)
     path_GM_session_encoding = os.path.join(session_settings.path_GM_folder,
                                             GM_session_id,
                                             session.folder_encoding_out)

@@ -1,7 +1,5 @@
 import os
 import settings
-import numpy as np
-from lib.mri.stack_NORAD import load_patients_labels
 from sklearn import metrics
 import matplotlib.pyplot as plt
 from sklearn.metrics import roc_curve
