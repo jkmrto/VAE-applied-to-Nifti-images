@@ -5,20 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a70bc70e-9f0d-404b-b0fa-698d01cb0e18" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vae_with_kfolds/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vae_with_kfolds/main.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vae_with_kfolds/session_settings.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vae_with_kfolds/vae_over_regions_kfolds.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/cv_utils.py" afterPath="$PROJECT_DIR$/lib/cv_utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/delete_pre_final_meta_data.py" afterPath="$PROJECT_DIR$/lib/delete_pre_final_meta_data.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/evaluation_utils.py" afterPath="$PROJECT_DIR$/lib/evaluation_utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/session_helper.py" afterPath="$PROJECT_DIR$/lib/session_helper.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/utils.py" afterPath="$PROJECT_DIR$/lib/utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/decision_neural_net_test_and_train.py" afterPath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/decision_neural_net_test_and_train.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/main.py" afterPath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/session_settings.py" afterPath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/session_settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/vae_over_regions.py" afterPath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/vae_over_regions.py" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -85,8 +73,8 @@
                 <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
                   <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/main.py">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="627">
-                        <caret line="130" column="44" lean-forward="false" selection-start-line="130" selection-start-column="44" selection-end-line="130" selection-end-column="44" />
+                      <state relative-caret-position="555">
+                        <caret line="80" column="50" lean-forward="true" selection-start-line="80" selection-start-column="50" selection-end-line="80" selection-end-column="50" />
                         <folding>
                           <element signature="e#0#23#0" expanded="true" />
                         </folding>
@@ -154,14 +142,24 @@
             </split-first>
             <split-second>
               <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-                <file leaf-file-name="vae_over_regions_kfolds.py" pinned="false" current-in-tab="true">
+                <file leaf-file-name="vae_over_regions_kfolds.py" pinned="false" current-in-tab="false">
                   <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/vae_over_regions_kfolds.py">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="17">
-                        <caret line="110" column="47" lean-forward="false" selection-start-line="110" selection-start-column="47" selection-end-line="110" selection-end-column="47" />
+                      <state relative-caret-position="300">
+                        <caret line="142" column="25" lean-forward="false" selection-start-line="142" selection-start-column="16" selection-end-line="142" selection-end-column="25" />
                         <folding>
                           <element signature="e#0#9#0" expanded="true" />
                         </folding>
+                      </state>
+                    </provider>
+                  </entry>
+                </file>
+                <file leaf-file-name="VAE.py" pinned="false" current-in-tab="true">
+                  <entry file="file://$PROJECT_DIR$/lib/vae/VAE.py">
+                    <provider selected="true" editor-type-id="text-editor">
+                      <state relative-caret-position="-210">
+                        <caret line="183" column="43" lean-forward="false" selection-start-line="183" selection-start-column="34" selection-end-line="183" selection-end-column="43" />
+                        <folding />
                       </state>
                     </provider>
                   </entry>
@@ -210,7 +208,7 @@
     <favorites_list name="VAE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5649795">
+    <splitter split-orientation="horizontal" split-proportion="0.504788">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="majority_vote.py" pinned="false" current-in-tab="false">
@@ -226,8 +224,8 @@
           <file leaf-file-name="session_settings.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/session_settings.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="153">
-                  <caret line="11" column="26" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="26" />
+                <state relative-caret-position="374">
+                  <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -279,7 +277,7 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="session_settings.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="session_settings.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/session_settings.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="374">
@@ -287,6 +285,16 @@
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/.gitignore">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="34">
+                  <caret line="2" column="8" lean-forward="true" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="8" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -332,6 +340,7 @@
       <find>__old</find>
       <find>select_regions</find>
       <find>session</find>
+      <find>save_meta_bool</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -349,7 +358,6 @@
         <option value="$PROJECT_DIR$/scripts/train_vae_loop_nets_with_cv.py" />
         <option value="$PROJECT_DIR$/region_selector_hub.py" />
         <option value="$PROJECT_DIR$/out/04_05_2017_19:05 arch: 1000_800_500_100/post_train/svm/per_region_accuracy.log" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/scripts/svm_score_aux_functions.py" />
         <option value="$PROJECT_DIR$/lib/svm_hub.py" />
         <option value="$PROJECT_DIR$/settings.py" />
@@ -391,6 +399,7 @@
         <option value="$PROJECT_DIR$/scripts/vae_with_kfolds/svm_over_encoding.py" />
         <option value="$PROJECT_DIR$/lib/evaluation_utils.py" />
         <option value="$PROJECT_DIR$/scripts/vae_with_kfolds/main.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -423,102 +432,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="VAN-applied-to-Nifti-images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vae_with_kfolds" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vae_with_cv_GM_and_WM" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="out" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="out" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Full session: GM + WM with k folds" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -858,7 +771,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_08_05_2017_23:42/post_train/test_out/resume.txt" />
     <entry file="file://$PROJECT_DIR$/scripts/vae_scripts/majority_vote.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="348">
@@ -982,13 +894,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/vae/VAE.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="238" column="20" lean-forward="false" selection-start-line="238" selection-start-column="19" selection-end-line="238" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/svm_over_encoding.py" />
     <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/sklearn/utils/validation.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -1016,29 +921,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/session_settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="11" column="26" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/evaluation_utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="663">
           <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="627">
-          <caret line="130" column="44" lean-forward="false" selection-start-line="130" selection-start-column="44" selection-end-line="130" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1088,16 +975,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/vae_over_regions_kfolds.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="110" column="47" lean-forward="false" selection-start-line="110" selection-start-column="47" selection-end-line="110" selection-end-column="47" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/cv_utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1343">
@@ -1121,6 +998,50 @@
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="8" lean-forward="true" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="80" column="50" lean-forward="true" selection-start-line="80" selection-start-column="50" selection-end-line="80" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/vae_over_regions_kfolds.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="142" column="25" lean-forward="false" selection-start-line="142" selection-start-column="16" selection-end-line="142" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/vae/VAE.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-210">
+          <caret line="183" column="43" lean-forward="false" selection-start-line="183" selection-start-column="34" selection-end-line="183" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/session_settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
