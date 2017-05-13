@@ -31,10 +31,8 @@ bool_test = False
 cv_utils.generate_k_fold(session_settings.path_kfolds_folder,
                          dict_norad_gm['stack'], n_folds)
 
-
-
 # LIST REGIONS SELECTION
-regions_used = "most important"
+regions_used = "three"
 list_regions = session.select_regions_to_evaluate(regions_used)
 
 hyperparams = {
@@ -52,7 +50,7 @@ after_input_architecture = [1000, 500, 100]
 # SESSION CONFIGURATION
 session_conf = {
     "bool_normalized": True,
-    "max_iter": 300,
+    "max_iter": 100,
     "save_meta_bool": False,
 }
 

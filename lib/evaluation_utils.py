@@ -41,6 +41,8 @@ def evaluation_output(path_to_resume_file, path_to_roc_png,
 def simple_evaluation_output(y_obtained, y_test,
                              thresholds_establised=None):
 
+    y_obtained = np.row_stack(y_obtained)
+    y_test = np.row_stack(y_test)
 
     [fpr, tpr, thresholds_roc] = metrics.roc_curve(y_test, y_obtained)
 
@@ -51,6 +53,9 @@ def simple_evaluation_output(y_obtained, y_test,
 
     scores_labeled = assign_binary_labels_based_on_threshold(
         y_obtained, threshold)
+    scores_labeled = np.row_stack(scores_labeled)
+
+    print(np.hstack((y_obtained, y_test, scores_labeled)))
 
     accuracy = metrics.accuracy_score(y_test, scores_labeled)
     f1_score = metrics.f1_score(y_test, scores_labeled)
