@@ -129,8 +129,8 @@ for k_fold_index in range(1, n_folds, 1):
         test_score_matriz[:, i] = test_score
         print(train_score.shape)
         print(Y_train.shape)
-        test_train_score = np.vstack((np.column_stack(train_score), np.column_stack(Y_train)))
-        test_test_score = np.vstack((np.column_stack(test_score), np.column_stack(Y_test)))
+        test_train_score = np.hstack((np.row_stack(train_score), np.row_stack(Y_train)))
+        test_test_score = np.hstack((np.row_stack(test_score), np.row_stack(Y_test)))
         print(test_train_score)
         print(test_test_score)
 
@@ -142,6 +142,14 @@ for k_fold_index in range(1, n_folds, 1):
 
     means_train = np.row_stack(train_score_matriz.mean(axis=1))
     means_test = np.row_stack(test_score_matriz.mean(axis=1))
+
+    print("TEST OVER FINAL RESULTS")
+    test_train_score = np.hstack(
+        (np.row_stack(means_train), np.row_stack(Y_train)))
+    test_test_score = np.hstack(
+        (np.row_stack(means_test), np.row_stack(Y_test)))
+    print(test_train_score)
+    print(test_test_score)
 
     threshold, output_dic_train = simple_evaluation_output(means_train, Y_train)
     threshold, output_dic_test = simple_evaluation_output(means_test, Y_test, threshold)
@@ -155,7 +163,7 @@ for k_fold_index in range(1, n_folds, 1):
     k_folds_results_train.append(output_dic_train)
     k_folds_results_test.append(output_dic_test)
 
-writer = csv.DictWriter(file, delimiter=',')
+writer = csv.DictWriter(file, delimiter=',', fieldnames=list(k_folds_results_test[0].keys()))
 writer.writeheader()
 for row in k_folds_results_test:
     writer.writerow(row)
