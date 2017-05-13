@@ -28,7 +28,7 @@ patient_labels = load_patients_labels()
 
 n_folds = 10
 bool_test = False
-max_iter = 250
+max_iter = 100
 cv_utils.generate_k_fold(session_settings.path_kfolds_folder,
                          dict_norad_gm['stack'], n_folds)
 
@@ -53,6 +53,7 @@ session_conf = {
     "bool_normalized": True,
     "max_iter": max_iter,
     "save_meta_bool": False,
+    "show_error_iter": 10,
 }
 
 k_folds_results_train = []
@@ -163,10 +164,10 @@ for k_fold_index in range(1, n_folds, 1):
                                                   threshold, bool_test=bool_test)
 
     print("Output kfolds nº {} test samples".format(k_fold_index))
-    print(output_dic_test)
+    print("Test: " + str(output_dic_test))
 
     print("Output kfolds nº {} train samples".format(k_fold_index))
-    print(output_dic_train)
+    print("Train: " + str(output_dic_train))
 
     k_folds_results_train.append(output_dic_train)
     k_folds_results_test.append(output_dic_test)
