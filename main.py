@@ -155,8 +155,9 @@ for k_fold_index in range(1, n_folds, 1):
         print(test_train_score)
         print(test_test_score)
 
-    threshold, output_dic_train = simple_evaluation_output(means_train, Y_train)
-    threshold, output_dic_test = simple_evaluation_output(means_test, Y_test, threshold)
+    threshold = 0
+    _, output_dic_train = simple_evaluation_output(means_train, Y_train, threshold )
+    _, output_dic_test = simple_evaluation_output(means_test, Y_test, threshold)
 
     print("Output kfolds nº {} test samples".format(k_fold_index))
     print(output_dic_test)
