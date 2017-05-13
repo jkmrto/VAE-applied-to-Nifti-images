@@ -41,6 +41,8 @@ def evaluation_output(path_to_resume_file, path_to_roc_png,
 def simple_evaluation_output(y_obtained, y_test,
                              thresholds_establised=None):
 
+    print(np.hstack((y_obtained, y_test)))
+
     y_obtained = np.row_stack(y_obtained)
     y_test = np.row_stack(y_test)
 
