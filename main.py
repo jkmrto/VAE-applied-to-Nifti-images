@@ -122,18 +122,20 @@ for k_fold_index in range(1, n_folds, 1):
         print(wm_and_gm_test_data.shape)
         train_score, test_score = svm_utils.fit_svm_and_get_decision_for_requiered_data(
             wm_and_gm_train_data, Y_train, wm_and_gm_test_data)
-        i += 1
+
+        train_score_matriz[:, i] = train_score
+        test_score_matriz[:, i] = test_score
 
         if bool_test:
             print("TEST SVM SCORE REGION {}".format(region_selected))
-            train_score_matriz[:, i] = train_score
-            test_score_matriz[:, i] = test_score
             print(train_score.shape)
             print(Y_train.shape)
             test_train_score = np.hstack((np.row_stack(train_score), np.row_stack(Y_train)))
             test_test_score = np.hstack((np.row_stack(test_score), np.row_stack(Y_test)))
             print(test_train_score)
             print(test_test_score)
+
+        i += 1
 
 
 
