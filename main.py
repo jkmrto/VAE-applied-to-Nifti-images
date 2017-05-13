@@ -27,7 +27,6 @@ dict_norad_wm = stack_NORAD.get_wm_stack()
 patient_labels = load_patients_labels()
 
 n_folds = 10
-cv_rate = 0.8
 cv_utils.generate_k_fold(session_settings.path_kfolds_folder,
                          dict_norad_gm['stack'], n_folds)
 
@@ -47,12 +46,12 @@ hyperparams = {
 }
 
 # Neural net architecture
-after_input_architecture = [1000, 500, 100]
+after_input_architecture = [1000, 800, 500, 100]
 
 # SESSION CONFIGURATION
 session_conf = {
     "bool_normalized": True,
-    "max_iter": 500,
+    "max_iter": 100,
     "save_meta_bool": False,
 }
 
@@ -125,10 +124,13 @@ for k_fold_index in range(1, n_folds, 1):
         train_score, test_score = svm_utils.fit_svm_and_get_decision_for_requiered_data(
             wm_and_gm_train_data, Y_train, wm_and_gm_test_data)
 
+        print("TEST SVM SCORE REGION {}".format(region_selected))
         train_score_matriz[:, i] = train_score
         test_score_matriz[:, i] = test_score
-        print(train_score)
-        print(test_score)
+        test_train_score = np.concatenate((train_score, Y_train), axis=1)
+        test_test_score = np.concatenate((test_score, Y_test), axis=1)
+        print(test_train_score)
+        print(test_test_score)
 
         i += 1
 
@@ -136,8 +138,8 @@ for k_fold_index in range(1, n_folds, 1):
     print(dic_region_to_matriz_pos)
     # majority vote
 
-    means_train = np.row_stack(train_score_matriz.mean(axis=0))
-    means_test = np.row_stack(test_score_matriz.mean(axis=0))
+    means_train = np.row_stack(train_score_matriz.mean(axis=1))
+    means_test = np.row_stack(test_score_matriz.mean(axis=1))
 
     threshold, output_dic_train = simple_evaluation_output(means_train, Y_train)
     threshold, output_dic_test = simple_evaluation_output(means_test, Y_test, threshold)

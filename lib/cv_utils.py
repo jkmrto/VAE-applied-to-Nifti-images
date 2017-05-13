@@ -81,4 +81,7 @@ def get_train_and_test_index_from_k_fold(path_to_kfold_folder, test_fold, n_fold
         else:
             train_index = np.append(train_index, file_loaded).astype(int).tolist()
 
+    train_index.sort()
+    test_index.sort()
+
     return train_index, test_index
