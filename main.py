@@ -27,18 +27,19 @@ dict_norad_wm = stack_NORAD.get_wm_stack()
 patient_labels = load_patients_labels()
 
 n_folds = 10
+bool_test = False
 cv_utils.generate_k_fold(session_settings.path_kfolds_folder,
                          dict_norad_gm['stack'], n_folds)
 
 
 
 # LIST REGIONS SELECTION
-regions_used = "three"
+regions_used = "most important"
 list_regions = session.select_regions_to_evaluate(regions_used)
 
 hyperparams = {
     "batch_size": 16,
-    "learning_rate": 1E-4,
+    "learning_rate": 1E-5,
     "dropout": 0.9,
     "lambda_l2_reg": 1E-5,
     "nonlinearity": tf.nn.elu,
@@ -46,12 +47,12 @@ hyperparams = {
 }
 
 # Neural net architecture
-after_input_architecture = [1000, 800, 500, 100]
+after_input_architecture = [1000, 500, 100]
 
 # SESSION CONFIGURATION
 session_conf = {
     "bool_normalized": True,
-    "max_iter": 100,
+    "max_iter": 300,
     "save_meta_bool": False,
 }
 
@@ -123,18 +124,20 @@ for k_fold_index in range(1, n_folds, 1):
         print(wm_and_gm_test_data.shape)
         train_score, test_score = svm_utils.fit_svm_and_get_decision_for_requiered_data(
             wm_and_gm_train_data, Y_train, wm_and_gm_test_data)
-
-        print("TEST SVM SCORE REGION {}".format(region_selected))
-        train_score_matriz[:, i] = train_score
-        test_score_matriz[:, i] = test_score
-        print(train_score.shape)
-        print(Y_train.shape)
-        test_train_score = np.hstack((np.row_stack(train_score), np.row_stack(Y_train)))
-        test_test_score = np.hstack((np.row_stack(test_score), np.row_stack(Y_test)))
-        print(test_train_score)
-        print(test_test_score)
-
         i += 1
+
+        if bool_test:
+            print("TEST SVM SCORE REGION {}".format(region_selected))
+            train_score_matriz[:, i] = train_score
+            test_score_matriz[:, i] = test_score
+            print(train_score.shape)
+            print(Y_train.shape)
+            test_train_score = np.hstack((np.row_stack(train_score), np.row_stack(Y_train)))
+            test_test_score = np.hstack((np.row_stack(test_score), np.row_stack(Y_test)))
+            print(test_train_score)
+            print(test_test_score)
+
+
 
     print("Diccionario de regions utilizadas")
     print(dic_region_to_matriz_pos)
@@ -143,13 +146,14 @@ for k_fold_index in range(1, n_folds, 1):
     means_train = np.row_stack(train_score_matriz.mean(axis=1))
     means_test = np.row_stack(test_score_matriz.mean(axis=1))
 
-    print("TEST OVER FINAL RESULTS")
-    test_train_score = np.hstack(
-        (np.row_stack(means_train), np.row_stack(Y_train)))
-    test_test_score = np.hstack(
-        (np.row_stack(means_test), np.row_stack(Y_test)))
-    print(test_train_score)
-    print(test_test_score)
+    if bool_test:
+        print("TEST OVER FINAL RESULTS")
+        test_train_score = np.hstack(
+            (np.row_stack(means_train), np.row_stack(Y_train)))
+        test_test_score = np.hstack(
+            (np.row_stack(means_test), np.row_stack(Y_test)))
+        print(test_train_score)
+        print(test_test_score)
 
     threshold, output_dic_train = simple_evaluation_output(means_train, Y_train)
     threshold, output_dic_test = simple_evaluation_output(means_test, Y_test, threshold)
