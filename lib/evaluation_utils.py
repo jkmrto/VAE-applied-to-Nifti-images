@@ -5,11 +5,8 @@ import numpy as np
 
 
 def evaluation_output(path_to_resume_file, path_to_roc_png,
-                      path_to_results_file, y_obtained,  y_test,
+                      path_to_results_file, y_obtained, y_test,
                       thresholds_establised=None):
-
-    print(y_test.shape)
-    print(y_obtained.shape)
     results = np.concatenate(([y_test], [y_obtained]))
     np.savetxt(path_to_results_file, results, delimiter=',')
 
@@ -39,6 +36,36 @@ def evaluation_output(path_to_resume_file, path_to_roc_png,
     print_dictionary(path_to_resume_file, output_dic)
 
     return threshold
+
+
+def simple_evaluation_output(y_obtained, y_test,
+                             thresholds_establised=None):
+
+
+    [fpr, tpr, thresholds_roc] = metrics.roc_curve(y_test, y_obtained)
+
+    if thresholds_establised == None:
+        threshold = get_thresholds_from_roc_curve(fpr, tpr, thresholds_roc)
+    else:
+        threshold = thresholds_establised
+
+    scores_labeled = assign_binary_labels_based_on_threshold(
+        y_obtained, threshold)
+
+    accuracy = metrics.accuracy_score(y_test, scores_labeled)
+    f1_score = metrics.f1_score(y_test, scores_labeled)
+    recall_score = metrics.recall_score(y_test, scores_labeled)
+
+    precision = metrics.average_precision_score(y_test, y_obtained)
+    auc = metrics.roc_auc_score(y_test, y_obtained)
+    output_dic = {"precision": precision,
+                  "area under the curve": auc,
+                  "accuracy": accuracy,
+                  "f1_score": f1_score,
+                  "recall_score": recall_score}
+
+
+    return threshold, output_dic
 
 
 def assign_binary_labels_based_on_threshold(scores, threshold):

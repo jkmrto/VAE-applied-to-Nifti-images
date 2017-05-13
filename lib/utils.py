@@ -22,5 +22,5 @@ def print_(var, name: str, first_n=5, summarize=5):
 
 def normalize_array(array):
     out = array / array.max()
-    return out, array.max
+    return out, array.max()
 

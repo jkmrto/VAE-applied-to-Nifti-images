@@ -85,8 +85,8 @@ def auto_execute():
             path_to_root, path_to_cv_index_folder=path_cv_index_folder)
 
 
-def execute(dict_norad, hyperparams, session_conf, after_input_architecture,
-            path_to_root, path_to_cv_index_folder=None):
+def execute(voxels_values, hyperparams, session_conf, after_input_architecture,
+            path_to_root, list_regions):
     """
 
     :param hyperparams:
@@ -95,24 +95,15 @@ def execute(dict_norad, hyperparams, session_conf, after_input_architecture,
     is going to be generated
     :return:
     """
+
+    per_region_results = {}
+
     region_voxels_index_per_region = mri_atlas.load_atlas_mri()
 
     path_session_folder, path_to_grad_desc_error, \
     path_to_grad_desc_error_images, \
     path_to_encoding_out_test, path_to_encoding_out_train \
         = init_session_folders(after_input_architecture, path_to_root)
-
-    # Cross validation decisions
-    if path_to_cv_index_folder == None:
-        # initialize cv session folder
-        path_to_cv = os.path.join(path_session_folder, session.fodler_cv)
-        create_directories([path_to_cv])
-
-        train_index, test_index = cv_utils.generate_and_store_train_and_test_index(
-            dict_norad['stack'], session_settings['cv_rate'], path_to_cv)
-    else:
-        train_index, test_index = cv_utils.get_train_and_test_index_from_files(
-            path_to_cv_index_folder)
 
     # GEMERATING SESSION DESCRIPTOR
     session_descriptor_data = {"architecture:": "input_" + "_".join(
@@ -121,8 +112,7 @@ def execute(dict_norad, hyperparams, session_conf, after_input_architecture,
     session_descriptor_data.update(session_conf)
     generate_session_descriptor(path_session_folder, session_descriptor_data)
 
-    # LIST REGIONS SELECTION
-    list_regions = session.select_regions_to_evaluate(session_conf["regions_used"])
+
 
     # LOOP OVER REGIONS
     for region_selected in list_regions:
@@ -130,15 +120,16 @@ def execute(dict_norad, hyperparams, session_conf, after_input_architecture,
         voxels_index = region_voxels_index_per_region[region_selected]
 
         # First map and the normalize to the unit the value of the pixels
-        region_voxels_values = dict_norad['stack'][:, voxels_index]
-        region_voxels_values_train = region_voxels_values[train_index, :]
-        region_voxels_values_test = region_voxels_values[test_index, :]
+        # filtering voxels per region
+        region_voxels_values_train = voxels_values['train'][:, voxels_index]
+        region_voxels_values_test = voxels_values['test'][:, voxels_index]
 
         if session_conf['bool_normalized']:
-            region_voxels_values, max_denormalize = \
-                utils.normalize_array(region_voxels_values)
+            region_voxels_values_train, max_denormalize = \
+                utils.normalize_array(region_voxels_values_train)
+            region_voxels_values_test = region_voxels_values_test / max_denormalize
 
-        architecture = [region_voxels_values.shape[1]]
+        architecture = [region_voxels_values_train.shape[1]]
         architecture.extend(after_input_architecture)
 
         tf.reset_default_graph()
@@ -149,8 +140,9 @@ def execute(dict_norad, hyperparams, session_conf, after_input_architecture,
 
         v.train(region_voxels_values_train,
                 max_iter=session_conf["max_iter"],
-                save_bool=save_bool, suffix_files_generated=region_suffix,
-                iter_to_save=500, iters_to_show_error=100)
+                save_bool=session_conf['save_meta_bool'],
+                suffix_files_generated=region_suffix,
+                iter_to_save=500, iters_to_show_error=50)
 
         # Script para pintar
         print("Region {} Trained!".format(region_selected))
@@ -158,7 +150,6 @@ def execute(dict_norad, hyperparams, session_conf, after_input_architecture,
         session.plot_grad_desc_error_per_region(path_to_grad_desc_error,
                                                 region_selected,
                                                 path_to_grad_desc_error_images)
-
 
         # ENCODING PHASE
         # Encoding samples for the next step
@@ -170,9 +161,13 @@ def execute(dict_norad, hyperparams, session_conf, after_input_architecture,
         session.save_encoding_output_per_region(path_to_encoding_out_test,
                                                 test_output, region_selected)
 
+        per_region_results[str(region_selected)] = {}
 
-# np.savetxt("test.mat", matriz, delimiter=",")
-# np.genfromtxt("test.mat", delimiter=",")
+        per_region_results[str(region_selected)]['train_output'] = train_output
+        per_region_results[str(region_selected)]['test_output'] = test_output
+
+    return per_region_results
+
 
 
 #auto_execute()

@@ -5,14 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a70bc70e-9f0d-404b-b0fa-698d01cb0e18" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/majority_vote.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/svm_session_settings.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/hola.png" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vae_with_kfolds/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vae_with_kfolds/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vae_with_kfolds/session_settings.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/vae_with_kfolds/vae_over_regions_kfolds.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/cv_utils.py" afterPath="$PROJECT_DIR$/lib/cv_utils.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/delete_pre_final_meta_data.py" afterPath="$PROJECT_DIR$/lib/delete_pre_final_meta_data.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/evaluation_utils.py" afterPath="$PROJECT_DIR$/lib/evaluation_utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/majority_vote.py" afterPath="$PROJECT_DIR$/scripts/majority_vote.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/session_helper.py" afterPath="$PROJECT_DIR$/lib/session_helper.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/utils.py" afterPath="$PROJECT_DIR$/lib/utils.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/decision_neural_net_test_and_train.py" afterPath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/decision_neural_net_test_and_train.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/svm_over_encoding_data.py" afterPath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/svm_over_encoding_data.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/main.py" afterPath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/session_settings.py" afterPath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/session_settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/vae_over_regions.py" afterPath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/vae_over_regions.py" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,26 +35,14 @@
     <window id="1">
       <content type="file-editors">
         <state>
-          <splitter split-orientation="horizontal" split-proportion="0.49895832">
+          <splitter split-orientation="horizontal" split-proportion="0.46510416">
             <split-first>
               <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
                 <file leaf-file-name="vae_over_regions.py" pinned="false" current-in-tab="false">
                   <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/vae_over_regions.py">
                     <provider selected="true" editor-type-id="text-editor">
                       <state relative-caret-position="1921">
-                        <caret line="124" column="47" lean-forward="false" selection-start-line="124" selection-start-column="47" selection-end-line="124" selection-end-column="47" />
-                        <folding>
-                          <element signature="e#0#9#0" expanded="true" />
-                        </folding>
-                      </state>
-                    </provider>
-                  </entry>
-                </file>
-                <file leaf-file-name="svm_over_encoding_data.py" pinned="false" current-in-tab="false">
-                  <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/svm_over_encoding_data.py">
-                    <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="748">
-                        <caret line="44" column="55" lean-forward="false" selection-start-line="44" selection-start-column="55" selection-end-line="44" selection-end-column="55" />
+                        <caret line="124" column="0" lean-forward="false" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
                         <folding>
                           <element signature="e#0#9#0" expanded="true" />
                         </folding>
@@ -57,10 +51,20 @@
                   </entry>
                 </file>
                 <file leaf-file-name="session_settings.py" pinned="false" current-in-tab="false">
-                  <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/session_settings.py">
+                  <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/session_settings.py">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="255">
-                        <caret line="15" column="14" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="14" />
+                      <state relative-caret-position="153">
+                        <caret line="11" column="26" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="26" />
+                        <folding />
+                      </state>
+                    </provider>
+                  </entry>
+                </file>
+                <file leaf-file-name="svm_over_encoding_data.py" pinned="false" current-in-tab="false">
+                  <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/svm_over_encoding_data.py">
+                    <provider selected="true" editor-type-id="text-editor">
+                      <state relative-caret-position="544">
+                        <caret line="44" column="55" lean-forward="false" selection-start-line="44" selection-start-column="55" selection-end-line="44" selection-end-column="55" />
                         <folding>
                           <element signature="e#0#9#0" expanded="true" />
                         </folding>
@@ -68,11 +72,45 @@
                     </provider>
                   </entry>
                 </file>
-                <file leaf-file-name="decision_neural_net_test_and_train.py" pinned="false" current-in-tab="true">
+                <file leaf-file-name="evaluation_utils.py" pinned="false" current-in-tab="false">
+                  <entry file="file://$PROJECT_DIR$/lib/evaluation_utils.py">
+                    <provider selected="true" editor-type-id="text-editor">
+                      <state relative-caret-position="629">
+                        <caret line="40" column="4" lean-forward="false" selection-start-line="40" selection-start-column="4" selection-end-line="40" selection-end-column="4" />
+                        <folding />
+                      </state>
+                    </provider>
+                  </entry>
+                </file>
+                <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+                  <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/main.py">
+                    <provider selected="true" editor-type-id="text-editor">
+                      <state relative-caret-position="627">
+                        <caret line="130" column="44" lean-forward="false" selection-start-line="130" selection-start-column="44" selection-end-line="130" selection-end-column="44" />
+                        <folding>
+                          <element signature="e#0#23#0" expanded="true" />
+                        </folding>
+                      </state>
+                    </provider>
+                  </entry>
+                </file>
+                <file leaf-file-name="session_settings.py" pinned="false" current-in-tab="false">
+                  <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/session_settings.py">
+                    <provider selected="true" editor-type-id="text-editor">
+                      <state relative-caret-position="187">
+                        <caret line="11" column="28" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="28" />
+                        <folding>
+                          <element signature="e#0#9#0" expanded="true" />
+                        </folding>
+                      </state>
+                    </provider>
+                  </entry>
+                </file>
+                <file leaf-file-name="decision_neural_net_test_and_train.py" pinned="false" current-in-tab="false">
                   <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/decision_neural_net_test_and_train.py">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="593">
-                        <caret line="134" column="0" lean-forward="true" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
+                      <state relative-caret-position="1428">
+                        <caret line="101" column="0" lean-forward="false" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
                         <folding>
                           <element signature="e#0#9#0" expanded="true" />
                         </folding>
@@ -83,8 +121,8 @@
                 <file leaf-file-name="session_helper.py" pinned="false" current-in-tab="false">
                   <entry file="file://$PROJECT_DIR$/lib/session_helper.py">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="493">
-                        <caret line="34" column="4" lean-forward="false" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="4" />
+                      <state relative-caret-position="646">
+                        <caret line="38" column="41" lean-forward="false" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="41" />
                         <folding>
                           <element signature="e#0#9#0" expanded="true" />
                         </folding>
@@ -102,15 +140,57 @@
                     </provider>
                   </entry>
                 </file>
+                <file leaf-file-name="svm_utils.py" pinned="false" current-in-tab="false">
+                  <entry file="file://$PROJECT_DIR$/lib/svm_utils.py">
+                    <provider selected="true" editor-type-id="text-editor">
+                      <state relative-caret-position="629">
+                        <caret line="44" column="55" lean-forward="false" selection-start-line="44" selection-start-column="55" selection-end-line="44" selection-end-column="55" />
+                        <folding />
+                      </state>
+                    </provider>
+                  </entry>
+                </file>
               </leaf>
             </split-first>
             <split-second>
               <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-                <file leaf-file-name="svm_over_encoding_data.py" pinned="false" current-in-tab="true">
+                <file leaf-file-name="vae_over_regions_kfolds.py" pinned="false" current-in-tab="true">
+                  <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/vae_over_regions_kfolds.py">
+                    <provider selected="true" editor-type-id="text-editor">
+                      <state relative-caret-position="17">
+                        <caret line="110" column="47" lean-forward="false" selection-start-line="110" selection-start-column="47" selection-end-line="110" selection-end-column="47" />
+                        <folding>
+                          <element signature="e#0#9#0" expanded="true" />
+                        </folding>
+                      </state>
+                    </provider>
+                  </entry>
+                </file>
+                <file leaf-file-name="cv_utils.py" pinned="false" current-in-tab="false">
+                  <entry file="file://$PROJECT_DIR$/lib/cv_utils.py">
+                    <provider selected="true" editor-type-id="text-editor">
+                      <state relative-caret-position="1394">
+                        <caret line="84" column="0" lean-forward="false" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+                        <folding />
+                      </state>
+                    </provider>
+                  </entry>
+                </file>
+                <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
+                  <entry file="file://$PROJECT_DIR$/lib/utils.py">
+                    <provider selected="true" editor-type-id="text-editor">
+                      <state relative-caret-position="374">
+                        <caret line="24" column="27" lean-forward="false" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="27" />
+                        <folding />
+                      </state>
+                    </provider>
+                  </entry>
+                </file>
+                <file leaf-file-name="svm_over_encoding_data.py" pinned="false" current-in-tab="false">
                   <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/svm_over_encoding_data.py">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="425">
-                        <caret line="37" column="62" lean-forward="false" selection-start-line="37" selection-start-column="62" selection-end-line="37" selection-end-column="62" />
+                      <state relative-caret-position="799">
+                        <caret line="47" column="53" lean-forward="false" selection-start-line="47" selection-start-column="53" selection-end-line="47" selection-end-column="53" />
                         <folding>
                           <element signature="e#0#9#0" expanded="true" />
                         </folding>
@@ -130,81 +210,57 @@
     <favorites_list name="VAE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.45971563">
+    <splitter split-orientation="horizontal" split-proportion="0.5649795">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="curva_roc.png" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_16:37/post_train/test_out/curva_roc.png">
-              <provider selected="true" editor-type-id="images">
-                <state />
+          <file leaf-file-name="majority_vote.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/majority_vote.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="153">
+                  <caret line="9" column="39" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+                  <folding />
+                </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="majority_vote.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/scripts/majority_vote.py">
+          <file leaf-file-name="session_settings.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/session_settings.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="348">
-                  <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="25" />
+                <state relative-caret-position="153">
+                  <caret line="11" column="26" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="26" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="evaluation_utils.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/lib/evaluation_utils.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="663">
+                  <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="validation.py" pinned="false" current-in-tab="false">
+            <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/sklearn/utils/validation.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="8738">
+                  <caret line="525" column="0" lean-forward="false" selection-start-line="525" selection-start-column="0" selection-end-line="525" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="session_helper.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/lib/session_helper.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="680">
+                  <caret line="45" column="25" lean-forward="false" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="25" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                   </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="results.txt" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_16:37/post_train/test_out/results.txt">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="resume.txt" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_16:37/post_train/test_out/resume.txt">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="resume.txt" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_16:37/post_train/train_out/resume.txt">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="curva_roc.png" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_16:37/post_train/train_out/curva_roc.png">
-              <provider selected="true" editor-type-id="images">
-                <state />
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="decision_neural_net_test_and_train.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv/decision_neural_net_test_and_train.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1071">
-                  <caret line="76" column="38" lean-forward="false" selection-start-line="76" selection-start-column="38" selection-end-line="76" selection-end-column="38" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="svm_session_settings.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/svm_session_settings.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="238">
-                  <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="21" />
-                  <folding />
                 </state>
               </provider>
             </entry>
@@ -213,12 +269,24 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="evaluation_utils.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/lib/evaluation_utils.py">
+          <file leaf-file-name="cv_utils.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/lib/cv_utils.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="85">
-                  <caret line="11" column="26" lean-forward="false" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+                <state relative-caret-position="1343">
+                  <caret line="81" column="82" lean-forward="false" selection-start-line="81" selection-start-column="82" selection-end-line="81" selection-end-column="82" />
                   <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="session_settings.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/session_settings.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="374">
+                  <caret line="22" column="62" lean-forward="false" selection-start-line="22" selection-start-column="62" selection-end-line="22" selection-end-column="62" />
+                  <folding>
+                    <element signature="e#0#9#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -272,12 +340,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/lib/mri/mri_atlas.py" />
-        <option value="$PROJECT_DIR$/scripts/test.py" />
-        <option value="$PROJECT_DIR$/scripts/encoding_over_trained_net.py" />
-        <option value="$PROJECT_DIR$/scripts/plot_over_encoding.py" />
-        <option value="$PROJECT_DIR$/scripts/plot_over_output_2dim.py" />
-        <option value="$PROJECT_DIR$/out/02_05_2017_21:09 arch: 1000_800_500_100_2/post_train/test_without_pre_records/per_region_accuracy.log" />
         <option value="$PROJECT_DIR$/scripts/delete_pre_final_meta_data.py" />
         <option value="$PROJECT_DIR$/lib/vae/VAE.py" />
         <option value="$PROJECT_DIR$/scripts/vae_scripts/train_regions_loop.py" />
@@ -294,7 +356,6 @@
         <option value="$PROJECT_DIR$/scripts/decision_neural_net_scripts/train_over_decision_neural_net.py" />
         <option value="$PROJECT_DIR$/scripts/vae_with_cv/Decision_net_train.py" />
         <option value="$PROJECT_DIR$/lib/cv_hub.py" />
-        <option value="$PROJECT_DIR$/lib/delete_pre_final_meta_data.py" />
         <option value="$PROJECT_DIR$/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_06-10:05/logs/train_error.log" />
         <option value="$PROJECT_DIR$/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_06-10:05/logs/test_error.log" />
         <option value="$PROJECT_DIR$/lib/neural_net/decision_neural_net.py" />
@@ -311,18 +372,25 @@
         <option value="$PROJECT_DIR$/scripts/vae_with_cv/decision_neural_net_test_and_train.py" />
         <option value="$PROJECT_DIR$/scripts/vae_with_cv/train_vae_loop_nets_with_cv.py" />
         <option value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/folder_settings.py" />
-        <option value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/session_settings.py" />
-        <option value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/main.py" />
-        <option value="$PROJECT_DIR$/lib/session_helper.py" />
-        <option value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/vae_over_regions.py" />
-        <option value="$PROJECT_DIR$/lib/cv_utils.py" />
         <option value="$PROJECT_DIR$/lib/svm_utils.py" />
-        <option value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/svm_over_encoding_data.py" />
         <option value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/svm_session_settings.py" />
-        <option value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/decision_neural_net_test_and_train.py" />
         <option value="$PROJECT_DIR$/scripts/majority_vote.py" />
-        <option value="$PROJECT_DIR$/lib/evaluation_utils.py" />
         <option value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/majority_vote.py" />
+        <option value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/decision_neural_net_test_and_train.py" />
+        <option value="$PROJECT_DIR$/lib/delete_pre_final_meta_data.py" />
+        <option value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/session_settings.py" />
+        <option value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/vae_over_regions.py" />
+        <option value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/vae_over_regions_kfolds.py" />
+        <option value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/main.py" />
+        <option value="$PROJECT_DIR$/scripts/vae_with_kfolds/session_settings.py" />
+        <option value="$PROJECT_DIR$/lib/utils.py" />
+        <option value="$PROJECT_DIR$/lib/session_helper.py" />
+        <option value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/svm_over_encoding_data.py" />
+        <option value="$PROJECT_DIR$/scripts/vae_with_kfolds/vae_over_regions_kfolds.py" />
+        <option value="$PROJECT_DIR$/lib/cv_utils.py" />
+        <option value="$PROJECT_DIR$/scripts/vae_with_kfolds/svm_over_encoding.py" />
+        <option value="$PROJECT_DIR$/lib/evaluation_utils.py" />
+        <option value="$PROJECT_DIR$/scripts/vae_with_kfolds/main.py" />
       </list>
     </option>
   </component>
@@ -386,7 +454,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="vae_with_cv_GM_and_WM" />
+              <option name="myItemId" value="vae_with_kfolds" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -404,7 +472,21 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="vae_with_cv" />
+              <option name="myItemId" value="vae_with_cv_GM_and_WM" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="out" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -422,21 +504,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="bueno_05_05_2017_08:19 arch: 1000_800_500_100" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="out" />
+              <option name="myItemId" value="Full session: GM + WM with k folds" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -456,8 +524,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -467,69 +535,19 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/scripts/vae_with_kfolds" />
       <recent name="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM" />
       <recent name="$PROJECT_DIR$/data" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/scripts/vae_with_kfolds" />
+      <recent name="$PROJECT_DIR$/scripts/vae_scripts" />
       <recent name="$PROJECT_DIR$/scripts/plot_scripts" />
       <recent name="$PROJECT_DIR$/lib/neural_net" />
       <recent name="$PROJECT_DIR$/lib" />
-      <recent name="$PROJECT_DIR$/scripts/vae_with_cv" />
-      <recent name="$PROJECT_DIR$/scripts" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.decision_neural_net_test_and_train (1)">
-    <configuration default="false" name="vae_over_regions" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="VAE" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/vae_over_regions.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="svm_over_encoding_data" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="VAE" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/svm_over_encoding_data.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="svm_utils" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/lib" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="VAE" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lib/svm_utils.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python.main (1)">
     <configuration default="false" name="decision_neural_net_test_and_train (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -547,7 +565,41 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="majority_vote" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="delete_pre_final_meta_data" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/lib" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="VAE" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lib/delete_pre_final_meta_data.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="cv_utils" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/lib" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="VAE" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lib/cv_utils.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -559,7 +611,24 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="VAE" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/majority_vote.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts/vae_with_kfolds" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="VAE" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/vae_with_kfolds/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -702,19 +771,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.vae_over_regions" />
-      <item index="1" class="java.lang.String" itemvalue="Python.svm_over_encoding_data" />
-      <item index="2" class="java.lang.String" itemvalue="Python.svm_utils" />
-      <item index="3" class="java.lang.String" itemvalue="Python.decision_neural_net_test_and_train (1)" />
-      <item index="4" class="java.lang.String" itemvalue="Python.majority_vote" />
+      <item index="0" class="java.lang.String" itemvalue="Python.decision_neural_net_test_and_train (1)" />
+      <item index="1" class="java.lang.String" itemvalue="Python.delete_pre_final_meta_data" />
+      <item index="2" class="java.lang.String" itemvalue="Python.cv_utils" />
+      <item index="3" class="java.lang.String" itemvalue="Python.main" />
+      <item index="4" class="java.lang.String" itemvalue="Python.main (1)" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.decision_neural_net_test_and_train (1)" />
-        <item index="1" class="java.lang.String" itemvalue="Python.majority_vote" />
-        <item index="2" class="java.lang.String" itemvalue="Python.svm_over_encoding_data" />
-        <item index="3" class="java.lang.String" itemvalue="Python.svm_utils" />
-        <item index="4" class="java.lang.String" itemvalue="Python.vae_over_regions" />
+        <item index="0" class="java.lang.String" itemvalue="Python.main (1)" />
+        <item index="1" class="java.lang.String" itemvalue="Python.main" />
+        <item index="2" class="java.lang.String" itemvalue="Python.cv_utils" />
+        <item index="3" class="java.lang.String" itemvalue="Python.delete_pre_final_meta_data" />
+        <item index="4" class="java.lang.String" itemvalue="Python.decision_neural_net_test_and_train (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -751,29 +820,29 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="0" width="1920" height="1080" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22890295" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Debug Logs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32821077" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34906697" sideWeight="0.5021097" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.50852877" sideWeight="0.4978903" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30916846" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32821077" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3315565" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2078059" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29637527" sideWeight="0.4978903" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32821077" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3315565" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32964134" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39872068" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30916846" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32896176" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26439232" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39872068" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="UnknownFeatures">
@@ -789,176 +858,214 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/svm_08_05_2017_19:46/output_combining_wm_and_gm_code_data_as_input_to_svm/test_out/scores.log" />
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/svm_08_05_2017_19:46/output_combining_wm_and_gm_code_data_as_input_to_svm/train_out/scores.log" />
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/svm_08_05_2017_19:53/output_combining_wm_and_gm_code_data_as_input_to_svm/test_out/per_reg_acc.log" />
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_08_05_2017_23:42/post_train/test_out/resume.txt" />
+    <entry file="file://$PROJECT_DIR$/scripts/vae_scripts/majority_vote.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/majority_vote_11_05_2017_18:46/test_out/resume.txt" />
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/majority_vote_11_05_2017_18:46/test_out/results.txt" />
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/majority_vote_11_05_2017_18:46/train_out/curva_roc.png" />
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/majority_vote_11_05_2017_18:46/test_out/curva_roc.png" />
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_18:51/post_train/test_out/curva_roc.png" />
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_18:51/post_train/test_out/results.txt" />
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_18:51/post_train/test_out/resume.txt" />
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_18:52/post_train/test_out/curva_roc.png" />
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_18:52/post_train/test_out/results.txt" />
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_16:37/post_train/test_out/curva_roc.png" />
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_16:37/post_train/test_out/results.txt" />
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_16:37/post_train/test_out/resume.txt" />
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_16:37/post_train/train_out/resume.txt" />
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_16:37/post_train/train_out/curva_roc.png" />
+    <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv/decision_neural_net_test_and_train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="76" column="38" lean-forward="false" selection-start-line="76" selection-start-column="38" selection-end-line="76" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/svm_session_settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_18:52/post_train/test_out/resume.txt" />
+    <entry file="file://$PROJECT_DIR$/index_fold_0.csv" />
+    <entry file="file://$PROJECT_DIR$/index_fold_8.csv" />
+    <entry file="file://$PROJECT_DIR$/lib/delete_pre_final_meta_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="888">
+          <caret line="60" column="61" lean-forward="false" selection-start-line="60" selection-start-column="61" selection-end-line="60" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with k folds/cv/index_fold_6.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with k folds/cv/index_fold_0.csv" />
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with k folds/cv/index_fold_2.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with k folds/cv/index_fold_1.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with k folds/cv/index_fold_4.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with k folds/cv/index_fold_5.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with k folds/cv/index_fold_7.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with k folds/cv/index_fold_8.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with k folds/cv/index_fold_9.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with k folds/cv/index_fold_10.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with k folds/cv/index_fold_3.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="32" column="15" lean-forward="false" selection-start-line="32" selection-start-column="15" selection-end-line="32" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/vae/VAE.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="705">
+          <caret line="238" column="20" lean-forward="false" selection-start-line="238" selection-start-column="19" selection-end-line="238" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/svm_over_encoding.py" />
+    <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/sklearn/utils/validation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8738">
+          <caret line="525" column="0" lean-forward="false" selection-start-line="525" selection-start-column="0" selection-end-line="525" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/majority_vote.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="39" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/vae_over_regions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1921">
-          <caret line="124" column="47" lean-forward="false" selection-start-line="124" selection-start-column="47" selection-end-line="124" selection-end-column="47" />
+          <caret line="124" column="0" lean-forward="false" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/out/02_05_2017_21:09 arch: 1000_800_500_100_2/post_train/test_svm_important/patient_score_per_region.log">
+    <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/session_settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="153">
+          <caret line="11" column="26" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/out/02_05_2017_21:09 arch: 1000_800_500_100_2/post_train/test_svm_importan/patient_score_per_region.log">
+    <entry file="file://$PROJECT_DIR$/lib/evaluation_utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="663">
+          <caret line="42" column="0" lean-forward="false" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/out/04_05_2017_19:05 arch: 1000_800_500_100/post_train/svm/test_out/per_reg_acc.log" />
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/svm_08_05_2017_19:53/output_combining_wm_and_gm_code_data_as_input_to_svm/train_out/per_reg_acc.log" />
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/svm_08_05_2017_19:53/output_no_combining_gm_wm,_evaluating_separately/gm_output/train_out/per_reg_acc.log" />
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/svm_08_05_2017_19:53/output_no_combining_gm_wm,_evaluating_separately/gm_output/test_out/per_reg_acc.log" />
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/svm_08_05_2017_19:53/output_no_combining_gm_wm,_evaluating_separately/wm_output/train_out/per_reg_acc.log" />
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/output_combining_wm_and_gm_code_data_as_input_to_svm/test_out/per_reg_acc.log">
+    <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="62" column="28" lean-forward="false" selection-start-line="62" selection-start-column="12" selection-end-line="62" selection-end-column="28" />
+        <state relative-caret-position="627">
+          <caret line="130" column="44" lean-forward="false" selection-start-line="130" selection-start-column="44" selection-end-line="130" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/out/02_05_2017_21:09 arch: 1000_800_500_100_2/post_train/test_without_pre_records/per_region_accuracy.log">
+    <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/session_settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/02_05_2017_21:09 arch: 1000_800_500_100_2/post_train/test_svm_important/patient_labels_per_region.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/svm_08_05_2017_19:53/output_no_combining_gm_wm,_evaluating_separately/wm_output/test_out/per_reg_acc.log" />
-    <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/sklearn/utils/validation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="525" column="0" lean-forward="false" selection-start-line="525" selection-start-column="0" selection-end-line="525" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/cv/test_index_to_stack.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/cv/train_index_to_stack.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/cv_utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="19" column="39" lean-forward="false" selection-start-line="19" selection-start-column="39" selection-end-line="19" selection-end-column="39" />
+        <state relative-caret-position="374">
+          <caret line="22" column="62" lean-forward="false" selection-start-line="22" selection-start-column="62" selection-end-line="22" selection-end-column="62" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.mat">
+    <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/decision_neural_net_test_and_train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv/decision_neural_net_test_and_train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1071">
-          <caret line="76" column="38" lean-forward="false" selection-start-line="76" selection-start-column="38" selection-end-line="76" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/svm_08_05_2017_19:59/output_combining_wm_and_gm_code_data_as_input_to_svm/test_out/scores.log" />
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/svm_08_05_2017_19:59/output_combining_wm_and_gm_code_data_as_input_to_svm/test_out/per_reg_acc.log" />
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/output_combining_wm_and_gm_code_data_as_input_to_svm/train_out/per_reg_acc.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/output_combining_wm_and_gm_code_data_as_input_to_svm/train_out/scores.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/aux_functionalities/os_aux.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_08_05_2017_23:42/post_train/test_out/curva_roc.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_08_05_2017_23:42/post_train/train_out/curva_roc.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_08_05_2017_23:42/post_train/train_out/results.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_08_05_2017_23:42/post_train/train_out/resume.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_08_05_2017_23:42/post_train/test_out/results.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="1428">
+          <caret line="101" column="0" lean-forward="false" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/session_helper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="34" column="4" lean-forward="false" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="4" />
+        <state relative-caret-position="680">
+          <caret line="45" column="25" lean-forward="false" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="25" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -973,134 +1080,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/svm_session_settings.py">
+    <entry file="file://$PROJECT_DIR$/lib/svm_utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="21" />
+        <state relative-caret-position="629">
+          <caret line="44" column="55" lean-forward="false" selection-start-line="44" selection-start-column="55" selection-end-line="44" selection-end-column="55" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_08_05_2017_23:42/post_train/test_out/resume.txt">
+    <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/vae_over_regions_kfolds.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="17">
+          <caret line="110" column="47" lean-forward="false" selection-start-line="110" selection-start-column="47" selection-end-line="110" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/cv_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1343">
+          <caret line="81" column="82" lean-forward="false" selection-start-line="81" selection-start-column="82" selection-end-line="81" selection-end-column="82" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_16:37/post_train/test_out/results.txt">
+    <entry file="file://$PROJECT_DIR$/lib/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="374">
+          <caret line="24" column="27" lean-forward="false" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="27" />
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_16:37/post_train/test_out/resume.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_16:37/post_train/train_out/resume.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_16:37/post_train/train_out/curva_roc.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/svm_over_encoding_data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
+        <state relative-caret-position="544">
           <caret line="44" column="55" lean-forward="false" selection-start-line="44" selection-start-column="55" selection-end-line="44" selection-end-column="55" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/DecisionNeuralNet_11_05_2017_16:37/post_train/test_out/curva_roc.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/session_settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="14" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/majority_vote.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/majority_vote_11_05_2017_18:46/test_out/resume.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/majority_vote_11_05_2017_18:46/test_out/results.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/majority_vote_11_05_2017_18:46/test_out/curva_roc.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with Cross_Validation/post_encoding/bueno_svm_08_05_2017_20:02/post_svm_step/majority_vote_11_05_2017_18:46/train_out/curva_roc.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/majority_vote.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5">
-          <caret line="19" column="21" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/evaluation_utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="11" column="26" lean-forward="false" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/decision_neural_net_test_and_train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="593">
-          <caret line="134" column="0" lean-forward="true" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

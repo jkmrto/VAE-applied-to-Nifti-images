@@ -99,7 +99,7 @@ HYPERPARAMS = {
 
 path_decision_session_folder, path_file_train_score, path_file_test_score, \
 path_to_grad_desc_error_image, path_to_grad_desc_error_log, \
-path_to_train_out, path_to_test_out = \
+ath_to_train_out, path_to_test_out = \
     init_session_folders(svm_session_folder_name)
 
 # LOADING DATA

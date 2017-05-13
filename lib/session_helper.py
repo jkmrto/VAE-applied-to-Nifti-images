@@ -42,6 +42,8 @@ def select_regions_to_evaluate(regions_used):
         list_regions = [1, 2, 3]
     elif regions_used == "68to117":
         list_regions = range(68, 117, 1)
+    elif regions_used == "one":
+        list_regions = [1]
 
     return list_regions
 
