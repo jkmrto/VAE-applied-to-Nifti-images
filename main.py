@@ -127,8 +127,8 @@ for k_fold_index in range(1, n_folds, 1):
         print("TEST SVM SCORE REGION {}".format(region_selected))
         train_score_matriz[:, i] = train_score
         test_score_matriz[:, i] = test_score
-        test_train_score = np.concatenate((train_score, Y_train), axis=1)
-        test_test_score = np.concatenate((test_score, Y_test), axis=1)
+        test_train_score = np.vstack((train_score, Y_train))
+        test_test_score = np.vstack((test_score, Y_test))
         print(test_train_score)
         print(test_test_score)
 
