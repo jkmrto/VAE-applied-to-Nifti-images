@@ -93,14 +93,13 @@ for k_fold_index in range(1, n_folds, 1):
     train_score_matriz = np.zeros((len(train_index), len(list_regions)))
     test_score_matriz = np.zeros((len(test_index), len(list_regions)))
 
-    print("SVM step")
-
     i = 0
     dic_region_to_matriz_pos = {}
 
     for region_selected in list_regions:
         dic_region_to_matriz_pos[str(region_selected)] = i
 
+        print("SVM step")
         print("region {} selected".format(region_selected))
         train_output_wm = vae_output['wm'][str(region_selected)]['train_output']
         test_output_wm = vae_output['wm'][str(region_selected)]['test_output']
@@ -118,9 +117,11 @@ for k_fold_index in range(1, n_folds, 1):
                                               axis=1)
         wm_and_gm_test_data = np.concatenate((test_means_gm, test_means_wm),
                                              axis=1)
+        if bool_test:
+            print("Shape wm+gm train data post encoder")
+            print(wm_and_gm_train_data.shape)
+            print(wm_and_gm_test_data.shape)
 
-        print(wm_and_gm_train_data.shape)
-        print(wm_and_gm_test_data.shape)
         train_score, test_score = svm_utils.fit_svm_and_get_decision_for_requiered_data(
             wm_and_gm_train_data, Y_train, wm_and_gm_test_data)
 
@@ -138,10 +139,9 @@ for k_fold_index in range(1, n_folds, 1):
 
         i += 1
 
-
-
-    print("Diccionario de regions utilizadas")
-    print(dic_region_to_matriz_pos)
+    if bool_test:
+        print("Diccionario de regions utilizadas")
+        print(dic_region_to_matriz_pos)
     # majority vote
 
     means_train = np.row_stack(train_score_matriz.mean(axis=1))
@@ -158,7 +158,7 @@ for k_fold_index in range(1, n_folds, 1):
 
     threshold = 0
     _, output_dic_train = simple_evaluation_output(means_train, Y_train,
-                                                   threshold, bool_test=bool_test )
+                                                   threshold, bool_test=bool_test)
     _, output_dic_test = simple_evaluation_output(means_test, Y_test,
                                                   threshold, bool_test=bool_test)
 

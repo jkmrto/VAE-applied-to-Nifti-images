@@ -38,8 +38,8 @@ def evaluation_output(path_to_resume_file, path_to_roc_png,
     return threshold
 
 
-def simple_evaluation_output(y_obtained, y_test, bool_test=False,
-                             thresholds_establised=None):
+def simple_evaluation_output(y_obtained, y_test,
+                             thresholds_establised=None, bool_test=False):
 
     print(np.hstack((y_obtained, y_test)))
 
