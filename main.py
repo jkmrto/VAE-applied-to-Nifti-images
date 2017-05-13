@@ -46,7 +46,7 @@ hyperparams = {
 }
 
 # Neural net architecture
-after_input_architecture = [1000, 500, 100]
+after_input_architecture = [1000, 800, 500, 100]
 
 # SESSION CONFIGURATION
 session_conf = {
