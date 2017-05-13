@@ -34,7 +34,7 @@ cv_utils.generate_k_fold(session_settings.path_kfolds_folder,
 
 
 # LIST REGIONS SELECTION
-regions_used = "most important"
+regions_used = "three"
 list_regions = session.select_regions_to_evaluate(regions_used)
 
 hyperparams = {
@@ -52,7 +52,7 @@ after_input_architecture = [1000, 500, 100]
 # SESSION CONFIGURATION
 session_conf = {
     "bool_normalized": True,
-    "max_iter": 200,
+    "max_iter": 500,
     "save_meta_bool": False,
 }
 
@@ -120,11 +120,15 @@ for k_fold_index in range(1, n_folds, 1):
         wm_and_gm_test_data = np.concatenate((test_means_gm, test_means_wm),
                                              axis=1)
 
+        print(wm_and_gm_train_data.shape)
+        print(wm_and_gm_test_data.shape)
         train_score, test_score = svm_utils.fit_svm_and_get_decision_for_requiered_data(
             wm_and_gm_train_data, Y_train, wm_and_gm_test_data)
 
         train_score_matriz[:, i] = train_score
         test_score_matriz[:, i] = test_score
+        print(train_score)
+        print(test_score)
 
         i += 1
 
@@ -132,8 +136,8 @@ for k_fold_index in range(1, n_folds, 1):
     print(dic_region_to_matriz_pos)
     # majority vote
 
-    means_train = np.row_stack(train_score_matriz.mean(axis=1))
-    means_test = np.row_stack(test_score_matriz.mean(axis=1))
+    means_train = np.row_stack(train_score_matriz.mean(axis=0))
+    means_test = np.row_stack(test_score_matriz.mean(axis=0))
 
     threshold, output_dic_train = simple_evaluation_output(means_train, Y_train)
     threshold, output_dic_test = simple_evaluation_output(means_test, Y_test, threshold)
