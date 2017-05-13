@@ -27,12 +27,13 @@ dict_norad_wm = stack_NORAD.get_wm_stack()
 patient_labels = load_patients_labels()
 
 n_folds = 10
-bool_test = True
+bool_test = False
+max_iter = 250
 cv_utils.generate_k_fold(session_settings.path_kfolds_folder,
                          dict_norad_gm['stack'], n_folds)
 
 # LIST REGIONS SELECTION
-regions_used = "three"
+regions_used = "most_important"
 list_regions = session.select_regions_to_evaluate(regions_used)
 
 hyperparams = {
@@ -50,7 +51,7 @@ after_input_architecture = [1000, 500, 100]
 # SESSION CONFIGURATION
 session_conf = {
     "bool_normalized": True,
-    "max_iter": 100,
+    "max_iter": max_iter,
     "save_meta_bool": False,
 }
 
@@ -156,8 +157,10 @@ for k_fold_index in range(1, n_folds, 1):
         print(test_test_score)
 
     threshold = 0
-    _, output_dic_train = simple_evaluation_output(means_train, Y_train, threshold )
-    _, output_dic_test = simple_evaluation_output(means_test, Y_test, threshold)
+    _, output_dic_train = simple_evaluation_output(means_train, Y_train,
+                                                   threshold, bool_test=bool_test )
+    _, output_dic_test = simple_evaluation_output(means_test, Y_test,
+                                                  threshold, bool_test=bool_test)
 
     print("Output kfolds nº {} test samples".format(k_fold_index))
     print(output_dic_test)
