@@ -129,8 +129,8 @@ for k_fold_index in range(1, n_folds, 1):
         test_score_matriz[:, i] = test_score
         print(train_score.shape)
         print(Y_train.shape)
-        test_train_score = np.vstack((train_score, Y_train))
-        test_test_score = np.vstack((test_score, Y_test))
+        test_train_score = np.vstack((np.column_stack(train_score), np.column_stack(Y_train)))
+        test_test_score = np.vstack((np.column_stack(test_score), np.column_stack(Y_test)))
         print(test_train_score)
         print(test_test_score)
 
