@@ -147,9 +147,9 @@ def execute(voxels_values, hyperparams, session_conf, after_input_architecture,
         # Script para pintar
         print("Region {} Trained!".format(region_selected))
 
-        session.plot_grad_desc_error_per_region(path_to_grad_desc_error,
-                                                region_selected,
-                                                path_to_grad_desc_error_images)
+  #      session.plot_grad_desc_error_per_region(path_to_grad_desc_error,
+  #                                              region_selected,
+  #                                              path_to_grad_desc_error_images)
 
         # ENCODING PHASE
         # Encoding samples for the next step
