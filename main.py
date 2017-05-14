@@ -28,7 +28,7 @@ patient_labels = load_patients_labels()
 
 n_folds = 10
 bool_test = False
-max_iter = 1000
+max_iter = 500
 cv_utils.generate_k_fold(session_settings.path_kfolds_folder,
                          dict_norad_gm['stack'], n_folds)
 
@@ -46,7 +46,7 @@ hyperparams = {
 }
 
 # Neural net architecture
-after_input_architecture = [1000, 800, 500, 100]
+after_input_architecture = [1000, 500, 100]
 
 # SESSION CONFIGURATION
 session_conf = {
