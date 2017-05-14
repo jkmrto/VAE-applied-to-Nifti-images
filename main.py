@@ -28,7 +28,7 @@ patient_labels = load_patients_labels()
 
 n_folds = 10
 bool_test = False
-max_iter = 500
+max_iter = 100
 cv_utils.generate_k_fold(session_settings.path_kfolds_folder,
                          dict_norad_gm['stack'], n_folds)
 
@@ -39,7 +39,7 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 hyperparams = {
     "batch_size": 16,
     "learning_rate": 1E-5,
-    "dropout": 0.9,
+    "dropout": 1,
     "lambda_l2_reg": 1E-5,
     "nonlinearity": tf.nn.elu,
     "squashing": tf.nn.sigmoid,
