@@ -28,7 +28,7 @@ patient_labels = load_patients_labels()
 
 n_folds = 10
 bool_test = False
-max_iter = 100
+max_iter = 1000
 cv_utils.generate_k_fold(session_settings.path_kfolds_folder,
                          dict_norad_gm['stack'], n_folds)
 
