@@ -2,3 +2,4 @@ out/
 data/
 data.tgz
 credentials.txt
+recollect_kfolds_results.sh

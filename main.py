@@ -35,7 +35,6 @@ simple_majority_vote_k_folds_results_test = []
 decision_net_k_folds_results_train = []
 decision_net_vote_k_folds_results_test = []
 
-
 # OUTPUT: Files initialization
 k_fold_output_file_simple_majority_vote = os.path.join(
     session_settings.path_kfolds_session_folder,
@@ -65,12 +64,11 @@ tar_file_main_output_path_replica = os.path.join(
     session_settings.path_kfolds_session_folder,
     "last_session_main_out.tar.gz".format(session_datetime))
 
-
 list_paths_files_to_store = [k_fold_output_file_simple_majority_vote,
-                          k_fold_output_file_complex_majority_vote,
-                          k_fold_output_file_decision_net,
-                          k_fold_output_resume_path,
-                          k_fold_output_path_session_description]
+                             k_fold_output_file_complex_majority_vote,
+                             k_fold_output_file_decision_net,
+                             k_fold_output_resume_path,
+                             k_fold_output_path_session_description]
 
 # Selecting the GM folder
 path_to_root_GM = session_settings.path_GM_folder
@@ -79,7 +77,6 @@ path_to_root_WM = session_settings.path_WM_folder
 dict_norad_gm = stack_NORAD.get_gm_stack()
 dict_norad_wm = stack_NORAD.get_wm_stack()
 patient_labels = load_patients_labels()
-
 
 # Meta settings.
 n_folds = 10
@@ -102,7 +99,7 @@ hyperparams_vae = {
 # Vae session cofiguration
 vae_session_conf = {
     "bool_normalized": True,
-    "max_iter": 250,
+    "max_iter": 100,
     "save_meta_bool": False,
     "show_error_iter": 10,
 }
@@ -112,6 +109,7 @@ decision_net_session_conf = {
     "decision_net_tries": 10,
     "field_to_select_try": "area under the curve",
     "max_iter": 100,
+    "threshould_prefixed_to_0.5": True,
 }
 
 HYPERPARAMS_decision_net = {
@@ -130,17 +128,19 @@ session_descriptor['meta settings'] = {"n_folds": n_folds,
 session_descriptor['VAE'] = {}
 session_descriptor['Decision net'] = {}
 session_descriptor['VAE']["net configuration"] = hyperparams_vae
-session_descriptor['VAE']["net configuration"]["architecture"] = "input_" + "_".join(
-        str(x) for x in after_input_architecture)
+session_descriptor['VAE']["net configuration"][
+    "architecture"] = "input_" + "_".join(
+    str(x) for x in after_input_architecture)
 session_descriptor['VAE']["session configuration"] = vae_session_conf
-session_descriptor['Decision net']["net configuration"] = HYPERPARAMS_decision_net
+session_descriptor['Decision net'][
+    "net configuration"] = HYPERPARAMS_decision_net
 session_descriptor['Decision net']["net configuration"]['architecture'] = \
     "[nºregions, nºregions/2, 1]"
 session_descriptor['Decision net']['session_conf'] = decision_net_session_conf
 
-
 file_session_descriptor = open(k_fold_output_path_session_description, "w")
-output_utils.print_recursive_dict(session_descriptor, file=file_session_descriptor)
+output_utils.print_recursive_dict(session_descriptor,
+                                  file=file_session_descriptor)
 file_session_descriptor.close()
 
 # Load regions index and create kfolds folder
@@ -297,9 +297,10 @@ for k_fold_index in range(1, n_folds + 1, 1):
     for i in range(1, decision_net_session_conf['decision_net_tries'] + 1, 1):
         print("Neural net try: {}".format(i))
         tf.reset_default_graph()
-        v = DecisionNeuralNet_leaky_relu_3layers_with_sigmoid(architecture=architecture,
-                              hyperparams=HYPERPARAMS_decision_net,
-                              bool_test=bool_test)
+        v = DecisionNeuralNet_leaky_relu_3layers_with_sigmoid(
+            architecture=architecture,
+            hyperparams=HYPERPARAMS_decision_net,
+            bool_test=bool_test)
 
         v.train(train_score_matriz, Y_train,
                 max_iter=decision_net_session_conf['max_iter'],
@@ -310,23 +311,39 @@ for k_fold_index in range(1, n_folds + 1, 1):
         score_train = v.forward_propagation(train_score_matriz)[0]
         score_test = v.forward_propagation(test_score_matriz)[0]
 
-        # Fixing the threeshold in function of the test evaluation
-        threshold, complex_output_dic_train = simple_evaluation_output(
-            score_train,
-            Y_train, bool_test=bool_test)
+        # Fixing the threeshold in function of the test evaluation or
+        # prefixed it to 0.5, the last door of the neural net is a sigmoid
 
-        _, complex_output_dic_test = simple_evaluation_output(
-            score_test, Y_test, thresholds_establised=threshold,
+        if decision_net_session_conf["threshould_prefixed_to_0.5"]:
+
+            threshold, decision_net_dic_train = simple_evaluation_output(
+                score_train,
+                Y_train, thresholds_establised=0.5,
+                bool_test=bool_test)
+        else:
+
+            threshold, decision_net_dic_train = simple_evaluation_output(
+                score_train,
+                Y_train, bool_test=bool_test)
+
+        _, decision_net_dic_test = simple_evaluation_output(
+            score_test, Y_test, thresholds_establised=0.5,
             bool_test=bool_test)
 
-        temp_results_per_try_test.append(complex_output_dic_test)
-        temp_results_per_try_train.append(complex_output_dic_train)
+        temp_results_per_try_test.append(decision_net_dic_test)
+        temp_results_per_try_train.append(decision_net_dic_train)
 
     try_selected_test_dic = sorted(temp_results_per_try_test,
-        key=lambda results:results[decision_net_session_conf['field_to_select_try']], reverse=True)[0]
+                                   key=lambda results: results[
+                                       decision_net_session_conf[
+                                           'field_to_select_try']],
+                                   reverse=True)[0]
 
     try_selected_train_dic = sorted(temp_results_per_try_train,
-        key = lambda results: results[decision_net_session_conf['field_to_select_try']], reverse=True)[0]
+                                    key=lambda results: results[
+                                        decision_net_session_conf[
+                                            'field_to_select_try']],
+                                    reverse=True)[0]
 
     if bool_test:
         print("Results over 10 tries over decision neural net:")
@@ -342,20 +359,22 @@ for k_fold_index in range(1, n_folds + 1, 1):
     decision_net_vote_k_folds_results_test.append(try_selected_test_dic)
 
 output_utils.print_dictionary_with_header(
-        k_fold_output_file_simple_majority_vote,
-        simple_majority_vote_k_folds_results_test)
+    k_fold_output_file_simple_majority_vote,
+    simple_majority_vote_k_folds_results_test)
 
 output_utils.print_dictionary_with_header(
-        k_fold_output_file_complex_majority_vote,
-        complex_majority_vote_k_folds_results_test)
+    k_fold_output_file_complex_majority_vote,
+    complex_majority_vote_k_folds_results_test)
 
 output_utils.print_dictionary_with_header(
     k_fold_output_file_decision_net,
     decision_net_vote_k_folds_results_test)
 
 resume_list_dicts = []
-simple_majority_vote = get_average_over_metrics(simple_majority_vote_k_folds_results_test)
-complex_majority_vote = get_average_over_metrics(complex_majority_vote_k_folds_results_test)
+simple_majority_vote = get_average_over_metrics(
+    simple_majority_vote_k_folds_results_test)
+complex_majority_vote = get_average_over_metrics(
+    complex_majority_vote_k_folds_results_test)
 decision_net = get_average_over_metrics(decision_net_vote_k_folds_results_test)
 
 temp_simple_majority_vote = {"decision step": "Simple majority vote"}
