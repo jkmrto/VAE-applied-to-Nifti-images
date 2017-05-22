@@ -90,8 +90,8 @@ after_input_architecture = [500, 200, 50]
 hyperparams_vae = {
     "batch_size": 16,
     "learning_rate": 1E-5,
-    "dropout": 0.7,
-    "lambda_l2_reg": 1E-5,
+    "dropout": 1,
+    "lambda_l2_reg": 1E-3,
     "nonlinearity": tf.nn.elu,
     "squashing": tf.nn.sigmoid,
 }
