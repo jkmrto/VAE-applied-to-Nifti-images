@@ -23,6 +23,7 @@ def print_dictionary(path_to_file, dictionary):
         file.write("{0}: {1}\n".format(str(key), str(value)))
     file.close()
 
+
 def load_csv_file_iter_to_error(path_to_log):
 
     file = open(path_to_log, 'r')
@@ -53,6 +54,8 @@ def plot_x_y_from_file_with_title(
     plt.title(graph_title)
     plt.savefig(path_where_to_save_png, dpi = 200)
 
-
-
-
+def print_dictionary(path_to_file, dictionary):
+    file = open(path_to_file, 'w')
+    for key, value in dictionary.items():
+        file.write("{0}: {1}\n".format(str(key), str(value)))
+    file.close()

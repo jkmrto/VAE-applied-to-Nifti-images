@@ -2,7 +2,7 @@ from lib.aux_functionalities.functions import print_dictionary
 from sklearn import metrics
 from matplotlib import pyplot as plt
 import numpy as np
-
+import copy
 
 def evaluation_output(path_to_resume_file, path_to_roc_png,
                       path_to_results_file, y_obtained, y_test,
@@ -78,10 +78,12 @@ def simple_evaluation_output(y_obtained, y_test,
 
 
 def assign_binary_labels_based_on_threshold(scores, threshold):
-    scores[scores <= threshold] = 0
-    scores[scores > threshold] = 1
+    aux_scores = copy.deepcopy(scores)
 
-    return scores
+    aux_scores[aux_scores <= threshold] = 0
+    aux_scores[aux_scores > threshold] = 1
+
+    return aux_scores
 
 
 def plot_roc_curve(fpr, tpr, path_to_roc_png):
@@ -99,3 +101,48 @@ def get_thresholds_from_roc_curve(fpr, tpr, thresholds):
     thresholds_optimum = thresholds[pos_optimum]
 
     return thresholds_optimum
+
+
+def simple_majority_vote(train_score_matrix, test_score_matrix, Y_train, Y_test,
+                         bool_test=False):
+    """
+    :param train_score_matriz: type: np.array[] => [patients x nºregions]
+    :param test_score_matriz:
+    :return:
+    """
+
+    threshold = 0
+
+    # simple majority vote
+    train_labels_obatained = assign_binary_labels_based_on_threshold(
+        train_score_matrix, threshold)
+
+    test_labels_obatained = assign_binary_labels_based_on_threshold(
+        test_score_matrix, threshold)
+
+    # Means over each over, this is evalutating the activation per patient
+    means_activation_train = np.row_stack(train_labels_obatained.mean(axis=1))
+    means_activation_test = np.row_stack(test_labels_obatained.mean(axis=1))
+
+
+    threshold = 0
+    _, output_dic_train = simple_evaluation_output(means_activation_train, Y_train,
+                                                   threshold, bool_test=bool_test)
+    _, output_dic_test = simple_evaluation_output(means_activation_test, Y_test,
+                                                  threshold, bool_test=bool_test)
+
+    return output_dic_train, output_dic_test
+
+
+def get_average_over_metrics(list_dicts):
+    """
+
+    :param list_dicts:
+    :return:
+    """
+    out = {}
+
+    for key in list_dicts[0].keys():
+        out[key] = np.array([float(dic[key]) for dic in list_dicts]).mean()
+
+    return out

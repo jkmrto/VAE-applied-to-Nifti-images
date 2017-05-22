@@ -54,8 +54,12 @@ def generate_k_fold(path_to_kfold_folder, stack, n_folds):
     over_samples = index[-n_over_samples:]
 
     samples_per_fold = int(index.shape[0] / n_folds)
-    index_matrix = np.reshape(index[0:-n_over_samples],
+
+    if n_over_samples > 0:
+        index_matrix = np.reshape(index[0:-n_over_samples],
                               (n_folds, samples_per_fold))
+    else:
+        index_matrix = np.reshape(index, (n_folds, samples_per_fold))
 
     for i in range(0, n_folds, 1):
         if i < n_over_samples:

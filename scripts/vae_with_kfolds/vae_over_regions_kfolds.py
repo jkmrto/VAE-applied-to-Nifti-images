@@ -105,15 +105,6 @@ def execute(voxels_values, hyperparams, session_conf, after_input_architecture,
     path_to_encoding_out_test, path_to_encoding_out_train \
         = init_session_folders(after_input_architecture, path_to_root)
 
-    # GEMERATING SESSION DESCRIPTOR
-    session_descriptor_data = {"architecture:": "input_" + "_".join(
-        str(x) for x in after_input_architecture)}
-    session_descriptor_data.update(hyperparams)
-    session_descriptor_data.update(session_conf)
-    generate_session_descriptor(path_session_folder, session_descriptor_data)
-
-
-
     # LOOP OVER REGIONS
     for region_selected in list_regions:
         print("Region Nº {} selected".format(region_selected))

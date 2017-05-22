@@ -13,17 +13,20 @@ RESTORE_KEY = 'key'
 
 class DecisionNeuralNet():
     def __init__(self, architecture=None, hyperparams=None, meta_graph=None,
-                 root_path=""):
+                 root_path="", bool_test=False):
         self.architecture = architecture
         self.hyperparams = hyperparams
         self.session = tf.Session()
         self.root_path = root_path
 
-        print("Hyperparamers indicated: " + str(self.hyperparams))
+        if bool_test:
+            print("Architecture Indicated" + str(architecture))
+            print("Hyperparamers indicated: " + str(self.hyperparams))
 
         if not meta_graph:  # new model
             # assert len(self.architecture) > 1, \
-            self.init_session_folders()
+            if not self.root_path == "":
+                self.init_session_folders()
             handles = self.__build_graph()
             for handle in handles:
                 tf.add_to_collection(RESTORE_KEY, handle)
@@ -110,7 +113,7 @@ class DecisionNeuralNet():
 
         self.save(saver) if save_bool else None
 
-    def train(self, X, Y, max_iter=1000, save_bool=True, iter_to_show_error=100,
+    def train(self, X, Y, max_iter=1000, save_bool=False, iter_to_show_error=100,
               iter_to_save=1000, path_to_grad_error_log_file_name=""):
 
         saver = tf.train.Saver(tf.global_variables()) if save_bool else None

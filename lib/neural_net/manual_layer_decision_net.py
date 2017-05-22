@@ -27,17 +27,19 @@ def wbVars(fan_in: int, fan_out: int):
 
 class DecisionNeuralNet():
     def __init__(self, architecture=None, hyperparams=None, meta_graph=None,
-                 root_path=""):
+                 root_path="", bool_test=False, bool_debug=False):
         self.architecture = architecture
         self.hyperparams = hyperparams
         self.session = tf.Session()
         self.root_path = root_path
 
-        print("Hyperparamers indicated: " + str(self.hyperparams))
+        if bool_test:
+            print("Hyperparamers indicated: " + str(self.hyperparams))
 
         if not meta_graph:  # new model
             # assert len(self.architecture) > 1, \
-            self.init_session_folders()
+            if not self.root_path == "":
+                self.init_session_folders()
             handles = self.__build_graph()
             for handle in handles:
                 tf.add_to_collection(RESTORE_KEY, handle)
@@ -70,10 +72,8 @@ class DecisionNeuralNet():
 
     @staticmethod
     def __build_cost_estimate(x_true, x_obtained):
-        print("build cost estimate")
-        print(x_true.get_shape())
-        print(x_obtained.get_shape())
-        return tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels=x_true, logits=x_obtained))
+        return tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(
+            labels=x_true, logits=x_obtained))
         # return l1_loss(x_true, x_obtained)
 
     def __build_graph(self):
@@ -85,12 +85,11 @@ class DecisionNeuralNet():
 
         w, b = wbVars(self.architecture[0], self.architecture[1])
         layer_1_pre_activation = tf.add(tf.matmul(x_in, w), b)
-        layer_1 = tf.maximum(alpha*layer_1_pre_activation, layer_1_pre_activation)
+        layer_1 = tf.maximum(alpha*layer_1_pre_activation, layer_1_pre_activation) # leaky relu door
 
         w, b = wbVars(self.architecture[1], self.architecture[2])
         y_obtained_pre_activation = tf.add(tf.matmul(layer_1, w), b)
-        y_obtained = tf.maximum(alpha*y_obtained_pre_activation,
-                                y_obtained_pre_activation)
+        y_obtained = tf.nn.sigmoid(y_obtained_pre_activation)
 
         global_step = tf.Variable(0, trainable=False)
 
@@ -128,7 +127,7 @@ class DecisionNeuralNet():
 
         self.save(saver) if save_bool else None
 
-    def train(self, X, Y, max_iter=1000, save_bool=True, iter_to_show_error=100,
+    def train(self, X, Y, max_iter=1000, save_bool=False, iter_to_show_error=100,
               iter_to_save=1000, path_to_grad_error_log_file_name=""):
 
         saver = tf.train.Saver(tf.global_variables()) if save_bool else None
