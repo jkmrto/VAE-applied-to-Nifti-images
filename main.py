@@ -85,13 +85,13 @@ regions_used = "most_important"
 
 # Vae settings
 # Net Configuration
-after_input_architecture = [500, 200, 50]
+after_input_architecture = [1000, 500, 100]
 
 hyperparams_vae = {
-    "batch_size": 16,
+    "batch_size": 32,
     "learning_rate": 1E-5,
     "dropout": 1,
-    "lambda_l2_reg": 1E-10,
+    "lambda_l2_reg": 1E-4,
     "nonlinearity": tf.nn.elu,
     "squashing": tf.nn.sigmoid,
 }

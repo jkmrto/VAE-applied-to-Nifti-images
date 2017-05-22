@@ -5,7 +5,10 @@
     <bookmark url="file://$PROJECT_DIR$/main.py" line="299" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a70bc70e-9f0d-404b-b0fa-698d01cb0e18" name="Default" comment="" />
+    <list default="true" id="a70bc70e-9f0d-404b-b0fa-698d01cb0e18" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+    </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -157,11 +160,11 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/main.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="159">
-                  <caret line="171" column="51" lean-forward="false" selection-start-line="171" selection-start-column="51" selection-end-line="171" selection-end-column="51" />
+                <state relative-caret-position="244">
+                  <caret line="92" column="17" lean-forward="true" selection-start-line="92" selection-start-column="17" selection-end-line="92" selection-end-column="17" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                   </folding>
@@ -169,11 +172,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="vae_over_regions_kfolds.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="vae_over_regions_kfolds.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/vae_over_regions_kfolds.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-492">
-                  <caret line="87" column="4" lean-forward="false" selection-start-line="87" selection-start-column="4" selection-end-line="87" selection-end-column="4" />
+                <state relative-caret-position="987">
+                  <caret line="144" column="24" lean-forward="true" selection-start-line="144" selection-start-column="24" selection-end-line="144" selection-end-column="24" />
                   <folding />
                 </state>
               </provider>
@@ -1164,21 +1167,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/vae_over_regions_kfolds.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="171" column="51" lean-forward="false" selection-start-line="171" selection-start-column="51" selection-end-line="171" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="987">
+          <caret line="144" column="24" lean-forward="true" selection-start-line="144" selection-start-column="24" selection-end-line="144" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/vae_over_regions_kfolds.py">
+    <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-492">
-          <caret line="87" column="4" lean-forward="false" selection-start-line="87" selection-start-column="4" selection-end-line="87" selection-end-column="4" />
-          <folding />
+        <state relative-caret-position="244">
+          <caret line="92" column="17" lean-forward="true" selection-start-line="92" selection-start-column="17" selection-end-line="92" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
