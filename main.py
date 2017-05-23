@@ -85,12 +85,12 @@ regions_used = "most_important"
 
 # Vae settings
 # Net Configuration
-after_input_architecture = [1000, 500, 100]
+after_input_architecture = [1000, 800,  500, 100]
 
 hyperparams_vae = {
     "batch_size": 32,
     "learning_rate": 1E-5,
-    "dropout": 1,
+    "dropout": 0.9,
     "lambda_l2_reg": 1E-4,
     "nonlinearity": tf.nn.elu,
     "squashing": tf.nn.sigmoid,
@@ -99,7 +99,7 @@ hyperparams_vae = {
 # Vae session cofiguration
 vae_session_conf = {
     "bool_normalized": True,
-    "max_iter": 200,
+    "max_iter": 100,
     "save_meta_bool": False,
     "show_error_iter": 10,
 }

@@ -1,0 +1,7 @@
+Por ahora los mejores resultados se han dado para, un VAE de [1000 500 100]
+CON noramlizacion
+con 100 repeticiones en la iteraccion.
+
+Probar con [1000 800 500 100] dejando los parametros, tanto el dropout de 0.9,
+quizas habria que aumentar el valor de la lambda de normalizacion
+
