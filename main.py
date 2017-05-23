@@ -85,7 +85,7 @@ regions_used = "most_important"
 
 # Vae settings
 # Net Configuration
-after_input_architecture = [1000, 800,  500, 100]
+after_input_architecture = [1000, 800,  500, 20]
 
 hyperparams_vae = {
     "batch_size": 32,
