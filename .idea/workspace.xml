@@ -2,7 +2,7 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/lib/neural_net/decision_neural_net.py" line="75" />
-    <bookmark url="file://$PROJECT_DIR$/main.py" line="357" />
+    <bookmark url="file://$PROJECT_DIR$/main.py" line="360" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a70bc70e-9f0d-404b-b0fa-698d01cb0e18" name="Default" comment="">
@@ -24,7 +24,7 @@
     <favorites_list name="VAE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.40643984">
+    <splitter split-orientation="horizontal" split-proportion="0.47144592">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="session_settings.py" pinned="false" current-in-tab="false">
@@ -89,11 +89,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="evaluation_utils.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="evaluation_utils.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/lib/evaluation_utils.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-695">
-                  <caret line="49" column="37" lean-forward="false" selection-start-line="49" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+                <state relative-caret-position="65">
+                  <caret line="105" column="4" lean-forward="false" selection-start-line="105" selection-start-column="4" selection-end-line="105" selection-end-column="4" />
                   <folding>
                     <element signature="e#0#62#0" expanded="true" />
                   </folding>
@@ -101,7 +101,7 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="svm_utils.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="svm_utils.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/lib/svm_utils.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="167">
@@ -142,8 +142,8 @@
           <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/main.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="299">
-                  <caret line="313" column="54" lean-forward="false" selection-start-line="313" selection-start-column="54" selection-end-line="313" selection-end-column="54" />
+                <state relative-caret-position="197">
+                  <caret line="268" column="83" lean-forward="false" selection-start-line="268" selection-start-column="83" selection-end-line="268" selection-end-column="83" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                   </folding>
@@ -1101,16 +1101,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/evaluation_utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-695">
-          <caret line="49" column="37" lean-forward="false" selection-start-line="49" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#62#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/output_utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -1147,10 +1137,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/evaluation_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="65">
+          <caret line="105" column="4" lean-forward="false" selection-start-line="105" selection-start-column="4" selection-end-line="105" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#62#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="313" column="54" lean-forward="false" selection-start-line="313" selection-start-column="54" selection-end-line="313" selection-end-column="54" />
+        <state relative-caret-position="197">
+          <caret line="268" column="83" lean-forward="false" selection-start-line="268" selection-start-column="83" selection-end-line="268" selection-end-column="83" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>

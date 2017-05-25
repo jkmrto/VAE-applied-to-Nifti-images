@@ -264,9 +264,9 @@ for k_fold_index in range(1, n_folds + 1, 1):
     complex_means_train = np.row_stack(train_score_matriz.mean(axis=1))
     complex_means_test = np.row_stack(test_score_matriz.mean(axis=1))
 
-    print("svm matriz score shapes")
-    print("train matriz [regions x patients]: " + str(train_score_matriz))
-    print("test matriz scores [regions x patients]: " + str(test_score_matriz))
+    print("svm matriz score shapes, ")
+    print("train matriz [regions x patients]: " + str(train_score_matriz.shape))
+    print("test matriz scores [regions x patients]: " + str(test_score_matriz.shape))
 
     if bool_test:
         print("TEST OVER FINAL RESULTS")
