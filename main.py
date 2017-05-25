@@ -95,7 +95,7 @@ patient_labels = load_patients_labels()
 # Meta settings.
 n_folds = 10
 bool_test = False
-regions_used = "most_important"
+regions_used = "one"
 
 # Vae settings
 # Net Configuration
