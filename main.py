@@ -99,7 +99,7 @@ regions_used = "three"
 
 # Vae settings
 # Net Configuration
-after_input_architecture = [1000, 800, 500, 20]
+after_input_architecture = [1000, 500, 100]
 
 hyperparams_vae = {
     "batch_size": 32,
@@ -256,9 +256,9 @@ for k_fold_index in range(1, n_folds + 1, 1):
 
     # End loop over regions
 
-    print("matriz svm scores -> shapes, before complex majority vote")
-    print("train matriz [regions x patients]: " + str(train_score_matriz.shape))
-    print("test matriz scores [regions x patients]: " + str(test_score_matriz.shape))
+    print("\nMatriz svm scores -> shapes, before complex majority vote")
+    print("train matriz [patients x region]: " + str(train_score_matriz.shape))
+    print("test matriz scores [patient x region]: " + str(test_score_matriz.shape))
 
     if bool_test:
         print("Diccionario de regions utilizadas")
@@ -296,9 +296,9 @@ for k_fold_index in range(1, n_folds + 1, 1):
     complex_majority_vote_k_folds_results_test.append(complex_output_dic_test)
 
 
-    print("matriz svm scores -> shapes, after complex majority vote")
-    print("train matriz [regions x patients]: " + str(train_score_matriz.shape))
-    print("test matriz scores [regions x patients]: " + str(test_score_matriz.shape))
+    print("\nMatriz svm scores -> shapes, after complex majority vote")
+    print("train matriz [patients x regions]: " + str(train_score_matriz.shape))
+    print("test matriz scores [patients x regions]: " + str(test_score_matriz.shape))
 
     # SIMPLE MAJORITY VOTE
     simple_output_dic_train, simple_output_dic_test = \
@@ -318,15 +318,15 @@ for k_fold_index in range(1, n_folds + 1, 1):
     # The score matriz is in regions per patient, we should transpose it
     # in the svm process
 
-    print("SVM over weithted regions shapes of data")
-    print("train_data" + str(train_score_matriz.transpose().shape))
-    print("test_data " + str(test_score_matriz.transpose().shape))
+    print("SVM over weigthed regions shapes of data")
+    print("train_data" + str(train_score_matriz.shape))
+    print("test_data " + str(test_score_matriz.shape))
     print("train labels" + str(Y_train.flatten().shape))
 
     scores_train, scores_test, svm_coef = \
         svm_utils.fit_svm_and_get_decision_for_requiered_data_and_coefs_associated(
-            train_score_matriz.transpose(), Y_train.flatten(),
-            test_score_matriz.transpose())
+            train_score_matriz, Y_train.flatten(),
+            test_score_matriz)
 
     # SVM weighted REGIONS RESULTS EVALUATION RESULTS
     threshold = 0
@@ -338,7 +338,7 @@ for k_fold_index in range(1, n_folds + 1, 1):
                                                       bool_test=bool_test)
 
     aux_dic_regions_weight_coefs = {}
-    [aux_dic_regions_weight_coefs.update({str(region): coef}) for region,coef in
+    [aux_dic_regions_weight_coefs.update({str(region): coef}) for region, coef in
         zip(list_regions, svm_coef)]
 
     svm_weighted_regions_k_folds_results_train.append(weighted_output_dic_train)
