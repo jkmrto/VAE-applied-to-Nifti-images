@@ -264,6 +264,10 @@ for k_fold_index in range(1, n_folds + 1, 1):
     complex_means_train = np.row_stack(train_score_matriz.mean(axis=1))
     complex_means_test = np.row_stack(test_score_matriz.mean(axis=1))
 
+    print("svm matriz score shapes")
+    print("train matriz [regions x patients]: " + str(train_score_matriz))
+    print("test matriz scores [regions x patients]: " + str(test_score_matriz))
+
     if bool_test:
         print("TEST OVER FINAL RESULTS")
         test_train_score = np.hstack(
@@ -304,14 +308,14 @@ for k_fold_index in range(1, n_folds + 1, 1):
     simple_majority_vote_k_folds_results_test.append(simple_output_dic_test)
 
     # SVM weighted REGIONS RESULTS
-    print("SVM over per region")
+    print("DECISION WEIGHTING SVM OUTPUTS")
     # The score matriz is in regions per patient, we should transpose it
     # in the svm process
 
     print("SVM over weithted regions shapes of data")
     print("train_data" + str(train_score_matriz.transpose().shape))
     print("test_data " + str(test_score_matriz.transpose().shape))
-    print("train labels" + str(Y_train.flatten()))
+    print("train labels" + str(Y_train.flatten().shape))
 
     scores_train, scores_test, svm_coef = \
         svm_utils.fit_svm_and_get_decision_for_requiered_data_and_coefs_associated(
@@ -326,7 +330,6 @@ for k_fold_index in range(1, n_folds + 1, 1):
     _, weighted_output_dic_test = simple_evaluation_output(scores_test,
                                                       Y_test, 0,
                                                       bool_test=bool_test)
-
 
     aux_dic_regions_weight_coefs = {}
     [aux_dic_regions_weight_coefs.update({str(region): coef}) for region,coef in
