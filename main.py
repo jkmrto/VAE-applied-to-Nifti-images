@@ -95,7 +95,7 @@ patient_labels = load_patients_labels()
 # Meta settings.
 n_folds = 10
 bool_test = False
-regions_used = "one"
+regions_used = "three"
 
 # Vae settings
 # Net Configuration
@@ -113,7 +113,7 @@ hyperparams_vae = {
 # Vae session cofiguration
 vae_session_conf = {
     "bool_normalized": True,
-    "max_iter": 100,
+    "max_iter": 50,
     "save_meta_bool": False,
     "show_error_iter": 10,
 }

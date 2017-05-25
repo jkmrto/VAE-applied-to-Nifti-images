@@ -142,10 +142,13 @@
           <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/main.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="282">
-                  <caret line="258" column="46" lean-forward="false" selection-start-line="258" selection-start-column="46" selection-end-line="258" selection-end-column="46" />
+                <state relative-caret-position="373">
+                  <caret line="115" column="18" lean-forward="false" selection-start-line="115" selection-start-column="18" selection-end-line="115" selection-end-column="18" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
+                    <marker date="1495731658394" expanded="true" signature="3801:3872" ph="..." />
+                    <marker date="1495731658394" expanded="true" signature="3802:3846" ph="..." />
+                    <marker date="1495731658394" expanded="true" signature="3874:3902" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -1149,10 +1152,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="258" column="46" lean-forward="false" selection-start-line="258" selection-start-column="46" selection-end-line="258" selection-end-column="46" />
+        <state relative-caret-position="373">
+          <caret line="115" column="18" lean-forward="false" selection-start-line="115" selection-start-column="18" selection-end-line="115" selection-end-column="18" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
+            <marker date="1495731658394" expanded="true" signature="3801:3872" ph="..." />
+            <marker date="1495731658394" expanded="true" signature="3802:3846" ph="..." />
+            <marker date="1495731658394" expanded="true" signature="3874:3902" ph="..." />
           </folding>
         </state>
       </provider>
