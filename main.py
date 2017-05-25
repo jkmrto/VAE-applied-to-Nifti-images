@@ -35,6 +35,10 @@ simple_majority_vote_k_folds_results_test = []
 decision_net_k_folds_results_train = []
 decision_net_vote_k_folds_results_test = []
 
+svm_weighted_regions_k_folds_results_train = []
+svm_weighted_regions_k_folds_results_test = []
+svm_weighted_regions_k_folds_coefs = []
+
 # OUTPUT: Files initialization
 k_fold_output_file_simple_majority_vote = os.path.join(
     session_settings.path_kfolds_session_folder,
@@ -47,6 +51,14 @@ k_fold_output_file_complex_majority_vote = os.path.join(
 k_fold_output_file_decision_net = os.path.join(
     session_settings.path_kfolds_session_folder,
     "k_fold_output_decision_net.csv")
+
+k_fold_output_file_weighted_svm = os.path.join(
+    session_settings.path_kfolds_session_folder,
+    "k_fold_output_weighted_svm.csv")
+
+k_fold_output_file_coefs_weighted_svm = os.path.join(
+    session_settings.path_kfolds_session_folder,
+    "k_fold_output_coefs_weighted_svm.csv")
 
 k_fold_output_path_session_description = os.path.join(
     session_settings.path_kfolds_session_folder,
@@ -68,7 +80,9 @@ list_paths_files_to_store = [k_fold_output_file_simple_majority_vote,
                              k_fold_output_file_complex_majority_vote,
                              k_fold_output_file_decision_net,
                              k_fold_output_resume_path,
-                             k_fold_output_path_session_description]
+                             k_fold_output_path_session_description,
+                             k_fold_output_file_weighted_svm,
+                             k_fold_output_file_coefs_weighted_svm]
 
 # Selecting the GM folder
 path_to_root_GM = session_settings.path_GM_folder
@@ -85,7 +99,7 @@ regions_used = "most_important"
 
 # Vae settings
 # Net Configuration
-after_input_architecture = [1000, 800,  500, 20]
+after_input_architecture = [1000, 800, 500, 20]
 
 hyperparams_vae = {
     "batch_size": 32,
@@ -108,13 +122,13 @@ vae_session_conf = {
 decision_net_session_conf = {
     "decision_net_tries": 10,
     "field_to_select_try": "area under the curve",
-    "max_iter": 100,
+    "max_iter": 200,
     "threshould_prefixed_to_0.5": True,
 }
 
 HYPERPARAMS_decision_net = {
     "batch_size": 200,
-    "learning_rate": 1E-4,
+    "learning_rate": 1E-6,
     "lambda_l2_reg": 0.000001,
     "dropout": 1,
     "nonlinearity": tf.nn.relu,
@@ -223,6 +237,7 @@ for k_fold_index in range(1, n_folds + 1, 1):
         train_score, test_score = svm_utils.fit_svm_and_get_decision_for_requiered_data(
             wm_and_gm_train_data, Y_train, wm_and_gm_test_data)
 
+        # [regions x patients] SVM results
         train_score_matriz[:, i] = train_score
         test_score_matriz[:, i] = test_score
 
@@ -239,11 +254,13 @@ for k_fold_index in range(1, n_folds + 1, 1):
 
         i += 1
 
+    # End loop over regions
+
     if bool_test:
         print("Diccionario de regions utilizadas")
         print(dic_region_to_matriz_pos)
 
-    # complex majority vote
+    # COMPLEX MAJORITY VOTE
     complex_means_train = np.row_stack(train_score_matriz.mean(axis=1))
     complex_means_test = np.row_stack(test_score_matriz.mean(axis=1))
 
@@ -269,6 +286,7 @@ for k_fold_index in range(1, n_folds + 1, 1):
     print("Complex Majority Vote Test: " + str(complex_output_dic_test))
     print("Complex Majority Vote Train: " + str(complex_output_dic_train))
 
+    # Adding results to kfolds output
     complex_majority_vote_k_folds_results_train.append(complex_output_dic_train)
     complex_majority_vote_k_folds_results_test.append(complex_output_dic_test)
 
@@ -285,6 +303,40 @@ for k_fold_index in range(1, n_folds + 1, 1):
     simple_majority_vote_k_folds_results_train.append(simple_output_dic_train)
     simple_majority_vote_k_folds_results_test.append(simple_output_dic_test)
 
+    # SVM weighted REGIONS RESULTS
+    print("SVM over per region")
+    # The score matriz is in regions per patient, we should transpose it
+    # in the svm process
+
+    scores_train, scores_test, svm_coef = \
+        svm_utils.fit_svm_and_get_decision_for_requiered_data_and_coefs_associated(
+            train_score_matriz.transpose(), Y_train,
+            test_score_matriz.transpose())
+
+    # SVM weighted REGIONS RESULTS EVALUATION RESULTS
+    threshold = 0
+    _, weighted_output_dic_train = simple_evaluation_output(scores_train,
+                                                       Y_train, 0,
+                                                       bool_test=bool_test)
+    _, weighted_output_dic_test = simple_evaluation_output(scores_test,
+                                                      Y_test, 0,
+                                                      bool_test=bool_test)
+
+
+    aux_dic_regions_weight_coefs = {}
+    [aux_dic_regions_weight_coefs.update({str(region): coef}) for region,coef in
+        zip(list_regions, svm_coef)]
+
+    svm_weighted_regions_k_folds_results_train.append(weighted_output_dic_train)
+    svm_weighted_regions_k_folds_results_test.append(weighted_output_dic_test)
+    svm_weighted_regions_k_folds_coefs.append(aux_dic_regions_weight_coefs)
+
+
+    print("Output kfolds nº {}".format(k_fold_index))
+    print("Weighted SVM Vote Test: " + str(weighted_output_dic_test))
+    print("Weighted SVM  Vote Train: " + str(weighted_output_dic_train))
+    print("Weighted SVM  Coefs Gotten: " + str(aux_dic_regions_weight_coefs))
+
     # DECISION NEURAL NET
     print("Decision neural net step")
 
@@ -295,6 +347,7 @@ for k_fold_index in range(1, n_folds + 1, 1):
     temp_results_per_try_test = []
     temp_results_per_try_train = []
     for i in range(1, decision_net_session_conf['decision_net_tries'] + 1, 1):
+
         print("Neural net try: {}".format(i))
         tf.reset_default_graph()
         v = DecisionNeuralNet_leaky_relu_3layers_with_sigmoid(
@@ -358,6 +411,7 @@ for k_fold_index in range(1, n_folds + 1, 1):
     decision_net_k_folds_results_train.append(try_selected_train_dic)
     decision_net_vote_k_folds_results_test.append(try_selected_test_dic)
 
+# Outputs files
 output_utils.print_dictionary_with_header(
     k_fold_output_file_simple_majority_vote,
     simple_majority_vote_k_folds_results_test)
@@ -369,6 +423,15 @@ output_utils.print_dictionary_with_header(
 output_utils.print_dictionary_with_header(
     k_fold_output_file_decision_net,
     decision_net_vote_k_folds_results_test)
+
+output_utils.print_dictionary_with_header(
+    k_fold_output_file_weighted_svm,
+    svm_weighted_regions_k_folds_results_test)
+
+output_utils.print_recursive_dict(
+    k_fold_output_file_coefs_weighted_svm,
+    svm_weighted_regions_k_folds_coefs
+)
 
 resume_list_dicts = []
 simple_majority_vote = get_average_over_metrics(

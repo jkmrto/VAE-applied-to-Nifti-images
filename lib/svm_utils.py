@@ -9,10 +9,10 @@ import copy
 
 
 def fit_svm_and_get_decision_for_requiered_data(X_train, Y_train, X_test,
-                                                decision_function_shape="ovr",
+                                                decision_function_shape="None",
                                                 kernel="linear"):
-
-    clf = svm.SVC(decision_function_shape=decision_function_shape, kernel=kernel)
+    clf = svm.SVC(decision_function_shape=decision_function_shape,
+                  kernel=kernel)
     clf.fit(X_train, Y_train)
 
     # Testing time
@@ -20,6 +20,21 @@ def fit_svm_and_get_decision_for_requiered_data(X_train, Y_train, X_test,
     scores_train = clf.decision_function(X_train)
 
     return scores_train, scores_test
+
+
+def fit_svm_and_get_decision_for_requiered_data_and_coefs_associated(X_train,
+    Y_train, X_test, decision_function_shape="ovr", kernel="linear"):
+
+    clf = svm.SVC(decision_function_shape=decision_function_shape,
+                  kernel=kernel)
+    clf.fit(X_train, Y_train)
+
+    # Testing time
+    scores_test = clf.decision_function(X_test)
+    scores_train = clf.decision_function(X_train)
+
+    return scores_train, scores_test, clf.coef_.tolist()[0]
+
 
 
 def per_region_evaluation(score, true_label, per_region_accuracy_file,
