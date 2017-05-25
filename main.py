@@ -120,9 +120,9 @@ vae_session_conf = {
 
 # DECISION NET CONFIGURATION
 decision_net_session_conf = {
-    "decision_net_tries": 10,
+    "decision_net_tries": 1,
     "field_to_select_try": "area under the curve",
-    "max_iter": 200,
+    "max_iter": 50,
     "threshould_prefixed_to_0.5": True,
 }
 
@@ -442,7 +442,7 @@ output_utils.print_dictionary_with_header(
     k_fold_output_file_weighted_svm,
     svm_weighted_regions_k_folds_results_test)
 
-output_utils.print_recursive_dict(
+output_utils.print_dictionary_with_header(
     k_fold_output_file_coefs_weighted_svm,
     svm_weighted_regions_k_folds_coefs
 )
@@ -452,8 +452,12 @@ simple_majority_vote = get_average_over_metrics(
     simple_majority_vote_k_folds_results_test)
 complex_majority_vote = get_average_over_metrics(
     complex_majority_vote_k_folds_results_test)
+
+svm_weighted = get_average_over_metrics(svm_weighted_regions_k_folds_coefs)
+
 decision_net = get_average_over_metrics(decision_net_vote_k_folds_results_test)
 
+# Add kind of decission session
 temp_simple_majority_vote = {"decision step": "Simple majority vote"}
 temp_simple_majority_vote.update(simple_majority_vote)
 
@@ -463,9 +467,13 @@ temp_complex_majority_vote.update(complex_majority_vote)
 temp_decision_net = {"decision step": "Decision neural net"}
 temp_decision_net.update(decision_net)
 
+temp_svm_weighted = {"decision step": "Decision neural net"}
+temp_svm_weighted.update(svm_weighted)
+
 output_utils.print_dictionary_with_header(
     k_fold_output_resume_path,
-    [temp_simple_majority_vote, temp_complex_majority_vote, temp_decision_net])
+    [temp_simple_majority_vote, temp_complex_majority_vote, temp_decision_net,
+     temp_svm_weighted])
 
 # Tarfile to group the results
 tar = tarfile.open(tar_file_main_output_path, "w:gz")
@@ -473,3 +481,6 @@ for file in list_paths_files_to_store:
     tar.add(file)
 tar.close()
 copyfile(tar_file_main_output_path, tar_file_main_output_path_replica)
+
+
+#Weighted SVM  Coefs Gotten: {'3': 1.056914793220729, '1': 0.9768996145437621, '2': 1.1293619260635606}
