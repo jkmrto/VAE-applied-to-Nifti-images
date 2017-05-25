@@ -93,7 +93,7 @@ dict_norad_wm = stack_NORAD.get_wm_stack()
 patient_labels = load_patients_labels()
 
 # Meta settings.
-n_folds = 10
+n_folds = 3
 bool_test = False
 regions_used = "three"
 
@@ -453,7 +453,7 @@ simple_majority_vote = get_average_over_metrics(
 complex_majority_vote = get_average_over_metrics(
     complex_majority_vote_k_folds_results_test)
 
-svm_weighted = get_average_over_metrics(svm_weighted_regions_k_folds_coefs)
+svm_weighted = get_average_over_metrics(svm_weighted_regions_k_folds_results_test)
 
 decision_net = get_average_over_metrics(decision_net_vote_k_folds_results_test)
 

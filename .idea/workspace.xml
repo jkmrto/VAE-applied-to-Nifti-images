@@ -6,7 +6,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a70bc70e-9f0d-404b-b0fa-698d01cb0e18" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -143,8 +142,8 @@
           <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/main.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="469">
-                  <caret line="475" column="22" lean-forward="false" selection-start-line="475" selection-start-column="22" selection-end-line="475" selection-end-column="22" />
+                <state relative-caret-position="178">
+                  <caret line="455" column="81" lean-forward="false" selection-start-line="455" selection-start-column="81" selection-end-line="455" selection-end-column="81" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                   </folding>
@@ -1150,8 +1149,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="469">
-          <caret line="475" column="22" lean-forward="false" selection-start-line="475" selection-start-column="22" selection-end-line="475" selection-end-column="22" />
+        <state relative-caret-position="178">
+          <caret line="455" column="81" lean-forward="false" selection-start-line="455" selection-start-column="81" selection-end-line="455" selection-end-column="81" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
