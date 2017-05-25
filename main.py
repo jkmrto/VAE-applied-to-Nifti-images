@@ -256,6 +256,10 @@ for k_fold_index in range(1, n_folds + 1, 1):
 
     # End loop over regions
 
+    print("matriz svm scores -> shapes, before complex majority vote")
+    print("train matriz [regions x patients]: " + str(train_score_matriz.shape))
+    print("test matriz scores [regions x patients]: " + str(test_score_matriz.shape))
+
     if bool_test:
         print("Diccionario de regions utilizadas")
         print(dic_region_to_matriz_pos)
@@ -264,9 +268,6 @@ for k_fold_index in range(1, n_folds + 1, 1):
     complex_means_train = np.row_stack(train_score_matriz.mean(axis=1))
     complex_means_test = np.row_stack(test_score_matriz.mean(axis=1))
 
-    print("svm matriz score shapes, ")
-    print("train matriz [regions x patients]: " + str(train_score_matriz.shape))
-    print("test matriz scores [regions x patients]: " + str(test_score_matriz.shape))
 
     if bool_test:
         print("TEST OVER FINAL RESULTS")
@@ -293,6 +294,11 @@ for k_fold_index in range(1, n_folds + 1, 1):
     # Adding results to kfolds output
     complex_majority_vote_k_folds_results_train.append(complex_output_dic_train)
     complex_majority_vote_k_folds_results_test.append(complex_output_dic_test)
+
+
+    print("matriz svm scores -> shapes, after complex majority vote")
+    print("train matriz [regions x patients]: " + str(train_score_matriz.shape))
+    print("test matriz scores [regions x patients]: " + str(test_score_matriz.shape))
 
     # SIMPLE MAJORITY VOTE
     simple_output_dic_train, simple_output_dic_test = \

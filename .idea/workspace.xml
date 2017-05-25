@@ -2,7 +2,7 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/lib/neural_net/decision_neural_net.py" line="75" />
-    <bookmark url="file://$PROJECT_DIR$/main.py" line="360" />
+    <bookmark url="file://$PROJECT_DIR$/main.py" line="366" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a70bc70e-9f0d-404b-b0fa-698d01cb0e18" name="Default" comment="">
@@ -142,8 +142,8 @@
           <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/main.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="197">
-                  <caret line="268" column="83" lean-forward="false" selection-start-line="268" selection-start-column="83" selection-end-line="268" selection-end-column="83" />
+                <state relative-caret-position="282">
+                  <caret line="258" column="46" lean-forward="false" selection-start-line="258" selection-start-column="46" selection-end-line="258" selection-end-column="46" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                   </folding>
@@ -1149,8 +1149,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="268" column="83" lean-forward="false" selection-start-line="268" selection-start-column="83" selection-end-line="268" selection-end-column="83" />
+        <state relative-caret-position="282">
+          <caret line="258" column="46" lean-forward="false" selection-start-line="258" selection-start-column="46" selection-end-line="258" selection-end-column="46" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
