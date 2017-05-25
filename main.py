@@ -93,19 +93,19 @@ dict_norad_wm = stack_NORAD.get_wm_stack()
 patient_labels = load_patients_labels()
 
 # Meta settings.
-n_folds = 3
+n_folds = 10
 bool_test = False
-regions_used = "three"
+regions_used = "most_important"
 
 # Vae settings
 # Net Configuration
 after_input_architecture = [1000, 500, 100]
 
 hyperparams_vae = {
-    "batch_size": 32,
+    "batch_size": 16,
     "learning_rate": 1E-5,
     "dropout": 0.9,
-    "lambda_l2_reg": 1E-4,
+    "lambda_l2_reg": 1E-5,
     "nonlinearity": tf.nn.elu,
     "squashing": tf.nn.sigmoid,
 }
@@ -113,7 +113,7 @@ hyperparams_vae = {
 # Vae session cofiguration
 vae_session_conf = {
     "bool_normalized": True,
-    "max_iter": 50,
+    "max_iter": 100,
     "save_meta_bool": False,
     "show_error_iter": 10,
 }
