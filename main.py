@@ -308,9 +308,14 @@ for k_fold_index in range(1, n_folds + 1, 1):
     # The score matriz is in regions per patient, we should transpose it
     # in the svm process
 
+    print("SVM over weithted regions shapes of data")
+    print("train_data" + str(train_score_matriz.transpose().shape))
+    print("test_data " + str(test_score_matriz.transpose().shape))
+    print("train labels" + str(Y_train.flatten()))
+
     scores_train, scores_test, svm_coef = \
         svm_utils.fit_svm_and_get_decision_for_requiered_data_and_coefs_associated(
-            train_score_matriz.transpose(), Y_train,
+            train_score_matriz.transpose(), Y_train.flatten(),
             test_score_matriz.transpose())
 
     # SVM weighted REGIONS RESULTS EVALUATION RESULTS
