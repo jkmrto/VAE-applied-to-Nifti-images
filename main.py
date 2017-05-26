@@ -19,8 +19,52 @@ from lib.neural_net.manual_layer_decision_net import DecisionNeuralNet as \
     DecisionNeuralNet_leaky_relu_3layers_with_sigmoid
 from lib.neural_net.decision_neural_net import DecisionNeuralNet
 
-session_datetime = datetime.now().isoformat()
+# Meta settings.
+n_folds = 3
+bool_test = False
+regions_used = "three"
 
+# Vae settings
+# Net Configuration
+after_input_architecture = [1000, 500, 100]
+
+hyperparams_vae = {
+    "batch_size": 16,
+    "learning_rate": 1E-5,
+    "dropout": 0.9,
+    "lambda_l2_reg": 1E-5,
+    "nonlinearity": tf.nn.elu,
+    "squashing": tf.nn.sigmoid,
+}
+
+# Vae session cofiguration
+vae_session_conf = {
+    "bool_normalized": True,
+    "max_iter": 100,
+    "save_meta_bool": False,
+    "show_error_iter": 10,
+}
+
+# DECISION NET CONFIGURATION
+decision_net_session_conf = {
+    "decision_net_tries": 1,
+    "field_to_select_try": "area under the curve",
+    "max_iter": 50,
+    "threshould_prefixed_to_0.5": True,
+}
+
+HYPERPARAMS_decision_net = {
+    "batch_size": 200,
+    "learning_rate": 1E-6,
+    "lambda_l2_reg": 0.000001,
+    "dropout": 1,
+    "nonlinearity": tf.nn.relu,
+}
+
+
+
+
+session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
 
 # OUTPUT SETTINGS
@@ -92,47 +136,7 @@ dict_norad_gm = stack_NORAD.get_gm_stack()
 dict_norad_wm = stack_NORAD.get_wm_stack()
 patient_labels = load_patients_labels()
 
-# Meta settings.
-n_folds = 10
-bool_test = False
-regions_used = "most_important"
 
-# Vae settings
-# Net Configuration
-after_input_architecture = [1000, 500, 100]
-
-hyperparams_vae = {
-    "batch_size": 16,
-    "learning_rate": 1E-5,
-    "dropout": 0.9,
-    "lambda_l2_reg": 1E-5,
-    "nonlinearity": tf.nn.elu,
-    "squashing": tf.nn.sigmoid,
-}
-
-# Vae session cofiguration
-vae_session_conf = {
-    "bool_normalized": True,
-    "max_iter": 100,
-    "save_meta_bool": False,
-    "show_error_iter": 10,
-}
-
-# DECISION NET CONFIGURATION
-decision_net_session_conf = {
-    "decision_net_tries": 1,
-    "field_to_select_try": "area under the curve",
-    "max_iter": 50,
-    "threshould_prefixed_to_0.5": True,
-}
-
-HYPERPARAMS_decision_net = {
-    "batch_size": 200,
-    "learning_rate": 1E-6,
-    "lambda_l2_reg": 0.000001,
-    "dropout": 1,
-    "nonlinearity": tf.nn.relu,
-}
 
 # Session descriptor elaboration
 session_descriptor = {}
@@ -202,72 +206,22 @@ for k_fold_index in range(1, n_folds + 1, 1):
                                                        path_to_root_WM,
                                                        list_regions)
 
-    train_score_matriz = np.zeros((len(train_index), len(list_regions)))
-    test_score_matriz = np.zeros((len(test_index), len(list_regions)))
+    train_score_matriz, test_score_matriz = svm_utils.svm_over_vae_output(
+        vae_output, Y_train, Y_test, list_regions,
+        bool_test=bool_test)
 
-    i = 0
-    dic_region_to_matriz_pos = {}
-
-    for region_selected in list_regions:
-        dic_region_to_matriz_pos[str(region_selected)] = i
-
-        print("SVM step")
-        print("region {} selected".format(region_selected))
-        train_output_wm = vae_output['wm'][str(region_selected)]['train_output']
-        test_output_wm = vae_output['wm'][str(region_selected)]['test_output']
-
-        train_output_gm = vae_output['gm'][str(region_selected)]['train_output']
-        test_output_gm = vae_output['gm'][str(region_selected)]['test_output']
-
-        train_means_gm = train_output_wm[0]
-        test_means_gm = test_output_wm[0]
-
-        train_means_wm = train_output_gm[0]
-        test_means_wm = test_output_gm[0]
-
-        wm_and_gm_train_data = np.concatenate((train_means_gm, train_means_wm),
-                                              axis=1)
-        wm_and_gm_test_data = np.concatenate((test_means_gm, test_means_wm),
-                                             axis=1)
-        if bool_test:
-            print("Shape wm+gm train data post encoder")
-            print(wm_and_gm_train_data.shape)
-            print(wm_and_gm_test_data.shape)
-
-        train_score, test_score = svm_utils.fit_svm_and_get_decision_for_requiered_data(
-            wm_and_gm_train_data, Y_train, wm_and_gm_test_data)
-
-        # [regions x patients] SVM results
-        train_score_matriz[:, i] = train_score
-        test_score_matriz[:, i] = test_score
-
-        if bool_test:
-            print("TEST SVM SCORE REGION {}".format(region_selected))
-            print(train_score.shape)
-            print(Y_train.shape)
-            test_train_score = np.hstack(
-                (np.row_stack(train_score), np.row_stack(Y_train)))
-            test_test_score = np.hstack(
-                (np.row_stack(test_score), np.row_stack(Y_test)))
-            print(test_train_score)
-            print(test_test_score)
-
-        i += 1
-
-    # End loop over regions
-
-    print("\nMatriz svm scores -> shapes, before complex majority vote")
-    print("train matriz [patients x region]: " + str(train_score_matriz.shape))
-    print("test matriz scores [patient x region]: " + str(test_score_matriz.shape))
+    # End loop ozver regions
 
     if bool_test:
-        print("Diccionario de regions utilizadas")
-        print(dic_region_to_matriz_pos)
+        print("\nMatriz svm scores -> shapes, before complex majority vote")
+        print("train matriz [patients x region]: " + str(
+            train_score_matriz.shape))
+        print("test matriz scores [patient x region]: " + str(
+            test_score_matriz.shape))
 
     # COMPLEX MAJORITY VOTE
     complex_means_train = np.row_stack(train_score_matriz.mean(axis=1))
     complex_means_test = np.row_stack(test_score_matriz.mean(axis=1))
-
 
     if bool_test:
         print("TEST OVER FINAL RESULTS")
@@ -295,10 +249,10 @@ for k_fold_index in range(1, n_folds + 1, 1):
     complex_majority_vote_k_folds_results_train.append(complex_output_dic_train)
     complex_majority_vote_k_folds_results_test.append(complex_output_dic_test)
 
-
     print("\nMatriz svm scores -> shapes, after complex majority vote")
     print("train matriz [patients x regions]: " + str(train_score_matriz.shape))
-    print("test matriz scores [patients x regions]: " + str(test_score_matriz.shape))
+    print("test matriz scores [patients x regions]: " + str(
+        test_score_matriz.shape))
 
     # SIMPLE MAJORITY VOTE
     simple_output_dic_train, simple_output_dic_test = \
@@ -331,20 +285,20 @@ for k_fold_index in range(1, n_folds + 1, 1):
     # SVM weighted REGIONS RESULTS EVALUATION RESULTS
     threshold = 0
     _, weighted_output_dic_train = simple_evaluation_output(scores_train,
-                                                       Y_train, 0,
-                                                       bool_test=bool_test)
+                                                            Y_train, 0,
+                                                            bool_test=bool_test)
     _, weighted_output_dic_test = simple_evaluation_output(scores_test,
-                                                      Y_test, 0,
-                                                      bool_test=bool_test)
+                                                           Y_test, 0,
+                                                           bool_test=bool_test)
 
     aux_dic_regions_weight_coefs = {}
-    [aux_dic_regions_weight_coefs.update({str(region): coef}) for region, coef in
-        zip(list_regions, svm_coef)]
+    [aux_dic_regions_weight_coefs.update({str(region): coef}) for region, coef
+     in
+     zip(list_regions, svm_coef)]
 
     svm_weighted_regions_k_folds_results_train.append(weighted_output_dic_train)
     svm_weighted_regions_k_folds_results_test.append(weighted_output_dic_test)
     svm_weighted_regions_k_folds_coefs.append(aux_dic_regions_weight_coefs)
-
 
     print("Output kfolds nº {}".format(k_fold_index))
     print("Weighted SVM Vote Test: " + str(weighted_output_dic_test))
@@ -453,7 +407,8 @@ simple_majority_vote = get_average_over_metrics(
 complex_majority_vote = get_average_over_metrics(
     complex_majority_vote_k_folds_results_test)
 
-svm_weighted = get_average_over_metrics(svm_weighted_regions_k_folds_results_test)
+svm_weighted = get_average_over_metrics(
+    svm_weighted_regions_k_folds_results_test)
 
 decision_net = get_average_over_metrics(decision_net_vote_k_folds_results_test)
 
@@ -467,7 +422,7 @@ temp_complex_majority_vote.update(complex_majority_vote)
 temp_decision_net = {"decision step": "Decision neural net"}
 temp_decision_net.update(decision_net)
 
-temp_svm_weighted = {"decision step": "Decision neural net"}
+temp_svm_weighted = {"decision step": "Weighted SVM"}
 temp_svm_weighted.update(svm_weighted)
 
 output_utils.print_dictionary_with_header(
@@ -483,4 +438,4 @@ tar.close()
 copyfile(tar_file_main_output_path, tar_file_main_output_path_replica)
 
 
-#Weighted SVM  Coefs Gotten: {'3': 1.056914793220729, '1': 0.9768996145437621, '2': 1.1293619260635606}
+# Weighted SVM  Coefs Gotten: {'3': 1.056914793220729, '1': 0.9768996145437621, '2': 1.1293619260635606}
