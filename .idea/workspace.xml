@@ -2,11 +2,19 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/lib/neural_net/decision_neural_net.py" line="75" />
-    <bookmark url="file://$PROJECT_DIR$/main.py" line="320" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a70bc70e-9f0d-404b-b0fa-698d01cb0e18" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/svm_utils.py" afterPath="$PROJECT_DIR$/lib/svm_utils.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/neural_net/leaky_net_utils.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/neural_net/manual_layer_decision_net.py" afterPath="$PROJECT_DIR$/lib/neural_net/leaky_relu_decision_net.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/vae/VAE.py" afterPath="$PROJECT_DIR$/lib/vae/VAE.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loop_over_latent_layer.py" afterPath="$PROJECT_DIR$/loop_over_latent_layer.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/vae_with_cv/decision_neural_net_test_and_train.py" afterPath="$PROJECT_DIR$/scripts/vae_with_cv/decision_neural_net_test_and_train.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/vae_with_cv/test_over_decision_neural_net.py" afterPath="$PROJECT_DIR$/scripts/vae_with_cv/test_over_decision_neural_net.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/vae_with_cv/train_step_by_step_decision_neural_net.py" afterPath="$PROJECT_DIR$/scripts/vae_with_cv/train_step_by_step_decision_neural_net.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/decision_neural_net_test_and_train.py" afterPath="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/decision_neural_net_test_and_train.py" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,8 +53,8 @@
                 <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
                   <entry file="file://$PROJECT_DIR$/main.py">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="-4594">
-                        <caret line="37" column="1" lean-forward="true" selection-start-line="37" selection-start-column="1" selection-end-line="37" selection-end-column="1" />
+                      <state relative-caret-position="583">
+                        <caret line="312" column="33" lean-forward="true" selection-start-line="312" selection-start-column="33" selection-end-line="312" selection-end-column="33" />
                         <folding>
                           <element signature="e#0#23#0" expanded="true" />
                         </folding>
@@ -66,7 +74,7 @@
     <favorites_list name="VAE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.59024066">
+    <splitter split-orientation="horizontal" split-proportion="0.39104277">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="session_settings.py" pinned="false" current-in-tab="false">
@@ -179,22 +187,44 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="k_fold_output_simple_majority_vote.csv" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with k folds/k_fold_output_simple_majority_vote.csv">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="credentials.txt" pinned="false" current-in-tab="true">
+          <file leaf-file-name="credentials.txt" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/credentials.txt">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="17">
                   <caret line="1" column="8" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="8" />
                   <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="VAE.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/lib/vae/VAE.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="425">
+                  <caret line="56" column="0" lean-forward="true" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="leaky_net_utils.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/lib/neural_net/leaky_net_utils.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-703">
+                  <caret line="1" column="1" lean-forward="false" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="1" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="leaky_relu_decision_net.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/lib/neural_net/leaky_relu_decision_net.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-136">
+                  <caret line="28" column="8" lean-forward="false" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
+                  <folding>
+                    <element signature="e#0#23#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -215,19 +245,6 @@
                 <state relative-caret-position="0">
                   <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
                   <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/README.md">
-              <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-                <state split_layout="SPLIT">
-                  <first_editor relative-caret-position="425">
-                    <caret line="25" column="5" lean-forward="false" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
-                    <folding />
-                  </first_editor>
-                  <second_editor />
                 </state>
               </provider>
             </entry>
@@ -293,8 +310,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/scripts/svm_score_aux_functions.py" />
-        <option value="$PROJECT_DIR$/lib/svm_hub.py" />
         <option value="$PROJECT_DIR$/settings.py" />
         <option value="$PROJECT_DIR$/scripts/decision_neural_net_scripts/train_over_decision_neural_net.py" />
         <option value="$PROJECT_DIR$/scripts/vae_with_cv/Decision_net_train.py" />
@@ -326,7 +341,6 @@
         <option value="$PROJECT_DIR$/scripts/vae_with_kfolds/svm_over_encoding.py" />
         <option value="$PROJECT_DIR$/scripts/vae_with_kfolds/main.py" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/credentials.txt" />
         <option value="$PROJECT_DIR$/lib/aux_functionalities/functions.py" />
         <option value="$PROJECT_DIR$/output_utils.py" />
         <option value="$PROJECT_DIR$/scripts/vae_with_kfolds/decision_neural_net.py" />
@@ -342,8 +356,11 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/recollect_kfolds_results.sh" />
         <option value="$PROJECT_DIR$/loop_over_latent_layer.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/lib/svm_utils.py" />
+        <option value="$PROJECT_DIR$/credentials.txt" />
+        <option value="$PROJECT_DIR$/lib/vae/VAE.py" />
+        <option value="$PROJECT_DIR$/lib/neural_net/leaky_net_utils.py" />
+        <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
   </component>
@@ -436,6 +453,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vae" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -834,13 +869,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lib/delete_pre_final_meta_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="888">
-          <caret line="60" column="61" lean-forward="false" selection-start-line="60" selection-start-column="61" selection-end-line="60" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with k folds/cv/index_fold_6.csv">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1019,13 +1047,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/vae/VAE.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="593">
-          <caret line="183" column="43" lean-forward="false" selection-start-line="183" selection-start-column="34" selection-end-line="183" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test.py" />
     <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with k folds/k_fold_output_decision_net.csv">
       <provider selected="true" editor-type-id="text-editor">
@@ -1111,16 +1132,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/neural_net/manual_layer_decision_net.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="28" column="8" lean-forward="false" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/out/Full session: GM + WM with k folds/k_fold_output_complex_majority_vote.csv">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -1170,6 +1181,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/svm_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="80" column="87" lean-forward="false" selection-start-line="80" selection-start-column="87" selection-end-line="80" selection-end-column="87" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/credentials.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -1178,20 +1199,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/lib/vae/VAE.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4594">
-          <caret line="37" column="1" lean-forward="true" selection-start-line="37" selection-start-column="1" selection-end-line="37" selection-end-column="1" />
+        <state relative-caret-position="425">
+          <caret line="56" column="0" lean-forward="true" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/neural_net/leaky_relu_decision_net.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-136">
+          <caret line="28" column="8" lean-forward="false" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/svm_utils.py">
+    <entry file="file://$PROJECT_DIR$/lib/neural_net/leaky_net_utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
-          <caret line="80" column="87" lean-forward="false" selection-start-line="80" selection-start-column="87" selection-end-line="80" selection-end-column="87" />
+        <state relative-caret-position="-703">
+          <caret line="1" column="1" lean-forward="false" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="583">
+          <caret line="312" column="33" lean-forward="true" selection-start-line="312" selection-start-column="33" selection-end-line="312" selection-end-column="33" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>

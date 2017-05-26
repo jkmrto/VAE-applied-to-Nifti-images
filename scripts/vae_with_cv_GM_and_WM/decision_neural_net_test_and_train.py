@@ -7,7 +7,7 @@ from lib.session_helper import generate_session_descriptor
 from lib.neural_net.decision_neural_net import DecisionNeuralNet
 from scripts.vae_with_cv_GM_and_WM import svm_session_settings as svm_settings
 from datetime import datetime
-from lib.neural_net.manual_layer_decision_net import DecisionNeuralNet as \
+from lib.neural_net.leaky_relu_decision_net import DecisionNeuralNet as \
     DecisionNeuralNet_leaky_relu_3layers
 import tensorflow as tf
 from lib.aux_functionalities import functions

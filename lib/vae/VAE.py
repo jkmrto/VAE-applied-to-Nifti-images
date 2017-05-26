@@ -21,7 +21,7 @@ class VAE():
     RESTORE_KEY = "restore"
 
     def __init__(self, architecture=None, hyperparams=None, meta_graph=None,
-                 path_to_session=None):
+                 path_to_session=None, test_bool=False):
         """(Re)build a symmetric VAE model with given:
 
             * architecture (list of nodes per encoder layer); e.g.
@@ -39,7 +39,9 @@ class VAE():
             self.architecture = architecture
             self.hyper_params.update(hyperparams)
 
-            print("Hyperparamers indicated: " + str(self.hyper_params))
+            if test_bool:
+                print("Hyperparamers indicated: " + str(self.hyper_params))
+
             self.init_session_folders(path_to_session)
             assert len(self.architecture) > 2, \
                 "Architecture must have more layers! (input, 1+ hidden, latent)"
@@ -53,7 +55,6 @@ class VAE():
             tf.train.import_meta_graph(meta_graph + ".meta").restore(self.session, meta_graph)
             handles = self.session.graph.get_collection_ref(VAE.RESTORE_KEY)
 
-        print(handles)
         (self.x_in, self.dropout_, self.z_mean, self.z_log_sigma,
          self.x_reconstructed, self.z_, self.x_reconstructed_,
          self.cost, self.global_step, self.train_op) = handles[0:10]

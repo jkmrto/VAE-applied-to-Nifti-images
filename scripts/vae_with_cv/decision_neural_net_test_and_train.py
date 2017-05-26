@@ -5,7 +5,7 @@ from lib.aux_functionalities.os_aux import create_directories
 from lib.svm_utils import load_svm_output_score
 from lib.session_helper import generate_session_descriptor
 from lib.neural_net.decision_neural_net import DecisionNeuralNet
-from lib.neural_net.manual_layer_decision_net import DecisionNeuralNet as \
+from lib.neural_net.leaky_relu_decision_net import DecisionNeuralNet as \
     DecisionNeuralNet_leaky_relu_3layers
 import tensorflow as tf
 from lib.aux_functionalities import functions

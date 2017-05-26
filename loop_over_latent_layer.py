@@ -15,7 +15,7 @@ from shutil import copyfile
 import numpy as np
 import tarfile
 from datetime import datetime
-from lib.neural_net.manual_layer_decision_net import DecisionNeuralNet as \
+from lib.neural_net.leaky_relu_decision_net import DecisionNeuralNet as \
     DecisionNeuralNet_leaky_relu_3layers_with_sigmoid
 from lib.neural_net.decision_neural_net import DecisionNeuralNet
 

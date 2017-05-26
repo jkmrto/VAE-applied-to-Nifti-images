@@ -9,7 +9,7 @@ from lib.evaluation_utils import evaluation_output
 import settings as set
 from lib.aux_functionalities.os_aux import create_directories
 from lib.cv_utils import get_label_per_patient
-from lib.neural_net.manual_layer_decision_net import DecisionNeuralNet
+from lib.neural_net.leaky_relu_decision_net import DecisionNeuralNet
 from lib.aux_functionalities.functions import load_csv_file_iter_to_error
 from lib.svm_utils import load_svm_output_score
 
