@@ -211,6 +211,8 @@ for k_fold_index in range(1, n_folds + 1, 1):
     # End loop ozver regions
 
     data = {}
+    data["test"] = {}
+    data["train"] = {}
     data["test"]["data"] = test_score_matriz
     data["test"]["label"] = Y_test
     data["train"]["data"] = train_score_matriz
