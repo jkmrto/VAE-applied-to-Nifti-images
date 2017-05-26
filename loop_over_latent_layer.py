@@ -3,7 +3,7 @@ import os
 from lib import cv_utils
 from lib.mri import stack_NORAD
 from lib import session_helper as session
-from scripts.vae_with_kfolds import session_settings
+from scripts.vae_loop_dim import session_settings
 from scripts.vae_with_kfolds import vae_over_regions_kfolds
 from lib.mri.stack_NORAD import load_patients_labels
 from lib import svm_utils
@@ -28,13 +28,13 @@ print("Time session init: {}".format(session_datetime))
 # Meta settings.
 n_folds = 3
 bool_test = False
-regions_used = "three"
+regions_used = "most_important"
 
 # Vae settings
 # Net Configuration
 middle_architecture = [1000, 500]
-latent_code_dim_list = [5, 10 ,15]
-#latent_code_dim_list = [2, 5, 8, 10, 25, 50, 75, 100, 125, 150, 175, 200]
+#latent_code_dim_list = [5, 10 ,15]
+latent_code_dim_list = [2, 5, 8, 10, 25, 50, 75, 100, 125, 150, 175, 200]
 list_regions = session.select_regions_to_evaluate(regions_used)
 
 hyperparams_vae = {
@@ -49,7 +49,7 @@ hyperparams_vae = {
 # Vae session cofiguration
 vae_session_conf = {
     "bool_normalized": True,
-    "max_iter": 10,
+    "max_iter": 100,
     "save_meta_bool": False,
     "show_error_iter": 10,
 }
@@ -58,7 +58,7 @@ vae_session_conf = {
 decision_net_session_conf = {
     "decision_net_tries": 1,
     "field_to_select_try": "area under the curve",
-    "max_iter": 10,
+    "max_iter": 100,
     "threshould_prefixed_to_0.5": True,
 }
 
