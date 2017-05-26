@@ -35,15 +35,15 @@ def fit_svm_and_get_decision_for_requiered_data_and_coefs_associated(X_train,
 
 
 
-def per_region_evaluation(score, true_label, per_region_accuracy_file,
-                          region_selected):
-    dec_label = evaluation.assign_binary_labels_based_on_threshold(
-        copy.copy(score), 0)
+#def per_region_evaluation(score, true_label, per_region_accuracy_file,
+#                          region_selected):
+#    dec_label = evaluation.assign_binary_labels_based_on_threshold(
+#        copy.copy(score), 0)
 
-    region_accuracy = metrics.accuracy_score(true_label, dec_label)
-    per_region_accuracy_file.write("region_{0},{1}\n".format(region_selected,
+#    region_accuracy = metrics.accuracy_score(true_label, dec_label)
+#    per_region_accuracy_file.write("region_{0},{1}\n".format(region_selected,
                                                              region_accuracy))
-    per_region_accuracy_file.flush()
+#    per_region_accuracy_file.flush()
 
 
 def log_scores(score, score_file, region_selected):

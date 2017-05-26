@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a70bc70e-9f0d-404b-b0fa-698d01cb0e18" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/evaluation_utils.py" afterPath="$PROJECT_DIR$/lib/evaluation_utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/neural_net/leaky_net_utils.py" afterPath="$PROJECT_DIR$/lib/neural_net/leaky_net_utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/svm_utils.py" afterPath="$PROJECT_DIR$/lib/svm_utils.py" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -46,7 +44,7 @@
                 <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
                   <entry file="file://$PROJECT_DIR$/main.py">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="708">
+                      <state relative-caret-position="4828">
                         <caret line="284" column="80" lean-forward="false" selection-start-line="284" selection-start-column="80" selection-end-line="284" selection-end-column="80" />
                         <folding>
                           <element signature="e#0#23#0" expanded="true" />
@@ -100,10 +98,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="evaluation_utils.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="evaluation_utils.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/lib/evaluation_utils.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="453">
+                <state relative-caret-position="548">
                   <caret line="216" column="43" lean-forward="false" selection-start-line="216" selection-start-column="43" selection-end-line="216" selection-end-column="43" />
                   <folding>
                     <element signature="e#0#62#0" expanded="true" />
@@ -112,11 +110,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="svm_utils.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="svm_utils.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/lib/svm_utils.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="56">
-                  <caret line="80" column="87" lean-forward="false" selection-start-line="80" selection-start-column="87" selection-end-line="80" selection-end-column="87" />
+                <state relative-caret-position="332">
+                  <caret line="45" column="1" lean-forward="false" selection-start-line="45" selection-start-column="1" selection-end-line="45" selection-end-column="1" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                   </folding>
@@ -203,8 +201,8 @@
           <file leaf-file-name="leaky_net_utils.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/lib/neural_net/leaky_net_utils.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="572">
-                  <caret line="76" column="0" lean-forward="true" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
+                <state relative-caret-position="555">
+                  <caret line="75" column="68" lean-forward="false" selection-start-line="75" selection-start-column="68" selection-end-line="75" selection-end-column="68" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                   </folding>
@@ -267,7 +265,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>variable</find>
       <find>graph</find>
       <find>saver</find>
       <find>Restore_key</find>
@@ -297,6 +294,7 @@
       <find>threshould_prefixed_to_0.5</find>
       <find>bool_normalized</find>
       <find>vae_session_conf</find>
+      <find>evaluation</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -350,12 +348,12 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/recollect_kfolds_results.sh" />
         <option value="$PROJECT_DIR$/loop_over_latent_layer.py" />
-        <option value="$PROJECT_DIR$/lib/svm_utils.py" />
         <option value="$PROJECT_DIR$/credentials.txt" />
         <option value="$PROJECT_DIR$/lib/vae/VAE.py" />
         <option value="$PROJECT_DIR$/lib/evaluation_utils.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/lib/neural_net/leaky_net_utils.py" />
+        <option value="$PROJECT_DIR$/lib/svm_utils.py" />
       </list>
     </option>
   </component>
@@ -1192,10 +1190,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/svm_utils.py">
+    <entry file="file://$PROJECT_DIR$/lib/neural_net/leaky_net_utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
-          <caret line="80" column="87" lean-forward="false" selection-start-line="80" selection-start-column="87" selection-end-line="80" selection-end-column="87" />
+        <state relative-caret-position="555">
+          <caret line="75" column="68" lean-forward="false" selection-start-line="75" selection-start-column="68" selection-end-line="75" selection-end-column="68" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
@@ -1204,7 +1202,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="708">
+        <state relative-caret-position="4828">
           <caret line="284" column="80" lean-forward="false" selection-start-line="284" selection-start-column="80" selection-end-line="284" selection-end-column="80" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
@@ -1214,7 +1212,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/evaluation_utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
+        <state relative-caret-position="548">
           <caret line="216" column="43" lean-forward="false" selection-start-line="216" selection-start-column="43" selection-end-line="216" selection-end-column="43" />
           <folding>
             <element signature="e#0#62#0" expanded="true" />
@@ -1222,10 +1220,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/neural_net/leaky_net_utils.py">
+    <entry file="file://$PROJECT_DIR$/lib/svm_utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="76" column="0" lean-forward="true" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
+        <state relative-caret-position="332">
+          <caret line="45" column="1" lean-forward="false" selection-start-line="45" selection-start-column="1" selection-end-line="45" selection-end-column="1" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
