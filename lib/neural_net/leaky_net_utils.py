@@ -5,10 +5,11 @@ from lib.neural_net.leaky_relu_decision_net import DecisionNeuralNet as \
 from lib.neural_net.decision_neural_net import DecisionNeuralNet
 
 
-def train_leaky_neural_net_various_tries_over_svm_output(decision_net_session_conf,
-    architecture, HYPERPARAMS_decision_net, train_score_matriz, test_score_matriz,
-    Y_train, Y_test, bool_test=False):
-
+def train_leaky_neural_net_various_tries_over_svm_output(
+        decision_net_session_conf,
+        architecture, HYPERPARAMS_decision_net, train_score_matriz,
+        test_score_matriz,
+        Y_train, Y_test, bool_test=False):
     temp_results_per_try_test = []
 
     temp_results_per_try_train = []
@@ -59,16 +60,15 @@ def train_leaky_neural_net_various_tries_over_svm_output(decision_net_session_co
                                    reverse=True)[0]
 
     try_selected_train_dic = sorted(temp_results_per_try_train,
-                                key=lambda results: results[
-                                    decision_net_session_conf[
-                                        'field_to_select_try']],
-                                reverse=True)[0]
+                                    key=lambda results: results[
+                                        decision_net_session_conf[
+                                            'field_to_select_try']],
+                                    reverse=True)[0]
 
     if bool_test:
-         print("Results over 10 tries over decision neural net:")
+        print("Results over 10 tries over decision neural net:")
         for i in range(0, len(temp_results_per_try_test), 1):
-           print("Test: " + str(temp_results_per_try_test[i]))
-           print("Train: " + str(temp_results_per_try_train[i]))
-
+            print("Test: " + str(temp_results_per_try_test[i]))
+            print("Train: " + str(temp_results_per_try_train[i]))
 
     return try_selected_train_dic, try_selected_test_dic
