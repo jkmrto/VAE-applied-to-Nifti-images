@@ -42,7 +42,7 @@ def fit_svm_and_get_decision_for_requiered_data_and_coefs_associated(X_train,
 
 #    region_accuracy = metrics.accuracy_score(true_label, dec_label)
 #    per_region_accuracy_file.write("region_{0},{1}\n".format(region_selected,
-                                                             region_accuracy))
+ #                                                            region_accuracy))
 #    per_region_accuracy_file.flush()
 
 
