@@ -1,9 +1,6 @@
 from sklearn import svm
-from sklearn import metrics
 from matplotlib import pyplot as plt
-from lib import evaluation_utils as evaluation
 import numpy as np
-import copy
 
 
 def fit_svm_and_get_decision_for_requiered_data(X_train, Y_train, X_test,
