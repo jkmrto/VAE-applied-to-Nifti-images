@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a70bc70e-9f0d-404b-b0fa-698d01cb0e18" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/evaluation_utils.py" afterPath="$PROJECT_DIR$/lib/evaluation_utils.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loop_over_latent_layer.py" afterPath="$PROJECT_DIR$/loop_over_latent_layer.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -28,8 +30,8 @@
                 <file leaf-file-name="loop_over_latent_layer.py" pinned="false" current-in-tab="true">
                   <entry file="file://$PROJECT_DIR$/loop_over_latent_layer.py">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="827">
-                        <caret line="182" column="0" lean-forward="false" selection-start-line="182" selection-start-column="0" selection-end-line="182" selection-end-column="0" />
+                      <state relative-caret-position="298">
+                        <caret line="36" column="1" lean-forward="false" selection-start-line="36" selection-start-column="1" selection-end-line="36" selection-end-column="1" />
                         <folding>
                           <element signature="e#0#23#0" expanded="true" />
                         </folding>
@@ -41,11 +43,23 @@
             </split-first>
             <split-second>
               <leaf>
-                <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+                <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
                   <entry file="file://$PROJECT_DIR$/main.py">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="578">
-                        <caret line="214" column="22" lean-forward="false" selection-start-line="214" selection-start-column="22" selection-end-line="214" selection-end-column="22" />
+                      <state relative-caret-position="62">
+                        <caret line="284" column="0" lean-forward="false" selection-start-line="284" selection-start-column="0" selection-end-line="304" selection-end-column="1" />
+                        <folding>
+                          <element signature="e#0#23#0" expanded="true" />
+                        </folding>
+                      </state>
+                    </provider>
+                  </entry>
+                </file>
+                <file leaf-file-name="loop_over_latent_layer.py" pinned="false" current-in-tab="true">
+                  <entry file="file://$PROJECT_DIR$/loop_over_latent_layer.py">
+                    <provider selected="true" editor-type-id="text-editor">
+                      <state relative-caret-position="476">
+                        <caret line="85" column="38" lean-forward="false" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="38" />
                         <folding>
                           <element signature="e#0#23#0" expanded="true" />
                         </folding>
@@ -98,11 +112,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="evaluation_utils.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="evaluation_utils.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/lib/evaluation_utils.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="548">
-                  <caret line="216" column="43" lean-forward="false" selection-start-line="216" selection-start-column="43" selection-end-line="216" selection-end-column="43" />
+                <state relative-caret-position="538">
+                  <caret line="185" column="0" lean-forward="true" selection-start-line="185" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
                   <folding>
                     <element signature="e#0#62#0" expanded="true" />
                   </folding>
@@ -110,7 +124,7 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="svm_utils.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="svm_utils.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/lib/svm_utils.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="34">
@@ -347,13 +361,13 @@
         <option value="$PROJECT_DIR$/lib/cv_utils.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/recollect_kfolds_results.sh" />
-        <option value="$PROJECT_DIR$/loop_over_latent_layer.py" />
         <option value="$PROJECT_DIR$/credentials.txt" />
         <option value="$PROJECT_DIR$/lib/vae/VAE.py" />
-        <option value="$PROJECT_DIR$/lib/evaluation_utils.py" />
         <option value="$PROJECT_DIR$/lib/neural_net/leaky_net_utils.py" />
         <option value="$PROJECT_DIR$/lib/svm_utils.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/lib/evaluation_utils.py" />
+        <option value="$PROJECT_DIR$/loop_over_latent_layer.py" />
       </list>
     </option>
   </component>
@@ -1146,16 +1160,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/loop_over_latent_layer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="827">
-          <caret line="182" column="0" lean-forward="false" selection-start-line="182" selection-start-column="0" selection-end-line="182" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/vae_over_regions_kfolds.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -1200,16 +1204,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/evaluation_utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="548">
-          <caret line="216" column="43" lean-forward="false" selection-start-line="216" selection-start-column="43" selection-end-line="216" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#62#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/svm_utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -1222,8 +1216,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="214" column="22" lean-forward="false" selection-start-line="214" selection-start-column="22" selection-end-line="214" selection-end-column="22" />
+        <state relative-caret-position="62">
+          <caret line="284" column="0" lean-forward="false" selection-start-line="284" selection-start-column="0" selection-end-line="304" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/evaluation_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="538">
+          <caret line="185" column="0" lean-forward="true" selection-start-line="185" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#62#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loop_over_latent_layer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="36" column="1" lean-forward="false" selection-start-line="36" selection-start-column="1" selection-end-line="36" selection-end-column="1" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>

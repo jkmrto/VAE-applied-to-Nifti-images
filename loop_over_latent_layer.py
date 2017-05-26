@@ -18,6 +18,8 @@ from datetime import datetime
 from lib.neural_net.leaky_relu_decision_net import DecisionNeuralNet as \
     DecisionNeuralNet_leaky_relu_3layers_with_sigmoid
 from lib.neural_net.decision_neural_net import DecisionNeuralNet
+from lib.neural_net import leaky_net_utils
+
 
 
 session_datetime = datetime.now().isoformat()
@@ -31,7 +33,8 @@ regions_used = "most_important"
 # Vae settings
 # Net Configuration
 middle_architecture = [1000, 500]
-latent_code_dim_list = [2, 5, 8, 10, 25, 50, 75, 100, 125, 150, 175, 200]
+latent_code_dim_list = [5, 10 ,15]
+#latent_code_dim_list = [2, 5, 8, 10, 25, 50, 75, 100, 125, 150, 175, 200]
 list_regions = session.select_regions_to_evaluate(regions_used)
 
 hyperparams_vae = {
@@ -76,23 +79,23 @@ dict_norad_wm = stack_NORAD.get_wm_stack()
 patient_labels = load_patients_labels()
 
 # OUTPUT: Files initialization
-k_fold_output_file_simple_majority_vote = os.path.join(
+loop_output_file_simple_majority_vote = os.path.join(
     session_settings.path_kfolds_session_folder,
     "loop_output_simple_majority_vote.csv")
 
-k_fold_output_file_complex_majority_vote = os.path.join(
+loop_output_file_complex_majority_vote = os.path.join(
     session_settings.path_kfolds_session_folder,
     "loop_output_complex_majority_vote.csv")
 
-k_fold_output_file_decision_net = os.path.join(
+loop_output_file_decision_net = os.path.join(
     session_settings.path_kfolds_session_folder,
     "loop_output_decision_net.csv")
 
-k_fold_output_file_weighted_svm = os.path.join(
+loop_output_file_weighted_svm = os.path.join(
     session_settings.path_kfolds_session_folder,
     "loop_output_weighted_svm.csv")
 
-k_fold_output_path_session_description = os.path.join(
+loop_output_path_session_description = os.path.join(
     session_settings.path_kfolds_session_folder,
     "session_description.csv")
 
@@ -101,7 +104,9 @@ k_fold_output_path_session_description = os.path.join(
 session_descriptor = {}
 session_descriptor['meta settings'] = {"n_folds": n_folds,
                                        "bool_test": bool_test,
-                                       "regions_used": regions_used}
+                                       "regions_used": regions_used,
+                                       "loop_over_latent_dim":
+                                           str(latent_code_dim_list)}
 session_descriptor['VAE'] = {}
 session_descriptor['Decision net'] = {}
 session_descriptor['VAE']["net configuration"] = hyperparams_vae
@@ -115,13 +120,17 @@ session_descriptor['Decision net']["net configuration"]['architecture'] = \
     "[nºregions, nºregions/2, 1]"
 session_descriptor['Decision net']['session_conf'] = decision_net_session_conf
 
-file_session_descriptor = open(k_fold_output_path_session_description, "w")
+file_session_descriptor = open(loop_output_path_session_description, "w")
 output_utils.print_recursive_dict(session_descriptor,
                                   file=file_session_descriptor)
 file_session_descriptor.close()
 
+list_averages_svm_weighted = []
+list_averages_simple_majority_vote = []
+list_averages_decision_net = []
+list_averages_complex_majority_vote = []
 
-for latent_dim in latent_code_dim_list
+for latent_dim in latent_code_dim_list:
     # OUTPUT SETTINGS
     # OUTPUT: List of dictionaries
     complex_majority_vote_k_folds_results_train = []
@@ -179,4 +188,133 @@ for latent_dim in latent_code_dim_list
                                                            middle_architecture,
                                                            path_to_root_WM,
                                                            list_regions)
+        train_score_matriz, test_score_matriz = svm_utils.svm_over_vae_output(
+            vae_output, Y_train, Y_test, list_regions, bool_test=bool_test)
+
+
+        data = {}
+        data["test"] = {}
+        data["train"] = {}
+        data["test"]["data"] = test_score_matriz
+        data["test"]["label"] = Y_test
+        data["train"]["data"] = train_score_matriz
+        data["train"]["label"] = Y_train
+
+        if bool_test:
+            print("\nMatriz svm scores -> shapes, before complex majority vote")
+            print("train matriz [patients x region]: " + str(
+                train_score_matriz.shape))
+            print("test matriz scores [patient x region]: " + str(
+                test_score_matriz.shape))
+
+        # COMPLEX MAJORITY VOTE
+
+        complex_output_dic_test, complex_output_dic_train = \
+            evaluation_utils.complex_majority_vote_evaluation(data,
+                                                              bool_test=bool_test)
+
+        # Adding results to kfolds output
+        complex_majority_vote_k_folds_results_train.append(
+            complex_output_dic_train)
+        complex_majority_vote_k_folds_results_test.append(
+            complex_output_dic_test)
+
+        if bool_test:
+            print("\nMatriz svm scores -> shapes, after complex majority vote")
+            print("train matriz [patients x regions]: " + str(
+                train_score_matriz.shape))
+            print("test matriz scores [patients x regions]: " + str(
+                test_score_matriz.shape))
+
+        # SIMPLE MAJORITY VOTE
+
+        simple_output_dic_train, simple_output_dic_test = \
+            evaluation_utils.simple_majority_vote(
+                train_score_matriz, test_score_matriz, Y_train, Y_test,
+                bool_test=False)
+
+        print("Output kfolds nº {}".format(k_fold_index))
+        print("Simple Majority Vote Test: " + str(simple_output_dic_test))
+        print("Simple Majority Vote Train: " + str(simple_output_dic_train))
+
+        simple_majority_vote_k_folds_results_train.append(
+            simple_output_dic_train)
+        simple_majority_vote_k_folds_results_test.append(simple_output_dic_test)
+
+        # SVM weighted REGIONS RESULTS
+        print("DECISION WEIGHTING SVM OUTPUTS")
+        # The score matriz is in regions per patient, we should transpose it
+        # in the svm process
+
+        weighted_output_dic_test, weighted_output_dic_train, \
+        aux_dic_regions_weight_coefs = \
+            evaluation_utils.weighted_svm_decision_evaluation(data,
+                                                              list_regions,
+                                                              bool_test=bool_test)
+
+        svm_weighted_regions_k_folds_results_train.append(
+            weighted_output_dic_train)
+        svm_weighted_regions_k_folds_results_test.append(
+            weighted_output_dic_test)
+        svm_weighted_regions_k_folds_coefs.append(aux_dic_regions_weight_coefs)
+
+        # DECISION NEURAL NET
+        print("Decision neural net step")
+
+        # train score matriz [patients x regions]
+        input_layer_size = train_score_matriz.shape[1]
+        architecture = [input_layer_size, int(input_layer_size / 2), 1]
+
+        net_train_dic, net_test_dic = \
+            leaky_net_utils.train_leaky_neural_net_various_tries_over_svm_output(
+                decision_net_session_conf, architecture,
+                HYPERPARAMS_decision_net,
+                train_score_matriz, test_score_matriz, Y_train, Y_test,
+                bool_test=False)
+
+        decision_net_k_folds_results_train.append(net_train_dic)
+        decision_net_vote_k_folds_results_test.append(net_test_dic)
+
+    # GET AVERAGE RESULTS OVER METRICS
+    extra_field = {"latent_dim": str(latent_dim)}
+
+    averages_simple_majority_vote = get_average_over_metrics(
+        simple_majority_vote_k_folds_results_test)
+    averages_simple_majority_vote.update(extra_field)
+
+    averages_complex_majority_vote = get_average_over_metrics(
+        complex_majority_vote_k_folds_results_test)
+    averages_complex_majority_vote.update(extra_field)
+
+    averages_svm_weighted = get_average_over_metrics(
+        svm_weighted_regions_k_folds_results_test)
+    averages_svm_weighted.update(extra_field)
+
+    averages_decision_net = get_average_over_metrics(
+        decision_net_vote_k_folds_results_test)
+    averages_decision_net.update(extra_field)
+
+    list_averages_svm_weighted.append(averages_svm_weighted)
+    list_averages_simple_majority_vote.append(averages_simple_majority_vote)
+    list_averages_decision_net.append(averages_decision_net)
+    list_averages_complex_majority_vote.append(averages_complex_majority_vote)
+
+
+# Outputs files
+# simple majority
+output_utils.print_dictionary_with_header(
+    loop_output_file_simple_majority_vote,
+    list_averages_simple_majority_vote)
+# complex majority
+output_utils.print_dictionary_with_header(
+    loop_output_file_complex_majority_vote,
+    list_averages_complex_majority_vote)
+
+output_utils.print_dictionary_with_header(
+    loop_output_file_decision_net,
+    list_averages_decision_net)
+
+output_utils.print_dictionary_with_header(
+    loop_output_file_weighted_svm,
+    list_averages_svm_weighted)
 

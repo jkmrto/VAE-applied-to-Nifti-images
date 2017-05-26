@@ -205,10 +205,7 @@ for k_fold_index in range(1, n_folds + 1, 1):
                                                        list_regions)
 
     train_score_matriz, test_score_matriz = svm_utils.svm_over_vae_output(
-        vae_output, Y_train, Y_test, list_regions,
-        bool_test=bool_test)
-
-    # End loop ozver regions
+        vae_output, Y_train, Y_test, list_regions, bool_test=bool_test)
 
     data = {}
     data["test"] = {}
@@ -231,10 +228,6 @@ for k_fold_index in range(1, n_folds + 1, 1):
     complex_output_dic_test, complex_output_dic_train = \
         evaluation_utils.complex_majority_vote_evaluation(data,
                                                           bool_test=bool_test)
-
-    print("Output kfolds nº {}.".format(k_fold_index))
-    print("Complex Majority Vote Test: " + str(complex_output_dic_test))
-    print("Complex Majority Vote Train: " + str(complex_output_dic_train))
 
     # Adding results to kfolds output
     complex_majority_vote_k_folds_results_train.append(complex_output_dic_train)

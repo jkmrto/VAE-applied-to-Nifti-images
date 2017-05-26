@@ -179,6 +179,9 @@ def complex_majority_vote_evaluation(data, bool_test=False):
                                                           Y_test, threshold,
                                                           bool_test=bool_test)
 
+    print("Complex Majority Vote Test: " + str(complex_output_dic_test))
+    print("Complex Majority Vote Train: " + str(complex_output_dic_train))
+
     return complex_output_dic_test, complex_output_dic_train
 
 
