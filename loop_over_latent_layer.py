@@ -26,9 +26,9 @@ session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
 
 # Meta settings.
-n_folds = 10
+n_folds = 3
 bool_test = False
-regions_used = "most_important"
+regions_used = "three"
 
 # Vae settings
 # Net Configuration
@@ -49,7 +49,7 @@ hyperparams_vae = {
 # Vae session cofiguration
 vae_session_conf = {
     "bool_normalized": True,
-    "max_iter": 100,
+    "max_iter": 10,
     "save_meta_bool": False,
     "show_error_iter": 10,
 }
@@ -58,7 +58,7 @@ vae_session_conf = {
 decision_net_session_conf = {
     "decision_net_tries": 1,
     "field_to_select_try": "area under the curve",
-    "max_iter": 50,
+    "max_iter": 10,
     "threshould_prefixed_to_0.5": True,
 }
 
@@ -131,6 +131,8 @@ list_averages_decision_net = []
 list_averages_complex_majority_vote = []
 
 for latent_dim in latent_code_dim_list:
+    print("Evaluating the system with a latent code of {} dim".format(latent_dim))
+
     # OUTPUT SETTINGS
     # OUTPUT: List of dictionaries
     complex_majority_vote_k_folds_results_train = []
