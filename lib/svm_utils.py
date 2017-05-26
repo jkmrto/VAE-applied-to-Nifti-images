@@ -78,8 +78,8 @@ def load_svm_output_score(score_file, plot_hist=False):
 
 def svm_over_vae_output(vae_output, Y_train, Y_test, list_regions, bool_test=False):
 
-    n_train_patient = vae_output['wm'][str(list_regions[0])]['train_output'].shape[1]
-    n_test_patient = vae_output['wm'][str(list_regions[0])]['test_output'].shape[0]
+    n_train_patient = vae_output['wm'][str(list_regions[0])]['train_output'][0].shape[0]
+    n_test_patient = vae_output['wm'][str(list_regions[0])]['test_output'][0].shape[0]
 
     train_score_matriz = np.zeros((n_train_patient, len(list_regions)))
     test_score_matriz = np.zeros((n_test_patient, len(list_regions)))
