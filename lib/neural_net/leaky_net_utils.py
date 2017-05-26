@@ -71,4 +71,8 @@ def train_leaky_neural_net_various_tries_over_svm_output(
             print("Test: " + str(temp_results_per_try_test[i]))
             print("Train: " + str(temp_results_per_try_train[i]))
 
+    print("Intent selected:")
+    print("Decision Neural Net Test: " + str(try_selected_test_dic))
+    print("Decision Neural Net Train: " + str(try_selected_train_dic))
+
     return try_selected_train_dic, try_selected_test_dic

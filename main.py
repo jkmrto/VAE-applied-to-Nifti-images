@@ -210,6 +210,13 @@ for k_fold_index in range(1, n_folds + 1, 1):
 
     # End loop ozver regions
 
+    data = {}
+    data["test"]["data"] = test_score_matriz
+    data["test"]["label"] = Y_test
+    data["train"]["data"] = train_score_matriz
+    data["train"]["label"] = Y_train
+
+
     if bool_test:
         print("\nMatriz svm scores -> shapes, before complex majority vote")
         print("train matriz [patients x region]: " + str(
@@ -218,25 +225,9 @@ for k_fold_index in range(1, n_folds + 1, 1):
             test_score_matriz.shape))
 
     # COMPLEX MAJORITY VOTE
-    complex_means_train = np.row_stack(train_score_matriz.mean(axis=1))
-    complex_means_test = np.row_stack(test_score_matriz.mean(axis=1))
 
-    if bool_test:
-        print("TEST OVER FINAL RESULTS")
-        test_train_score = np.hstack(
-            (np.row_stack(complex_means_train), np.row_stack(Y_train)))
-        test_test_score = np.hstack(
-            (np.row_stack(complex_means_test), np.row_stack(Y_test)))
-        print(test_train_score)
-        print(test_test_score)
-
-    # COMPLEX MAJORITY VOTE
-    threshold = 0
-    _, complex_output_dic_train = simple_evaluation_output(complex_means_train,
-                                                           Y_train, threshold,
-                                                           bool_test=bool_test)
-    _, complex_output_dic_test = simple_evaluation_output(complex_means_test,
-                                                          Y_test, threshold,
+    complex_output_dic_test, complex_output_dic_train = \
+        evaluation_utils.complex_majority_vote_evaluation(data,
                                                           bool_test=bool_test)
 
     print("Output kfolds nº {}.".format(k_fold_index))
@@ -247,12 +238,14 @@ for k_fold_index in range(1, n_folds + 1, 1):
     complex_majority_vote_k_folds_results_train.append(complex_output_dic_train)
     complex_majority_vote_k_folds_results_test.append(complex_output_dic_test)
 
-    print("\nMatriz svm scores -> shapes, after complex majority vote")
-    print("train matriz [patients x regions]: " + str(train_score_matriz.shape))
-    print("test matriz scores [patients x regions]: " + str(
+    if bool_test:
+        print("\nMatriz svm scores -> shapes, after complex majority vote")
+        print("train matriz [patients x regions]: " + str(train_score_matriz.shape))
+        print("test matriz scores [patients x regions]: " + str(
         test_score_matriz.shape))
 
     # SIMPLE MAJORITY VOTE
+
     simple_output_dic_train, simple_output_dic_test = \
         evaluation_utils.simple_majority_vote(
             train_score_matriz, test_score_matriz, Y_train, Y_test,
@@ -270,37 +263,14 @@ for k_fold_index in range(1, n_folds + 1, 1):
     # The score matriz is in regions per patient, we should transpose it
     # in the svm process
 
-    print("SVM over weigthed regions shapes of data")
-    print("train_data" + str(train_score_matriz.shape))
-    print("test_data " + str(test_score_matriz.shape))
-    print("train labels" + str(Y_train.flatten().shape))
-
-    scores_train, scores_test, svm_coef = \
-        svm_utils.fit_svm_and_get_decision_for_requiered_data_and_coefs_associated(
-            train_score_matriz, Y_train.flatten(),
-            test_score_matriz)
-
-    # SVM weighted REGIONS RESULTS EVALUATION RESULTS
-    threshold = 0
-    _, weighted_output_dic_train = simple_evaluation_output(scores_train,
-                                                            Y_train, 0,
-                                                            bool_test=bool_test)
-    _, weighted_output_dic_test = simple_evaluation_output(scores_test,
-                                                           Y_test, 0,
-                                                           bool_test=bool_test)
-
-    aux_dic_regions_weight_coefs = {}
-    [aux_dic_regions_weight_coefs.update({str(region): coef}) for region, coef
-     in zip(list_regions, svm_coef)]
+    weighted_output_dic_test, weighted_output_dic_train, \
+    aux_dic_regions_weight_coefs = \
+        evaluation_utils.weighted_svm_decision_evaluation(data, list_regions,
+                                                          bool_test=bool_test)
 
     svm_weighted_regions_k_folds_results_train.append(weighted_output_dic_train)
     svm_weighted_regions_k_folds_results_test.append(weighted_output_dic_test)
     svm_weighted_regions_k_folds_coefs.append(aux_dic_regions_weight_coefs)
-
-    print("Output kfolds nº {}".format(k_fold_index))
-    print("Weighted SVM Vote Test: " + str(weighted_output_dic_test))
-    print("Weighted SVM  Vote Train: " + str(weighted_output_dic_train))
-    print("Weighted SVM  Coefs Gotten: " + str(aux_dic_regions_weight_coefs))
 
     # DECISION NEURAL NET
     print("Decision neural net step")
@@ -313,10 +283,6 @@ for k_fold_index in range(1, n_folds + 1, 1):
         leaky_net_utils.train_leaky_neural_net_various_tries_over_svm_output(
         decision_net_session_conf, architecture, HYPERPARAMS_decision_net,
         train_score_matriz, test_score_matriz, Y_train, Y_test, bool_test=False)
-
-    print("Intent selected:")
-    print("Decision Neural Net Test: " + str(net_test_dic))
-    print("Decision Neural Net Train: " + str(net_train_dic))
 
     decision_net_k_folds_results_train.append(net_train_dic)
     decision_net_vote_k_folds_results_test.append(net_test_dic)
