@@ -11,6 +11,7 @@ from lib.evaluation_utils import simple_evaluation_output
 from lib.evaluation_utils import get_average_over_metrics
 from lib import evaluation_utils
 from lib import output_utils
+from copy import deepcopy
 from shutil import copyfile
 import numpy as np
 import tarfile
@@ -19,8 +20,6 @@ from lib.neural_net.leaky_relu_decision_net import DecisionNeuralNet as \
     DecisionNeuralNet_leaky_relu_3layers_with_sigmoid
 from lib.neural_net.decision_neural_net import DecisionNeuralNet
 from lib.neural_net import leaky_net_utils
-
-
 
 session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
@@ -34,7 +33,8 @@ regions_used = "most_important"
 # Net Configuration
 middle_architecture = [1000, 500]
 #latent_code_dim_list = [5, 10 ,15]
-latent_code_dim_list = [2, 5, 8, 10, 25, 50, 75, 100, 125, 150, 175, 200]
+#latent_code_dim_list = [2, 5, 8, 10, 25, 50, 75, 100, 125, 150, 175, 200]
+latent_code_dim_list = [100]
 list_regions = session.select_regions_to_evaluate(regions_used)
 
 hyperparams_vae = {
@@ -56,7 +56,7 @@ vae_session_conf = {
 
 # DECISION NET CONFIGURATION
 decision_net_session_conf = {
-    "decision_net_tries": 1,
+    "decision_net_tries": 10,
     "field_to_select_try": "area under the curve",
     "max_iter": 100,
     "threshould_prefixed_to_0.5": True,
@@ -133,6 +133,10 @@ list_averages_complex_majority_vote = []
 for latent_dim in latent_code_dim_list:
     print("Evaluating the system with a latent code of {} dim".format(latent_dim))
 
+    temp_architecture = deepcopy(middle_architecture)
+    temp_architecture.extend([latent_dim])
+    print("Architecture selected: " + str(temp_architecture))
+
     # OUTPUT SETTINGS
     # OUTPUT: List of dictionaries
     complex_majority_vote_k_folds_results_train = []
@@ -171,11 +175,10 @@ for latent_dim in latent_code_dim_list:
         voxels_values['test'] = dict_norad_gm['stack'][test_index, :]
 
         print("Train over GM regions")
-        middle_architecture.extend([latent_dim])
         vae_output['gm'] = vae_over_regions_kfolds.execute(voxels_values,
                                                            hyperparams_vae,
                                                            vae_session_conf,
-                                                           middle_architecture,
+                                                           temp_architecture,
                                                            path_to_root_GM,
                                                            list_regions)
 
@@ -187,7 +190,7 @@ for latent_dim in latent_code_dim_list:
         vae_output['wm'] = vae_over_regions_kfolds.execute(voxels_values,
                                                            hyperparams_vae,
                                                            vae_session_conf,
-                                                           middle_architecture,
+                                                           temp_architecture,
                                                            path_to_root_WM,
                                                            list_regions)
         train_score_matriz, test_score_matriz = svm_utils.svm_over_vae_output(
