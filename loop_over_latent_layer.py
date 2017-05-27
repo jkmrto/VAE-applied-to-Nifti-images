@@ -25,7 +25,7 @@ session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
 
 # Meta settings.
-n_folds = 3
+n_folds = 10
 bool_test = False
 regions_used = "most_important"
 
@@ -33,8 +33,8 @@ regions_used = "most_important"
 # Net Configuration
 middle_architecture = [1000, 500]
 #latent_code_dim_list = [5, 10 ,15]
-#latent_code_dim_list = [2, 5, 8, 10, 25, 50, 75, 100, 125, 150, 175, 200]
-latent_code_dim_list = [100]
+latent_code_dim_list = [2, 5, 8, 10, 25, 50, 75, 100, 125, 150, 175, 200]
+#latent_code_dim_list = [100]
 list_regions = session.select_regions_to_evaluate(regions_used)
 
 hyperparams_vae = {
@@ -64,9 +64,9 @@ decision_net_session_conf = {
 
 HYPERPARAMS_decision_net = {
     "batch_size": 200,
-    "learning_rate": 1E-6,
+    "learning_rate": 1E-5,
     "lambda_l2_reg": 0.000001,
-    "dropout": 1,
+    "dropout": 0.9,
     "nonlinearity": tf.nn.relu,
 }
 
@@ -101,7 +101,7 @@ loop_output_path_session_description = os.path.join(
 
 tar_file_main_output_path = os.path.join(
     session_settings.path_kfolds_session_folder,
-    "main_out_session_{}.tar.gz".format(session_datetime))
+    "loop_over_dim_out_session_{}.tar.gz".format(session_datetime))
 
 list_paths_files_to_store = [loop_output_file_simple_majority_vote,
                              loop_output_file_complex_majority_vote,
