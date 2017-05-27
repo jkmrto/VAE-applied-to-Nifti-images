@@ -99,6 +99,16 @@ loop_output_path_session_description = os.path.join(
     session_settings.path_kfolds_session_folder,
     "session_description.csv")
 
+tar_file_main_output_path = os.path.join(
+    session_settings.path_kfolds_session_folder,
+    "main_out_session_{}.tar.gz".format(session_datetime))
+
+list_paths_files_to_store = [loop_output_file_simple_majority_vote,
+                             loop_output_file_complex_majority_vote,
+                             loop_output_file_decision_net,
+                             loop_output_file_weighted_svm,
+                             loop_output_path_session_description,
+                             loop_output_file_weighted_svm]
 
 # SESSION DESCRIPTOR ELLABORATION
 session_descriptor = {}
@@ -323,3 +333,8 @@ output_utils.print_dictionary_with_header(
     loop_output_file_weighted_svm,
     list_averages_svm_weighted)
 
+# Tarfile to group the results
+tar = tarfile.open(tar_file_main_output_path, "w:gz")
+for file in list_paths_files_to_store:
+    tar.add(file)
+tar.close()
