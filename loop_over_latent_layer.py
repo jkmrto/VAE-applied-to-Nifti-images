@@ -3,7 +3,7 @@ import os
 from lib import cv_utils
 from lib.mri import stack_NORAD
 from lib import session_helper as session
-from scripts.vae_loop_dim import session_settings
+from scripts.vae_loops_over_features import session_settings
 from scripts.vae_with_kfolds import vae_over_regions_kfolds
 from lib.mri.stack_NORAD import load_patients_labels
 from lib import svm_utils
