@@ -227,7 +227,8 @@ for k_fold_index in range(1, n_folds + 1, 1):
         svmw_per_svm_error_k_folds_results_test[str(svm_minimun_error)] = []
 
         train_score_matriz, test_score_matriz = svm_utils.svm_over_vae_output(
-            vae_output, Y_train, Y_test, list_regions, bool_test=bool_test)
+            vae_output, Y_train, Y_test, list_regions, bool_test=bool_test,
+            minimum_training_svm_error=svm_minimun_error)
 
         data = {}
         data["test"] = {}

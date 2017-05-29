@@ -5,9 +5,10 @@ import numpy as np
 
 def fit_svm_and_get_decision_for_requiered_data(X_train, Y_train, X_test,
                                                 decision_function_shape="None",
-                                                kernel="linear"):
+                                                kernel="linear",
+                                                minimum_training_svm_error=0.001):
     clf = svm.SVC(decision_function_shape=decision_function_shape,
-                  kernel=kernel)
+                  kernel=kernel, tol=minimum_training_svm_error)
     clf.fit(X_train, Y_train)
 
     # Testing time
@@ -110,7 +111,8 @@ def svm_over_vae_output(vae_output, Y_train, Y_test, list_regions, bool_test=Fal
             print("Test shape: " + str(wm_and_gm_test_data.shape))
 
         train_score, test_score = fit_svm_and_get_decision_for_requiered_data(
-            wm_and_gm_train_data, Y_train, wm_and_gm_test_data)
+            wm_and_gm_train_data, Y_train, wm_and_gm_test_data,
+            minimum_training_svm_error=minimum_training_svm_error)
 
         # [regions x patients] SVM results
         train_score_matriz[:, i] = train_score
