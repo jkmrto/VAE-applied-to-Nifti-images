@@ -86,7 +86,7 @@ def auto_execute():
 
 
 def execute(voxels_values, hyperparams, session_conf, after_input_architecture,
-            list_regions, path_to_root=None):
+            list_regions, path_to_root):
     """
 
     :param hyperparams:
@@ -100,10 +100,11 @@ def execute(voxels_values, hyperparams, session_conf, after_input_architecture,
 
     region_voxels_index_per_region = mri_atlas.load_atlas_mri()
 
+
     path_session_folder, path_to_grad_desc_error, \
     path_to_grad_desc_error_images, \
     path_to_encoding_out_test, path_to_encoding_out_train \
-        = init_session_folders(after_input_architecture, path_to_root)
+            = init_session_folders(after_input_architecture, path_to_root)
 
     # LOOP OVER REGIONS
     for region_selected in list_regions:
@@ -160,5 +161,61 @@ def execute(voxels_values, hyperparams, session_conf, after_input_architecture,
     return per_region_results
 
 
+def execute_without_any_logs(voxels_values, hyperparams, session_conf, after_input_architecture,
+            list_regions, path_to_root=None):
+    """
+
+    :param hyperparams:
+    :param session_settings:
+    :param path_to_root: It is the folder where the folder of the session
+    is going to be generated
+    :return:
+    """
+
+    per_region_results = {}
+    region_voxels_index_per_region = mri_atlas.load_atlas_mri()
+
+    # LOOP OVER REGIONS
+    for region_selected in list_regions:
+        print("Region Nº {} selected".format(region_selected))
+        voxels_index = region_voxels_index_per_region[region_selected]
+
+        # First map and the normalize to the unit the value of the pixels
+        # filtering voxels per region
+        region_voxels_values_train = voxels_values['train'][:, voxels_index]
+        region_voxels_values_test = voxels_values['test'][:, voxels_index]
+
+        if session_conf['bool_normalized']:
+            region_voxels_values_train, max_denormalize = \
+                utils.normalize_array(region_voxels_values_train)
+            region_voxels_values_test = region_voxels_values_test / max_denormalize
+
+        architecture = [region_voxels_values_train.shape[1]]
+        architecture.extend(after_input_architecture)
+
+        tf.reset_default_graph()
+        v = VAE.VAE(architecture, hyperparams)
+
+        region_suffix = 'region_' + str(region_selected)
+
+        v.train(region_voxels_values_train,
+                max_iter=session_conf["max_iter"],
+                suffix_files_generated=region_suffix,
+                iter_to_save=500, iters_to_show_error=session_conf['show_error_iter'])
+
+        # Script para pintar
+        print("Region {} Trained!".format(region_selected))
+
+        # ENCODING PHASE
+        # Encoding samples for the next step
+        train_output = v.encode(region_voxels_values_train)
+        test_output = v.encode(region_voxels_values_test)
+
+        per_region_results[str(region_selected)] = {}
+
+        per_region_results[str(region_selected)]['train_output'] = train_output
+        per_region_results[str(region_selected)]['test_output'] = test_output
+
+    return per_region_results
 
 #auto_execute()

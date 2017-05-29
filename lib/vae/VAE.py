@@ -187,7 +187,7 @@ class VAE():
         outfile = os.path.join(self.path_to_meta, suffix_file_saver_name)
         saver.save(self.session, outfile, global_step=self.step)
 
-    def training_end_output(self, saver, save_bool, last_avg_cost, suffix):
+    def training_end_output(self, last_avg_cost):
 
         print("final avg cost %1.5f" % (last_avg_cost))
         now = datetime.now().isoformat()[11:]

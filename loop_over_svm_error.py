@@ -24,6 +24,8 @@ from lib.neural_net import leaky_net_utils
 
 
 def format_output_data(dict_per_svm_error_kfold_outputs):
+
+    list_averages_results = []
     for key, value in dict_per_svm_error_kfold_outputs.items():
         extra_field = {"svm_minimun_error": str(key)}
 
@@ -32,11 +34,15 @@ def format_output_data(dict_per_svm_error_kfold_outputs):
 
         temp_averages_over_kfold_results.update(extra_field)
 
-        return temp_averages_over_kfold_results
+        list_averages_results.append(temp_averages_over_kfold_results)
+
+    return list_averages_results
 
 # Default SVM error 1e-3
 list_svm_errors = [0.1, 0.075, 0.05, 0.025, 0.01, 0.0075, 0.005, 0.00025, 0.001,
                    0.00005, 0.00001]
+
+#list_svm_errors = [0.1, 0.01, 0.001]
 
 session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
@@ -44,8 +50,8 @@ print("Time session init: {}".format(session_datetime))
 # Meta settings.
 n_folds = 10
 bool_test = False
-#regions_used = "most_important"
-regions_used = "three"
+regions_used = "most_important"
+#regions_used = "three"
 
 # Vae settings
 # Net Configuration
@@ -64,16 +70,16 @@ hyperparams_vae = {
 # Vae session cofiguration
 vae_session_conf = {
     "bool_normalized": True,
-    "max_iter": 10,
+    "max_iter": 100,
     "save_meta_bool": False,
     "show_error_iter": 10,
 }
 
 # DECISION NET CONFIGURATION
 decision_net_session_conf = {
-    "decision_net_tries": 10,
+    "decision_net_tries": 20,
     "field_to_select_try": "area under the curve",
-    "max_iter": 10,
+    "max_iter": 100,
     "threshould_prefixed_to_0.5": True,
 }
 
@@ -189,7 +195,7 @@ for k_fold_index in range(1, n_folds + 1, 1):
     voxels_values['test'] = dict_norad_gm['stack'][test_index, :]
 
     print("Train over GM regions")
-    vae_output['gm'] = vae_over_regions_kfolds.execute(voxels_values,
+    vae_output['gm'] = vae_over_regions_kfolds.execute_without_any_logs(voxels_values,
                                                        hyperparams_vae,
                                                        vae_session_conf,
                                                        after_architecture,
@@ -200,7 +206,7 @@ for k_fold_index in range(1, n_folds + 1, 1):
     voxels_values['test'] = dict_norad_wm['stack'][test_index, :]
 
     print("Train over WM regions")
-    vae_output['wm'] = vae_over_regions_kfolds.execute(voxels_values,
+    vae_output['wm'] = vae_over_regions_kfolds.execute_without_any_logs(voxels_values,
                                                        hyperparams_vae,
                                                        vae_session_conf,
                                                        after_architecture,
@@ -314,28 +320,23 @@ averages_nn = format_output_data(nn_per_svm_error_k_folds_results_test)
 
 averages_svmw = format_output_data(svmw_per_svm_error_k_folds_results_test)
 
-list_averages_simple_majority_vote.append(averages_sm)
-list_averages_complex_majority_vote.append(averages_cm)
-list_averages_decision_net.append(averages_nn)
-list_averages_svm_weighted.append(averages_svmw)
-
 # Outputs files
 # simple majority
 output_utils.print_dictionary_with_header(
     loop_output_file_simple_majority_vote,
-    list_averages_simple_majority_vote)
+    averages_sm)
 # complex majority
 output_utils.print_dictionary_with_header(
     loop_output_file_complex_majority_vote,
-    list_averages_complex_majority_vote)
+    averages_cm)
 
 output_utils.print_dictionary_with_header(
     loop_output_file_decision_net,
-    list_averages_decision_net)
+    averages_nn)
 
 output_utils.print_dictionary_with_header(
     loop_output_file_weighted_svm,
-    list_averages_svm_weighted)
+    averages_svmw)
 
 # Tarfile to group the results
 tar = tarfile.open(tar_file_main_output_path, "w:gz")
