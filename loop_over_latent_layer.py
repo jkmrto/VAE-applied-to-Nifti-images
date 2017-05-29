@@ -107,8 +107,7 @@ list_paths_files_to_store = [loop_output_file_simple_majority_vote,
                              loop_output_file_complex_majority_vote,
                              loop_output_file_decision_net,
                              loop_output_file_weighted_svm,
-                             loop_output_path_session_description,
-                             loop_output_file_weighted_svm]
+                             loop_output_path_session_description]
 
 # SESSION DESCRIPTOR ELLABORATION
 session_descriptor = {}

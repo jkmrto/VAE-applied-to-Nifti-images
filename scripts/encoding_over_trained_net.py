@@ -6,13 +6,13 @@ from lib.mri import mri_atlas
 from lib.aux_functionalities.os_aux import create_directories
 from lib import utils
 from lib.vae import VAE
-
+from lib import session_helper as session
 from lib.mri import stack_NORAD
 
 iden_session = "02_05_2017_21:09 arch: 1000_800_500_100_2"
 test_name = "Encoding session"
 regions_used = "most important"
-max_iter = 1000
+max_iter = 1500
 
 path_to_session = os.path.join(settings.path_to_general_out_folder,
                                iden_session)
@@ -26,12 +26,9 @@ create_directories([path_to_main_test, path_to_particular_test,
                     path_to_encoding_storage_folder])
 
 dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
+region_voxels_label = dict_norad['labels']
 
-list_regions = []
-if regions_used == "all":
-    list_regions = range(1, 85, 1)  # 117 regions en total -> limited to 85 in the session
-elif regions_used == "most important":
-    list_regions = settings.list_regions_evaluated
+list_regions = session.select_regions_to_evaluate(regions_used)
 
 for region_selected in list_regions:
     encoding_mean_file_saver = os.path.join(path_to_encoding_storage_folder,
@@ -45,7 +42,6 @@ for region_selected in list_regions:
     region_voxels_values = dict_norad['stack'][:, region_voxels_index]
     region_voxels_values, max_denormalize = utils.normalize_array(
         region_voxels_values)
-    region_voxels_label = dict_norad['labels']
 
     X_train = region_voxels_values
     Y_train = region_voxels_label
