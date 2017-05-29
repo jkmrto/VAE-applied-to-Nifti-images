@@ -3,7 +3,7 @@ import os
 from lib import cv_utils
 from lib.mri import stack_NORAD
 from lib import session_helper as session
-from scripts.vae_loops_over_features import session_settings
+from scripts.vae_sweep_over_features import loop_latent_layer_session_settings
 from scripts.vae_with_kfolds import vae_over_regions_kfolds
 from lib.mri.stack_NORAD import load_patients_labels
 from lib import svm_utils
@@ -71,8 +71,8 @@ HYPERPARAMS_decision_net = {
 }
 
 # Selecting the GM folder
-path_to_root_GM = session_settings.path_GM_folder
-path_to_root_WM = session_settings.path_WM_folder
+path_to_root_GM = loop_latent_layer_session_settings.path_GM_folder
+path_to_root_WM = loop_latent_layer_session_settings.path_WM_folder
 # Loading the stack of images
 dict_norad_gm = stack_NORAD.get_gm_stack()
 dict_norad_wm = stack_NORAD.get_wm_stack()
@@ -80,27 +80,27 @@ patient_labels = load_patients_labels()
 
 # OUTPUT: Files initialization
 loop_output_file_simple_majority_vote = os.path.join(
-    session_settings.path_kfolds_session_folder,
+    loop_latent_layer_session_settings.path_kfolds_session_folder,
     "loop_output_simple_majority_vote.csv")
 
 loop_output_file_complex_majority_vote = os.path.join(
-    session_settings.path_kfolds_session_folder,
+    loop_latent_layer_session_settings.path_kfolds_session_folder,
     "loop_output_complex_majority_vote.csv")
 
 loop_output_file_decision_net = os.path.join(
-    session_settings.path_kfolds_session_folder,
+    loop_latent_layer_session_settings.path_kfolds_session_folder,
     "loop_output_decision_net.csv")
 
 loop_output_file_weighted_svm = os.path.join(
-    session_settings.path_kfolds_session_folder,
+    loop_latent_layer_session_settings.path_kfolds_session_folder,
     "loop_output_weighted_svm.csv")
 
 loop_output_path_session_description = os.path.join(
-    session_settings.path_kfolds_session_folder,
+    loop_latent_layer_session_settings.path_kfolds_session_folder,
     "session_description.csv")
 
 tar_file_main_output_path = os.path.join(
-    session_settings.path_kfolds_session_folder,
+    loop_latent_layer_session_settings.path_kfolds_session_folder,
     "loop_over_dim_out_session_{}.tar.gz".format(session_datetime))
 
 list_paths_files_to_store = [loop_output_file_simple_majority_vote,
@@ -161,14 +161,14 @@ for latent_dim in latent_code_dim_list:
     svm_weighted_regions_k_folds_results_test = []
     svm_weighted_regions_k_folds_coefs = []
 
-    cv_utils.generate_k_fold(session_settings.path_kfolds_folder,
+    cv_utils.generate_k_fold(loop_latent_layer_session_settings.path_kfolds_folder,
                              dict_norad_gm['stack'], n_folds)
 
     for k_fold_index in range(1, n_folds + 1, 1):
         vae_output = {}
 
         train_index, test_index = cv_utils.get_train_and_test_index_from_k_fold(
-            session_settings.path_kfolds_folder, k_fold_index, n_folds)
+            loop_latent_layer_session_settings.path_kfolds_folder, k_fold_index, n_folds)
 
         Y_train = patient_labels[train_index]
         Y_test = patient_labels[test_index]
