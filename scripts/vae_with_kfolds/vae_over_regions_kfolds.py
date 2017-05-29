@@ -86,7 +86,7 @@ def auto_execute():
 
 
 def execute(voxels_values, hyperparams, session_conf, after_input_architecture,
-            path_to_root, list_regions):
+            list_regions, path_to_root=None):
     """
 
     :param hyperparams:
