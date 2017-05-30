@@ -39,7 +39,7 @@ def format_output_data(dict_per_svm_error_kfold_outputs):
     return list_averages_results
 
 # Default SVM error 1e-3
-list_svm_errors = [0.1, 0.075, 0.05, 0.025, 0.01, 0.0075, 0.005, 0.00025, 0.001,
+list_svm_errors = [1, 0.75, 0.5, 0.25, 0.1, 0.075, 0.05, 0.025, 0.01, 0.0075, 0.005, 0.00025, 0.001,
                    0.00005, 0.00001]
 
 #list_svm_errors = [0.1, 0.01, 0.001]
