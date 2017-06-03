@@ -143,4 +143,4 @@ session_descriptor_data = {"max_iter": max_iter,
                            "architecture:": "_".join(
                                str(x) for x in architecture)}
 session_descriptor_data.update(HYPERPARAMS)
-generate_session_descriptor(path_decision_session_folder, session_descriptor_data)
+session.generate_session_descriptor(path_decision_session_folder, session_descriptor_data)

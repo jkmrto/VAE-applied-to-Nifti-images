@@ -13,8 +13,8 @@ from lib import utils
 # iden_session = "02_05_2017_21:09 arch: 1000_800_500_100_2"
 iden_session = "03_05_2017_08:12 arch: 1000_800_500_100"
 test_name = "svm"
-# regions_used = "all"
-regions_used = "most important"
+regions_used = "all"
+#regions_used = "most important"
 iter_to_meta_load = 5000
 
 path_to_session = os.path.join(settings.path_to_general_out_folder,

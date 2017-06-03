@@ -10,6 +10,26 @@ from lib import session_helper as session
 from lib import regenerate_utils
 from lib.mri import stack_NORAD
 
+
+def evaluate_cubes_difference_by_planes(cube1, cube2, bool_test=False):
+
+   if bool_test:
+        print(cube1.shape)
+        print(cube2.shape)
+
+   cube_dif = cube1-cube2
+   cube_dif = cube_dif.__abs__()
+
+   pos_max = 0
+   max = 0
+   v1 = cube_dif.sum(axis=2).sum(axis=1)
+   v2 = cube_dif.sum(axis=2).sum(axis=0)
+   v3 = cube_dif.sum(axis=0).sum(axis=0)
+
+   return np.argmax(v1), np.argmax(v2), np.argmax(v3)
+
+
+# SESSION SETTINGS
 iden_session = "bueno_05_05_2017_08:19 arch: 1000_800_500_100"
 test_name = "Encoding session"
 regions_used = "all"
@@ -18,12 +38,13 @@ latent_layer_dim = 100
 n_intervals = 10
 norm_truncate = False
 
+# LOADING THE DATA
 dict_norad = stack_NORAD.get_gm_stack()
 patient_label = dict_norad['labels']
 list_regions = session.select_regions_to_evaluate(regions_used)
 atlas_mri = mri_atlas.load_atlas_mri()
 
-# Directory to the net saved
+# DIRECTORY TO THE NET SAVED
 path_to_session = os.path.join(settings.path_to_general_out_folder,
                                iden_session)
 path_to_meta_folder = os.path.join(path_to_session, "meta")
@@ -31,39 +52,34 @@ path_to_images_generated = os.path.join(path_to_session,
                                         "images_regenerated")
 create_directories([path_to_images_generated])
 
-# Truncate values over 1 to 1, and under 0 to 0,
-# because each voxels indicates the probability
-# of having or not grey matter, so the inteval
-# should be [0....1]
+img_index = 40
+sample_pos = dict_norad['stack'][-img_index,:]
+sample_neg = dict_norad['stack'][img_index,:]
 
-if norm_truncate:
-    dict_norad['stack'][dict_norad['stack'] < 0 ] = 0
-    dict_norad['stack'][dict_norad['stack'] > 1 ] = 1
-
-mean_mri_image_false_patients = \
-    regenerate_utils.get_mean_over_samples_images(dict_norad, 0)
-mean_mri_image_positive_patient = \
-    regenerate_utils.get_mean_over_samples_images(dict_norad, 1)
-
-# init matriz to store results
-#[nºregions *  dim_latent_layer]
 output = np.zeros(((n_intervals + 1), dict_norad['stack'].shape[1]))
+
+bool_normalize_per_ground_images = False
 
 for region_selected in list_regions:
 
+    region_voxels_index = atlas_mri[region_selected]
+
+    region_voxels_values = dict_norad['stack'][:, region_voxels_index]
+    _, max_denormalize = utils.normalize_array(region_voxels_values)
+
     print("Region {} selected".format(region_selected))
 
-    region_voxels_index = atlas_mri[region_selected]
-    f_reg_voxels_values = mean_mri_image_false_patients[region_voxels_index]
-    p_reg_voxels_values = mean_mri_image_positive_patient[region_voxels_index]
+    f_reg_voxels_values = sample_neg[region_voxels_index]/max_denormalize
+    p_reg_voxels_values = sample_pos[region_voxels_index]/max_denormalize
 
-    f_reg_voxels_values, max_denormalize_f = \
-        utils.normalize_array(f_reg_voxels_values)
+    if bool_normalize_per_ground_images:
+        f_reg_voxels_values, max_denormalize_f = \
+            utils.normalize_array(f_reg_voxels_values)
 
-    p_reg_voxels_values, max_denormalize_p = \
-        utils.normalize_array(p_reg_voxels_values)
+        p_reg_voxels_values, max_denormalize_p = \
+            utils.normalize_array(p_reg_voxels_values)
 
-    noramalize = max([max_denormalize_f, max_denormalize_p])
+        noramalize = max([max_denormalize_f, max_denormalize_p])
 
     suffix = 'region_' + str(region_selected)
     savefile = os.path.join(path_to_meta_folder,
@@ -92,7 +108,7 @@ for region_selected in list_regions:
 
     region_output = v.decode(zs=matriz_latent_codes[:,:])
 
-    output[:, region_voxels_index] = region_output * noramalize
+    output[:, region_voxels_index] = region_output * max_denormalize
 
 
 for index in range(0, n_intervals + 1, 1):

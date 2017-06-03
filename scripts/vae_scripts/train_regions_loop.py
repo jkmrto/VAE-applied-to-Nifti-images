@@ -1,9 +1,9 @@
 import tensorflow as tf
 from lib.aux_functionalities.os_aux import create_directories
-from lib.aux_functionalities.functions import generate_session_descriptor
 from datetime import datetime
 from lib.aux_functionalities import functions
 import settings
+from lib import session_helper as session
 import os
 from lib.mri import mri_atlas
 from lib.vae import VAE
@@ -60,49 +60,51 @@ HYPERPARAMS = {
     "squashing": tf.nn.sigmoid,
 }
 
-bool_normalized = True
+bool_normalized_per_region = False
+bool_norm_truncate = True
+bool_log_grad_desc_error = True
 max_denormalize = 1
 regions_used = "all"
-max_iter = 200
+max_iter = 1500
+after_input_architecture = [1000, 800, 500, 200]
+iter_to_save = 50
+iter_to_show_error = 10
 
-# region_voxels_index = mri_atlas.get_super_region_to_voxels()[region_name]
 dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
 region_voxels_index_per_region = mri_atlas.load_atlas_mri()
 
-architecture = [1000, 800, 500, 100]
 path_session_folder, path_to_grad_desc_error, \
-path_to_grad_desc_error_images = init_session_folders(architecture)
+path_to_grad_desc_error_images = init_session_folders(after_input_architecture)
 
 # SESSION DESCRIPTOR CREATION
-session_descriptor_data = {"voxeles normalized": str(bool_normalized),
+session_descriptor_data = {"bool_normalized_per_region": str(bool_normalized_per_region),
+                           "bool_normalized_truncate": str(bool_norm_truncate),
                            "max_iter": max_iter,
                            "voxels normalized by": str(max_denormalize),
                            "architecture:": "input_" + "_".join(
-                               str(x) for x in architecture),
+                               str(x) for x in after_input_architecture),
                            "regions used": str(regions_used)}
 session_descriptor_data.update(HYPERPARAMS)
-generate_session_descriptor(path_session_folder, session_descriptor_data)
+session.generate_session_descriptor(path_session_folder, session_descriptor_data)
 
-# LIST REGIONS SELECTION
-list_regions = []
-if regions_used == "all":
-    list_regions = region_voxels_index_per_region.keys()
-elif regions_used == "most important":
-    list_regions = settings.list_regions_evaluated
+list_regions = session.select_regions_to_evaluate(regions_used)
+
+if bool_norm_truncate:
+    dict_norad['stack'][dict_norad['stack'] < 0] = 0
+    dict_norad['stack'][dict_norad['stack'] > 1] = 1
 
 for region_selected in list_regions:
     print("Region Nº {} selected".format(region_selected))
     voxels_index = region_voxels_index_per_region[region_selected]
-    # We map the voxels indexes to his voxels value,
-    # which is stored in the Stacked previously loaded
-
-    # First map and the normalize to the unit the value of the pixels
     region_voxels_values = dict_norad['stack'][:, voxels_index]
 
-    if bool_normalized: region_voxels_values, max_denormalize = \
-        utils.normalize_array(region_voxels_values)
+    if bool_normalized_per_region:
+        region_voxels_values, max_denormalize =  \
+            utils.normalize_array(region_voxels_values)
 
-    architecture = [region_voxels_values.shape[1], 1000, 800, 500, 100]
+    architecture = [region_voxels_values.shape[1]]
+    architecture.extend(after_input_architecture)
+
     tf.reset_default_graph()
     v = VAE.VAE(architecture, HYPERPARAMS, path_to_session=path_session_folder)
 
@@ -110,10 +112,12 @@ for region_selected in list_regions:
 
     v.train(region_voxels_values, max_iter=max_iter,
             save_bool=True, suffix_files_generated=region_suffix,
-            iter_to_save=500, iters_to_show_error=100)
+            iter_to_save=iter_to_save, iters_to_show_error=iter_to_show_error,
+            bool_log_grad_desc_error=bool_log_grad_desc_error)
 
     # Script para pintar
     print("Region {} Trained!".format(region_selected))
 
-    plot_grad_desc_error_per_region(path_to_grad_desc_error, region_selected,
+    if bool_log_grad_desc_error:
+        plot_grad_desc_error_per_region(path_to_grad_desc_error, region_selected,
                                     path_to_grad_desc_error_images)

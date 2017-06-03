@@ -147,11 +147,11 @@ class VAE():
 
         # ops to directly explore latent space
         # defaults to prior z ~ N(0, I)
-        with tf.name_scope("latent_in"):
-            z_ = tf.placeholder_with_default(tf.random_normal([1, self.architecture[-1]]),
-                                             shape=[None, self.architecture[-1]],
-                                             name="latent_in")
-        x_reconstructed_ = compose_all(decoding)(z_)
+
+        z_ = tf.placeholder(tf.float32, shape=[None, self.architecture[-1]], name="latent_in")
+
+        x_reconstructed_ = tf.identity(compose_all(decoding)(z_),
+                                      name="x_reconstructed")
 
         return (x_in, dropout, z_mean, z_log_sigma, x_reconstructed,
                 z_, x_reconstructed_, cost, global_step, train_op)
@@ -172,10 +172,12 @@ class VAE():
         feed_dict = dict()
         if zs is not None:
             is_tensor = lambda x: hasattr(x, "eval")
-            zs = (self.session.run(zs) if is_tensor(zs) else zs)  # coerce to np.array
+            zs = (self.session.run(zs) if is_tensor(zs) else zs) # coerce to np.array
             feed_dict.update({self.z_: zs})
         # else, zs defaults to draw from conjugate prior z ~ N(0, I)
         return self.session.run(self.x_reconstructed_, feed_dict=feed_dict)
+
+
 
     def vae(self, x):
         """End-to-end autoencoder"""
