@@ -7,9 +7,9 @@ from lib.session_helper import plot_grad_desc_error_per_region
 from lib.cv_utils import generate_and_store_train_and_test_index
 import settings
 import os
-from lib.mri import mri_atlas
+from lib.data_loader import mri_atlas
 from lib.vae import VAE
-from lib.mri import stack_NORAD
+from lib.data_loader import MRI_stack_NORAD
 from lib import utils
 
 
@@ -64,7 +64,7 @@ path_to_grad_desc_error_images, path_to_cv = init_session_folders(
     after_input_architecture)
 
 # region_voxels_index = mri_atlas.get_super_region_to_voxels()[region_name]
-dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
+dict_norad = MRI_stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
 
 train_index = generate_and_store_train_and_test_index(dict_norad['stack'],
                                                       cv_rate, path_to_cv)

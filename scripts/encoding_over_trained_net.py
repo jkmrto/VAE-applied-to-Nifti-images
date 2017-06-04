@@ -2,12 +2,12 @@ import os
 import settings
 import tensorflow as tf
 import numpy
-from lib.mri import mri_atlas
+from lib.data_loader import mri_atlas
 from lib.aux_functionalities.os_aux import create_directories
 from lib import utils
 from lib.vae import VAE
 from lib import session_helper as session
-from lib.mri import stack_NORAD
+from lib.data_loader import MRI_stack_NORAD
 
 iden_session = "02_05_2017_21:09 arch: 1000_800_500_100_2"
 test_name = "Encoding session"
@@ -25,7 +25,7 @@ path_to_encoding_storage_folder = os.path.join(path_to_particular_test,
 create_directories([path_to_main_test, path_to_particular_test,
                     path_to_encoding_storage_folder])
 
-dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
+dict_norad = MRI_stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
 region_voxels_label = dict_norad['labels']
 
 list_regions = session.select_regions_to_evaluate(regions_used)

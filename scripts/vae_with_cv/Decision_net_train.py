@@ -1,7 +1,7 @@
 import os
 import settings as set
 import numpy as np
-from lib.mri.stack_NORAD import load_patients_labels
+from lib.data_loader.MRI_stack_NORAD import load_patients_labels
 from lib.aux_functionalities.os_aux import create_directories
 from lib.svm_utils import load_svm_output_score
 from lib.neural_net.decision_neural_net import DecisionNeuralNet

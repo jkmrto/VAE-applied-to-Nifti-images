@@ -1,5 +1,5 @@
 import numpy as np
-from lib.mri import stack_NORAD
+from lib.data_loader import MRI_stack_NORAD
 from lib import regenerate_utils
 
 
@@ -28,7 +28,7 @@ def evaluate_cubes_diference_by_planes(cube1, cube2, bool_test=False):
 #           max = cube_dif[index, : :].sum(axis=0).sum(axis=0)
            #print(max)
 def test():
-    dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
+    dict_norad = MRI_stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
     img_index = 40
     sample_pos = dict_norad['stack'][-img_index,:]
     sample_neg = dict_norad['stack'][img_index,:]
@@ -43,3 +43,5 @@ def test():
     cube1 = np.array([[[1,2],[3,4]],[[5,6],[7,8]]])
     cube2 = cube1.transpose()
     evaluate_cubes_diference_by_planes(mri_imag_3d_pos, mri_imag_3d_neg)
+
+

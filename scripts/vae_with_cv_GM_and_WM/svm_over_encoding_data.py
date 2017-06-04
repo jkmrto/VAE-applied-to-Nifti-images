@@ -10,7 +10,7 @@ from scripts.vae_with_cv_GM_and_WM import session_settings
 from lib import session_helper as session
 from scripts.vae_with_cv_GM_and_WM import session_settings
 from scripts.vae_with_cv_GM_and_WM import svm_session_settings as svm_session
-from lib.mri import stack_NORAD
+from lib.data_loader import MRI_stack_NORAD
 
 
 def generate_log_files_for_svm_execution(path_to_storage_folder):

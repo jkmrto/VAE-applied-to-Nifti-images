@@ -1,7 +1,6 @@
 import os
-import numpy as np
 from lib.aux_functionalities.os_aux import create_directories
-from lib.mri.mri_atlas_settings import super_regions_atlas
+from lib.data_loader.atlas_settings import super_regions_atlas
 
 
 def get_list_of_regions_evaluated(list_supper_region):
@@ -22,9 +21,12 @@ path_to_project = os.path.dirname(os.path.abspath(__file__))
 path_to_general_out_folder = os.path.join(path_to_project, "out")
 create_directories([path_to_general_out_folder])
 
-stack_path_GM = path_to_project + "/data/stack_NORAD_GM.mat"
-stack_path_WM = path_to_project + "/data/stack_NORAD_WM.mat"
-atlas_path = path_to_project + "/data/" + "ratlas116_MRI.nii"
+MRI_stack_path_GM = path_to_project + "/data/stack_NORAD_GM.mat"
+MRI_stack_path_WM = path_to_project + "/data/stack_NORAD_WM.mat"
+mri_atlas_path = path_to_project + "/data/" + "ratlas116_MRI.nii"
+
+PET_stack_path = path_to_project + "/data/PET_stack_NORAD.mat"
+pet_atlas_path = path_to_project + "/data/" + "ratlas116_PET.nii"
 
 # AUTOENCODER SESSION FOLDER AND FILES ASSOCIATED
 main_test_folder_autoencoder_session = "post_train"

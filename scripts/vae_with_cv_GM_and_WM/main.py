@@ -1,14 +1,14 @@
 import tensorflow as tf
 
 from lib import cv_utils
-from lib.mri import stack_NORAD
+from lib.data_loader import MRI_stack_NORAD
 from scripts.vae_with_cv_GM_and_WM import session_settings
 
 cv_rate = 0.8
 
 # Loading the stack of images
-dict_norad_gm = stack_NORAD.get_gm_stack()
-dict_norad_wm = stack_NORAD.get_wm_stack()
+dict_norad_gm = MRI_stack_NORAD.get_gm_stack()
+dict_norad_wm = MRI_stack_NORAD.get_wm_stack()
 
 # TEST AND TRAIN SPLIT DATASET
 # The indexes generated point to the same images of both stack WM and GM

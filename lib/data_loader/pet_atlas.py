@@ -1,4 +1,4 @@
-from lib.data_loader.mri_atlas_settings import super_regions_atlas
+from lib.data_loader.atlas_settings import super_regions_atlas
 import nibabel as nib
 import settings
 import numpy as np
@@ -6,7 +6,7 @@ import csv
 
 
 def load_atlas():
-    img = nib.load(settings.mri_atlas_path)
+    img = nib.load(settings.pet_atlas_path)
     img_data = img.get_data()
     atlasdata = img_data.flatten()
     bckvoxels = np.where(atlasdata != 0) #Sacamos los indices que no son 0
@@ -18,6 +18,7 @@ def load_atlas():
 
     return reg_idx
 
+atlas = load_atlas()
 
 def get_super_region_to_voxels():
     """

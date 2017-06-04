@@ -2,10 +2,10 @@ import tensorflow as tf
 from lib import svm_utils
 from lib.aux_functionalities.os_aux import create_directories
 import os
-from lib.mri import mri_atlas
+from lib.data_loader import mri_atlas
 import settings
 from lib.vae import VAE
-from lib.mri import stack_NORAD
+from lib.data_loader import MRI_stack_NORAD
 from sklearn.model_selection import train_test_split
 
 from lib import utils
@@ -57,7 +57,7 @@ train_index, test_index = svm_utils.get_train_and_test_index_from_files(path_to_
 
 
 # LOADING THE DATA
-dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
+dict_norad = MRI_stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
 # Loading Labels
 region_voxels_label = dict_norad['labels']
 Y_train = region_voxels_label[train_index]

@@ -1,9 +1,9 @@
 import os
 import tensorflow as tf
-from lib.mri import mri_atlas
+from lib.data_loader import mri_atlas
 from lib import session_helper as session
 from datetime import datetime
-from lib.mri import stack_NORAD
+from lib.data_loader import MRI_stack_NORAD
 from lib import cv_utils
 from lib import utils
 from lib.vae import VAE
@@ -75,7 +75,7 @@ def auto_execute():
     #path_cv_index_folder = session_settings.path_cv_folder
 
     # Selecting the wM folder
-    dict_norad = stack_NORAD.get_wm_stack()
+    dict_norad = MRI_stack_NORAD.get_wm_stack()
     path_to_root = session_settings.path_WM_folder
     path_cv_index_folder = session_settings.path_cv_folder
 

@@ -12,10 +12,36 @@ def get_stack():
     :return:
     """
     f = sio.loadmat(settings.PET_stack_path)
-    f.keys()
-    return {'labels': f['labels'], 'voxel_index': f['nobck_idx'], 'stack': f['stack_NORAD_GM'],
-            'imgsize':f['imgsize'].astype('uint32').tolist()[0], 'n_patients': len(f['labels'])}
+    # f -> dict_keys(['bmask', 'normtype', 'tu', 'thr', 'labels_conv', 'labels', '__globals__',
+    # 'nthr', 'maskind', 'atlas', 'stack_all_norm', 'CLASV', 'stack_PET', '__header__', '__version__',
+    # 'clastring', 'patient'])
 
+    images_size = [79, 95, 68]
+    full_images = f['stack_all_norm'] # [138 x 510340]
+    patient_labels = f['labels'] #[ 1x138]
+
+    return {'labels': patient_labels,
+            'stack': full_images,
+            'imgsize':images_size,
+            'n_patients': len(patient_labels)}
+
+
+def get_stack_reduced():
+    f = sio.loadmat(settings.PET_stack_path)
+    # f -> dict_keys(['bmask', 'normtype', 'tu', 'thr', 'labels_conv', 'labels', '__globals__',
+    # 'nthr', 'maskind', 'atlas', 'stack_all_norm', 'CLASV', 'stack_PET', '__header__', '__version__',
+    # 'clastring', 'patient'])
+
+    images_size = [79, 95, 68]
+    reduced_images = f['stack_PET'] # [138 x 182562]
+    reduce_index_to_full = f['maskind'] #[1 x 182562]
+    patient_labels = f['labels'] #[ 1x138]
+
+    return {'labels': patient_labels,
+            'stack': reduced_images,
+            'voxel_index': reduce_index_to_full,
+            'imgsize':images_size,
+            'n_patients': len(patient_labels)}
 
 def load_patients_labels():
     dict_norad = get_stack()  # 'stack' 'voxel_index' 'labels'

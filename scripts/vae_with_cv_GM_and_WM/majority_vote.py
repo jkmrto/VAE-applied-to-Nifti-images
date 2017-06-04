@@ -3,7 +3,7 @@ import settings
 from sklearn import metrics
 import matplotlib.pyplot as plt
 from sklearn.metrics import roc_curve
-from lib.mri.stack_NORAD import load_patients_labels
+from lib.data_loader.MRI_stack_NORAD import load_patients_labels
 from lib.svm_utils import load_svm_output_score
 from lib.aux_functionalities.os_aux import create_directories
 from lib.aux_functionalities.functions import print_dictionary

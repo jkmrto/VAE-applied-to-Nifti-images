@@ -1,4 +1,4 @@
-from lib.mri import stack_NORAD
+from lib.data_loader import MRI_stack_NORAD
 from lib import regenerate_utils as utils
 from matplotlib import pyplot as plt
 
@@ -7,7 +7,7 @@ import matplotlib
 matplotlib.get_backend()
 plt.interactive(False)
 
-dict_norad = stack_NORAD.get_gm_stack()
+dict_norad = MRI_stack_NORAD.get_gm_stack()
 
 # Truncate values over 1 to 1, and under 0 to 0
 dict_norad['stack'][dict_norad['stack'] < 0 ] = 0

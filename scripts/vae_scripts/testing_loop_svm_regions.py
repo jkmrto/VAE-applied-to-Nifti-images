@@ -3,10 +3,10 @@ from lib.aux_functionalities.os_aux import create_directories
 import os
 from lib import svm_utils
 from lib import session_helper
-from lib.mri import mri_atlas
+from lib.data_loader import mri_atlas
 import settings
 from lib.vae import VAE
-from lib.mri import stack_NORAD
+from lib.data_loader import MRI_stack_NORAD
 from lib import utils
 
 # SVM CONFIGURATION
@@ -30,7 +30,7 @@ per_region_accuracy_file = open(os.path.join(path_to_particular_test,
                                              "per_region_accuracy.log"), "w")
 
 # LOADING DATA
-dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
+dict_norad = MRI_stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
 atlas_mri = mri_atlas.load_atlas_mri()
 region_voxels_label = dict_norad['labels']
 Y_train = region_voxels_label

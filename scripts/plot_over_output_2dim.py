@@ -1,7 +1,7 @@
 import os
 import numpy
 import settings
-from lib.mri import stack_NORAD
+from lib.data_loader import MRI_stack_NORAD
 from lib.aux_functionalities.os_aux import create_directories
 from matplotlib import pyplot as plt
 
@@ -22,7 +22,7 @@ path_to_cluster_images = os.path.join(path_to_particular_test, "images")
 
 create_directories([path_to_cluster_images])
 
-dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
+dict_norad = MRI_stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
 region_voxels_label = dict_norad['labels']
 
 list_regions = []

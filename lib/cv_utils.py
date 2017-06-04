@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from lib.mri.stack_NORAD import load_patients_labels
+from lib.data_loader.MRI_stack_NORAD import load_patients_labels
 
 train_index_file = "train_index_to_stack.csv"
 test_index_file = "test_index_to_stack.csv"

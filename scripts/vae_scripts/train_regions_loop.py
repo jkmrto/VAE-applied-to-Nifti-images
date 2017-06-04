@@ -5,9 +5,9 @@ from lib.aux_functionalities import functions
 import settings
 from lib import session_helper as session
 import os
-from lib.mri import mri_atlas
+from lib.data_loader import mri_atlas
 from lib.vae import VAE
-from lib.mri import stack_NORAD
+from lib.data_loader import MRI_stack_NORAD
 from lib import utils
 
 
@@ -70,7 +70,7 @@ after_input_architecture = [1000, 800, 500, 200]
 iter_to_save = 50
 iter_to_show_error = 10
 
-dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
+dict_norad = MRI_stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
 region_voxels_index_per_region = mri_atlas.load_atlas_mri()
 
 path_session_folder, path_to_grad_desc_error, \

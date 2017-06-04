@@ -1,8 +1,10 @@
+# Reconstructor over all images
+
 import os
 import settings
 import tensorflow as tf
 import numpy as np
-from lib.mri import mri_atlas
+from lib.data_loader import mri_atlas
 from lib.aux_functionalities.os_aux import create_directories
 from lib import utils
 from lib.vae import VAE
@@ -10,7 +12,7 @@ from lib import session_helper as session
 from lib import regenerate_utils
 from lib import regenerate_utils
 from matplotlib import pyplot as plt
-from lib.mri import stack_NORAD
+from lib.data_loader import MRI_stack_NORAD
 
 iden_session = "02_06_2017_23:20_arch:_1000_800_500_200"
 test_name = "Encoding session"
@@ -21,7 +23,7 @@ bool_norm_truncate = True
 bool_normalize_per_ground_images = False
 
 # LOADING THE DATA
-dict_norad = stack_NORAD.get_gm_stack()
+dict_norad = MRI_stack_NORAD.get_gm_stack()
 patient_label = dict_norad['labels']
 list_regions = session.select_regions_to_evaluate(regions_used)
 atlas_mri = mri_atlas.load_atlas_mri()
@@ -32,13 +34,16 @@ path_to_session = os.path.join(settings.path_to_general_out_folder,
 path_to_meta_folder = os.path.join(path_to_session, "meta")
 path_to_images_generated = os.path.join(path_to_session,
                                         "images_regenerated")
+
 create_directories([path_to_images_generated])
 
 if bool_norm_truncate:
     dict_norad['stack'][dict_norad['stack'] < 0] = 0
     dict_norad['stack'][dict_norad['stack'] > 1] = 1
 
-all_images = dict_norad['stack']
+img_index = 40
+sample_pos = dict_norad['stack'][-img_index,:]
+sample_neg = dict_norad['stack'][img_index,:]
 
 images_reconstructed = np.zeros([dict_norad['stack'].shape[0], dict_norad['stack'].shape[1]])
 
@@ -52,7 +57,6 @@ for region_selected in list_regions:
         _, max_denormalize = utils.normalize_array(region_voxels_values)
 
     print("Region {} selected".format(region_selected))
-
 
     suffix = 'region_' + str(region_selected)
     savefile = os.path.join(path_to_meta_folder,

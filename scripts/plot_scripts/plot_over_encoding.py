@@ -3,10 +3,10 @@ import settings
 import tensorflow as tf
 import numpy
 from sklearn.decomposition import PCA
-from lib.mri import mri_atlas
+from lib.data_loader import mri_atlas
 from lib.aux_functionalities.os_aux import create_directories
 from matplotlib import pyplot as plt
-from lib.mri import stack_NORAD
+from lib.data_loader import MRI_stack_NORAD
 from lib import utils
 
 test_name = "Encoding session"
@@ -28,7 +28,7 @@ path_to_output = os.path.join(path_to_pca_over_encoding, "output")
 create_directories([path_to_pca_over_encoding, path_to_images, path_to_output])
 
 # We load the labels in order to assign the colour in the graph
-dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
+dict_norad = MRI_stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
 region_voxels_label = dict_norad['labels']
 
 list_regions = []

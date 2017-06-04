@@ -8,7 +8,7 @@ import nibabel as nib
 plt.interactive(False)
 
 print("Loading stack_NORAD_GM")
-f = sio.loadmat(settings.stack_path_GM)
+f = sio.loadmat(settings.MRI_stack_path_GM)
 images_stack = f['stack_NORAD_GM']
 
 imgsize = f['imgsize'].astype('uint32')
@@ -21,7 +21,7 @@ plt.imshow(mri_image_3d[:,50,:], cmap="Greys")
 plt.show()
 
 
-img = nib.load(settings.atlas_path)
+img = nib.load(settings.mri_atlas_path)
 img_data = img.get_data()
 atlasdata = img_data.flatten()
 bckvoxels = np.where(atlasdata != 0)

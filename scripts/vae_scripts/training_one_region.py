@@ -2,9 +2,9 @@ import tensorflow as tf
 import numpy as np
 from lib.aux_functionalities import os_aux
 import settings
-from lib.mri import mri_atlas
+from lib.data_loader import mri_atlas
 from lib.vae import VAE
-from lib.mri import stack_NORAD
+from lib.data_loader import MRI_stack_NORAD
 from lib import utils
 
 os_aux.create_directories(settings.List_of_dir)
@@ -14,7 +14,7 @@ super_region_name = 'frontal_lobe_val'
 region_selected = 8
 region_voxels_index = mri_atlas.load_atlas_mri()[region_selected]
 #region_voxels_index = mri_atlas.get_super_region_to_voxels()[region_name]
-dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
+dict_norad = MRI_stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
 
 # Los voxeles dados por el mapa en las regions vienen ya referidos a su posicion sin background
 # Por lo tanto, en una red neuronal no convolucional no hace falta reconstruir la imagen,

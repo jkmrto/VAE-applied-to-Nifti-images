@@ -1,11 +1,11 @@
 import tensorflow as tf
 import os
 from lib import cv_utils
-from lib.mri import stack_NORAD
+from lib.data_loader import MRI_stack_NORAD
 from lib import session_helper as session
 from scripts.vae_with_kfolds import session_settings
 from scripts.vae_with_kfolds import vae_over_regions_kfolds
-from lib.mri.stack_NORAD import load_patients_labels
+from lib.data_loader.MRI_stack_NORAD import load_patients_labels
 from lib import svm_utils
 from lib.evaluation_utils import simple_evaluation_output
 from lib.evaluation_utils import get_average_over_metrics
@@ -130,8 +130,8 @@ list_paths_files_to_store = [k_fold_output_file_simple_majority_vote,
 path_to_root_GM = session_settings.path_GM_folder
 path_to_root_WM = session_settings.path_WM_folder
 # Loading the stack of images
-dict_norad_gm = stack_NORAD.get_gm_stack()
-dict_norad_wm = stack_NORAD.get_wm_stack()
+dict_norad_gm = MRI_stack_NORAD.get_gm_stack()
+dict_norad_wm = MRI_stack_NORAD.get_wm_stack()
 patient_labels = load_patients_labels()
 
 

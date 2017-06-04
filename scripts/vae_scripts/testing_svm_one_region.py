@@ -1,10 +1,10 @@
 import tensorflow as tf
 from sklearn import svm
 from sklearn.metrics import confusion_matrix
-from lib.mri import mri_atlas
+from lib.data_loader import mri_atlas
 import settings
 from lib.vae import VAE
-from lib.mri import stack_NORAD
+from lib.data_loader import MRI_stack_NORAD
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
 
@@ -30,7 +30,7 @@ def normalize_array(array):
 
 region_selected = 8
 region_voxels_index = mri_atlas.load_atlas_mri()[region_selected]
-dict_norad = stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
+dict_norad = MRI_stack_NORAD.get_gm_stack()  # 'stack' 'voxel_index' 'labels'
 
 
 region_voxels_values = dict_norad['stack'][:, region_voxels_index]
