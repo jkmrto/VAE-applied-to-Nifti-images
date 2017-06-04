@@ -1,12 +1,12 @@
-from lib.mri.mri_atlas_settings import super_regions_atlas
+from lib.data_loader.mri_atlas_settings import super_regions_atlas
 import nibabel as nib
 import settings
 import numpy as np
 import csv
 
 
-def load_atlas_mri():
-    img = nib.load(settings.atlas_path)
+def load_atlas():
+    img = nib.load(settings.mri_atlas_path)
     img_data = img.get_data()
     atlasdata = img_data.flatten()
     bckvoxels = np.where(atlasdata != 0) #Sacamos los indices que no son 0
@@ -26,7 +26,7 @@ def get_super_region_to_voxels():
     their voxels associated
     :return:
     """
-    regions_dict = load_atlas_mri()  # dictionary
+    regions_dict = load_atlas()  # dictionary
     super_region_atlas_voxels = {}
     for super_region_key, regions_included in super_regions_atlas.items():
         super_region_atlas_voxels[super_region_key] = \
@@ -50,7 +50,7 @@ def generate_super_regions_csv_template():
 
 
 def generate_regions_csv_template():
-    regions_dict = load_atlas_mri()
+    regions_dict = load_atlas()
 
     with open('regions_neural_net_setting.template.csv', 'w+') as file:
         fieldnames = ['region', 'n_voxels', 'input_layer', 'first_layer', 'second_layer', 'latent_layer']
