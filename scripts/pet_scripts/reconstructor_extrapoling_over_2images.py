@@ -9,19 +9,19 @@ from lib.vae import VAE
 from lib import session_helper as session
 from lib import regenerate_utils
 from matplotlib import pyplot as plt
-from lib.data_loader import MRI_stack_NORAD
+from lib.data_loader import PET_stack_NORAD
 
 
-iden_session = "02_06_2017_23:20_arch:_1000_800_500_200"
+#iden_session = "02_06_2017_23:20_arch:_1000_800_500_200"
 test_name = "Encoding session"
 regions_used = "all"
 max_iter = 1500
-latent_layer_dim = 200
+latent_layer_dim = 100
 bool_norm_truncate = True
 bool_normalize_per_ground_images = False
 
 # LOADING THE DATA
-dict_norad = MRI_stack_NORAD.get_gm_stack()
+dict_norad = PET_stack_NORAD.get_stack()
 patient_label = dict_norad['labels']
 list_regions = session.select_regions_to_evaluate(regions_used)
 atlas_mri = mri_atlas.load_atlas_mri()
