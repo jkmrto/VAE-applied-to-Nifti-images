@@ -6,7 +6,6 @@ from lib.data_loader import PET_stack_NORAD
 from lib import session_helper as session
 from scripts.vae_with_kfolds import session_settings
 from scripts.vae_with_kfolds import vae_over_regions_kfolds
-from lib.data_loader.MRI_stack_NORAD import load_patients_labels
 from lib import svm_utils
 from lib.data_loader import mri_atlas
 from lib.data_loader import pet_atlas
@@ -29,7 +28,7 @@ images_used = "PET"
 # Meta settings.
 n_folds = 10
 bool_test = False
-regions_used = "all"
+regions_used = "most_important"
 
 # Vae settings
 # Net Configuration
@@ -179,12 +178,13 @@ if images_used == "PET":
     dict_norad_pet = PET_stack_NORAD.get_full_stack()  # 'stack' 'voxel_index' 'labels'
     region_voxels_index_per_region = pet_atlas.load_atlas()
     patient_labels = PET_stack_NORAD.load_patients_labels()
-    atlas = mri_atlas.load_atlas_mri()
+    atlas = pet_atlas.load_atlas()
+
 elif images_used == "MRI":
     # Loading the stack of images
     dict_norad_mri_gm = MRI_stack_NORAD.get_gm_stack()
     dict_norad_mri_wm = MRI_stack_NORAD.get_wm_stack()
-    patient_labels = load_patients_labels()
+    patient_labels = MRI_stack_NORAD.load_patients_labels()
     atlas = pet_atlas.load_atlas()
 
 # Load regions index and create kfolds folder
@@ -269,7 +269,6 @@ for k_fold_index in range(1, n_folds + 1, 1):
     data["test"]["label"] = Y_test
     data["train"]["data"] = train_score_matriz
     data["train"]["label"] = Y_train
-
 
     if bool_test:
         print("\nMatriz svm scores -> shapes, After svm before qualifying")

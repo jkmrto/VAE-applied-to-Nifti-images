@@ -11,3 +11,4 @@ sshpass -p "DircOwz1" scp  /media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/
 
 
 
+sshpass -p "DircOwz1" scp /media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/data/* jcmartinez@150.214.59.226:/mnt/datos/home/jcmartinez/VAN-applied-to-Nifti-images/data/
