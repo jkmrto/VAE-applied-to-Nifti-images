@@ -2,19 +2,18 @@ import os
 import settings
 import tensorflow as tf
 import numpy as np
-from lib.data_loader import mri_atlas
+from lib.data_loader import pet_atlas
 from lib.aux_functionalities.os_aux import create_directories
-from lib import utils
 from lib.vae import VAE
 from lib import session_helper as session
 from lib import regenerate_utils
-from matplotlib import pyplot as plt
 from lib.data_loader import PET_stack_NORAD
 
 
-#iden_session = "02_06_2017_23:20_arch:_1000_800_500_200"
+iden_session = "PET_04_06_2017_21:34_arch:_1000_500_100"
 test_name = "Encoding session"
 regions_used = "all"
+#regions_used = "three"
 max_iter = 1500
 latent_layer_dim = 100
 bool_norm_truncate = True
@@ -24,7 +23,7 @@ bool_normalize_per_ground_images = False
 dict_norad = PET_stack_NORAD.get_stack()
 patient_label = dict_norad['labels']
 list_regions = session.select_regions_to_evaluate(regions_used)
-atlas_mri = mri_atlas.load_atlas_mri()
+atlas_mri = pet_atlas.load_atlas()
 
 # DIRECTORY TO THE NET SAVED
 path_to_session = os.path.join(settings.path_to_general_out_folder,
@@ -117,6 +116,7 @@ for index in range(0, images_reconstructed.shape[0], 1):
         title=labels[index], index_section_to_plot=77,
         path_to_3d_reconstruction = os.path.join(
             path_to_images_generated_own_folder,
-            "{}.nii.gz".format(labels[index])))
+            "{}.nii.gz".format(labels[index])),
+        reshape_order="F")
 
 

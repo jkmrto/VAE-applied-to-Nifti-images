@@ -33,7 +33,8 @@ regions_used = "most_important"
 # Net Configuration
 middle_architecture = [1000, 500]
 #latent_code_dim_list = [5, 10 ,15]
-latent_code_dim_list = [2, 5, 8, 10, 25, 50, 75, 100, 125, 150, 175, 200]
+latent_code_dim_list = [2, 5, 8, 10, 25, 50, 75, 100, 125, 150, 175, 200, 225,
+                        250, 275, 300, 325, 350, 375, 400]
 #latent_code_dim_list = [100]
 list_regions = session.select_regions_to_evaluate(regions_used)
 
@@ -140,6 +141,8 @@ list_averages_decision_net = []
 list_averages_complex_majority_vote = []
 
 for latent_dim in latent_code_dim_list:
+
+    
     print("Evaluating the system with a latent code of {} dim".format(latent_dim))
 
     temp_architecture = deepcopy(middle_architecture)

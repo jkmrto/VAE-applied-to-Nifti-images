@@ -3,12 +3,12 @@ import nibabel as nib
 from matplotlib import pyplot as plt
 
 
-def reconstruct_3d_image(image_flatten, voxels_index, imgsize):
+def reconstruct_3d_image(image_flatten, voxels_index, imgsize, reshape_order="C"):
 
-    print(imgsize)
-    mri_image = np.zeros(imgsize[0] * imgsize[1] * imgsize[2])
+    mri_image = np.zeros(imgsize)
+    mri_image = mri_image.flatten()
     mri_image[voxels_index] = image_flatten
-    mri_image_3d = mri_image.reshape(121, 145, 121)
+    mri_image_3d = np.reshape(mri_image, imgsize, reshape_order)
 
     return mri_image_3d
 
@@ -31,10 +31,12 @@ def plot_and_save_mri_section(image_mri_3d, index_section, png_name):
 
 
 def plot_and_save_fig(flat_image, dict_norad, path_to_image, title="",
-                      index_section_to_plot=77, path_to_3d_reconstruction=None):
+                      index_section_to_plot=77, path_to_3d_reconstruction=None,
+                      reshape_order="C"):
 
     image_reconstructed_3d  = reconstruct_3d_image(flat_image,
-            dict_norad['voxel_index'], dict_norad['imgsize'])
+            dict_norad['voxel_index'], dict_norad['imgsize'],
+            reshape_order=reshape_order)
 
     plt.figure()
     plt.imshow(image_reconstructed_3d[:,index_section_to_plot,:], cmap="Greys")
@@ -44,3 +46,4 @@ def plot_and_save_fig(flat_image, dict_norad, path_to_image, title="",
     if path_to_3d_reconstruction is not None:
         img = nib.Nifti1Image(image_reconstructed_3d, np.eye(4))
         img.to_filename(path_to_3d_reconstruction)
+

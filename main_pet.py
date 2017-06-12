@@ -8,6 +8,8 @@ from scripts.vae_with_kfolds import session_settings
 from scripts.vae_with_kfolds import vae_over_regions_kfolds
 from lib.data_loader.MRI_stack_NORAD import load_patients_labels
 from lib import svm_utils
+from lib.data_loader import mri_atlas
+from lib.data_loader import pet_atlas
 from lib.evaluation_utils import simple_evaluation_output
 from lib.evaluation_utils import get_average_over_metrics
 from lib import evaluation_utils
@@ -17,14 +19,17 @@ import numpy as np
 import tarfile
 from datetime import datetime
 from lib.neural_net import leaky_net_utils
+from lib.data_loader import pet_atlas
+import settings
+from lib.aux_functionalities.os_aux import create_directories
 
-
-images_used = "MRI"
+#images_used = "MRI"
+images_used = "PET"
 
 # Meta settings.
-n_folds = 3
+n_folds = 10
 bool_test = False
-regions_used = "three"
+regions_used = "all"
 
 # Vae settings
 # Net Configuration
@@ -42,7 +47,7 @@ hyperparams_vae = {
 # Vae session cofiguration
 vae_session_conf = {
     "bool_normalized": True,
-    "max_iter": 20,
+    "max_iter": 100,
     "save_meta_bool": False,
     "show_error_iter": 10,
 }
@@ -56,7 +61,7 @@ decision_net_session_conf = {
 }
 
 HYPERPARAMS_decision_net = {
-    "batch_size": 200,
+    "batch_size": 50,
     "learning_rate": 1E-6,
     "lambda_l2_reg": 0.000001,
     "dropout": 1,
@@ -82,13 +87,25 @@ svm_weighted_regions_k_folds_results_train = []
 svm_weighted_regions_k_folds_results_test = []
 svm_weighted_regions_k_folds_coefs = []
 
+
+# OUTPUT: Folder initialization
+Kfolds_folder = "Kfolds index"
+session_name = "Full_classification_session_with_k-folds"
+path_session_folder = os.path.join(
+    settings.path_to_general_out_folder,
+    session_name)
+
+path_kfolds_folder = os.path.join(path_session_folder, Kfolds_folder)
+create_directories([path_session_folder,path_kfolds_folder])
+
+
 # OUTPUT: Files initialization
 k_fold_output_file_simple_majority_vote = os.path.join(
-    session_settings.path_kfolds_session_folder,
+    path_session_folder,
     "k_fold_output_simple_majority_vote.csv")
 
 k_fold_output_file_complex_majority_vote = os.path.join(
-    session_settings.path_kfolds_session_folder,
+    path_session_folder,
     "k_fold_output_complex_majority_vote.csv")
 
 k_fold_output_file_decision_net = os.path.join(
@@ -96,27 +113,27 @@ k_fold_output_file_decision_net = os.path.join(
     "k_fold_output_decision_net.csv")
 
 k_fold_output_file_weighted_svm = os.path.join(
-    session_settings.path_kfolds_session_folder,
+    path_session_folder,
     "k_fold_output_weighted_svm.csv")
 
 k_fold_output_file_coefs_weighted_svm = os.path.join(
-    session_settings.path_kfolds_session_folder,
+    path_session_folder,
     "k_fold_output_coefs_weighted_svm.csv")
 
 k_fold_output_path_session_description = os.path.join(
-    session_settings.path_kfolds_session_folder,
+    path_session_folder,
     "session_description.csv")
 
 k_fold_output_resume_path = os.path.join(
-    session_settings.path_kfolds_session_folder,
+    path_session_folder,
     "resume.csv")
 
 tar_file_main_output_path = os.path.join(
-    session_settings.path_kfolds_session_folder,
+    path_session_folder,
     "main_out_session_{}.tar.gz".format(session_datetime))
 
 tar_file_main_output_path_replica = os.path.join(
-    session_settings.path_kfolds_session_folder,
+    path_session_folder,
     "last_session_main_out.tar.gz".format(session_datetime))
 
 list_paths_files_to_store = [k_fold_output_file_simple_majority_vote,
@@ -127,10 +144,9 @@ list_paths_files_to_store = [k_fold_output_file_simple_majority_vote,
                              k_fold_output_file_weighted_svm,
                              k_fold_output_file_coefs_weighted_svm]
 
-<
-
 # Session descriptor elaboration
-session_descriptor = {}
+session_descritpr = {}
+session_descriptor = {"Images Used": "Pet Images"}
 session_descriptor['meta settings'] = {"n_folds": n_folds,
                                        "bool_test": bool_test,
                                        "regions_used": regions_used}
@@ -152,10 +168,34 @@ output_utils.print_recursive_dict(session_descriptor,
                                   file=file_session_descriptor)
 file_session_descriptor.close()
 
+# Loading data
+
+dict_norad_pet = {}
+dict_norad_mri_gm = {}
+dict_norad_mri_wm = {}
+atlas = {}
+
+if images_used == "PET":
+    dict_norad_pet = PET_stack_NORAD.get_full_stack()  # 'stack' 'voxel_index' 'labels'
+    region_voxels_index_per_region = pet_atlas.load_atlas()
+    patient_labels = PET_stack_NORAD.load_patients_labels()
+    atlas = mri_atlas.load_atlas_mri()
+elif images_used == "MRI":
+    # Loading the stack of images
+    dict_norad_mri_gm = MRI_stack_NORAD.get_gm_stack()
+    dict_norad_mri_wm = MRI_stack_NORAD.get_wm_stack()
+    patient_labels = load_patients_labels()
+    atlas = pet_atlas.load_atlas()
+
 # Load regions index and create kfolds folder
 list_regions = session.select_regions_to_evaluate(regions_used)
-cv_utils.generate_k_fold(session_settings.path_kfolds_folder,
-                         dict_norad_gm['stack'], n_folds)
+
+if images_used == "PET":
+    cv_utils.generate_k_fold(session_settings.path_kfolds_folder,
+                             dict_norad_pet['stack'].shape[0], n_folds)
+elif images_used == "MRI":
+    cv_utils.generate_k_fold(session_settings.path_kfolds_folder,
+                             dict_norad_mri_gm['stack'].shape[0], n_folds)
 
 # Main Loop
 for k_fold_index in range(1, n_folds + 1, 1):
@@ -173,32 +213,54 @@ for k_fold_index in range(1, n_folds + 1, 1):
     print("Number test samples {}".format(len(test_index)))
     print("Number train samples {}".format(len(train_index)))
 
-    voxels_values = {}
-    voxels_values['train'] = dict_norad_gm['stack'][train_index, :]
-    voxels_values['test'] = dict_norad_gm['stack'][test_index, :]
+    if images_used == "MRI":
 
-    print("Train over GM regions")
-    vae_output['gm'] = vae_over_regions_kfolds.execute(voxels_values,
-                                                       hyperparams_vae,
-                                                       vae_session_conf,
-                                                       after_input_architecture,
-                                                       path_to_root_GM,
-                                                       list_regions)
+        voxels_values = {}
+        voxels_values['train'] = dict_norad_mri_gm['stack'][train_index, :]
+        voxels_values['test'] = dict_norad_mri_gm['stack'][test_index, :]
 
-    voxels_values = {}
-    voxels_values['train'] = dict_norad_wm['stack'][train_index, :]
-    voxels_values['test'] = dict_norad_wm['stack'][test_index, :]
+        print("Train over GM regions")
+        vae_output['gm'] = vae_over_regions_kfolds.execute_without_any_logs(
+            voxels_values,
+            hyperparams_vae,
+            vae_session_conf,
+            atlas,
+            after_input_architecture,
+            list_regions)
 
-    print("Train over WM regions")
-    vae_output['wm'] = vae_over_regions_kfolds.execute(voxels_values,
-                                                       hyperparams_vae,
-                                                       vae_session_conf,
-                                                       after_input_architecture,
-                                                       path_to_root_WM,
-                                                       list_regions)
+        voxels_values = {}
+        voxels_values['train'] = dict_norad_mri_wm['stack'][train_index, :]
+        voxels_values['test'] = dict_norad_mri_wm['stack'][test_index, :]
 
-    train_score_matriz, test_score_matriz = svm_utils.svm_over_vae_output(
-        vae_output, Y_train, Y_test, list_regions, bool_test=bool_test)
+        print("Train over WM regions")
+        vae_output['wm'] = vae_over_regions_kfolds.execute_without_any_logs(
+            voxels_values,
+            hyperparams_vae,
+            vae_session_conf,
+            atlas,
+            after_input_architecture,
+            list_regions)
+
+        train_score_matriz, test_score_matriz = svm_utils.svm_mri_over_vae_output(
+            vae_output, Y_train, Y_test, list_regions, bool_test=bool_test)
+
+    if images_used == "PET":
+
+        voxels_values = {}
+        voxels_values['train'] = dict_norad_pet['stack'][train_index, :]
+        voxels_values['test'] = dict_norad_pet['stack'][test_index, :]
+
+        print("Train over regions")
+        vae_output = vae_over_regions_kfolds.execute_without_any_logs(
+            voxels_values,
+            hyperparams_vae,
+            vae_session_conf,
+            atlas,
+            after_input_architecture,
+            list_regions)
+
+        train_score_matriz, test_score_matriz = svm_utils.svm_pet_over_vae_output(
+            vae_output, Y_train, Y_test, list_regions, bool_test=bool_test)
 
     data = {}
     data["test"] = {}
@@ -210,7 +272,7 @@ for k_fold_index in range(1, n_folds + 1, 1):
 
 
     if bool_test:
-        print("\nMatriz svm scores -> shapes, before complex majority vote")
+        print("\nMatriz svm scores -> shapes, After svm before qualifying")
         print("train matriz [patients x region]: " + str(
             train_score_matriz.shape))
         print("test matriz scores [patient x region]: " + str(

@@ -18,7 +18,8 @@ def load_atlas():
 
     return reg_idx
 
-atlas = load_atlas()
+#atlas = load_atlas()
+
 
 def get_super_region_to_voxels():
     """

@@ -47,8 +47,8 @@ def generate_and_store_train_and_test_index(stack, cv_rate, path_to_cv):
     return train_index, test_index
 
 
-def generate_k_fold(path_to_kfold_folder, stack, n_folds):
-    index = np.random.choice(range(stack.shape[0]), stack.shape[0],
+def generate_k_fold(path_to_kfold_folder, n_samples, n_folds):
+    index = np.random.choice(range(n_samples),n_samples,
                              replace=False)
     n_over_samples = index.shape[0] % n_folds
     over_samples = index[-n_over_samples:]

@@ -13,8 +13,11 @@ def get_gm_stack():
     :return:
     """
     f = sio.loadmat(settings.MRI_stack_path_GM)
-    return {'labels': f['labels'], 'voxel_index': f['nobck_idx'], 'stack': f['stack_NORAD_GM'],
-            'imgsize':f['imgsize'].astype('uint32').tolist()[0], 'n_patients': len(f['labels'])}
+    return {'labels': f['labels'],
+            'voxel_index': f['nobck_idx'],
+            'stack': f['stack_NORAD_GM'],
+            'imgsize':f['imgsize'].astype('uint32').tolist()[0],
+            'n_patients': len(f['labels'])}
 
 
 def get_wm_stack():
@@ -35,14 +38,14 @@ def load_patients_labels():
 
 def test():
     data = get_gm_stack()
-    sample = data['stack'][0,:].shape
+    sample = data['stack'][0,:]
 
     template = np.zeros(data['imgsize'], dtype=float)
     template = template.flatten()
     template[data['voxel_index']] = sample
     out = np.reshape(template, data['imgsize'])
-    plt.imshow(out[:, 50, :], cmap='gray')
-
+    plt.imshow(out[:, 77, :], cmap='gray')
+    plt.show(block=True)
     img = nib.Nifti1Image(out, np.eye(4))
     img.to_filename('test4d.nii.gz')
 

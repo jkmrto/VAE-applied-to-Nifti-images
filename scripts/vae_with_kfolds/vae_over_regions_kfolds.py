@@ -87,14 +87,6 @@ def auto_execute():
 
 def execute(voxels_values, hyperparams, session_conf, after_input_architecture,
             list_regions, path_to_root):
-    """
-
-    :param hyperparams:
-    :param session_settings:
-    :param path_to_root: It is the folder where the folder of the session
-    is going to be generated
-    :return:
-    """
 
     per_region_results = {}
 
@@ -161,24 +153,15 @@ def execute(voxels_values, hyperparams, session_conf, after_input_architecture,
     return per_region_results
 
 
-def execute_without_any_logs(voxels_values, hyperparams, session_conf, after_input_architecture,
-            list_regions, path_to_root=None):
-    """
-
-    :param hyperparams:
-    :param session_settings:
-    :param path_to_root: It is the folder where the folder of the session
-    is going to be generated
-    :return:
-    """
+def execute_without_any_logs(voxels_values, hyperparams, session_conf, atlas,
+                             after_input_architecture, list_regions, path_to_root=None):
 
     per_region_results = {}
-    region_voxels_index_per_region = mri_atlas.load_atlas_mri()
 
     # LOOP OVER REGIONS
     for region_selected in list_regions:
         print("Region Nº {} selected".format(region_selected))
-        voxels_index = region_voxels_index_per_region[region_selected]
+        voxels_index = atlas[region_selected]
 
         # First map and the normalize to the unit the value of the pixels
         # filtering voxels per region

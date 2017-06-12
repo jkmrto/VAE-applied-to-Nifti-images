@@ -74,7 +74,7 @@ def load_svm_output_score(score_file, plot_hist=False):
     return dic
 
 
-def svm_over_vae_output(vae_output, Y_train, Y_test, list_regions, bool_test=False,
+def svm_mri_over_vae_output(vae_output, Y_train, Y_test, list_regions, bool_test=False,
                         minimum_training_svm_error=0.001):
 
     n_train_patient = vae_output['wm'][str(list_regions[0])]['train_output'][0].shape[0]
@@ -112,6 +112,56 @@ def svm_over_vae_output(vae_output, Y_train, Y_test, list_regions, bool_test=Fal
 
         train_score, test_score = fit_svm_and_get_decision_for_requiered_data(
             wm_and_gm_train_data, Y_train, wm_and_gm_test_data,
+            minimum_training_svm_error=minimum_training_svm_error)
+
+        # [regions x patients] SVM results
+        train_score_matriz[:, i] = train_score
+        test_score_matriz[:, i] = test_score
+
+        if bool_test:
+            print("TEST SVM SCORE REGION {}".format(region_selected))
+            print(train_score.shape)
+            print(Y_train.shape)
+            test_train_score = np.hstack(
+                (np.row_stack(train_score), np.row_stack(Y_train)))
+            test_test_score = np.hstack(
+                (np.row_stack(test_score), np.row_stack(Y_test)))
+            print(test_train_score)
+            print(test_test_score)
+
+        i = i + 1
+
+    return train_score_matriz, test_score_matriz
+
+
+def svm_pet_over_vae_output(vae_output, Y_train, Y_test, list_regions,
+                            bool_test=False, minimum_training_svm_error=0.001):
+
+    n_train_patient = vae_output[str(list_regions[0])]['train_output'][0].shape[0]
+    n_test_patient = vae_output[str(list_regions[0])]['test_output'][0].shape[0]
+
+    train_score_matriz = np.zeros((n_train_patient, len(list_regions)))
+    test_score_matriz = np.zeros((n_test_patient, len(list_regions)))
+
+    i = 0
+
+    for region_selected in list_regions:
+
+        print("SVM step")
+        print("region {} selected".format(region_selected))
+        train_output = vae_output[str(region_selected)]['train_output']
+        test_output = vae_output[str(region_selected)]['test_output']
+
+        train_means = train_output[0]
+        test_means = test_output[0]
+
+        if bool_test:
+            print("\nShape wm+gm train data post encoder")
+            print("Train shape: " +  str(train_means.shape))
+            print("Test shape: " + str(test_means.shape))
+
+        train_score, test_score = fit_svm_and_get_decision_for_requiered_data(
+            train_means, Y_train, test_means,
             minimum_training_svm_error=minimum_training_svm_error)
 
         # [regions x patients] SVM results
