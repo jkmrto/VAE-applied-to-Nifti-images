@@ -22,8 +22,8 @@ from lib.data_loader import pet_atlas
 import settings
 from lib.aux_functionalities.os_aux import create_directories
 
-#images_used = "MRI"
-images_used = "PET"
+images_used = "MRI"
+#images_used = "PET"
 
 # Meta settings.
 n_folds = 10
@@ -185,7 +185,7 @@ elif images_used == "MRI":
     dict_norad_mri_gm = MRI_stack_NORAD.get_gm_stack()
     dict_norad_mri_wm = MRI_stack_NORAD.get_wm_stack()
     patient_labels = MRI_stack_NORAD.load_patients_labels()
-    atlas = pet_atlas.load_atlas()
+    atlas = mri_atlas.load_atlas_mri()
 
 # Load regions index and create kfolds folder
 list_regions = session.select_regions_to_evaluate(regions_used)
