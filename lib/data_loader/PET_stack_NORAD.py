@@ -18,12 +18,12 @@ def get_full_stack():
 
     images_size = [79, 95, 68]
     voxels_index = f['maskind']
-    images = f['stack_all_norm'] # [138 x 510340]
+    images = f['stack_PET'] # [138 x 510340]
     patient_labels = f['labels'] #[ 1x138]
 
     return {'labels': patient_labels,
             'stack': images,
-    #        'voxel_index': voxels_index,
+            'voxel_index': voxels_index,
             'imgsize':images_size,
             'n_patients': len(patient_labels)}
 
@@ -31,7 +31,6 @@ def get_full_stack():
 def load_patients_labels():
     dict_norad = get_full_stack()  # 'stack' 'voxel_index' 'labels'
     return dict_norad['labels']
-
 
 def test():
     data = get_stack()

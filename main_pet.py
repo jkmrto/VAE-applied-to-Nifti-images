@@ -145,7 +145,7 @@ list_paths_files_to_store = [k_fold_output_file_simple_majority_vote,
 
 # Session descriptor elaboration
 session_descritpr = {}
-session_descriptor = {"Images Used": "Pet Images"}
+session_descriptor = {"Images Used": images_used}
 session_descriptor['meta settings'] = {"n_folds": n_folds,
                                        "bool_test": bool_test,
                                        "regions_used": regions_used}
