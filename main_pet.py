@@ -22,13 +22,15 @@ from lib.data_loader import pet_atlas
 import settings
 from lib.aux_functionalities.os_aux import create_directories
 
-images_used = "MRI"
-#images_used = "PET"
+#images_used = "MRI"
+images_used = "PET"
 
 # Meta settings.
-n_folds = 10
+n_folds = 3
 bool_test = False
+bool_log_svm_output = True
 regions_used = "most_important"
+#regions_used = "three"
 
 # Vae settings
 # Net Configuration
@@ -148,6 +150,7 @@ session_descritpr = {}
 session_descriptor = {"Images Used": images_used}
 session_descriptor['meta settings'] = {"n_folds": n_folds,
                                        "bool_test": bool_test,
+                                       "bool_log_svm_output": bool_log_svm_output,
                                        "regions_used": regions_used}
 session_descriptor['VAE'] = {}
 session_descriptor['Decision net'] = {}
@@ -241,6 +244,7 @@ for k_fold_index in range(1, n_folds + 1, 1):
             after_input_architecture,
             list_regions)
 
+        #[patient x region]
         train_score_matriz, test_score_matriz = svm_utils.svm_mri_over_vae_output(
             vae_output, Y_train, Y_test, list_regions, bool_test=bool_test)
 
@@ -261,6 +265,22 @@ for k_fold_index in range(1, n_folds + 1, 1):
 
         train_score_matriz, test_score_matriz = svm_utils.svm_pet_over_vae_output(
             vae_output, Y_train, Y_test, list_regions, bool_test=bool_test)
+
+    if bool_log_svm_output:
+        suffix = "log_svm_output_kfold_" + str(k_fold_index) + "_"
+        path_to_log_svm_output = os.path.join(path_session_folder, suffix)
+        Y_train_matrix_unicolumn = np.reshape(Y_train, [Y_train.flatten().shape[0], 1])
+        Y_test_matrix_unicolumn = np.reshape(Y_test, [Y_test.flatten().shape[0], 1])
+
+        log_svm_out_train_matrix = out = np.concatenate(
+            [Y_train_matrix_unicolumn, train_score_matriz], axis=1)
+        log_svm_out_test_matrix = out = np.concatenate(
+            [Y_test_matrix_unicolumn, test_score_matriz],axis=1)
+
+        np.savetxt(path_to_log_svm_output + "train.csv", X=log_svm_out_train_matrix,
+                   fmt="%.2f", delimiter=",")
+        np.savetxt(path_to_log_svm_output + "test.csv", X=log_svm_out_test_matrix,
+                   fmt="%.2f", delimiter=",")
 
     data = {}
     data["test"] = {}
