@@ -6,6 +6,7 @@ import os
 from scipy.misc import imsave as ims
 import utils as utils
 import ops as ops
+
 class LatentAttention():
     def __init__(self):
         self.mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)

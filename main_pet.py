@@ -22,8 +22,8 @@ from lib.data_loader import pet_atlas
 import settings
 from lib.aux_functionalities.os_aux import create_directories
 
-#images_used = "MRI"
-images_used = "PET"
+images_used = "MRI"
+#images_used = "PET"
 
 # Meta settings.
 n_folds = 3
