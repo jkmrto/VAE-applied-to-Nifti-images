@@ -1,0 +1,3 @@
+model_checkpoint_path: "/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/training/train-9"
+all_model_checkpoint_paths: "/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/training/train-8"
+all_model_checkpoint_paths: "/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/training/train-9"

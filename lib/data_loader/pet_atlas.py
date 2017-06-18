@@ -1,6 +1,7 @@
 from lib.data_loader.atlas_settings import super_regions_atlas
 import nibabel as nib
 import settings
+import os
 import numpy as np
 import csv
 
@@ -8,7 +9,9 @@ import csv
 def load_atlas():
     img = nib.load(settings.pet_atlas_path)
     img_data = img.get_data()
-    atlasdata = img_data.flatten()
+    imgsize = img_data.shape
+
+    atlasdata = np.reshape(img_data, [np.array(imgsize).prod()], "F")
     bckvoxels = np.where(atlasdata != 0) #Sacamos los indices que no son 0
     atlasdata = atlasdata[bckvoxels] # Mapeamos aplicando los indices
     vals = np.unique(atlasdata)
@@ -18,8 +21,14 @@ def load_atlas():
 
     return reg_idx
 
-atlas = load_atlas()
 
+def test_over_atlas():
+    img = nib.load(settings.pet_atlas_path)
+    img_data = img.get_data()
+
+    path = os.path.join(settings.path_to_project, "tests_sources")
+    img = nib.Nifti1Image(img_data, np.eye(4))
+    img.to_filename(os.path.join(path, "pet_atlas"))
 
 def get_super_region_to_voxels():
     """

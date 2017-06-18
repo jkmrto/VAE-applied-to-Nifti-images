@@ -17,7 +17,8 @@ def get_full_stack():
     # 'clastring', 'patient'])
 
     images_size = [79, 95, 68]
-    voxels_index = f['maskind']
+    voxels_index = f['maskind'][0]
+    total_voxels = np.array(images_size).prod()
     images = f['stack_PET'] # [138 x 510340]
     patient_labels = f['labels'] #[ 1x138]
 
@@ -25,7 +26,8 @@ def get_full_stack():
             'stack': images,
             'voxel_index': voxels_index,
             'imgsize':images_size,
-            'n_patients': len(patient_labels)}
+            'n_patients': len(patient_labels),
+            'total_size': total_voxels}
 
 
 def load_patients_labels():
