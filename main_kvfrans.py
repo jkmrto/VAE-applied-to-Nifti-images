@@ -1,13 +1,15 @@
-import tensorflow as tf
-import numpy as np
-from tensorflow.examples.tutorials.mnist import input_data
 import os
-from scipy.misc import imsave as ims
-import utils as utils
-import ops as ops
 
+import numpy as np
+import tensorflow as tf
+from scipy.misc import imsave as ims
+from tensorflow.examples.tutorials.mnist import input_data
+
+import lib.kfrans_ops as ops
+from lib import utils
 
 bool_save_meta = False
+
 
 class LatentAttention():
     def __init__(self):
@@ -55,15 +57,15 @@ class LatentAttention():
 
             h2_flat = tf.reshape(h2, [self.batchsize, 7*7*32])
 
-            w_mean = ops.dense(h2_flat, 7*7*32, self.n_z, "w_mean")
-            w_stddev = ops.dense(h2_flat, 7*7*32, self.n_z, "w_stddev")
+            w_mean = ops.dense(h2_flat, 7 * 7 * 32, self.n_z, "w_mean")
+            w_stddev = ops.dense(h2_flat, 7 * 7 * 32, self.n_z, "w_stddev")
 
         return w_mean, w_stddev
 
     # decoder
     def generation(self, z):
         with tf.variable_scope("generation"):
-            z_develop = ops.dense(z, self.n_z, 7*7*32, scope='z_matrix')
+            z_develop = ops.dense(z, self.n_z, 7 * 7 * 32, scope='z_matrix')
             z_matrix = tf.nn.relu(tf.reshape(z_develop,
                                              [-1, 7, 7, 32]))
             h1 = tf.nn.relu(ops.conv2d_transpose(

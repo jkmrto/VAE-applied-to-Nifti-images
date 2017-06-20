@@ -240,6 +240,7 @@ class VAE():
 
                 if i >= max_iter:
                     self.training_end_output( last_avg_cost)
+
                     if bool_log_grad_desc_error:
                         if self.path_session_folder is not None:
                             gradient_descent_log.close()

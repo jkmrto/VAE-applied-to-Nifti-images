@@ -1,13 +1,10 @@
-import tensorflow as tf
-from tensorflow.examples.tutorials.mnist import input_data
 import numpy as np
-import matplotlib.pyplot as plt
-import os
-from scipy.misc import imsave as ims
+import tensorflow as tf
 import utils as utils
-import ops as cops
+from scipy.misc import imsave as ims
 from tensorflow.python.framework import ops
-from tensorflow.contrib.layers.python.layers.layers import batch_norm
+
+from lib import kfrans_ops as cops
 
 # Global Dictionary of Flags
 flags = {

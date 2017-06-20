@@ -1,6 +1,7 @@
 import functools
 from functional import compose, partial
-import tensorflow as tf
+import tensorflow  as tf
+import numpy as np
 
 
 def compose_all(*args):

@@ -17,6 +17,12 @@ def get_batch_from_samples_unsupervised(X, batch_size):
     return X[index, :]
 
 
+def get_batch_from_samples_unsupervised_3d(X, batch_size):
+    index = np.random.choice(range(X.shape[0]), batch_size, replace=False)
+    index = index.tolist()
+    return X[index, :, :, :]
+
+
 def print_dictionary(path_to_file, dictionary):
     file = open(path_to_file, 'w')
     for key, value in dictionary.items():
