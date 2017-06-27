@@ -38,6 +38,7 @@ class LatentAttention():
         self.n_z = 1000
         self.batchsize = 100
 
+
         self.images = tf.placeholder(tf.float32, [None, total_size])
         image_matrix = tf.reshape(self.images, [self.batchsize, 34, 42, 41, 1])
 
@@ -53,7 +54,7 @@ class LatentAttention():
         self.latent_loss = 0.5 * tf.reduce_sum(tf.square(z_mean) + tf.square(z_stddev) - tf.log(tf.square(z_stddev)) - 1,1)
         self.cost = tf.reduce_mean(self.generation_loss + self.latent_loss)
 
-        self.optimizer = tf.train.AdamOptimizer(0.00001).minimize(self.cost)
+        self.optimizer = tf.train.AdamOptimizer(0.001).minimize(self.cost)
 
     # encoder
     def recognition(self, input_images):
