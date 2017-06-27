@@ -6,138 +6,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a70bc70e-9f0d-404b-b0fa-698d01cb0e18" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cvae_hub.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cvae_three_layers.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cvae_two_layers.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/input_data.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/input_data_old.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_1.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_10.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_100.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_101.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_102.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_103.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_104.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_105.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_106.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_107.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_108.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_109.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_11.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_110.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_111.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_112.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_113.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_114.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_115.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_116.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_12.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_13.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_14.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_15.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_16.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_17.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_18.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_19.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_2.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_20.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_21.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_22.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_23.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_24.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_25.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_26.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_27.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_28.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_29.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_3.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_30.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_31.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_32.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_33.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_34.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_35.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_36.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_37.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_38.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_39.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_4.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_40.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_41.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_42.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_43.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_44.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_45.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_46.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_47.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_48.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_49.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_5.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_50.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_51.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_52.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_53.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_54.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_55.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_56.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_57.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_58.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_59.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_6.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_60.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_61.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_62.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_63.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_64.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_65.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_66.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_67.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_68.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_69.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_7.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_70.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_71.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_72.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_73.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_74.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_75.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_76.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_77.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_78.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_79.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_8.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_80.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_81.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_82.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_83.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_84.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_85.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_86.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_87.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_88.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_89.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_9.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_90.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_91.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_92.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_93.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_94.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_95.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_96.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_97.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_98.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pet_regions_segmented/region_99.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/region_3.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test_region_segmentation/atlas.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test_region_segmentation/atlas_region3.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/utils.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/ops.py" afterPath="$PROJECT_DIR$/lib/kfrans_ops.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/test_over_segmenting_regions.py" afterPath="$PROJECT_DIR$/lib/test_over_segmenting_regions.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fresh_3d_net.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/iwyoo_main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/main_kvfrans3d.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tflearn_cvae.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/training/checkpoint" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/training/train-8.data-00000-of-00001" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/training/train-8.index" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/training/train-8.meta" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/training/train-9.data-00000-of-00001" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/training/train-9.index" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/training/train-9.meta" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/results/0.jpg" afterPath="$PROJECT_DIR$/results/0.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/results/1.jpg" afterPath="$PROJECT_DIR$/results/1.jpg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CNNVAE.py" afterPath="$PROJECT_DIR$/CNNVAE.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/aux_functionalities/functions.py" afterPath="$PROJECT_DIR$/lib/aux_functionalities/functions.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/utils.py" afterPath="$PROJECT_DIR$/lib/utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/vae/VAE.py" afterPath="$PROJECT_DIR$/lib/vae/VAE.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cvae_hub.py" afterPath="$PROJECT_DIR$/cvae_hub.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cvae_three_layers.py" afterPath="$PROJECT_DIR$/cvae_three_layers.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cvae_two_layers.py" afterPath="$PROJECT_DIR$/cvae_two_layers.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/kfrans_ops.py" afterPath="$PROJECT_DIR$/lib/kfrans_ops.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main_kvfrans.py" afterPath="$PROJECT_DIR$/main_kvfrans.py" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -156,24 +42,94 @@
     <favorites_list name="VAE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.46394384">
+    <splitter split-orientation="horizontal" split-proportion="0.55184746">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="main_pet.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/main_pet.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="17">
+                <state relative-caret-position="68">
                   <caret line="4" column="39" lean-forward="false" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="cvae_three_layers.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="kfrans_ops.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/lib/kfrans_ops.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="104">
+                  <caret line="57" column="67" lean-forward="true" selection-start-line="57" selection-start-column="67" selection-end-line="57" selection-end-column="67" />
+                  <folding>
+                    <element signature="e#0#18#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="main_kvfrans.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/main_kvfrans.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="43">
+                  <caret line="85" column="21" lean-forward="false" selection-start-line="85" selection-start-column="8" selection-end-line="85" selection-end-column="21" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="cvae_two_layers.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/cvae_two_layers.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="2210">
+                  <caret line="130" column="48" lean-forward="false" selection-start-line="130" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#23#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="fresh_3d_net.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/fresh_3d_net.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="357">
+                  <caret line="21" column="8" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#9#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="cvae_hub.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/cvae_hub.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1870">
+                  <caret line="124" column="0" lean-forward="false" selection-start-line="124" selection-start-column="0" selection-end-line="126" selection-end-column="59" />
+                  <folding>
+                    <element signature="e#0#9#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="VAE.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/lib/vae/VAE.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="2159">
+                  <caret line="137" column="43" lean-forward="false" selection-start-line="137" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#9#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="cvae_three_layers.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/cvae_three_layers.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-425">
-                  <caret line="128" column="23" lean-forward="false" selection-start-line="128" selection-start-column="23" selection-end-line="128" selection-end-column="23" />
+                <state relative-caret-position="272">
+                  <caret line="46" column="24" lean-forward="false" selection-start-line="46" selection-start-column="24" selection-end-line="46" selection-end-column="24" />
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                   </folding>
@@ -184,50 +140,18 @@
           <file leaf-file-name="test_over_segmenting_regions.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/lib/test_over_segmenting_regions.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="576">
-                  <caret line="94" column="51" lean-forward="false" selection-start-line="94" selection-start-column="51" selection-end-line="94" selection-end-column="51" />
-                  <folding>
-                    <element signature="e#0#61#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/lib/utils.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="34">
-                  <caret line="2" column="24" lean-forward="false" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
+                <state relative-caret-position="-957">
+                  <caret line="3" column="15" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="cvae_hub.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/cvae_hub.py">
+          <file leaf-file-name="pet_atlas.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/lib/data_loader/pet_atlas.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="68">
-                  <caret line="4" column="12" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="CNNVAE.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/CNNVAE.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1394">
-                  <caret line="88" column="67" lean-forward="false" selection-start-line="88" selection-start-column="67" selection-end-line="88" selection-end-column="67" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="main_kvfrans.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/main_kvfrans.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="170">
-                  <caret line="18" column="51" lean-forward="false" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="51" />
+                <state relative-caret-position="340">
+                  <caret line="25" column="43" lean-forward="false" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
                   <folding />
                 </state>
               </provider>
@@ -237,63 +161,97 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="cvae_two_layers.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/cvae_two_layers.py">
+          <file leaf-file-name="tflearn_cvae.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/tflearn_cvae.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="119">
-                  <caret line="7" column="8" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="kfrans_ops.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/lib/kfrans_ops.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-514">
-                  <caret line="61" column="68" lean-forward="false" selection-start-line="61" selection-start-column="68" selection-end-line="61" selection-end-column="68" />
+                <state relative-caret-position="-11">
+                  <caret line="121" column="34" lean-forward="false" selection-start-line="121" selection-start-column="34" selection-end-line="121" selection-end-column="34" />
                   <folding>
-                    <element signature="e#0#18#0" expanded="true" />
+                    <element signature="e#642#709#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="layers.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/lib/neural_net/layers.py">
+          <file leaf-file-name="mtrand.py" pinned="false" current-in-tab="false">
+            <entry file="file://$USER_HOME$/.PyCharmCE2016.3/system/python_stubs/-1247971764/numpy/random/mtrand.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="442">
-                  <caret line="26" column="8" lean-forward="false" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="8" />
+                <state relative-caret-position="26877">
+                  <caret line="1585" column="10" lean-forward="false" selection-start-line="1585" selection-start-column="4" selection-end-line="1585" selection-end-column="10" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="tensor_shape.py" pinned="false" current-in-tab="false">
-            <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/tensorflow/python/framework/tensor_shape.py">
+          <file leaf-file-name="main_kvfrans3d.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/main_kvfrans3d.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1734">
-                  <caret line="107" column="0" lean-forward="false" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
+                <state relative-caret-position="170">
+                  <caret line="55" column="54" lean-forward="false" selection-start-line="55" selection-start-column="54" selection-end-line="55" selection-end-column="54" />
+                  <folding>
+                    <element signature="e#0#9#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="gen_array_ops.py" pinned="false" current-in-tab="false">
+            <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/tensorflow/python/ops/gen_array_ops.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="206">
+                  <caret line="2629" column="0" lean-forward="false" selection-start-line="2629" selection-start-column="0" selection-end-line="2629" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="train_over_regions_loop.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/scripts/pet_scripts/train_over_regions_loop.py">
+          <file leaf-file-name="common_shapes.py" pinned="false" current-in-tab="false">
+            <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/tensorflow/python/framework/common_shapes.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1734">
-                  <caret line="112" column="0" lean-forward="false" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+                <state relative-caret-position="206">
+                  <caret line="675" column="0" lean-forward="false" selection-start-line="675" selection-start-column="0" selection-end-line="675" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="variable_scope.py" pinned="false" current-in-tab="true">
-            <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/tensorflow/python/ops/variable_scope.py">
+          <file leaf-file-name="local_cli_wrapper.py" pinned="false" current-in-tab="false">
+            <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/tensorflow/python/debug/wrappers/local_cli_wrapper.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="272">
-                  <caret line="638" column="0" lean-forward="false" selection-start-line="638" selection-start-column="0" selection-end-line="638" selection-end-column="0" />
+                <state relative-caret-position="2176">
+                  <caret line="145" column="56" lean-forward="false" selection-start-line="145" selection-start-column="43" selection-end-line="145" selection-end-column="56" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="random_ops.py" pinned="false" current-in-tab="false">
+            <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/tensorflow/python/ops/random_ops.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="561">
+                  <caret line="46" column="24" lean-forward="false" selection-start-line="46" selection-start-column="18" selection-end-line="46" selection-end-column="24" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="cvae_hub.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/cvae_hub.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1955">
+                  <caret line="115" column="25" lean-forward="false" selection-start-line="115" selection-start-column="25" selection-end-line="115" selection-end-column="25" />
+                  <folding>
+                    <element signature="e#0#9#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="functions.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/lib/aux_functionalities/functions.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="221">
+                  <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -312,14 +270,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>save</find>
-      <find>meta</find>
-      <find>eps</find>
-      <find>__old</find>
-      <find>select_regions</find>
-      <find>session</find>
-      <find>save_bool</find>
-      <find>92761836441893819</find>
       <find>save_meta_bool</find>
       <find>threshould_prefixed_to_0.5</find>
       <find>bool_normalized</find>
@@ -342,6 +292,14 @@
       <find>w_mean</find>
       <find>relu</find>
       <find>wbVars</find>
+      <find>2</find>
+      <find>train_op</find>
+      <find>sparsity_weigh</find>
+      <find>normal</find>
+      <find>activation</find>
+      <find>self.train_images</find>
+      <find>self.train_images</find>
+      <find>train_images</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -350,10 +308,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/lib/delete_pre_final_meta_data.py" />
-        <option value="$PROJECT_DIR$/scripts/single_reconstructor.py" />
-        <option value="$PROJECT_DIR$/scp_test.py" />
-        <option value="$PROJECT_DIR$/reconstructor_latent_code.py" />
         <option value="$PROJECT_DIR$/reconstructor_extrapoling.py" />
         <option value="$PROJECT_DIR$/scripts/single_reconstructorv2.py" />
         <option value="$PROJECT_DIR$/reconstructor_hub_latent_code.py" />
@@ -387,7 +341,6 @@
         <option value="$PROJECT_DIR$/lib/data_loader/pet_atlas.py" />
         <option value="$PROJECT_DIR$/test_over_segmenting_regions.py" />
         <option value="$PROJECT_DIR$/utils.py" />
-        <option value="$PROJECT_DIR$/main_kvfrans.py" />
         <option value="$PROJECT_DIR$/lib/utils.py" />
         <option value="$PROJECT_DIR$/lib/vae/VAE.py" />
         <option value="$PROJECT_DIR$/lib/aux_functionalities/functions.py" />
@@ -396,11 +349,16 @@
         <option value="$PROJECT_DIR$/CVAE.py" />
         <option value="$PROJECT_DIR$/cvae_simple.py" />
         <option value="$PROJECT_DIR$/cvae_one_layer.py" />
-        <option value="$PROJECT_DIR$/cvae_hub.py" />
         <option value="$PROJECT_DIR$/lib/test_over_segmenting_regions.py" />
-        <option value="$PROJECT_DIR$/lib/kfrans_ops.py" />
+        <option value="$PROJECT_DIR$/iwyoo_main.py" />
         <option value="$PROJECT_DIR$/cvae_two_layers.py" />
+        <option value="$PROJECT_DIR$/tflearn_cvae.py" />
+        <option value="$PROJECT_DIR$/cvae_hub.py" />
         <option value="$PROJECT_DIR$/cvae_three_layers.py" />
+        <option value="$PROJECT_DIR$/fresh_3d_net.py" />
+        <option value="$PROJECT_DIR$/main_kvfrans.py" />
+        <option value="$PROJECT_DIR$/lib/kfrans_ops.py" />
+        <option value="$PROJECT_DIR$/main_kvfrans3d.py" />
       </list>
     </option>
   </component>
@@ -424,8 +382,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -438,8 +394,42 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vae" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -462,24 +452,7 @@
       <recent name="$PROJECT_DIR$/data" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.cvae_three_layers">
-    <configuration default="false" name="CVAE" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="VAE" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cvae_hub.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python.main_kvfrans3d">
     <configuration default="false" name="cvae_two_layers" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -497,40 +470,6 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="VAE" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/lib/vae" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="VAE" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lib/vae/VAE.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="test_over_segmenting_regions" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/lib" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="VAE" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lib/test_over_segmenting_regions.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
     <configuration default="false" name="cvae_three_layers" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -544,6 +483,57 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="VAE" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cvae_three_layers.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="fresh_3d_net" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="VAE" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/fresh_3d_net.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="main_kvfrans" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="VAE" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main_kvfrans.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="main_kvfrans3d" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="VAE" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main_kvfrans3d.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -697,19 +687,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.CVAE" />
-      <item index="1" class="java.lang.String" itemvalue="Python.cvae_two_layers" />
-      <item index="2" class="java.lang.String" itemvalue="Python.VAE" />
-      <item index="3" class="java.lang.String" itemvalue="Python.test_over_segmenting_regions" />
-      <item index="4" class="java.lang.String" itemvalue="Python.cvae_three_layers" />
+      <item index="0" class="java.lang.String" itemvalue="Python.cvae_two_layers" />
+      <item index="1" class="java.lang.String" itemvalue="Python.cvae_three_layers" />
+      <item index="2" class="java.lang.String" itemvalue="Python.fresh_3d_net" />
+      <item index="3" class="java.lang.String" itemvalue="Python.main_kvfrans" />
+      <item index="4" class="java.lang.String" itemvalue="Python.main_kvfrans3d" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.cvae_three_layers" />
-        <item index="1" class="java.lang.String" itemvalue="Python.cvae_two_layers" />
-        <item index="2" class="java.lang.String" itemvalue="Python.test_over_segmenting_regions" />
-        <item index="3" class="java.lang.String" itemvalue="Python.VAE" />
-        <item index="4" class="java.lang.String" itemvalue="Python.CVAE" />
+        <item index="0" class="java.lang.String" itemvalue="Python.main_kvfrans3d" />
+        <item index="1" class="java.lang.String" itemvalue="Python.main_kvfrans" />
+        <item index="2" class="java.lang.String" itemvalue="Python.fresh_3d_net" />
+        <item index="3" class="java.lang.String" itemvalue="Python.cvae_three_layers" />
+        <item index="4" class="java.lang.String" itemvalue="Python.cvae_two_layers" />
       </list>
     </recent_temporary>
   </component>
@@ -752,15 +742,14 @@
       <window_info id="Debug Logs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32821077" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41684434" sideWeight="0.503692" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26439232" sideWeight="0.4978903" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28210756" sideWeight="0.49683544" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26234907" sideWeight="0.4978903" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28649837" sideWeight="0.49683544" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32821077" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1492865" sideWeight="0.49630803" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1735232" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26344675" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24917673" sideWeight="0.49630803" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1149789" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32964134" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.59808105" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16465423" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -768,6 +757,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32896176" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26344675" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -779,18 +769,18 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41684434" sideWeight="0.503692" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4552239" sideWeight="0.4978903" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3955224" sideWeight="0.49683544" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26439232" sideWeight="0.4978903" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30076838" sideWeight="0.49683544" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32896176" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32821077" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25586355" sideWeight="0.49630803" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18565401" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42810097" sideWeight="0.49630803" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.085443035" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26358974" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26344675" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32964134" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39872068" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16465423" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
@@ -805,78 +795,16 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="41" />
+      <option name="time" value="43" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lib/svm_utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="10" column="31" lean-forward="false" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/Full_classification_session_with_k-folds/log_svm_output_kfold_3_test.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test" />
-    <entry file="file://$PROJECT_DIR$/out/Full_classification_session_with_k-folds/log_svm_output_kfold_1_test.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="845">
-          <caret line="129" column="1" lean-forward="false" selection-start-line="129" selection-start-column="1" selection-end-line="129" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/single_reconstructorv2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="47" column="0" lean-forward="false" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/credentials.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="29" lean-forward="false" selection-start-line="0" selection-start-column="4" selection-end-line="0" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/recollect_kfolds_results.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="17" lean-forward="false" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/loop_over_latent_layer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1530">
-          <caret line="144" column="4" lean-forward="false" selection-start-line="144" selection-start-column="4" selection-end-line="144" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CVAE/conv_vae.py" />
-    <entry file="file://$PROJECT_DIR$/CVAE/README.md" />
-    <entry file="file://$PROJECT_DIR$/CVAE/semisupervised.py" />
-    <entry file="file://$PROJECT_DIR$/README_kvfrans.md" />
     <entry file="file://$PROJECT_DIR$/main3_kvfrans.py" />
     <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/tensorflow/python/framework/ops.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
           <caret line="410" column="0" lean-forward="false" selection-start-line="410" selection-start-column="0" selection-end-line="410" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -929,33 +857,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
           <caret line="30" column="49" lean-forward="false" selection-start-line="30" selection-start-column="49" selection-end-line="30" selection-end-column="49" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test_segmentation_one_region.py" />
     <entry file="file://$PROJECT_DIR$/input_data.py" />
     <entry file="file://$PROJECT_DIR$/input_data_old.py" />
-    <entry file="file://$PROJECT_DIR$/lib/data_loader/pet_atlas.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="25" column="43" lean-forward="false" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main_kvfrans.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="18" column="51" lean-forward="false" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/tensorflow/python/framework/tensor_shape.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1734">
           <caret line="107" column="0" lean-forward="false" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -963,7 +874,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="318">
           <caret line="1265" column="4" lean-forward="false" selection-start-line="1265" selection-start-column="4" selection-end-line="1265" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -971,24 +881,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1394">
           <caret line="88" column="67" lean-forward="false" selection-start-line="88" selection-start-column="67" selection-end-line="88" selection-end-column="67" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/utils.py" />
-    <entry file="file://$PROJECT_DIR$/lib/vae/VAE.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="21" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/pet_scripts/train_over_regions_loop.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1734">
           <caret line="112" column="0" lean-forward="false" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -996,7 +896,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="4" column="4" lean-forward="false" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1004,14 +903,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" column="4" lean-forward="false" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/aux_functionalities/functions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1019,7 +910,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="765">
           <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1027,9 +917,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1037,9 +924,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#9#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1047,74 +931,216 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="24" lean-forward="false" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/test_over_segmenting_regions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="94" column="51" lean-forward="false" selection-start-line="94" selection-start-column="51" selection-end-line="94" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#61#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/neural_net/layers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="8" lean-forward="false" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/kfrans_ops.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-514">
-          <caret line="61" column="68" lean-forward="false" selection-start-line="61" selection-start-column="68" selection-end-line="61" selection-end-column="68" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main_pet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="4" column="39" lean-forward="false" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cvae_hub.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="12" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cvae_two_layers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="8" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/tensorflow/python/ops/variable_scope.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
+        <state relative-caret-position="10523">
           <caret line="638" column="0" lean-forward="false" selection-start-line="638" selection-start-column="0" selection-end-line="638" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/iwyoo_main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2584">
+          <caret line="158" column="8" lean-forward="false" selection-start-line="158" selection-start-column="8" selection-end-line="158" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/neural_net/layers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="36" column="68" lean-forward="false" selection-start-line="36" selection-start-column="61" selection-end-line="36" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/vae/VAE.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2159">
+          <caret line="137" column="43" lean-forward="false" selection-start-line="137" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="1035" column="0" lean-forward="false" selection-start-line="1035" selection-start-column="0" selection-end-line="1035" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/file_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#61#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/aux_functionalities/functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main_pet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="39" lean-forward="false" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/data_loader/pet_atlas.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="25" column="43" lean-forward="false" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.5/dist-packages/tflearn/helpers/trainer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="571">
+          <caret line="817" column="0" lean-forward="false" selection-start-line="817" selection-start-column="0" selection-end-line="817" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python3.5/dist-packages/tflearn/models/dnn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="571">
+          <caret line="64" column="0" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cvae_hub.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1955">
+          <caret line="115" column="25" lean-forward="false" selection-start-line="115" selection-start-column="25" selection-end-line="115" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/tensorflow/python/ops/random_ops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="46" column="24" lean-forward="false" selection-start-line="46" selection-start-column="18" selection-end-line="46" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/tensorflow/python/debug/wrappers/local_cli_wrapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2176">
+          <caret line="145" column="56" lean-forward="false" selection-start-line="145" selection-start-column="43" selection-end-line="145" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2016.3/system/python_stubs/-1247971764/numpy/random/mtrand.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26877">
+          <caret line="1585" column="10" lean-forward="false" selection-start-line="1585" selection-start-column="4" selection-end-line="1585" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cvae_three_layers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-425">
-          <caret line="128" column="23" lean-forward="false" selection-start-line="128" selection-start-column="23" selection-end-line="128" selection-end-column="23" />
+        <state relative-caret-position="272">
+          <caret line="46" column="24" lean-forward="false" selection-start-line="46" selection-start-column="24" selection-end-line="46" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fresh_3d_net.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="8" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/tensorflow/python/framework/common_shapes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="206">
+          <caret line="675" column="0" lean-forward="false" selection-start-line="675" selection-start-column="0" selection-end-line="675" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/tensorflow/python/ops/gen_array_ops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="206">
+          <caret line="2629" column="0" lean-forward="false" selection-start-line="2629" selection-start-column="0" selection-end-line="2629" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cvae_two_layers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2210">
+          <caret line="130" column="48" lean-forward="false" selection-start-line="130" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tflearn_cvae.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-11">
+          <caret line="121" column="34" lean-forward="false" selection-start-line="121" selection-start-column="34" selection-end-line="121" selection-end-column="34" />
+          <folding>
+            <element signature="e#642#709#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/test_over_segmenting_regions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-957">
+          <caret line="3" column="15" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main_kvfrans.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="43">
+          <caret line="85" column="21" lean-forward="false" selection-start-line="85" selection-start-column="8" selection-end-line="85" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/kfrans_ops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="57" column="67" lean-forward="true" selection-start-line="57" selection-start-column="67" selection-end-line="57" selection-end-column="67" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main_kvfrans3d.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="55" column="54" lean-forward="false" selection-start-line="55" selection-start-column="54" selection-end-line="55" selection-end-column="54" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

@@ -1,7 +1,13 @@
 import os
 
 import tensorflow as tf
-
+import tensorflow as tf
+from lib import session_helper
+from lib import kfrans_ops
+import numpy as np
+from lib import loss_function as loss
+from lib.test_over_segmenting_regions import load_regions_segmented
+from lib.math_utils import sample_gaussian
 from lib import session_helper
 from lib.aux_functionalities.functions import get_batch_from_samples_unsupervised_3d
 from lib.aux_functionalities.os_aux import create_directories
@@ -71,8 +77,8 @@ class cvae_3d():
                 self.session, meta_graph)
             handles = self.session.graph.get_collection_ref(cvae_3d.RESTORE_KEY)
 
-        self.x_in, self.z_mean, self.z_stddev, self.images_out, self.cost,\
-            self.global_step, self.generation_loss, self.latent_loss= handles[0:8]
+        self.x_in, self.z_mean, self.z_stddev, self.cost,\
+            self.global_step = handles[0:5]
 
 
         self.writer = tf.summary.FileWriter(logs_path, graph=self.session.graph)

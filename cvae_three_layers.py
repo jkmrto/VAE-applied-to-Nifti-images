@@ -34,14 +34,13 @@ class cvae_3d():
         self.hyper_params = hyperparams
         self.path_session_folder = path_to_session
 
-        self.n_hidden = 500
         self.n_z = 1000
         self.batchsize = 100
         self.input_shape = [34, 42, 41]
-        self.filter_per_layer = [16, 32, 64]
+        self.filter_per_layer = [8, 16, 32]
         self.stride = 2
         self.learning_rate = 0.00001
-        self.kernel_size = 2
+        self.kernel_size = 5
         self.activation = tf.nn.sigmoid
 
 
@@ -76,7 +75,6 @@ class cvae_3d():
         self.x_in, self.z_mean, self.z_stddev, self.images_out, self.cost,\
             self.global_step, self.generation_loss, self.latent_loss= handles[0:8]
 
-
         self.writer = tf.summary.FileWriter(logs_path, graph=self.session.graph)
 
     def init_session_folders(self):
@@ -109,7 +107,7 @@ class cvae_3d():
             x=x_with_depth_layer,
             input_features=1,
             output_features=self.filter_per_layer[0],
-            stride=2,
+            stride=self.stride,
             name="first_layer",
             kernel_size=self.kernel_size))  # 28x28x1 -> 14x14x16
 
@@ -130,9 +128,10 @@ class cvae_3d():
             kernel_size=self.kernel_size))
 
         print(h3.get_shape().as_list())
-        h3_size = h2.get_shape().as_list()
+        h3_size = h3.get_shape().as_list()
         total_size = np.array(h3_size)[1:].prod()
         print(total_size)
+        print(h3.get_shape())
 
         h3_flat = tf.reshape(h3, [-1, total_size])
 
@@ -141,7 +140,7 @@ class cvae_3d():
                                   scope="w_mean")
         z_stddev = kfrans_ops.dense(h3_flat, input_len=total_size,
                                     output_len=self.n_z,
-                                    scope="w_stddev")
+                                    scope="w_mean", reuse=True)
 
         # samples = tf.random_normal([None, self.n_z], 0, 1,
         #                           dtype=tf.float32)
@@ -187,7 +186,7 @@ class cvae_3d():
         x_in_flatten = tf.reshape(self.x_in,
                                   [-1, np.array(self.input_shape).prod()])
         print(x_in_flatten.get_shape())
-        print(g2.get_shape())
+        print(g3.get_shape())
         x_out_flatten = tf.reshape(g3, tf.shape(x_in_flatten))
 
         generation_loss = tf.reduce_mean(-tf.reduce_sum(
@@ -274,39 +273,12 @@ class cvae_3d():
                 break
 
 
+
+
 regions_used = "three"
 list_regions = session_helper.select_regions_to_evaluate(regions_used)
-region = 3
 region_segmented = load_regions_segmented(list_regions)[3]
 print(region_segmented.shape)
 cvae = cvae_3d()
-print("training")
-cvae.train(x_in=region_segmented)
-
-
-
-class cvae_three_layers(cvae_3d):
-
-    def __init__(self):
-        super().__init__([16, 32, 64]
-)
-
-        self.n_z = 100
-        self.batchsize = 100
-        self.input_shape = [34, 42, 41]
-        self.stride = 2
-        self.learning_rate = 0.001
-        self.kernel_size = 8
-        self.activation = kfrans_ops.lrelu
-
-
-
-
-regions_used = "three"
-list_regions = session_helper.select_regions_to_evaluate(regions_used)
-region = 3
-region_segmented = load_regions_segmented(list_regions)[3]
-print(region_segmented.shape)
-cvae = cvae_three_layers()
 print("training")
 cvae.train(x_in=region_segmented)

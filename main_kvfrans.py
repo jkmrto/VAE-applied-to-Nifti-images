@@ -66,8 +66,7 @@ class LatentAttention():
     def generation(self, z):
         with tf.variable_scope("generation"):
             z_develop = ops.dense(z, self.n_z, 7 * 7 * 32, scope='z_matrix')
-            z_matrix = tf.nn.relu(tf.reshape(z_develop,
-                                             [-1, 7, 7, 32]))
+            z_matrix = tf.nn.relu(tf.reshape(z_develop, [-1, 7, 7, 32]))
             h1 = tf.nn.relu(ops.conv2d_transpose(
                 z_matrix,
                 [self.batchsize, 14, 14, 16],

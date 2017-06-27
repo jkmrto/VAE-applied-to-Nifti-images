@@ -52,16 +52,16 @@ def conv2d(x, inputdepth, n_filters, stride, name):
 
 
 # standard convolution layer
-def conv3d(x, input_features, output_features, stride,  name, kernel_size=5):
+def conv3d(x, input_features, output_features, stride, kernel,  name):
     with tf.variable_scope(name):
-        w = tf.get_variable("w", [kernel_size, kernel_size, kernel_size,
+        w = tf.get_variable("weights", [kernel, kernel, kernel,
                                   input_features, output_features],
-                            initializer=tf.random_normal_initializer(stddev=0.05))
+                            initializer=tf.random_normal_initializer(stddev=0.02))
 
         b = tf.get_variable("b", [output_features],
-                            initializer=tf.random_normal_initializer(stddev=0.05))
+                            initializer=tf.random_normal_initializer(stddev=0.02))
 
-        conv = tf.nn.conv3d(x, w, strides=[1,stride, stride, stride, 1],
+        conv = tf.nn.conv3d(x, w, strides=[1, stride, stride, stride, 1],
                             padding='SAME') + b
 
         return conv
@@ -77,17 +77,17 @@ def conv2d_transpose(x, outputShape, stride, name):
 
 
 def conv3d_transpose(x, output_shape, input_features, output_features,
-                     name, stride=2, kernel_size=5):
+                     kernel, name, stride=2):
 
     with tf.variable_scope(name):
 
-        w = tf.get_variable("w", [kernel_size, kernel_size, kernel_size,
+        w = tf.get_variable("weights", [kernel, kernel, kernel,
                                   output_features, input_features],
-                            initializer=tf.random_normal_initializer(stddev=0.05),
+                            initializer=tf.random_normal_initializer(stddev=0.02),
                             trainable=True)
 
         b = tf.get_variable("b", [output_features],
-                            initializer=tf.random_normal_initializer(stddev=0.05),
+                            initializer=tf.random_normal_initializer(stddev=0.02),
                             trainable=True)
 
         convt = tf.nn.conv3d_transpose(x, w,
@@ -122,13 +122,13 @@ def lrelu(x, leak=0.2, name="lrelu"):
 
 
 # fully-conected layer
-def dense(x, input_len, output_len, scope=None, with_w=False):
-    with tf.variable_scope(scope or "Linear"):
-        matrix = tf.get_variable("Matrix", [input_len, output_len],
+def dense(x, input_len, output_len, scope=None, with_w=False, reuse=False):
+    with tf.variable_scope(scope or "Linear", reuse=reuse):
+        matrix = tf.get_variable("weights", [input_len, output_len],
                                  tf.float32, initializer=
-                                 tf.random_normal_initializer(stddev=0.05))
+                                 tf.random_normal_initializer(stddev=0.02))
         bias = tf.get_variable("bias", [output_len],
-                               initializer=tf.random_normal_initializer(stddev=0.05))
+                               initializer=tf.random_normal_initializer(stddev=0.02))
         if with_w:
             return tf.matmul(x, matrix) + bias, matrix, bias
         else:

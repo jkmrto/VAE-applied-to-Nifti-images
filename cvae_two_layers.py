@@ -9,21 +9,19 @@ from lib.math_utils import sample_gaussian
 
 
 class cvae_two_layers(cvae_3d):
-
     def __init__(self):
         super().__init__()
 
-        self.n_z = 100
+        self.n_z = 1000
         self.batchsize = 100
         self.input_shape = [34, 42, 41]
-        self.filter_per_layer = [16, 32]
-        self.stride = 4
-        self.learning_rate = 0.001
+        self.filter_per_layer = [32, 64]
+        self.stride = 2
+        self.learning_rate = 0.01
         self.kernel_size = 8
         self.activation = kfrans_ops.lrelu
 
     def _build_graph(self):
-
         self.x_in = tf.placeholder(tf.float32, [None, self.input_shape[0],
                                                 self.input_shape[1],
                                                 self.input_shape[2]])
@@ -76,7 +74,7 @@ class cvae_two_layers(cvae_3d):
                                              scope='z_matrix')
         print(z_develop_flatten.get_shape())
         z_develop_matrix = tf.reshape(z_develop_flatten,
-                                                 tf.shape(h2))
+                                      tf.shape(h2))
 
         print(z_develop_matrix.get_shape())
         g1 = self.activation(kfrans_ops.conv3d_transpose(
@@ -96,43 +94,46 @@ class cvae_two_layers(cvae_3d):
             stride=self.stride,
             name="g_h2"))
 
-        #images_out = tf.nn.sigmoid(g2)
+        images_out = tf.nn.sigmoid(g2)
 
         x_in_flatten = tf.reshape(self.x_in,
                                   [-1, np.array(self.input_shape).prod()])
         print(x_in_flatten.get_shape())
         print(g2.get_shape())
-        x_out_flatten = tf.reshape(g2, tf.shape(x_in_flatten))
+        x_out_flatten = tf.reshape(images_out, tf.shape(x_in_flatten))
 
         generation_loss = tf.reduce_mean(-tf.reduce_sum(
             x_in_flatten * tf.log(1e-8 + x_out_flatten) + (1 - x_in_flatten) *
             tf.log(1e-8 + 1 - x_out_flatten), 1))
 
-        latent_loss = tf.reduce_mean(0.5 * tf.reduce_sum(tf.square(z_mean) +
-                                               tf.square(z_stddev)
-                                               - tf.log(tf.square(z_stddev)) - 1, 1))
-        self.cost = tf.reduce_mean(generation_loss + latent_loss)
+    #    latent_loss = tf.reduce_mean(0.5 * tf.reduce_sum(tf.square(z_mean) +
+    #                                                     tf.square(z_stddev)
+    #                                                     - tf.log(tf.square(z_stddev)) - 1, 1))
+        #    self.cost = tf.reduce_mean(generation_loss + latent_loss)
 
-       # cost = self.__build_cost_estimate(x_out_flatten, x_in_flatten, z_mean, z_stddev)
+     #   cost = self.__build_cost_estimate(x_out_flatten,
+     #                                     x_in_flatten, z_mean, z_stddev)
 
         global_step = tf.Variable(0, trainable=False)
-    #    with tf.name_scope("Adam_optimizer"):
-    #        optimizer = tf.train.AdamOptimizer(self.learning_rate)
-    #        tvars = tf.trainable_variables()
-    #        print(tvars)
-    #        grads_and_vars = optimizer.compute_gradients(cost, tvars)
-    #        clipped = [(tf.clip_by_value(grad, -5, 5), tvar)  # gradient clipping
-    #                   for grad, tvar in grads_and_vars]
-    #        train_op = optimizer.apply_gradients(clipped, global_step=global_step,
-     #                                            name="minimize_cost")
 
-        self.optimizer = tf.train.AdamOptimizer(self.learning_rate).minimize(self.cost)
+  #      with tf.name_scope("Adam_optimizer"):
+  #          optimizer = tf.train.AdamOptimizer(self.learning_rate)
+  #          tvars = tf.trainable_variables()
+  #          print(tvars)
+  #          grads_and_vars = optimizer.compute_gradients(cost, tvars)
+  #          clipped = [(tf.clip_by_value(grad, -5, 5), tvar)
+                       # gradient clipping
+  #                     for grad, tvar in grads_and_vars]
+  #          train_op = optimizer.apply_gradients(clipped,
+  #                                               global_step=global_step,
+  #                                               name="minimize_cost")
 
-        return self.x_in, z_mean, z_stddev, g2, self.cost, global_step, \
-               generation_loss, latent_loss
+        self.optimizer = tf.train.AdamOptimizer(self.learning_rate).minimize(generation_loss)
+
+        return self.x_in, z_mean, z_stddev, generation_loss, global_step
+
 
     def __build_cost_estimate(self, x_reconstructed, x_in, z_mean, z_log_sigma):
-
         # reconstruction loss: mismatch b/w x & x_reconstructed
         # binary cross-entropy -- assumes x & p(x|z) are iid Bernoullis
         rec_loss = loss.crossEntropy(x_reconstructed, x_in)
@@ -140,18 +141,18 @@ class cvae_two_layers(cvae_3d):
         # Kullback-Leibler divergence: mismatch b/w approximate vs. imposed/true posterior
         kl_loss = loss.kullbackLeibler(z_mean, z_log_sigma)
 
-     #   with tf.name_scope("l2_regularization"):
-     #       regularizers = [tf.nn.l2_loss(var) for var in self.session.graph.get_collection(
-     #           "trainable_variables") if "weights" in var.name]
-     #       l2_reg = self.hyper_params['lambda_l2_reg'] * tf.add_n(regularizers)
+        with tf.name_scope("l2_regularization"):
+            regularizers = [tf.nn.l2_loss(var) for var in
+                            self.session.graph.get_collection(
+                                "trainable_variables") if "weights" in var.name]
+        l2_reg = 20 * tf.add_n(regularizers)
 
         with tf.name_scope("cost"):
             # average over minibatch
             cost = tf.reduce_mean(rec_loss + kl_loss, name="vae_cost")
-           # cost += l2_reg
+            cost += l2_reg
 
         return cost
-
 
 
 regions_used = "three"
