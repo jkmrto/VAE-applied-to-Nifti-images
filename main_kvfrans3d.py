@@ -25,7 +25,7 @@ train_images = load_regions_segmented(list_regions)[3]
 input_shape = [34, 42, 41]
 total_size = 34 * 42 * 41
 activation_layer = ops.lrelu
-learning_rate = 0.005
+learning_rate = 0.001
 
 class LatentAttention():
     def __init__(self):
