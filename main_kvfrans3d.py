@@ -54,7 +54,7 @@ class LatentAttention():
         self.latent_loss = 0.5 * tf.reduce_sum(tf.square(z_mean) + tf.square(z_stddev) - tf.log(tf.square(z_stddev)) - 1,1)
         self.cost = tf.reduce_mean(self.generation_loss + self.latent_loss)
 
-        self.optimizer = tf.train.AdamOptimizer(0.001).minimize(self.cost)
+        self.optimizer = tf.train.AdamOptimizer(0.01).minimize(self.cost)
 
     # encoder
     def recognition(self, input_images):
@@ -113,7 +113,7 @@ class LatentAttention():
 
         with tf.Session() as sess:
             sess.run(tf.initialize_all_variables())
-            for epoch in range(100):
+            for epoch in range(1000):
                 for idx in range(int(self.n_samples / self.batchsize)):
                     batch_images = train_images[0:self.batchsize, :, :, :]
                     batch = np.reshape(batch_images, [batch_images.shape[0], 34*42*41])
