@@ -5,3 +5,4 @@ credentials.txt
 recollect_kfolds_results.sh
 test_over_cvae/
 tests_sources/
+pet_regions_segmented/
