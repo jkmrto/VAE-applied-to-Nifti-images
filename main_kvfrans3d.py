@@ -2,13 +2,11 @@ import os
 import nibabel as nib
 import numpy as np
 import tensorflow as tf
-from scipy.misc import imsave as ims
 from lib import session_helper
 from lib.test_over_segmenting_regions import load_regions_segmented
 import lib.kfrans_ops as ops
 from lib.aux_functionalities.functions import \
     get_batch_from_samples_unsupervised_3d
-from lib import utils
 
 import settings
 
@@ -72,7 +70,6 @@ class LatentAttention():
 
         self.session.run(tf.initialize_all_variables())
 
-
     def __cost_calculation(self, images_reconstructed, z_mean, z_stddev):
         self.generation_loss = -tf.reduce_sum(
             self.images * tf.log(1e-8 + images_reconstructed) + (
@@ -95,8 +92,8 @@ class LatentAttention():
 
                 cost += l2_reg
 
-
         return cost
+
 
     # encoder
     def recognition(self, input_images):
@@ -195,7 +192,7 @@ class LatentAttention():
 
 
 regions_used = "all"
-region_selected = 40
+region_selected = 38
 list_regions = session_helper.select_regions_to_evaluate(regions_used)
 train_images = load_regions_segmented(list_regions)[region_selected]
 
