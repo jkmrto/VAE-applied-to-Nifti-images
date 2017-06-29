@@ -44,16 +44,16 @@ class LatentAttention():
 
         self.decay_rate = tf.placeholder_with_default(0., shape=[], name="decay_rate")
         self.images = tf.placeholder(tf.float32, [None, total_size])
-        image_matrix = tf.reshape(self.images, [self.batchsize, 34, 42, 41, 1])
+        image_matrix = tf.reshape(self.images, [-1, 34, 42, 41, 1])
 
         z_mean, z_stddev = self.recognition(image_matrix)
-        samples = tf.random_normal([self.batchsize, self.n_z], 0, 1,
+        samples = tf.random_normal(tf.shape(z_mean), 0, 1,
                                    dtype=tf.float32)
         guessed_z = z_mean + (z_stddev * samples)
 
         self.generated_images = self.generation(guessed_z)
         generated_flat = tf.reshape(self.generated_images,
-                                    [self.batchsize, total_size])
+                                    tf.shape(self.images))
 
         self.generation_loss = -tf.reduce_sum(
             self.images * tf.log(1e-8 + generated_flat) + (
@@ -110,7 +110,7 @@ class LatentAttention():
                 name="second_layers"))  # 14x14x16 -> 7x7x32
 
             print(h2.shape)
-            h2_flat = tf.reshape(h2, [self.batchsize, 9 * 11 * 11 * 32])
+            h2_flat = tf.reshape(h2, [-1, 9 * 11 * 11 * 32])
 
             w_mean = ops.dense(h2_flat, 9 * 11 * 11 * 32, self.n_z, "w_mean")
             w_stddev = ops.dense(h2_flat, 9 * 11 * 11 * 32, self.n_z,
@@ -150,14 +150,17 @@ class LatentAttention():
 
         for epoch in range(1000):
             for idx in range(int(n_samples / self.batchsize)):
+
+
                 batch_images = train_images[0:self.batchsize, :, :, :]
                 batch = np.reshape(batch_images,
                                    [batch_images.shape[0], 34 * 42 * 41])
 
+                feed_dict = {self.images: batch, self.decay_rate: decay_rate}
                 _, gen_loss, lat_loss, global_step, learning_rate = self.session.run(
                     (self.optimizer, self.generation_loss, self.latent_loss,
                      self.global_step, self.temp_learning_rate),
-                    feed_dict={self.images: batch})
+                    feed_dict=feed_dict)
                 # dumb hack to print cost every epoch
                 if idx % (n_samples - 3) == 0:
                     print("epoch %d: genloss %f latloss %f" % (
@@ -165,9 +168,11 @@ class LatentAttention():
                     print("iter: {0}, learning rate: {1}".format(global_step, learning_rate))
 
             if epoch % 10 == 0:
-                generated_test = self.session.run(self.generated_images,
-                                          feed_dict={self.images: batch})
-                generated_test = generated_test[0, :]
+
+                feed_dict = {self.images: batch}
+                generated_test = self.session.run(self.generated_images[1,:],
+                                          feed_dict=feed_dict)
+
                 image_3d = np.reshape(generated_test, [34, 42, 41])
                 image_3d = image_3d.astype(float)
                 file_path = os.path.join(path_to_nii_output,
