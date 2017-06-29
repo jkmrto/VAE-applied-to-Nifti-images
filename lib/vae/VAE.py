@@ -177,8 +177,6 @@ class VAE():
         # else, zs defaults to draw from conjugate prior z ~ N(0, I)
         return self.session.run(self.x_reconstructed_, feed_dict=feed_dict)
 
-
-
     def vae(self, x):
         """End-to-end autoencoder"""
         # np.array -> np.array
