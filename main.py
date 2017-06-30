@@ -26,13 +26,13 @@ dict_norad_gm = MRI_stack_NORAD.get_gm_stack()
 dict_norad_wm = MRI_stack_NORAD.get_wm_stack()
 patient_labels = load_patients_labels()
 # Meta settings.
-n_folds = 3
+n_folds = 10
 bool_test = False
-regions_used = "three"
+regions_used = "most_important"
 
 # Vae settings
 # Net Configuration
-after_input_architecture = [1000, 500, 100]
+after_input_architecture = [1000, 500]
 
 hyperparams_vae = {
     "batch_size": 16,
@@ -46,7 +46,7 @@ hyperparams_vae = {
 # Vae session cofiguration
 vae_session_conf = {
     "bool_normalized": True,
-    "max_iter": 20,
+    "max_iter": 100,
     "save_meta_bool": False,
     "show_error_iter": 10,
 }
@@ -158,15 +158,16 @@ file_session_descriptor.close()
 
 # Load regions index and create kfolds folder
 list_regions = session.select_regions_to_evaluate(regions_used)
-cv_utils.generate_k_fold(session_settings.path_kfolds_folder,
-                         dict_norad_gm['stack'], n_folds)
+
+k_fold_dict = cv_utils.generate_k_folder_in_dict(
+    dict_norad_gm['stack'].shape[0], n_folds)
 
 # Main Loop
-for k_fold_index in range(1, n_folds + 1, 1):
+for k_fold_index in range(0, n_folds, 1):
     vae_output = {}
 
-    train_index, test_index = cv_utils.get_train_and_test_index_from_k_fold(
-        session_settings.path_kfolds_folder, k_fold_index, n_folds)
+    train_index = k_fold_dict[k_fold_index]["train"]
+    test_index = k_fold_dict[k_fold_index]["test"]
 
     Y_train = patient_labels[train_index]
     Y_test = patient_labels[test_index]
@@ -182,11 +183,10 @@ for k_fold_index in range(1, n_folds + 1, 1):
     voxels_values['test'] = dict_norad_gm['stack'][test_index, :]
 
     print("Train over GM regions")
-    vae_output['gm'] = vae_over_regions_kfolds.execute(voxels_values,
+    vae_output['gm'] = vae_over_regions_kfolds.execute_without_any_logs(voxels_values,
                                                        hyperparams_vae,
                                                        vae_session_conf,
                                                        after_input_architecture,
-                                                       path_to_root_GM,
                                                        list_regions)
 
     voxels_values = {}
@@ -194,14 +194,13 @@ for k_fold_index in range(1, n_folds + 1, 1):
     voxels_values['test'] = dict_norad_wm['stack'][test_index, :]
 
     print("Train over WM regions")
-    vae_output['wm'] = vae_over_regions_kfolds.execute(voxels_values,
+    vae_output['wm'] = vae_over_regions_kfolds.execute_without_any_logs(voxels_values,
                                                        hyperparams_vae,
                                                        vae_session_conf,
                                                        after_input_architecture,
-                                                       path_to_root_WM,
                                                        list_regions)
 
-    train_score_matriz, test_score_matriz = svm_utils.svm_over_vae_output(
+    train_score_matriz, test_score_matriz = svm_utils.svm_mri_over_vae_output(
         vae_output, Y_train, Y_test, list_regions, bool_test=bool_test)
 
     data = {}

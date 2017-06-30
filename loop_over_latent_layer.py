@@ -164,16 +164,14 @@ for latent_dim in latent_code_dim_list:
     svm_weighted_regions_k_folds_results_test = []
     svm_weighted_regions_k_folds_coefs = []
 
-    cv_utils.generate_k_fold(
-        loop_latent_layer_session_settings.path_kfolds_folder,
-        dict_norad_gm['stack'], n_folds)
+    k_fold_dict = cv_utils.generate_k_folder_in_dict(
+        dict_norad_gm['stack'].shape[0], n_folds)
 
-    for k_fold_index in range(1, n_folds + 1, 1):
+    for k_fold_index in range(0, n_folds, 1):
         vae_output = {}
 
-        train_index, test_index = cv_utils.get_train_and_test_index_from_k_fold(
-            loop_latent_layer_session_settings.path_kfolds_folder, k_fold_index,
-            n_folds)
+        train_index = k_fold_dict[k_fold_index]["train"]
+        test_index = k_fold_dict[k_fold_index]["test"]
 
         Y_train = patient_labels[train_index]
         Y_test = patient_labels[test_index]
