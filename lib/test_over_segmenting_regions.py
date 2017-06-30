@@ -56,22 +56,28 @@ def recortar_region(stack_dict, region, atlas, thval=0):
     return stack_masked
 
 
-def load_regions_segmented(list_regions, folder_to_store_3d_images=None):
+def load_regions_segmented(list_regions, folder_to_store_3d_images=None,
+                           bool_logs=True):
 
     dic_regions_segmented = {}
 
-    print("Loading Pet Stack")
+    if bool_logs:
+        print("Loading Pet Stack")
     dict_norad_pet = PET_stack_NORAD.get_full_stack()  # 'stack' 'voxel_index' 'labels'
-    print(" Stack Loaded")
+
+    if bool_logs:
+        print(" Stack Loaded")
     patient = 10
     atlas = pet_atlas.load_atlas()
 
     for region in list_regions:
-        print("Segmenting Region {}".format(region))
+        if bool_logs:
+            print("Segmenting Region {}".format(region))
         region_segmented = recortar_region(stack_dict=dict_norad_pet,
                                        region=region,
                                        atlas=atlas)
-        print("Region {} Segmented".format(region))
+        if bool_logs:
+            print("Region {} Segmented".format(region))
 
         if folder_to_store_3d_images is not None:
             img = nib.Nifti1Image(region_segmented[patient,:,:,:], np.eye(4))

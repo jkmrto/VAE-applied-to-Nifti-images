@@ -20,7 +20,11 @@ from lib.neural_net import leaky_net_utils
 
 
 images_used = "MRI"
-
+# Selecting the GM folder
+# Loading the stack of images
+dict_norad_gm = MRI_stack_NORAD.get_gm_stack()
+dict_norad_wm = MRI_stack_NORAD.get_wm_stack()
+patient_labels = load_patients_labels()
 # Meta settings.
 n_folds = 3
 bool_test = False
@@ -127,7 +131,7 @@ list_paths_files_to_store = [k_fold_output_file_simple_majority_vote,
                              k_fold_output_file_weighted_svm,
                              k_fold_output_file_coefs_weighted_svm]
 
-<
+
 
 # Session descriptor elaboration
 session_descriptor = {}

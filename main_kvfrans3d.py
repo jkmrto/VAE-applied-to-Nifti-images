@@ -47,16 +47,16 @@ class LatentAttention():
                                 self.image_shape[2], 1])
         self.dim_in_first_layer = tf.shape(image_matrix)
 
-        z_mean, z_stddev = self.recognition(image_matrix)
-        samples = tf.random_normal(tf.shape(z_mean), 0, 1,
+        self.z_mean, self.z_stddev = self.recognition(image_matrix)
+        samples = tf.random_normal(tf.shape(self.z_mean), 0, 1,
                                    dtype=tf.float32)
-        guessed_z = z_mean + (z_stddev * samples)
+        guessed_z = self.z_mean + (self.z_stddev * samples)
 
         self.generated_images = self.generation(guessed_z)
         generated_flat = tf.reshape(self.generated_images,
                                     tf.shape(self.images))
 
-        self.cost = self.__cost_calculation(generated_flat, z_mean, z_stddev)
+        self.cost = self.__cost_calculation(generated_flat, self.z_mean, self.z_stddev )
 
         self.global_step = tf.Variable(0, trainable=False)
 
@@ -129,6 +129,13 @@ class LatentAttention():
 
         return w_mean, w_stddev
 
+    def encode (self, input_images):
+        # np.array -> [float, float]
+        input_images_flat = np.reshape(input_images,
+                                [input_images.shape[0], self.total_size])
+        feed_dict = {self.images: input_images_flat}
+        return self.session.run([self.z_mean, self.z_stddev], feed_dict=feed_dict)
+
     # decoder
     def generation(self, z):
         with tf.variable_scope("generation"):
@@ -190,22 +197,22 @@ class LatentAttention():
                                          "epoc_{}".format(iter))
                 from_3d_image_to_nifti_file(file_path, image_3d)
 
+def auto_execute():
+    regions_used = "all"
+    region_selected = 38
+    list_regions = session_helper.select_regions_to_evaluate(regions_used)
+    train_images = load_regions_segmented(list_regions)[region_selected]
 
-regions_used = "all"
-region_selected = 38
-list_regions = session_helper.select_regions_to_evaluate(regions_used)
-train_images = load_regions_segmented(list_regions)[region_selected]
+    hyperparams = {}
+    hyperparams['latent_layer_dim'] = 100
+    hyperparams['kernel_size'] = 5
+    hyperparams['features_depth'] = [1, 16, 32]
+    hyperparams['image_shape'] = train_images.shape[1:]
+    hyperparams['activation_layer'] = ops.lrelu
+    hyperparams['total_size'] = np.array(train_images.shape[1:]).prod()
+    hyperparams['decay_rate'] = 0.0002
+    hyperparams['learning_rate'] = 0.001
+    hyperparams['lambda_l2_regularization'] = 0.0001
 
-hyperparams = {}
-hyperparams['latent_layer_dim'] = 100
-hyperparams['kernel_size'] = 5
-hyperparams['features_depth'] = [1, 16, 32]
-hyperparams['image_shape'] = train_images.shape[1:]
-hyperparams['activation_layer'] = ops.lrelu
-hyperparams['total_size'] = np.array(train_images.shape[1:]).prod()
-hyperparams['decay_rate'] = 0.0002
-hyperparams['learning_rate'] = 0.001
-hyperparams['lambda_l2_regularization'] = 0.0001
-
-model = LatentAttention(hyperparams=hyperparams)
-model.train(X=train_images, n_iters=1000, batchsize=50)
+    model = LatentAttention(hyperparams=hyperparams)
+    model.train(X=train_images, n_iters=1000, batchsize=50)

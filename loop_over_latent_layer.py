@@ -25,17 +25,17 @@ session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
 
 # Meta settings.
-n_folds = 10
+n_folds = 1
 bool_test = False
-regions_used = "most_important"
+regions_used = "three"
 
 # Vae settings
 # Net Configuration
 middle_architecture = [1000, 500]
-#latent_code_dim_list = [5, 10 ,15]
+# latent_code_dim_list = [5, 10 ,15]
 latent_code_dim_list = [2, 5, 8, 10, 25, 50, 75, 100, 125, 150, 175, 200, 225,
                         250, 275, 300, 325, 350, 375, 400]
-#latent_code_dim_list = [100]
+# latent_code_dim_list = [100]
 list_regions = session.select_regions_to_evaluate(regions_used)
 
 hyperparams_vae = {
@@ -50,7 +50,7 @@ hyperparams_vae = {
 # Vae session cofiguration
 vae_session_conf = {
     "bool_normalized": True,
-    "max_iter": 100,
+    "max_iter": 10,
     "save_meta_bool": False,
     "show_error_iter": 10,
 }
@@ -142,8 +142,8 @@ list_averages_complex_majority_vote = []
 
 for latent_dim in latent_code_dim_list:
 
-    
-    print("Evaluating the system with a latent code of {} dim".format(latent_dim))
+    print(
+        "Evaluating the system with a latent code of {} dim".format(latent_dim))
 
     temp_architecture = deepcopy(middle_architecture)
     temp_architecture.extend([latent_dim])
@@ -164,14 +164,16 @@ for latent_dim in latent_code_dim_list:
     svm_weighted_regions_k_folds_results_test = []
     svm_weighted_regions_k_folds_coefs = []
 
-    cv_utils.generate_k_fold(loop_latent_layer_session_settings.path_kfolds_folder,
-                             dict_norad_gm['stack'], n_folds)
+    cv_utils.generate_k_fold(
+        loop_latent_layer_session_settings.path_kfolds_folder,
+        dict_norad_gm['stack'], n_folds)
 
     for k_fold_index in range(1, n_folds + 1, 1):
         vae_output = {}
 
         train_index, test_index = cv_utils.get_train_and_test_index_from_k_fold(
-            loop_latent_layer_session_settings.path_kfolds_folder, k_fold_index, n_folds)
+            loop_latent_layer_session_settings.path_kfolds_folder, k_fold_index,
+            n_folds)
 
         Y_train = patient_labels[train_index]
         Y_test = patient_labels[test_index]
@@ -187,27 +189,27 @@ for latent_dim in latent_code_dim_list:
         voxels_values['test'] = dict_norad_gm['stack'][test_index, :]
 
         print("Train over GM regions")
-        vae_output['gm'] = vae_over_regions_kfolds.execute(voxels_values,
-                                                           hyperparams_vae,
-                                                           vae_session_conf,
-                                                           temp_architecture,
-                                                           path_to_root_GM,
-                                                           list_regions)
+        vae_output['gm'] = vae_over_regions_kfolds.execute_without_any_logs(
+            voxels_values,
+            hyperparams_vae,
+            vae_session_conf,
+            temp_architecture,
+            list_regions)
 
         voxels_values = {}
         voxels_values['train'] = dict_norad_wm['stack'][train_index, :]
         voxels_values['test'] = dict_norad_wm['stack'][test_index, :]
 
         print("Train over WM regions")
-        vae_output['wm'] = vae_over_regions_kfolds.execute(voxels_values,
-                                                           hyperparams_vae,
-                                                           vae_session_conf,
-                                                           temp_architecture,
-                                                           path_to_root_WM,
-                                                           list_regions)
+        vae_output['wm'] = vae_over_regions_kfolds.execute_without_any_logs(
+            voxels_values,
+            hyperparams_vae,
+            vae_session_conf,
+            temp_architecture,
+            list_regions)
+
         train_score_matriz, test_score_matriz = svm_utils.svm_over_vae_output(
             vae_output, Y_train, Y_test, list_regions, bool_test=bool_test)
-
 
         data = {}
         data["test"] = {}
@@ -315,7 +317,6 @@ for latent_dim in latent_code_dim_list:
     list_averages_simple_majority_vote.append(averages_simple_majority_vote)
     list_averages_decision_net.append(averages_decision_net)
     list_averages_complex_majority_vote.append(averages_complex_majority_vote)
-
 
 # Outputs files
 # simple majority
