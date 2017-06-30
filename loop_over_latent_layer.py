@@ -25,13 +25,13 @@ session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
 
 # Meta settings.
-n_folds = 1
+n_folds = 2
 bool_test = False
 regions_used = "three"
 
 # Vae settings
 # Net Configuration
-middle_architecture = [1000, 500]
+middle_architecture = [100, 50]
 # latent_code_dim_list = [5, 10 ,15]
 latent_code_dim_list = [2, 5, 8, 10, 25, 50, 75, 100, 125, 150, 175, 200, 225,
                         250, 275, 300, 325, 350, 375, 400]
