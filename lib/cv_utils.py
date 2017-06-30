@@ -47,6 +47,50 @@ def generate_and_store_train_and_test_index(stack, cv_rate, path_to_cv):
     return train_index, test_index
 
 
+def generate_k_folder_in_dict(n_samples, n_folds):
+    index = np.random.choice(range(n_samples),n_samples,
+                             replace=False)
+    n_over_samples = index.shape[0] % n_folds
+    over_samples = index[-n_over_samples:]
+
+    samples_per_fold = int(index.shape[0] / n_folds)
+
+    if n_over_samples > 0:
+        index_matrix = np.reshape(index[0:-n_over_samples],
+                              (n_folds, samples_per_fold))
+    else:
+        index_matrix = np.reshape(index, (n_folds, samples_per_fold))
+
+    k_fold_dict = {}
+    for test_fold in range(0, n_folds , 1):
+
+        train_index = np.empty(shape=0)
+        test_index = np.empty(shape=0)
+
+        for i in range(0, n_folds, 1):
+            if i == test_fold:
+                test_index = np.append(test_index, index_matrix[i, :]).astype(int).tolist()
+                if i < n_over_samples:
+                    test_index = np.append(test_index, over_samples[i])
+            else:
+                train_index = np.append(train_index, index_matrix[i,:]).astype(int).tolist()
+                if i < n_over_samples:
+                    train_index = np.append(train_index, over_samples[i])
+
+        train_index.sort()
+        test_index.sort()
+
+        k_fold_dict[test_fold] = {}
+        k_fold_dict[test_fold]['train'] = train_index
+        k_fold_dict[test_fold]['test'] = test_index
+
+    return k_fold_dict
+
+
+def test_over_generate_k_folder_in_dict():
+    kfold_dict = generate_k_folder_in_dict(n_samples=103, n_folds=10)
+    print(kfold_dict)
+
 def generate_k_fold(path_to_kfold_folder, n_samples, n_folds):
     index = np.random.choice(range(n_samples),n_samples,
                              replace=False)
@@ -70,6 +114,7 @@ def generate_k_fold(path_to_kfold_folder, n_samples, n_folds):
         np.savetxt(os.path.join(path_to_kfold_folder,
                                 k_folds_files_template.format(i +1 )), out,
                    delimiter=',')
+
 
 
 def get_train_and_test_index_from_k_fold(path_to_kfold_folder, test_fold, n_folds):

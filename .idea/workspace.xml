@@ -6,7 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a70bc70e-9f0d-404b-b0fa-698d01cb0e18" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loop_over_latent_layer.py" afterPath="$PROJECT_DIR$/loop_over_latent_layer.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/cv_utils.py" afterPath="$PROJECT_DIR$/lib/cv_utils.py" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -157,14 +158,24 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="loop_over_latent_layer.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="loop_over_latent_layer.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/loop_over_latent_layer.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="348">
-                  <caret line="27" column="11" lean-forward="false" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="11" />
+                <state relative-caret-position="314">
+                  <caret line="166" column="23" lean-forward="false" selection-start-line="166" selection-start-column="23" selection-end-line="166" selection-end-column="23" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="cv_utils.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/lib/cv_utils.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="465">
+                  <caret line="90" column="4" lean-forward="false" selection-start-line="90" selection-start-column="4" selection-end-line="90" selection-end-column="4" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -285,7 +296,6 @@
         <option value="$PROJECT_DIR$/lib/data_loader/MRI_stack_NORAD.py" />
         <option value="$PROJECT_DIR$/lib/regenerate_utils.py" />
         <option value="$PROJECT_DIR$/scripts/pet_scripts/reconstructor_extrapoling_over_2images.py" />
-        <option value="$PROJECT_DIR$/lib/cv_utils.py" />
         <option value="$PROJECT_DIR$/scripts/vae_with_kfolds/session_settings.py" />
         <option value="$PROJECT_DIR$/recollect_kfolds_results.sh" />
         <option value="$PROJECT_DIR$/test" />
@@ -323,6 +333,7 @@
         <option value="$PROJECT_DIR$/scripts/vae_with_kfolds/vae_over_regions_kfolds.py" />
         <option value="$PROJECT_DIR$/lib/output_utils.py" />
         <option value="$PROJECT_DIR$/loop_over_latent_layer.py" />
+        <option value="$PROJECT_DIR$/lib/cv_utils.py" />
       </list>
     </option>
   </component>
@@ -448,24 +459,7 @@
       <recent name="$PROJECT_DIR$/data" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.loop_over_latent_layer">
-    <configuration default="false" name="main_kvfrans" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="VAE" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main_kvfrans.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python.cv_utils">
     <configuration default="false" name="main_kvfrans3d" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -530,6 +524,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="VAE" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/loop_over_latent_layer.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="cv_utils" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/lib" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="VAE" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lib/cv_utils.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -683,19 +694,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.main_kvfrans" />
-      <item index="1" class="java.lang.String" itemvalue="Python.main_kvfrans3d" />
-      <item index="2" class="java.lang.String" itemvalue="Python.test_over_weight" />
-      <item index="3" class="java.lang.String" itemvalue="Python.cvae_over_regions" />
-      <item index="4" class="java.lang.String" itemvalue="Python.loop_over_latent_layer" />
+      <item index="0" class="java.lang.String" itemvalue="Python.main_kvfrans3d" />
+      <item index="1" class="java.lang.String" itemvalue="Python.test_over_weight" />
+      <item index="2" class="java.lang.String" itemvalue="Python.cvae_over_regions" />
+      <item index="3" class="java.lang.String" itemvalue="Python.loop_over_latent_layer" />
+      <item index="4" class="java.lang.String" itemvalue="Python.cv_utils" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.loop_over_latent_layer" />
-        <item index="1" class="java.lang.String" itemvalue="Python.cvae_over_regions" />
-        <item index="2" class="java.lang.String" itemvalue="Python.main_kvfrans3d" />
-        <item index="3" class="java.lang.String" itemvalue="Python.test_over_weight" />
-        <item index="4" class="java.lang.String" itemvalue="Python.main_kvfrans" />
+        <item index="0" class="java.lang.String" itemvalue="Python.cv_utils" />
+        <item index="1" class="java.lang.String" itemvalue="Python.loop_over_latent_layer" />
+        <item index="2" class="java.lang.String" itemvalue="Python.cvae_over_regions" />
+        <item index="3" class="java.lang.String" itemvalue="Python.main_kvfrans3d" />
+        <item index="4" class="java.lang.String" itemvalue="Python.test_over_weight" />
       </list>
     </recent_temporary>
   </component>
@@ -796,13 +807,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/scripts/pet_scripts/reconstructor_extrapoling_over_2images.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1734">
-          <caret line="111" column="28" lean-forward="false" selection-start-line="111" selection-start-column="28" selection-end-line="111" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
@@ -1120,11 +1124,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/loop_over_latent_layer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="27" column="11" lean-forward="false" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="11" />
+        <state relative-caret-position="314">
+          <caret line="166" column="23" lean-forward="false" selection-start-line="166" selection-start-column="23" selection-end-line="166" selection-end-column="23" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/cv_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="90" column="4" lean-forward="false" selection-start-line="90" selection-start-column="4" selection-end-line="90" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
