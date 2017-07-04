@@ -203,7 +203,7 @@ def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
         else:
             max_train_iter = session_conf['n_iters']
 
-        model.train(X=train_cube_images, n_iters=max_train_iter,
+        model.train(X=train_cube_images, n_iters=session_conf['n_iters'],
                     batchsize=session_conf["batch_size"])
 
         # Script para pintar

@@ -156,3 +156,27 @@ def restructure_dictionary_based_on_cv_index_3dimages(
         restructure_output["train"][region] = region_to_img_dict[region][train_index,:,:,:]
 
     return restructure_output
+
+
+def restructure_dictionary_based_on_cv_index_flat_images(
+        dict_train_test_index, region_to_img_dict):
+    """
+
+    :param dict_train_test_index: Dic["train"|"test"] -> index_samples
+    :param region_to_img_dict:  Dic[region] -> image 3d values
+    :return: Dic["train"|"test][region] -> image 3d values
+    """
+
+    test_index = dict_train_test_index['test']
+    train_index = dict_train_test_index['train']
+
+    restructure_output = {"test": {}, "train": {}}
+
+    for region in region_to_img_dict.keys():
+        restructure_output["test"][region] = \
+            region_to_img_dict[region][test_index, :]
+        restructure_output["train"][region] =\
+            region_to_img_dict[region][train_index, :]
+
+    return restructure_output
+

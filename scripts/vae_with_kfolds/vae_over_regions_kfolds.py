@@ -154,36 +154,35 @@ def execute(voxels_values, hyperparams, session_conf, after_input_architecture,
     return per_region_results
 
 
-def execute_without_any_logs(voxels_values, hyperparams, session_conf, atlas,
-                             after_input_architecture, list_regions, path_to_root=None):
-
+def execute_without_any_logs(region_to_flat_voxels_train_dict,
+                             hyperparams, session_conf,
+                             list_regions, path_to_root=None,
+                             region_to_flat_voxels_test_dict=None,
+                             explicit_iter_per_region=[]):
 
     per_region_results = {}
 
     # LOOP OVER REGIONS
     for region_selected in list_regions:
         print("Region Nº {} selected".format(region_selected))
-        voxels_index = atlas[region_selected]
 
-        # First map and the normalize to the unit the value of the pixels
-        # filtering voxels per region
-        region_voxels_values_train = voxels_values['train'][:, voxels_index]
-        region_voxels_values_test = voxels_values['test'][:, voxels_index]
+        train_voxels = region_to_flat_voxels_train_dict[region_selected]
+        test_voxels = region_to_flat_voxels_test_dict[region_selected]
 
         if session_conf['bool_normalized']:
-            region_voxels_values_train, max_denormalize = \
-                utils.normalize_array(region_voxels_values_train)
-            region_voxels_values_test = region_voxels_values_test / max_denormalize
+            train_voxels, max_denormalize = \
+                utils.normalize_array(train_voxels)
+            test_voxels = test_voxels / max_denormalize
 
-        architecture = [region_voxels_values_train.shape[1]]
-        architecture.extend(after_input_architecture)
+        architecture = [train_voxels.shape[1]]
+        architecture.extend(session_conf["after_input_architecture"])
 
         tf.reset_default_graph()
         v = VAE.VAE(architecture, hyperparams)
 
         region_suffix = 'region_' + str(region_selected)
 
-        v.train(region_voxels_values_train,
+        v.train(train_voxels,
                 max_iter=session_conf["max_iter"],
                 suffix_files_generated=region_suffix,
                 iter_to_save=500, iters_to_show_error=session_conf['show_error_iter'])
@@ -193,8 +192,8 @@ def execute_without_any_logs(voxels_values, hyperparams, session_conf, atlas,
 
         # ENCODING PHASE
         # Encoding samples for the next step
-        train_output = v.encode(region_voxels_values_train)
-        test_output = v.encode(region_voxels_values_test)
+        train_output = v.encode(train_voxels)
+        test_output = v.encode(test_voxels)
 
         per_region_results[str(region_selected)] = {}
 

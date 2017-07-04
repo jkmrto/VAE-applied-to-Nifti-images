@@ -2,7 +2,10 @@ import numpy as np  # Se genera la mascara a partir del atlas
 from lib.data_loader import PET_stack_NORAD
 from lib.data_loader import pet_atlas
 import nibabel as nib
+from lib.data_loader import MRI_stack_NORAD
+from lib.data_loader import PET_stack_NORAD
 import os
+from lib.data_loader import mri_atlas
 from lib import session_helper as session
 import settings
 
@@ -86,6 +89,33 @@ def load_regions_segmented(list_regions, folder_to_store_3d_images=None,
 
         dic_regions_segmented[region] = region_segmented
     return dic_regions_segmented
+
+
+def load_mri_regions_flatten(list_regions):
+    """
+
+    :param list_regions:
+    :return: dic_wm[region], dic_gm[region] || region -> voxels_flatten
+    """
+    dict_norad_gm = MRI_stack_NORAD.get_gm_stack()['stack']
+    dict_norad_wm = MRI_stack_NORAD.get_wm_stack()['stack']
+
+    atlas = mri_atlas.load_atlas_mri()
+
+    dic_regions_to_flatten_voxels_mri_gm = {}
+    dic_regions_to_flatten_voxels_mri_wm = {}
+
+    for region in list_regions:
+        dic_regions_to_flatten_voxels_mri_gm[region] = \
+            dict_norad_gm[:, atlas[region]]
+
+        dic_regions_to_flatten_voxels_mri_wm[region] = \
+            dict_norad_wm[:, atlas[region]]
+
+    return dic_regions_to_flatten_voxels_mri_gm, \
+           dic_regions_to_flatten_voxels_mri_wm
+
+#out_gm, out_wm = load_mri_regions_flatten([2, 3, 4, 5, 6])
 
 
 def test(region_to_save, path_where_store_out="pet_regions_segmented"):
