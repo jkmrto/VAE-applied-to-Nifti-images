@@ -6,8 +6,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a70bc70e-9f0d-404b-b0fa-698d01cb0e18" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/iwyoo_main.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/main_deprecated.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cvae_main_with_pet.py" afterPath="$PROJECT_DIR$/cvae_main_with_pet.py" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -96,12 +94,12 @@
           <file leaf-file-name="cvae_main_with_pet.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/cvae_main_with_pet.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="465">
-                  <caret line="35" column="19" lean-forward="false" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
+                <state relative-caret-position="550">
+                  <caret line="52" column="30" lean-forward="false" selection-start-line="52" selection-start-column="30" selection-end-line="52" selection-end-column="30" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
-                    <element signature="e#1756#1899#0" expanded="false" />
-                    <element signature="e#1928#2061#0" expanded="false" />
+                    <element signature="e#1757#1900#0" expanded="false" />
+                    <element signature="e#1929#2062#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -140,9 +138,9 @@
                   <caret line="251" column="0" lean-forward="false" selection-start-line="251" selection-start-column="0" selection-end-line="251" selection-end-column="0" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
-                    <element signature="e#1756#1899#0" expanded="false" />
-                    <element signature="e#1928#2061#0" expanded="false" />
-                    <marker date="1499198614302" expanded="true" signature="6649:13062" ph="..." />
+                    <element signature="e#1757#1900#0" expanded="false" />
+                    <element signature="e#1929#2062#0" expanded="false" />
+                    <marker date="1499198691689" expanded="true" signature="6650:13063" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -1098,12 +1096,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cvae_main_with_pet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="35" column="19" lean-forward="false" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
+        <state relative-caret-position="550">
+          <caret line="52" column="30" lean-forward="false" selection-start-line="52" selection-start-column="30" selection-end-line="52" selection-end-column="30" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
-            <element signature="e#1756#1899#0" expanded="false" />
-            <element signature="e#1928#2061#0" expanded="false" />
+            <element signature="e#1757#1900#0" expanded="false" />
+            <element signature="e#1929#2062#0" expanded="false" />
           </folding>
         </state>
       </provider>

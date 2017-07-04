@@ -50,7 +50,7 @@ hyperparams = {'latent_layer_dim': 100,
 
 # Vae session cofiguration
 cvae_session_conf = {'bool_normalized': False,
-                'n_iters': 50,
+                'n_iters': 200,
                 "batch_size": 16}
 
 # DECISION NET CONFIGURATION
