@@ -35,6 +35,7 @@ bool_test = False
 bool_log_svm_output = True
 regions_used = "three"
 #regions_used = "three"
+list_regions = session_helper.select_regions_to_evaluate(regions_used)
 
 # Vae settings
 # Net Configuration
@@ -175,9 +176,11 @@ dict_norad_mri_wm = {}
 atlas = {}
 list_regions = session_helper.select_regions_to_evaluate(regions_used)
 
+n_samples=0
+region_to_img_dict={}
 if images_used == "PET":
-    train_images = load_regions_segmented(list_regions, bool_logs=False)
-    n_samples = train_images[1].shape[0] #selecting one region for getting the n samples
+    region_to_img_dict = load_regions_segmented(list_regions, bool_logs=False)
+    n_samples = region_to_img_dict[1].shape[0] #selecting one region for getting the n samples
     patient_labels = PET_stack_NORAD.load_patients_labels()
 #    atlas = pet_atlas.load_atlas()
 
@@ -192,24 +195,26 @@ elif images_used == "MRI":
 
 # Load regions index and create kfolds folder
 
-k_fold_dict = {}
-cv_utils.generate_k_folder_in_dict(n_samples=n_samples, n_folds=n_folds)
+k_fold_dict=\
+    cv_utils.generate_k_folder_in_dict(n_samples=n_samples, n_folds=n_folds)
 
 # Main Loop
 for k_fold_index in range(0, n_folds, 1):
     vae_output = {}
 
-    train_index = k_fold_dict[k_fold_index]["train"]
-    test_index = k_fold_dict[k_fold_index]["test"]
+    reg_to_group_to_images_dict = \
+        cv_utils.restructure_dictionary_based_on_cv_index_3dimages(
+        dict_train_test_index=k_fold_dict[k_fold_index],
+        region_to_img_dict=region_to_img_dict)
 
-    Y_train = patient_labels[train_index]
-    Y_test = patient_labels[test_index]
+    Y_train = patient_labels[k_fold_dict[k_fold_index]["train"]]
+    Y_test = patient_labels[k_fold_dict[k_fold_index]["test"]]
     Y_train = np.row_stack(Y_train)
     Y_test = np.row_stack(Y_test)
 
     print("Kfold {} Selected".format(k_fold_index))
-    print("Number test samples {}".format(len(test_index)))
-    print("Number train samples {}".format(len(train_index)))
+    print("Number test samples {}".format(len(k_fold_dict[k_fold_index]["test"])))
+    print("Number train samples {}".format(len(k_fold_dict[k_fold_index]["train"])))
 
     if images_used == "MRI":
         print("MRI version not implemented")
@@ -247,10 +252,12 @@ for k_fold_index in range(0, n_folds, 1):
 
         print("Train over regions")
         vae_output = cvae_over_regions.execute_without_any_logs(
-            train_images,
-            hyperparams,
-            cvae_session_conf,
-            list_regions, path_to_root=None)
+            region_train_cubes_dict=reg_to_group_to_images_dict["train"],
+            hyperparams=hyperparams,
+            session_conf=cvae_session_conf,
+            list_regions=list_regions,
+            path_to_root=None,
+            region_test_cubes_dict=reg_to_group_to_images_dict["test"])
 
         train_score_matriz, test_score_matriz = svm_utils.svm_pet_over_vae_output(
             vae_output, Y_train, Y_test, list_regions, bool_test=bool_test)

@@ -137,8 +137,8 @@ def svm_mri_over_vae_output(vae_output, Y_train, Y_test, list_regions, bool_test
 def svm_pet_over_vae_output(vae_output, Y_train, Y_test, list_regions,
                             bool_test=False, minimum_training_svm_error=0.001):
 
-    n_train_patient = vae_output[str(list_regions[0])]['train_output'][0].shape[0]
-    n_test_patient = vae_output[str(list_regions[0])]['test_output'][0].shape[0]
+    n_train_patient = vae_output[str(list_regions[0])]['train_output']["mean"].shape[0]
+    n_test_patient = vae_output[str(list_regions[0])]['test_output']["mean"].shape[0]
 
     train_score_matriz = np.zeros((n_train_patient, len(list_regions)))
     test_score_matriz = np.zeros((n_test_patient, len(list_regions)))
@@ -152,8 +152,8 @@ def svm_pet_over_vae_output(vae_output, Y_train, Y_test, list_regions,
         train_output = vae_output[str(region_selected)]['train_output']
         test_output = vae_output[str(region_selected)]['test_output']
 
-        train_means = train_output[0]
-        test_means = test_output[0]
+        train_means = train_output["mean"]
+        test_means = test_output["mean"]
 
         if bool_test:
             print("\nShape wm+gm train data post encoder")
