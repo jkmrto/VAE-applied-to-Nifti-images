@@ -130,11 +130,18 @@ class LatentAttention():
         return w_mean, w_stddev
 
     def encode (self, input_images):
+
+        output_dic = {}
         # np.array -> [float, float]
         input_images_flat = np.reshape(input_images,
                                 [input_images.shape[0], self.total_size])
         feed_dict = {self.images: input_images_flat}
-        return self.session.run([self.z_mean, self.z_stddev], feed_dict=feed_dict)
+        out_encode = \
+            self.session.run([self.z_mean, self.z_stddev], feed_dict=feed_dict)
+        output_dic["mean"] = out_encode[0]
+        output_dic["stdev"] = out_encode[1]
+        return output_dic
+
 
     # decoder
     def generation(self, z):

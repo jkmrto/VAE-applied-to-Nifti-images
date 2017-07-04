@@ -154,10 +154,9 @@ def execute(voxels_values, hyperparams, session_conf, after_input_architecture,
     return per_region_results
 
 
-def execute_without_any_logs(voxels_values, hyperparams, session_conf,
+def execute_without_any_logs(voxels_values, hyperparams, session_conf, atlas,
                              after_input_architecture, list_regions, path_to_root=None):
 
-    atlas = mri_atlas.load_atlas_mri()
 
     per_region_results = {}
 

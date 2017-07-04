@@ -12,6 +12,7 @@ from lib.test_over_segmenting_regions import load_regions_segmented
 from lib.aux_functionalities.os_aux import create_directories
 from scripts.vae_with_cv_GM_and_WM import session_settings
 import lib.kfrans_ops as ops
+from lib import cv_utils
 from lib.session_helper import generate_session_descriptor
 import numpy as np
 import main_kvfrans3d
@@ -155,10 +156,10 @@ def execute(voxels_values, hyperparams, session_conf, after_input_architecture,
     return per_region_results
 
 
-def execute_without_any_logs(region_images_dict, hyperparams, session_conf,
-                             list_regions, path_to_root=None):
+def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
+                             list_regions, path_to_root=None,
+                             region_test_cubes_dict=None):
     """
-
     :param voxels_values:
     :param hyperparams:
     :param session_conf:
@@ -167,24 +168,26 @@ def execute_without_any_logs(region_images_dict, hyperparams, session_conf,
     :param path_to_root:
     :return:
     """
-
-
     per_region_results = {}
 
     # LOOP OVER REGIONS
     for region_selected in list_regions:
         print("Region Nº {} selected".format(region_selected))
+
+
         # Selecting the cubes_images of the region selected
-        region_cube_images = region_images_dict[region_selected]
+        train_cube_images = region_train_cubes_dict[region_selected]
 
-        # Updating hyperparmas due to the dimensions of the cubes of the region
-        hyperparams['image_shape'] = region_cube_images.shape[1:]
-        hyperparams['total_size'] = np.array(region_cube_images.shape[1:]).prod()
+        # If cv is requested
+        test_cube_images = None
+        if region_test_cubes_dict is not None:
+            test_cube_images = region_test_cubes_dict[region_selected]
 
+        # Updating hyperparameters due to the dimensions of the cubes of the region
+        hyperparams['image_shape'] = train_cube_images.shape[1:]
+        hyperparams['total_size'] = np.array(train_cube_images.shape[1:]).prod()
 
-        region_cube_images_train = region_cube_images
-        #region_cube_images_test = region_cube_images['test']
-
+        # Currently the normalization is not inclueded
         if session_conf['bool_normalized']:
             region_voxels_values_train, max_denormalize = \
                 utils.normalize_array(region_voxels_values_train)
@@ -192,10 +195,9 @@ def execute_without_any_logs(region_images_dict, hyperparams, session_conf,
 
         tf.reset_default_graph()
         model = main_kvfrans3d.LatentAttention(hyperparams)
-
         region_suffix = 'region_' + str(region_selected)
 
-        model.train(X=region_cube_images_train, n_iters=session_conf['n_iters'],
+        model.train(X=train_cube_images, n_iters=session_conf['n_iters'],
                     batchsize=session_conf["batch_size"])
 
         # Script para pintar
@@ -203,15 +205,54 @@ def execute_without_any_logs(region_images_dict, hyperparams, session_conf,
 
         # ENCODING PHASE
         # Encoding samples for the next step
-        train_output = model.encode(region_cube_images_train)
-        #test_output = v.encode(region_voxels_values_test)
+        train_output = model.encode(train_cube_images)
+        test_output = model.encode(test_cube_images)
 
         per_region_results[str(region_selected)] = {}
 
         per_region_results[str(region_selected)]['train_output'] = train_output
-      #  per_region_results[str(region_selected)]['test_output'] = test_output
+        per_region_results[str(region_selected)]['test_output'] = test_output
 
     return per_region_results
+
+
+def auto_execute_without_logs():
+    regions_used = "three"
+    list_regions = session_helper.select_regions_to_evaluate(regions_used)
+    region_to_img_dict = load_regions_segmented(list_regions, bool_logs=False)
+
+    n_folds = 10
+    n_samples = region_to_img_dict[1].shape[0]
+    k_fold_dict = cv_utils.generate_k_folder_in_dict(n_samples=n_samples,
+                                                     n_folds=n_folds)
+
+    reg_to_group_to_images_dict = cv_utils.restructure_dictionary_based_on_cv_index_3dimages(
+        dict_train_test_index=k_fold_dict[0],
+        region_to_img_dict=region_to_img_dict)
+
+    hyperparams = {'latent_layer_dim': 20,
+                   'kernel_size': 5,
+                   'activation_layer': ops.lrelu,
+                   'features_depth': [1, 16, 32],
+                   'decay_rate': 0.0002,
+                   'learning_rate': 0.001,
+                   'lambda_l2_regularization': 0.0001}
+
+    session_conf = {'bool_normalized': False,
+                    'n_iters': 50,
+                    "batch_size": 16}
+
+    results = execute_without_any_logs(
+        region_train_cubes_dict=reg_to_group_to_images_dict['train'],
+        hyperparams=hyperparams,
+        session_conf=session_conf,
+        path_to_root=None,
+        list_regions=list_regions,
+        region_test_cubes_dict=reg_to_group_to_images_dict['test'])
+
+    return results
+
+# out = auto_execute_without_logs()
 
 
 def auto_execute_without_logs():
@@ -220,20 +261,18 @@ def auto_execute_without_logs():
     list_regions = session_helper.select_regions_to_evaluate(regions_used)
     train_images = load_regions_segmented(list_regions, bool_logs=False)
 
-    hyperparams = {}
-    hyperparams['latent_layer_dim'] = 100
-    hyperparams['kernel_size'] = 5
-    hyperparams['activation_layer'] = ops.lrelu
-    hyperparams['features_depth'] = [1, 16, 32]
-    hyperparams['decay_rate'] = 0.0002
-    hyperparams['learning_rate'] = 0.001
-    hyperparams['lambda_l2_regularization'] = 0.0001
+    hyperparams = {'latent_layer_dim': 100, 'kernel_size': 5,
+                   'activation_layer': ops.lrelu,
+                   'features_depth': [1, 16, 32],
+                   'decay_rate': 0.0002, 'learning_rate': 0.001,
+                   'lambda_l2_regularization': 0.0001}
 
     session_conf = {'bool_normalized': False,
                     'n_iters': 50,
                     "batch_size": 16}
 
-    results = execute_without_any_logs(train_images, hyperparams, session_conf,
+    results = execute_without_any_logs(train_images, hyperparams,
+                                       session_conf,
                                        list_regions, path_to_root=None)
 
-auto_execute_without_logs()
+    # auto_execute_without_logs()
