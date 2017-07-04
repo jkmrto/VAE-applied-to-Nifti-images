@@ -30,10 +30,10 @@ from lib import session_helper
 images_used = "PET"
 
 # Meta settings.
-n_folds = 3
+n_folds = 10
 bool_test = False
 bool_log_svm_output = True
-regions_used = "three"
+regions_used = "all"
 #regions_used = "three"
 list_regions = session_helper.select_regions_to_evaluate(regions_used)
 
