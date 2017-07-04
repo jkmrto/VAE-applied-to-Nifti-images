@@ -158,7 +158,8 @@ def execute(voxels_values, hyperparams, session_conf, after_input_architecture,
 
 def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
                              list_regions, path_to_root=None,
-                             region_test_cubes_dict=None):
+                             region_test_cubes_dict=None,
+                             explicit_iter_per_region=[]):
     """
     :param voxels_values:
     :param hyperparams:
@@ -197,7 +198,12 @@ def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
         model = main_kvfrans3d.LatentAttention(hyperparams)
         region_suffix = 'region_' + str(region_selected)
 
-        model.train(X=train_cube_images, n_iters=session_conf['n_iters'],
+        if region_selected in explicit_iter_per_region:
+            max_train_iter = explicit_iter_per_region[region_selected]
+        else:
+            max_train_iter = session_conf['n_iters']
+
+        model.train(X=train_cube_images, n_iters=max_train_iter,
                     batchsize=session_conf["batch_size"])
 
         # Script para pintar

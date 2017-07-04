@@ -33,18 +33,26 @@ images_used = "PET"
 n_folds = 10
 bool_test = False
 bool_log_svm_output = True
-regions_used = "all"
+regions_used = "three"
 #regions_used = "three"
 list_regions = session_helper.select_regions_to_evaluate(regions_used)
-
+#list_regions = [47]
 # Vae settings
 # Net Configuration
+explicit_iter_per_region = {
+    47: 160,
+    44: 100,
+    43: 130,
+    73: 130,
+    74: 130,
+    75: 60,
 
+}
 hyperparams = {'latent_layer_dim': 100,
                'kernel_size': 5,
                'activation_layer': ops.lrelu,
                'features_depth': [1, 16, 32],
-               'decay_rate': 0.0002,
+               'decay_rate': 0.002,
                'learning_rate': 0.001,
                'lambda_l2_regularization': 0.0001}
 
@@ -174,13 +182,12 @@ dict_norad_pet = {}
 dict_norad_mri_gm = {}
 dict_norad_mri_wm = {}
 atlas = {}
-list_regions = session_helper.select_regions_to_evaluate(regions_used)
 
 n_samples=0
 region_to_img_dict={}
 if images_used == "PET":
     region_to_img_dict = load_regions_segmented(list_regions, bool_logs=False)
-    n_samples = region_to_img_dict[1].shape[0] #selecting one region for getting the n samples
+    n_samples = region_to_img_dict[list(region_to_img_dict.keys())[0]].shape[0] #selecting one region for getting the n samples
     patient_labels = PET_stack_NORAD.load_patients_labels()
 #    atlas = pet_atlas.load_atlas()
 
@@ -251,13 +258,17 @@ for k_fold_index in range(0, n_folds, 1):
     if images_used == "PET":
 
         print("Train over regions")
+
+
         vae_output = cvae_over_regions.execute_without_any_logs(
             region_train_cubes_dict=reg_to_group_to_images_dict["train"],
             hyperparams=hyperparams,
             session_conf=cvae_session_conf,
             list_regions=list_regions,
             path_to_root=None,
-            region_test_cubes_dict=reg_to_group_to_images_dict["test"])
+            region_test_cubes_dict=reg_to_group_to_images_dict["test"],
+            explicit_iter_per_region=explicit_iter_per_region
+        )
 
         train_score_matriz, test_score_matriz = svm_utils.svm_pet_over_vae_output(
             vae_output, Y_train, Y_test, list_regions, bool_test=bool_test)

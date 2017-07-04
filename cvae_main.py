@@ -26,9 +26,9 @@ dict_norad_gm = MRI_stack_NORAD.get_gm_stack()
 dict_norad_wm = MRI_stack_NORAD.get_wm_stack()
 patient_labels = load_patients_labels()
 # Meta settings.
-n_folds = 10
+n_folds = 3
 bool_test = False
-regions_used = "most_important"
+regions_used = "three"
 
 # Vae settings
 # Net Configuration

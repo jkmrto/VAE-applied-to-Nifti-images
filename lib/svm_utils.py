@@ -7,6 +7,7 @@ def fit_svm_and_get_decision_for_requiered_data(X_train, Y_train, X_test,
                                                 decision_function_shape="None",
                                                 kernel="linear",
                                                 minimum_training_svm_error=0.001):
+
     clf = svm.SVC(decision_function_shape=decision_function_shape,
                   kernel=kernel)
     clf.fit(X_train, Y_train)
