@@ -6,17 +6,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a70bc70e-9f0d-404b-b0fa-698d01cb0e18" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cvae_loop_over_latent_layer.py" afterPath="$PROJECT_DIR$/benchmark_vae_swap_latent_layer_dim.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/benchamark_cvae_with_kfold.py" afterPath="$PROJECT_DIR$/benchamark_cvae_with_kfold.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/benchmark_vae_with_kfold.py" afterPath="$PROJECT_DIR$/benchmark_vae_with_kfold.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/aux_functionalities/functions.py" afterPath="$PROJECT_DIR$/lib/aux_functionalities/functions.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/cv_utils.py" afterPath="$PROJECT_DIR$/lib/cv_utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/cvae_over_regions.py" afterPath="$PROJECT_DIR$/lib/cvae_over_regions.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/svm_utils.py" afterPath="$PROJECT_DIR$/lib/svm_utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/vae/CVAE.py" afterPath="$PROJECT_DIR$/lib/vae/CVAE.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nifti_regions_loader.py" afterPath="$PROJECT_DIR$/nifti_regions_loader.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/vae_with_kfolds/vae_over_regions_kfolds.py" afterPath="$PROJECT_DIR$/scripts/vae_with_kfolds/vae_over_regions_kfolds.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/sweep_parameters/loop_over_dim_out_session_2017-05-27T10:11:46.498677.tar.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/sweep_parameters/loop_over_svm_minimum_error_session_2017-05-29T23:09:53.991885.tar.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/sweep_parameters/loop_over_svm_minimum_error_session_2017-05-30T07:39:06.263021.tar.gz" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/mri_gm_region_2.nii" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/mri_gm_region_3.nii" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/mri_wm_region_2.nii" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/mri_wm_region_3.nii" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tests_sources/pet_atlas.nii" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/vae_benchamark_with_kfold_deprecated.py" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -99,7 +97,7 @@
     <splitter split-orientation="horizontal" split-proportion="0.49794802">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="benchamark_cvae_with_kfold.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="benchamark_cvae_with_kfold.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/benchamark_cvae_with_kfold.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="-2052">
@@ -113,23 +111,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="CVAE.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/lib/vae/CVAE.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="764">
-                  <caret line="217" column="43" lean-forward="true" selection-start-line="217" selection-start-column="43" selection-end-line="217" selection-end-column="43" />
-                  <folding>
-                    <element signature="e#0#9#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="benchmark_vae_swap_latent_layer_dim.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="benchmark_vae_swap_latent_layer_dim.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/benchmark_vae_swap_latent_layer_dim.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1285">
-                  <caret line="96" column="48" lean-forward="false" selection-start-line="96" selection-start-column="48" selection-end-line="96" selection-end-column="48" />
+                <state relative-caret-position="403">
+                  <caret line="47" column="31" lean-forward="true" selection-start-line="47" selection-start-column="31" selection-end-line="47" selection-end-column="31" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                   </folding>
@@ -262,8 +248,8 @@
       <find>atlas</find>
       <find>train_index</find>
       <find>after_input_architecture</find>
-      <find>tar_file_main_output_path</find>
       <find>vae_session_conf</find>
+      <find>tar_file_main_output_path</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -371,20 +357,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="out" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -446,7 +418,7 @@
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.JSON" />
-    <property name="add_unversioned_files" value="/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_06-14:11/images/train_test_grad_error.png&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/png/desc_grad_graph/grad_desc_region_11.png&#10;/home/jkmrto/VAN-applied-to-Nifti-images/credentials.txt&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/01_04_2017_00:00 arch: 1000_800_500_100/post_train/first_test/neural_net-2017_04_22-17:53-42_21_1/post_train/curva_roc.png&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_07-13:28/post_train/test_out/curva_roc.png&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_06-21:09/post_train/train_out/curva_roc.png&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/out/01_04_2017_00:00 arch: 1000_800_500_100/test/first_test/patient_score_per_region.log&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/recollect_kfolds_results.sh&#10;/home/jkmrto/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_06-21:09/post_train/test_out/curva_roc.png&#10;/home/jkmrto/VAN-applied-to-Nifti-images/out/Sesion Sweep over latent dim/loop_output_complex_majority_vote.csv&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/png/desc_grad_graph/grad_desc_region_6.png&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_06-10:04/logs/test_error.log&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/README.md&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/png/desc_grad_graph/grad_desc_region_4.png" />
+    <property name="add_unversioned_files" value="/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_06-14:11/images/train_test_grad_error.png&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/png/desc_grad_graph/grad_desc_region_11.png&#10;/home/jkmrto/VAN-applied-to-Nifti-images/credentials.txt&#10;/home/jkmrto/VAN-applied-to-Nifti-images/regions_dimensions.csv&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/01_04_2017_00:00 arch: 1000_800_500_100/post_train/first_test/neural_net-2017_04_22-17:53-42_21_1/post_train/curva_roc.png&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_07-13:28/post_train/test_out/curva_roc.png&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_06-21:09/post_train/train_out/curva_roc.png&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/out/01_04_2017_00:00 arch: 1000_800_500_100/test/first_test/patient_score_per_region.log&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/recollect_kfolds_results.sh&#10;/home/jkmrto/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_06-21:09/post_train/test_out/curva_roc.png&#10;/home/jkmrto/VAN-applied-to-Nifti-images/out/Sesion Sweep over latent dim/loop_output_complex_majority_vote.csv&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/png/desc_grad_graph/grad_desc_region_6.png&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_06-10:04/logs/test_error.log&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/README.md&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/png/desc_grad_graph/grad_desc_region_4.png" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -744,7 +716,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1855" height="1176" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20196506" sideWeight="0.49384615" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924694" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -754,7 +726,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26159555" sideWeight="0.4978903" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42207792" sideWeight="0.49683544" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15981013" sideWeight="0.5061538" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25510204" sideWeight="0.49630803" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25510204" sideWeight="0.49630803" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32964134" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16465423" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -952,33 +924,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/benchamark_cvae_with_kfold.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2052">
-          <caret line="39" column="11" lean-forward="true" selection-start-line="39" selection-start-column="11" selection-end-line="39" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-            <element signature="e#1530#1673#0" expanded="false" />
-            <element signature="e#1702#1835#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/cv_utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="183" column="51" lean-forward="false" selection-start-line="183" selection-start-column="4" selection-end-line="183" selection-end-column="51" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vae_benchamark_with_kfold_deprecated.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2790">
-          <caret line="155" column="0" lean-forward="false" selection-start-line="155" selection-start-column="0" selection-end-line="156" selection-end-column="66" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1056,24 +1006,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/benchmark_vae_swap_latent_layer_dim.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1285">
-          <caret line="96" column="48" lean-forward="false" selection-start-line="96" selection-start-column="48" selection-end-line="96" selection-end-column="48" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/regions_dimensions.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/output_utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
@@ -1089,6 +1021,44 @@
           <folding>
             <element signature="e#0#61#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/benchmark_vae_swap_latent_layer_dim.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="403">
+          <caret line="47" column="31" lean-forward="true" selection-start-line="47" selection-start-column="31" selection-end-line="47" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/regions_dimensions.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/benchamark_cvae_with_kfold.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2052">
+          <caret line="39" column="11" lean-forward="true" selection-start-line="39" selection-start-column="11" selection-end-line="39" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#1530#1673#0" expanded="false" />
+            <element signature="e#1702#1835#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vae_benchamark_with_kfold_deprecated.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-73">
+          <caret line="155" column="0" lean-forward="false" selection-start-line="155" selection-start-column="0" selection-end-line="156" selection-end-column="66" />
+          <folding />
         </state>
       </provider>
     </entry>
