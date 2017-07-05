@@ -90,11 +90,11 @@ def svm_mri_over_vae_output(vae_output, Y_train, Y_test, list_regions, bool_test
 
         print("SVM step")
         print("region {} selected".format(region_selected))
-        train_output_wm = vae_output['wm'][str(region_selected)]['train_output']
-        test_output_wm = vae_output['wm'][str(region_selected)]['test_output']
+        train_output_wm = vae_output['wm'][region_selected]['train_output']
+        test_output_wm = vae_output['wm'][region_selected]['test_output']
 
-        train_output_gm = vae_output['gm'][str(region_selected)]['train_output']
-        test_output_gm = vae_output['gm'][str(region_selected)]['test_output']
+        train_output_gm = vae_output['gm'][region_selecte]['train_output']
+        test_output_gm = vae_output['gm'][region_selected]['test_output']
 
         train_means_gm = train_output_wm[0]
         test_means_gm = test_output_wm[0]

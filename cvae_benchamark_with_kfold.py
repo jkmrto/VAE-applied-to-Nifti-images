@@ -20,38 +20,48 @@ from datetime import datetime
 from lib.neural_net import leaky_net_utils
 from lib.data_loader import pet_atlas
 import settings
+from lib import cvae_over_regions
 from lib.aux_functionalities.os_aux import create_directories
+from lib.nifti_regions_loader import load_pet_regions_segmented
+import lib.kfrans_ops as ops
+from lib import session_helper
 
 #images_used = "MRI"
 images_used = "PET"
 
 # Meta settings.
-n_folds = 3
+n_folds = 10
 bool_test = False
 bool_log_svm_output = True
-regions_used = "three"
+regions_used = "all"
 #regions_used = "three"
+list_regions = session_helper.select_regions_to_evaluate(regions_used)
+#list_regions = [47]
+
+explicit_iter_per_region = {
+    47: 160,
+    44: 100,
+    43: 130,
+    73: 130,
+    74: 130,
+    75: 60,
+
+}
 
 # Vae settings
 # Net Configuration
-after_input_architecture = [1000, 500]
-
-hyperparams_vae = {
-    "batch_size": 16,
-    "learning_rate": 1E-5,
-    "dropout": 0.9,
-    "lambda_l2_reg": 1E-5,
-    "nonlinearity": tf.nn.elu,
-    "squashing": tf.nn.sigmoid,
-}
+hyperparams = {'latent_layer_dim': 100,
+               'kernel_size': 5,
+               'activation_layer': ops.lrelu,
+               'features_depth': [1, 16, 32],
+               'decay_rate': 0.002,
+               'learning_rate': 0.001,
+               'lambda_l2_regularization': 0.0001}
 
 # Vae session cofiguration
-vae_session_conf = {
-    "bool_normalized": True,
-    "max_iter": 20,
-    "save_meta_bool": False,
-    "show_error_iter": 10,
-}
+cvae_session_conf = {'bool_normalized': False,
+                'n_iters': 200,
+                "batch_size": 16}
 
 # DECISION NET CONFIGURATION
 decision_net_session_conf = {
@@ -154,13 +164,11 @@ session_descriptor['meta settings'] = {"n_folds": n_folds,
                                        "regions_used": regions_used}
 session_descriptor['VAE'] = {}
 session_descriptor['Decision net'] = {}
-session_descriptor['VAE']["net configuration"] = hyperparams_vae
-session_descriptor['VAE']["net configuration"][
-    "architecture"] = "input_" + "_".join(
-    str(x) for x in after_input_architecture)
-session_descriptor['VAE']["session configuration"] = vae_session_conf
-session_descriptor['Decision net'][
-    "net configuration"] = HYPERPARAMS_decision_net
+session_descriptor['VAE']["net configuration"] = hyperparams
+
+session_descriptor['VAE']["session configuration"] = cvae_session_conf
+
+session_descriptor['Decision net']["net configuration"] = HYPERPARAMS_decision_net
 session_descriptor['Decision net']["net configuration"]['architecture'] = \
     "[nºregions, nºregions/2, 1]"
 session_descriptor['Decision net']['session_conf'] = decision_net_session_conf
@@ -177,92 +185,90 @@ dict_norad_mri_gm = {}
 dict_norad_mri_wm = {}
 atlas = {}
 
+n_samples=0
+region_to_img_dict={}
 if images_used == "PET":
-    dict_norad_pet = PET_stack_NORAD.get_full_stack()  # 'stack' 'voxel_index' 'labels'
-    region_voxels_index_per_region = pet_atlas.load_atlas()
+    region_to_img_dict = load_pet_regions_segmented(list_regions, bool_logs=False)
+    n_samples = region_to_img_dict[list(region_to_img_dict.keys())[0]].shape[0] #selecting one region for getting the n samples
     patient_labels = PET_stack_NORAD.load_patients_labels()
-    atlas = pet_atlas.load_atlas()
+#    atlas = pet_atlas.load_atlas()
 
 elif images_used == "MRI":
+    print("Not implemented for MRI")
+
     # Loading the stack of images
-    dict_norad_mri_gm = MRI_stack_NORAD.get_gm_stack()
-    dict_norad_mri_wm = MRI_stack_NORAD.get_wm_stack()
-    patient_labels = MRI_stack_NORAD.load_patients_labels()
-    atlas = mri_atlas.load_atlas_mri()
+    #dict_norad_mri_gm = MRI_stack_NORAD.get_gm_stack()
+    #dict_norad_mri_wm = MRI_stack_NORAD.get_wm_stack()
+    #patient_labels = MRI_stack_NORAD.load_patients_labels()
+    #atlas = mri_atlas.load_atlas_mri()
 
 # Load regions index and create kfolds folder
-list_regions = session.select_regions_to_evaluate(regions_used)
 
-k_fold_dict = {}
-if images_used == "PET":
-    k_fold_dict = cv_utils.generate_k_folder_in_dict(
-        dict_norad_pet['stack'].shape[0], n_folds)
-elif images_used == "MRI":
-    k_fold_dict = cv_utils.generate_k_folder_in_dict(
-        dict_norad_mri_gm['stack'].shape[0], n_folds)
+k_fold_dict=\
+    cv_utils.generate_k_folder_in_dict(n_samples=n_samples, n_folds=n_folds)
 
 # Main Loop
 for k_fold_index in range(0, n_folds, 1):
     vae_output = {}
 
-    train_index = k_fold_dict[k_fold_index]["train"]
-    test_index = k_fold_dict[k_fold_index]["test"]
+    reg_to_group_to_images_dict = \
+        cv_utils.restructure_dictionary_based_on_cv_index_3dimages(
+        dict_train_test_index=k_fold_dict[k_fold_index],
+        region_to_img_dict=region_to_img_dict)
 
-    Y_train = patient_labels[train_index]
-    Y_test = patient_labels[test_index]
+    Y_train = patient_labels[k_fold_dict[k_fold_index]["train"]]
+    Y_test = patient_labels[k_fold_dict[k_fold_index]["test"]]
     Y_train = np.row_stack(Y_train)
     Y_test = np.row_stack(Y_test)
 
     print("Kfold {} Selected".format(k_fold_index))
-    print("Number test samples {}".format(len(test_index)))
-    print("Number train samples {}".format(len(train_index)))
+    print("Number test samples {}".format(len(k_fold_dict[k_fold_index]["test"])))
+    print("Number train samples {}".format(len(k_fold_dict[k_fold_index]["train"])))
 
     if images_used == "MRI":
+        print("MRI version not implemented")
+   #     voxels_values = {}
+   #     voxels_values['train'] = dict_norad_mri_gm['stack'][train_index, :]
+   #     voxels_values['test'] = dict_norad_mri_gm['stack'][test_index, :]
 
-        voxels_values = {}
-        voxels_values['train'] = dict_norad_mri_gm['stack'][train_index, :]
-        voxels_values['test'] = dict_norad_mri_gm['stack'][test_index, :]
+   #     print("Train over GM regions")
+   #     vae_output['gm'] = vae_over_regions_kfolds.execute_without_any_logs(
+   #         voxels_values,
+   #         hyperparams_vae,
+   #         vae_session_conf,
+   #         atlas,
+   #         after_input_architecture,
+   #         list_regions)
 
-        print("Train over GM regions")
-        vae_output['gm'] = vae_over_regions_kfolds.execute_without_any_logs(
-            voxels_values,
-            hyperparams_vae,
-            vae_session_conf,
-            atlas,
-            after_input_architecture,
-            list_regions)
+   #     voxels_values = {}
+   #     voxels_values['train'] = dict_norad_mri_wm['stack'][train_index, :]
+   #     voxels_values['test'] = dict_norad_mri_wm['stack'][test_index, :]
 
-        voxels_values = {}
-        voxels_values['train'] = dict_norad_mri_wm['stack'][train_index, :]
-        voxels_values['test'] = dict_norad_mri_wm['stack'][test_index, :]
+   #     print("Train over WM regions")
+   #     vae_output['wm'] = vae_over_regions_kfolds.execute_without_any_logs(
+   #         voxels_values,
+   #         hyperparams_vae,
+   #         vae_session_conf,
+   #         atlas,
+   #         after_input_architecture,
+   #         list_regions)
 
-        print("Train over WM regions")
-        vae_output['wm'] = vae_over_regions_kfolds.execute_without_any_logs(
-            voxels_values,
-            hyperparams_vae,
-            vae_session_conf,
-            atlas,
-            after_input_architecture,
-            list_regions)
-
-        #[patient x region]
-        train_score_matriz, test_score_matriz = svm_utils.svm_mri_over_vae_output(
-            vae_output, Y_train, Y_test, list_regions, bool_test=bool_test)
+   #     #[patient x region]
+   #     train_score_matriz, test_score_matriz = svm_utils.svm_mri_over_vae_output(
+   #         vae_output, Y_train, Y_test, list_regions, bool_test=bool_test)
 
     if images_used == "PET":
 
-        voxels_values = {}
-        voxels_values['train'] = dict_norad_pet['stack'][train_index, :]
-        voxels_values['test'] = dict_norad_pet['stack'][test_index, :]
-
         print("Train over regions")
-        vae_output = vae_over_regions_kfolds.execute_without_any_logs(
-            voxels_values,
-            hyperparams_vae,
-            vae_session_conf,
-            atlas,
-            after_input_architecture,
-            list_regions)
+        vae_output = cvae_over_regions.execute_without_any_logs(
+            region_train_cubes_dict=reg_to_group_to_images_dict["train"],
+            hyperparams=hyperparams,
+            session_conf=cvae_session_conf,
+            list_regions=list_regions,
+            path_to_root=None,
+            region_test_cubes_dict=reg_to_group_to_images_dict["test"],
+            explicit_iter_per_region=explicit_iter_per_region
+        )
 
         train_score_matriz, test_score_matriz = svm_utils.svm_pet_over_vae_output(
             vae_output, Y_train, Y_test, list_regions, bool_test=bool_test)

@@ -218,8 +218,8 @@ def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
 
         per_region_results[str(region_selected)] = {}
 
-        per_region_results[str(region_selected)]['train_output'] = train_output
-        per_region_results[str(region_selected)]['test_output'] = test_output
+        per_region_results[region_selected]['train_output'] = train_output
+        per_region_results[region_selected]['test_output'] = test_output
 
     return per_region_results
 

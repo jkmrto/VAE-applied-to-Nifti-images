@@ -161,8 +161,12 @@ class VAE():
         a.k.a. inference network q(z|x)
         """
         # np.array -> [float, float]
+
         feed_dict = {self.x_in: x}
-        return self.session.run([self.z_mean, self.z_log_sigma], feed_dict=feed_dict)
+        output = self.session.run([self.z_mean, self.z_log_sigma], feed_dict=feed_dict)
+        out_dict = {"mean": output[0],
+                   "stdev": output[1]}
+        return out_dict
 
     def decode(self, zs=None):
         """Generative decoder from latent space to reconstructions of input space;

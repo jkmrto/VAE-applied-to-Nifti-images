@@ -148,8 +148,8 @@ def execute(voxels_values, hyperparams, session_conf, after_input_architecture,
 
         per_region_results[str(region_selected)] = {}
 
-        per_region_results[str(region_selected)]['train_output'] = train_output
-        per_region_results[str(region_selected)]['test_output'] = test_output
+        per_region_results[region_selected]['train_output'] = train_output
+        per_region_results[region_selected]['test_output'] = test_output
 
     return per_region_results
 
