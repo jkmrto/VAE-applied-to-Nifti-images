@@ -78,8 +78,8 @@ def load_svm_output_score(score_file, plot_hist=False):
 def svm_mri_over_vae_output(vae_output, Y_train, Y_test, list_regions, bool_test=False,
                         minimum_training_svm_error=0.001):
 
-    n_train_patient = vae_output['wm'][str(list_regions[0])]['train_output'][0].shape[0]
-    n_test_patient = vae_output['wm'][str(list_regions[0])]['test_output'][0].shape[0]
+    n_train_patient = vae_output['wm'][list_regions[0]]['train_output'][0].shape[0]
+    n_test_patient = vae_output['wm'][list_regions[0]]['test_output'][0].shape[0]
 
     train_score_matriz = np.zeros((n_train_patient, len(list_regions)))
     test_score_matriz = np.zeros((n_test_patient, len(list_regions)))
@@ -93,7 +93,7 @@ def svm_mri_over_vae_output(vae_output, Y_train, Y_test, list_regions, bool_test
         train_output_wm = vae_output['wm'][region_selected]['train_output']
         test_output_wm = vae_output['wm'][region_selected]['test_output']
 
-        train_output_gm = vae_output['gm'][region_selecte]['train_output']
+        train_output_gm = vae_output['gm'][region_selected]['train_output']
         test_output_gm = vae_output['gm'][region_selected]['test_output']
 
         train_means_gm = train_output_wm[0]
@@ -130,7 +130,7 @@ def svm_mri_over_vae_output(vae_output, Y_train, Y_test, list_regions, bool_test
             print(test_train_score)
             print(test_test_score)
 
-        i = i + 1
+        i += 1
 
     return train_score_matriz, test_score_matriz
 
@@ -138,8 +138,8 @@ def svm_mri_over_vae_output(vae_output, Y_train, Y_test, list_regions, bool_test
 def svm_pet_over_vae_output(vae_output, Y_train, Y_test, list_regions,
                             bool_test=False, minimum_training_svm_error=0.001):
 
-    n_train_patient = vae_output[str(list_regions[0])]['train_output']["mean"].shape[0]
-    n_test_patient = vae_output[str(list_regions[0])]['test_output']["mean"].shape[0]
+    n_train_patient = vae_output[list_regions[0]]['train_output']["mean"].shape[0]
+    n_test_patient = vae_output[list_regions[0]]['test_output']["mean"].shape[0]
 
     train_score_matriz = np.zeros((n_train_patient, len(list_regions)))
     test_score_matriz = np.zeros((n_test_patient, len(list_regions)))
@@ -150,15 +150,15 @@ def svm_pet_over_vae_output(vae_output, Y_train, Y_test, list_regions,
 
         print("SVM step")
         print("region {} selected".format(region_selected))
-        train_output = vae_output[str(region_selected)]['train_output']
-        test_output = vae_output[str(region_selected)]['test_output']
+        train_output = vae_output[region_selected]['train_output']
+        test_output = vae_output[region_selected]['test_output']
 
         train_means = train_output["mean"]
         test_means = test_output["mean"]
 
         if bool_test:
             print("\nShape wm+gm train data post encoder")
-            print("Train shape: " +  str(train_means.shape))
+            print("Train shape: " + str(train_means.shape))
             print("Test shape: " + str(test_means.shape))
 
         train_score, test_score = fit_svm_and_get_decision_for_requiered_data(
@@ -180,6 +180,6 @@ def svm_pet_over_vae_output(vae_output, Y_train, Y_test, list_regions,
             print(test_train_score)
             print(test_test_score)
 
-        i = i + 1
+        i += 1
 
     return train_score_matriz, test_score_matriz

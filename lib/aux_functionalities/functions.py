@@ -6,6 +6,13 @@ from lib.aux_functionalities.os_aux import create_directories
 
 
 def get_batch_from_samples(X, Y, batch_size):
+    """
+    It is mandatory batch_size > X.shape[0] && batch_size > Y.shape[0]
+    :param X:
+    :param Y:
+    :param batch_size:
+    :return:
+    """
     index = np.random.choice(range(X.shape[0]), batch_size, replace=False)
     index = index.tolist()
     return X[index, :], Y[index]

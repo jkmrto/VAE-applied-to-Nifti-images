@@ -1,21 +1,20 @@
 import tensorflow as tf
 import os
+from lib.cv_utils import get_test_and_train_labels_from_kfold_dict_entry, generate_k_folder_in_dict
 from lib import cv_utils
-from lib.data_loader import MRI_stack_NORAD
 from lib import session_helper as session
 from scripts.vae_sweep_over_features import loop_latent_layer_session_settings
 from scripts.vae_with_kfolds import vae_over_regions_kfolds
-from lib.data_loader.MRI_stack_NORAD import load_patients_labels
 from lib import svm_utils
-from lib.evaluation_utils import simple_evaluation_output
 from lib.evaluation_utils import get_average_over_metrics
 from lib import evaluation_utils
 from lib import output_utils
 from copy import deepcopy
-from shutil import copyfile
 import numpy as np
 import tarfile
 from datetime import datetime
+from nifti_regions_loader import \
+    load_mri_data_flat, load_pet_data_flat
 from lib.neural_net.leaky_relu_decision_net import DecisionNeuralNet as \
     DecisionNeuralNet_leaky_relu_3layers_with_sigmoid
 from lib.neural_net.decision_neural_net import DecisionNeuralNet
@@ -25,13 +24,15 @@ session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
 
 # Meta settings.
+images_used = "PET"
+#images_used = "MRI"
 n_folds = 2
 bool_test = False
 regions_used = "three"
 
 # Vae settings
 # Net Configuration
-middle_architecture = [100, 50]
+middle_architecture = [200, 150]
 # latent_code_dim_list = [5, 10 ,15]
 latent_code_dim_list = [2, 5, 8, 10, 25, 50, 75, 100, 125, 150, 175, 200, 225,
                         250, 275, 300, 325, 350, 375, 400]
@@ -57,27 +58,19 @@ vae_session_conf = {
 
 # DECISION NET CONFIGURATION
 decision_net_session_conf = {
-    "decision_net_tries": 10,
+    "decision_net_tries": 1,
     "field_to_select_try": "area under the curve",
-    "max_iter": 100,
+    "max_iter": 10,
     "threshould_prefixed_to_0.5": True,
 }
 
 HYPERPARAMS_decision_net = {
-    "batch_size": 200,
+    "batch_size": 32,
     "learning_rate": 1E-5,
     "lambda_l2_reg": 0.000001,
     "dropout": 0.9,
     "nonlinearity": tf.nn.relu,
 }
-
-# Selecting the GM folder
-path_to_root_GM = loop_latent_layer_session_settings.path_GM_folder
-path_to_root_WM = loop_latent_layer_session_settings.path_WM_folder
-# Loading the stack of images
-dict_norad_gm = MRI_stack_NORAD.get_gm_stack()
-dict_norad_wm = MRI_stack_NORAD.get_wm_stack()
-patient_labels = load_patients_labels()
 
 # OUTPUT: Files initialization
 loop_output_file_simple_majority_vote = os.path.join(
@@ -135,6 +128,15 @@ output_utils.print_recursive_dict(session_descriptor,
                                   file=file_session_descriptor)
 file_session_descriptor.close()
 
+# Loading data
+n_samples = 0
+if images_used == "PET":
+    dic_regions_to_flatten_voxels_pet, patient_labels, n_samples = \
+        load_pet_data = load_pet_data_flat(list_regions)
+elif images_used == "MRI":
+    dic_regions_to_flatten_voxels_mri_gm, dic_regions_to_flatten_voxels_mri_wm, \
+        patient_labels, n_samples = load_mri_data_flat(list_regions)
+
 list_averages_svm_weighted = []
 list_averages_simple_majority_vote = []
 list_averages_decision_net = []
@@ -142,12 +144,11 @@ list_averages_complex_majority_vote = []
 
 for latent_dim in latent_code_dim_list:
 
-    print(
-        "Evaluating the system with a latent code of {} dim".format(latent_dim))
+    print( "Evaluating the system with a latent code of {} dim".format(latent_dim))
 
     temp_architecture = deepcopy(middle_architecture)
     temp_architecture.extend([latent_dim])
-    print("Architecture selected: " + str(temp_architecture))
+    vae_session_conf["after_input_architecture"] = temp_architecture
 
     # OUTPUT SETTINGS
     # OUTPUT: List of dictionaries
@@ -164,50 +165,74 @@ for latent_dim in latent_code_dim_list:
     svm_weighted_regions_k_folds_results_test = []
     svm_weighted_regions_k_folds_coefs = []
 
-    k_fold_dict = cv_utils.generate_k_folder_in_dict(
-        dict_norad_gm['stack'].shape[0], n_folds)
+    k_fold_dict = generate_k_folder_in_dict(
+        n_samples, n_folds)
 
     for k_fold_index in range(0, n_folds, 1):
         vae_output = {}
 
-        train_index = k_fold_dict[k_fold_index]["train"]
-        test_index = k_fold_dict[k_fold_index]["test"]
+        if images_used == "MRI":
+            reg_to_group_to_images_dict_mri_gm = \
+                cv_utils.restructure_dictionary_based_on_cv_index_flat_images(
+                    dict_train_test_index=k_fold_dict[k_fold_index],
+                    region_to_img_dict=dic_regions_to_flatten_voxels_mri_gm)
 
-        Y_train = patient_labels[train_index]
-        Y_test = patient_labels[test_index]
-        Y_train = np.row_stack(Y_train)
-        Y_test = np.row_stack(Y_test)
+            reg_to_group_to_images_dict_mri_wm = \
+                cv_utils.restructure_dictionary_based_on_cv_index_flat_images(
+                    dict_train_test_index=k_fold_dict[k_fold_index],
+                    region_to_img_dict=dic_regions_to_flatten_voxels_mri_wm)
+
+        if images_used == "PET":
+            reg_to_group_to_images_dict_pet = \
+                cv_utils.restructure_dictionary_based_on_cv_index_flat_images(
+                    dict_train_test_index=k_fold_dict[k_fold_index],
+                    region_to_img_dict=dic_regions_to_flatten_voxels_pet)
+
+        Y_train, Y_test = get_test_and_train_labels_from_kfold_dict_entry(
+            k_fold_entry=k_fold_dict[k_fold_index],
+            patient_labels=patient_labels)
 
         print("Kfold {} Selected".format(k_fold_index))
-        print("Number test samples {}".format(len(test_index)))
-        print("Number train samples {}".format(len(train_index)))
+        print("Number test samples {}".format(len(Y_test)))
+        print("Number train samples {}".format(len(Y_train)))
 
-        voxels_values = {}
-        voxels_values['train'] = dict_norad_gm['stack'][train_index, :]
-        voxels_values['test'] = dict_norad_gm['stack'][test_index, :]
+        if images_used == "MRI":
+            print("Training MRI GM regions")
+            vae_output['gm'] = vae_over_regions_kfolds.execute_without_any_logs(
+                region_to_flat_voxels_train_dict=reg_to_group_to_images_dict_mri_gm["train"],
+                hyperparams=hyperparams_vae,
+                session_conf=vae_session_conf,
+                list_regions=list_regions,
+                path_to_root=None,
+                region_to_flat_voxels_test_dict=reg_to_group_to_images_dict_mri_gm["test"],
+                explicit_iter_per_region=[]
+            )
 
-        print("Train over GM regions")
-        vae_output['gm'] = vae_over_regions_kfolds.execute_without_any_logs(
-            voxels_values,
-            hyperparams_vae,
-            vae_session_conf,
-            temp_architecture,
-            list_regions)
+            print("Training MRI WM regions")
+            vae_output['wm'] = vae_over_regions_kfolds.execute_without_any_logs(
+                region_to_flat_voxels_train_dict=reg_to_group_to_images_dict_mri_wm["train"],
+                hyperparams=hyperparams_vae,
+                session_conf=vae_session_conf,
+                list_regions=list_regions,
+                path_to_root=None,
+                region_to_flat_voxels_test_dict=reg_to_group_to_images_dict_mri_wm["test"],
+                explicit_iter_per_region=[]
+            )
 
-        voxels_values = {}
-        voxels_values['train'] = dict_norad_wm['stack'][train_index, :]
-        voxels_values['test'] = dict_norad_wm['stack'][test_index, :]
+        if images_used == "PET":
+            print("Training PET regions")
+            vae_output = vae_over_regions_kfolds.execute_without_any_logs(
+                region_to_flat_voxels_train_dict=reg_to_group_to_images_dict_pet["train"],
+                hyperparams=hyperparams_vae,
+                session_conf=vae_session_conf,
+                list_regions=list_regions,
+                path_to_root=None,
+                region_to_flat_voxels_test_dict=reg_to_group_to_images_dict_pet["test"],
+                explicit_iter_per_region=[]
+            )
 
-        print("Train over WM regions")
-        vae_output['wm'] = vae_over_regions_kfolds.execute_without_any_logs(
-            voxels_values,
-            hyperparams_vae,
-            vae_session_conf,
-            temp_architecture,
-            list_regions)
-
-        train_score_matriz, test_score_matriz = svm_utils.svm_over_vae_output(
-            vae_output, Y_train, Y_test, list_regions, bool_test=bool_test)
+            train_score_matriz, test_score_matriz = svm_utils.svm_pet_over_vae_output(
+                vae_output, Y_train, Y_test, list_regions, bool_test=bool_test)
 
         data = {}
         data["test"] = {}
@@ -227,8 +252,7 @@ for latent_dim in latent_code_dim_list:
         # COMPLEX MAJORITY VOTE
 
         complex_output_dic_test, complex_output_dic_train = \
-            evaluation_utils.complex_majority_vote_evaluation(data,
-                                                              bool_test=bool_test)
+            evaluation_utils.complex_majority_vote_evaluation(data, bool_test=bool_test)
 
         # Adding results to kfolds output
         complex_majority_vote_k_folds_results_train.append(

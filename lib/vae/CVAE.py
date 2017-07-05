@@ -3,7 +3,7 @@ import nibabel as nib
 import numpy as np
 import tensorflow as tf
 from lib import session_helper
-from lib.nifti_regions_loader import load_pet_regions_segmented
+from nifti_regions_loader import load_pet_regions_segmented
 import lib.kfrans_ops as ops
 from lib.aux_functionalities.functions import \
     get_batch_from_samples_unsupervised_3d
@@ -203,6 +203,7 @@ class LatentAttention():
                 file_path = os.path.join(path_to_nii_output,
                                          "epoc_{}".format(iter))
                 from_3d_image_to_nifti_file(file_path, image_3d)
+
 
 def auto_execute():
     regions_used = "all"

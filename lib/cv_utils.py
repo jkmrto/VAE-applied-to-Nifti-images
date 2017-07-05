@@ -180,3 +180,19 @@ def restructure_dictionary_based_on_cv_index_flat_images(
 
     return restructure_output
 
+
+def get_test_and_train_labels_from_kfold_dict_entry(k_fold_entry, patient_labels):
+    """
+    :param k_fold_entry: dict[test|train] -> Type:array "index"
+    :param patient_labels: Type: array "labels"
+    :return:
+    """
+    train_index = k_fold_entry["train"]
+    test_index = k_fold_entry["test"]
+
+    Y_train = patient_labels[train_index]
+    Y_test = patient_labels[test_index]
+    Y_train = np.row_stack(Y_train)
+    Y_test = np.row_stack(Y_test)
+
+    return Y_train, Y_test

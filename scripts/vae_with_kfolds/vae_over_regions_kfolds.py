@@ -195,10 +195,10 @@ def execute_without_any_logs(region_to_flat_voxels_train_dict,
         train_output = v.encode(train_voxels)
         test_output = v.encode(test_voxels)
 
-        per_region_results[str(region_selected)] = {}
+        per_region_results[region_selected] = {}
 
-        per_region_results[str(region_selected)]['train_output'] = train_output
-        per_region_results[str(region_selected)]['test_output'] = test_output
+        per_region_results[region_selected]['train_output'] = train_output
+        per_region_results[region_selected]['test_output'] = test_output
 
     return per_region_results
 

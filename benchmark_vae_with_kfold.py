@@ -9,7 +9,7 @@ from lib import evaluation_utils
 from lib import output_utils
 from shutil import copyfile
 from nifti_regions_loader import \
-    load_mri_data, load_pet_data
+    load_mri_data_flat, load_pet_data_flat
 import numpy as np
 import tarfile
 from datetime import datetime
@@ -50,7 +50,7 @@ vae_session_conf = {
     "max_iter": 20,
     "save_meta_bool": False,
     "show_error_iter": 10,
-    "after_input_architecture": [1000, 500],
+    "after_input_architecture": [1000, 500, 100],
 }
 
 # DECISION NET CONFIGURATION
@@ -173,10 +173,10 @@ file_session_descriptor.close()
 n_samples = 0
 if images_used == "PET":
     dic_regions_to_flatten_voxels_pet, patient_labels, n_samples = \
-        load_pet_data
+        load_pet_data = load_pet_data_flat(list_regions)
 elif images_used == "MRI":
     dic_regions_to_flatten_voxels_mri_gm, dic_regions_to_flatten_voxels_mri_wm, \
-        patient_labels, n_samples = load_mri_data(list_regions)
+        patient_labels, n_samples = load_mri_data_flat(list_regions)
 
 # Load regions index and create kfolds folder
 

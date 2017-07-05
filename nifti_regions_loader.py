@@ -1,6 +1,7 @@
 import numpy as np  # Se genera la mascara a partir del atlas
 from lib.data_loader import PET_stack_NORAD
 from lib.data_loader import pet_atlas
+from lib import session_helper
 import nibabel as nib
 from lib.data_loader import MRI_stack_NORAD
 from lib.data_loader import PET_stack_NORAD
@@ -118,14 +119,13 @@ def load_pet_regions_segmented(list_regions, folder_to_store_3d_images=None,
     return dic_regions_segmented
 
 
-# load_pet_regions_segmented([2, 3, 4, 5, 6, 7, 8],
-#                           folder_to_store_3d_images=None,
-#                           bool_logs=True,
-#                           out_csv_region_dimensions="regions_dimensions.csv")
+load_pet_regions_segmented(list_regions=session_helper.select_regions_to_evaluate("all"),
+                           folder_to_store_3d_images=None,
+                           bool_logs=True,
+                           out_csv_region_dimensions="regions_dimensions.csv")
 
-
-def load_mri_regions_segmented(list_regions, folder_to_store_3d_images=None,
-                               bool_logs=True):
+def load_mri_regions_segmented3d(list_regions, folder_to_store_3d_images=None,
+                                 bool_logs=True):
     """
 
     :param list_regions:
@@ -242,15 +242,18 @@ def load_pet_regions_flatten(list_regions):
 
 # out = load_pet_regions_flatten([2, 3, 4, 5, 6])
 
-def load_pet_data(list_regions):
-
+def load_pet_data_flat(list_regions):
     dic_regions_to_flatten_voxels_pet = load_pet_regions_flatten(list_regions)
     patient_labels = PET_stack_NORAD.load_patients_labels()
     n_samples = dic_regions_to_flatten_voxels_pet[list_regions[0]].shape[0]
 
     return dic_regions_to_flatten_voxels_pet, patient_labels, n_samples
 
-def load_mri_data(list_regions):
+
+# [out1, out2, out3] = load_pet_data([3,4,5,6,7,7])
+
+
+def load_mri_data_flat(list_regions):
     # Loading the stack of images
     dic_regions_to_flatten_voxels_mri_gm, dic_regions_to_flatten_voxels_mri_wm = \
         load_mri_regions_flatten(list_regions)
@@ -258,7 +261,26 @@ def load_mri_data(list_regions):
     n_samples = dic_regions_to_flatten_voxels_mri_gm[list_regions[0]].shape[0]
 
     return dic_regions_to_flatten_voxels_mri_gm, dic_regions_to_flatten_voxels_mri_wm, \
-        patient_labels, n_samples
+           patient_labels, n_samples
+
+
+def load_pet_data_3d(list_regions):
+    region_to_3dimg_dict_pet = load_pet_regions_segmented(list_regions, bool_logs=False)
+    patient_labels = PET_stack_NORAD.load_patients_labels()
+    n_samples = len(patient_labels)
+
+    return region_to_3dimg_dict_pet, patient_labels, n_samples
+
+
+def load_mri_data_3d(list_regions):
+    # Loading the stack of images
+    dic_regions_to_3dimg_mri_gm, dic_regions_to_3dimg_mri_wm = \
+        load_mri_regions_segmented3d(list_regions)
+    patient_labels = MRI_stack_NORAD.load_patients_labels()
+    n_samples = len(patient_labels)
+
+    return dic_regions_to_3dimg_mri_gm, dic_regions_to_3dimg_mri_wm, \
+           patient_labels, n_samples
 
 
 def test(nifti_region_to_save, path_where_store_out="pet_regions_segmented"):

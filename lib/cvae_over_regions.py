@@ -12,7 +12,7 @@ from lib import utils
 from lib.aux_functionalities.os_aux import create_directories
 from lib.data_loader import MRI_stack_NORAD
 from lib.data_loader import mri_atlas
-from lib.nifti_regions_loader import load_pet_regions_segmented
+from nifti_regions_loader import load_pet_regions_segmented
 from lib.vae import VAE, CVAE
 from scripts.vae_with_cv_GM_and_WM import session_settings
 
