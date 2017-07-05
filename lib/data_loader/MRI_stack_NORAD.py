@@ -13,11 +13,15 @@ def get_gm_stack():
     :return:
     """
     f = sio.loadmat(settings.MRI_stack_path_GM)
+    imgsize = f['imgsize'].astype('uint32').tolist()[0]
+    total_voxels = np.array(imgsize).prod()
+    
     return {'labels': f['labels'],
             'voxel_index': f['nobck_idx'],
             'stack': f['stack_NORAD_GM'],
-            'imgsize':f['imgsize'].astype('uint32').tolist()[0],
-            'n_patients': len(f['labels'])}
+            'imgsize':imgsize,
+            'n_patients': len(f['labels']),
+            'total_size': total_voxels}
 
 
 def get_wm_stack():
@@ -27,8 +31,15 @@ def get_wm_stack():
     :return:
     """
     f = sio.loadmat(settings.MRI_stack_path_WM)
-    return {'labels': f['labels'], 'voxel_index': f['nobck_idx'], 'stack': f['stack_NORAD_WM'],
-            'imgsize':f['imgsize'].astype('uint32').tolist()[0], 'n_patients': len(f['labels'])}
+    imgsize = f['imgsize'].astype('uint32').tolist()[0]
+    total_voxels = np.array(imgsize).prod()
+
+    return {'labels': f['labels'], 
+            'voxel_index': f['nobck_idx'],
+            'stack': f['stack_NORAD_WM'],
+            'imgsize':imgsize, 
+            'n_patients': len(f['labels']),
+            'total_size': total_voxels}
 
 
 def load_patients_labels():

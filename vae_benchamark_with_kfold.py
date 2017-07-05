@@ -12,7 +12,7 @@ from lib.data_loader import MRI_stack_NORAD
 from lib import evaluation_utils
 from lib import output_utils
 from shutil import copyfile
-from lib.test_over_segmenting_regions import load_mri_regions_flatten
+from lib.nifti_regions_loader import load_mri_regions_flatten
 import numpy as np
 import tarfile
 from datetime import datetime

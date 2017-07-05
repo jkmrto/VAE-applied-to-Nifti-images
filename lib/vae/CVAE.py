@@ -3,7 +3,7 @@ import nibabel as nib
 import numpy as np
 import tensorflow as tf
 from lib import session_helper
-from lib.test_over_segmenting_regions import load_regions_segmented
+from lib.nifti_regions_loader import load_pet_regions_segmented
 import lib.kfrans_ops as ops
 from lib.aux_functionalities.functions import \
     get_batch_from_samples_unsupervised_3d
@@ -208,7 +208,7 @@ def auto_execute():
     regions_used = "all"
     region_selected = 38
     list_regions = session_helper.select_regions_to_evaluate(regions_used)
-    train_images = load_regions_segmented(list_regions)[region_selected]
+    train_images = load_pet_regions_segmented(list_regions)[region_selected]
 
     hyperparams = {}
     hyperparams['latent_layer_dim'] = 100

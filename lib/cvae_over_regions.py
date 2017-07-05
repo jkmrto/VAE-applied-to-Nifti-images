@@ -12,7 +12,7 @@ from lib import utils
 from lib.aux_functionalities.os_aux import create_directories
 from lib.data_loader import MRI_stack_NORAD
 from lib.data_loader import mri_atlas
-from lib.test_over_segmenting_regions import load_regions_segmented
+from lib.nifti_regions_loader import load_pet_regions_segmented
 from lib.vae import VAE, CVAE
 from scripts.vae_with_cv_GM_and_WM import session_settings
 
@@ -227,7 +227,7 @@ def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
 def auto_execute_without_logs():
     regions_used = "three"
     list_regions = session_helper.select_regions_to_evaluate(regions_used)
-    region_to_img_dict = load_regions_segmented(list_regions, bool_logs=False)
+    region_to_img_dict = load_pet_regions_segmented(list_regions, bool_logs=False)
 
     n_folds = 10
     n_samples = region_to_img_dict[1].shape[0]
@@ -267,7 +267,7 @@ def auto_execute_without_logs():
     regions_used = "three"
     region_selected = 38
     list_regions = session_helper.select_regions_to_evaluate(regions_used)
-    train_images = load_regions_segmented(list_regions, bool_logs=False)
+    train_images = load_pet_regions_segmented(list_regions, bool_logs=False)
 
     hyperparams = {'latent_layer_dim': 100, 'kernel_size': 5,
                    'activation_layer': ops.lrelu,

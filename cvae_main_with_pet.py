@@ -22,7 +22,7 @@ from lib.data_loader import pet_atlas
 import settings
 from lib import cvae_over_regions
 from lib.aux_functionalities.os_aux import create_directories
-from lib.test_over_segmenting_regions import load_regions_segmented
+from lib.nifti_regions_loader import load_pet_regions_segmented
 import lib.kfrans_ops as ops
 from lib import session_helper
 
@@ -186,7 +186,7 @@ atlas = {}
 n_samples=0
 region_to_img_dict={}
 if images_used == "PET":
-    region_to_img_dict = load_regions_segmented(list_regions, bool_logs=False)
+    region_to_img_dict = load_pet_regions_segmented(list_regions, bool_logs=False)
     n_samples = region_to_img_dict[list(region_to_img_dict.keys())[0]].shape[0] #selecting one region for getting the n samples
     patient_labels = PET_stack_NORAD.load_patients_labels()
 #    atlas = pet_atlas.load_atlas()

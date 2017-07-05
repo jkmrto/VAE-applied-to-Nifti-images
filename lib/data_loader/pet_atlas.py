@@ -7,6 +7,9 @@ import csv
 
 
 def load_atlas():
+    """
+    :return: dict[region] -> index to nifti voxels belonged to that region
+    """
     img = nib.load(settings.pet_atlas_path)
     img_data = img.get_data()
     imgsize = img_data.shape
