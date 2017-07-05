@@ -46,14 +46,15 @@ def recortar_region(stack_dict, region, atlas, thval=0):
                              abs(minidx[2] - maxidx[2])))
 
     for patient in range(stack_masked.shape[0]):
-        second_image = np.zeros(total_size)
 
         image = np.zeros(total_size)  # template
-
         voxels_patient_region_selected = stack[patient, map_region_voxels]
-        print(voxels_patient_region_selected.shape)
-        voxels_patient_region_selected = voxels_patient_region_selected.reshape(voxels_patient_region_selected.size, 1)
-        image[real_region_voxels.tolist()] = voxels_patient_region_selected
+
+        try:
+            image[real_region_voxels.tolist()] = voxels_patient_region_selected
+        except:
+            voxels_patient_region_selected = voxels_patient_region_selected.reshape(voxels_patient_region_selected.size,1)
+            image[real_region_voxels.tolist()] = voxels_patient_region_selected
 
         image = np.reshape(image, imgsize, "F")
 
@@ -100,7 +101,7 @@ def load_pet_regions_segmented(list_regions, folder_to_store_3d_images=None,
         if out_csv_region_dimensions is not None:
             dic_region_dimension = {
                 "region": region,
-                "n_voxels": atlas[region],
+                "n_voxels": atlas[region].size,
                 "width_3d": region_segmented.shape[1],
                 "height_3d": region_segmented.shape[2],
                 "depth_3d": region_segmented.shape[3],
@@ -114,10 +115,10 @@ def load_pet_regions_segmented(list_regions, folder_to_store_3d_images=None,
     return dic_regions_segmented
 
 
-load_pet_regions_segmented([2, 3, 4, 5, 6, 7, 8],
-                           folder_to_store_3d_images=None,
-                           bool_logs=True,
-                           out_csv_region_dimensions="regions_dimensions.csv")
+#load_pet_regions_segmented([2, 3, 4, 5, 6, 7, 8],
+#                           folder_to_store_3d_images=None,
+#                           bool_logs=True,
+#                           out_csv_region_dimensions="regions_dimensions.csv")
 
 
 def load_mri_regions_segmented(list_regions, folder_to_store_3d_images=None,
