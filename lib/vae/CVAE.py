@@ -1,14 +1,15 @@
 import os
+
 import nibabel as nib
 import numpy as np
 import tensorflow as tf
+
+import lib.neural_net.kfrans_ops as ops
+import settings
 from lib import session_helper
-from nifti_regions_loader import load_pet_regions_segmented
-import lib.kfrans_ops as ops
 from lib.aux_functionalities.functions import \
     get_batch_from_samples_unsupervised_3d
-
-import settings
+from nifti_regions_loader import load_pet_regions_segmented
 
 path_to_nii_output = os.path.join(settings.path_to_project, "test_over_cvae")
 
@@ -172,7 +173,8 @@ class LatentAttention():
 
         return h2
 
-    def train(self, X, n_iters=1000, batchsize=10):
+    def train(self, X, n_iters=1000, batchsize=10, path_tempSGD_3dimages=None,
+              iter_show_error=10):
 
         for iter in range(n_iters):
 
@@ -193,16 +195,16 @@ class LatentAttention():
                 print("iter %d: genloss %f latloss %f learning_rate %f"  % (
                     iter, np.mean(gen_loss), np.mean(lat_loss), learning_rate))
 
-            if iter % 10 == 0:
+            if iter % iter_show_error == 0:
                 feed_dict = {self.images:batch_flat[0:2, :]}
                 generated_test = self.session.run(self.generated_images[1, :],
                                                   feed_dict=feed_dict)
-
-                image_3d = np.reshape(generated_test, self.image_shape)
-                image_3d = image_3d.astype(float)
-                file_path = os.path.join(path_to_nii_output,
+                if path_tempSGD_3dimages is not None:
+                    image_3d = np.reshape(generated_test, self.image_shape)
+                    image_3d = image_3d.astype(float)
+                    file_path = os.path.join(path_to_nii_output,
                                          "epoc_{}".format(iter))
-                from_3d_image_to_nifti_file(file_path, image_3d)
+                    from_3d_image_to_nifti_file(file_path, image_3d)
 
 
 def auto_execute():

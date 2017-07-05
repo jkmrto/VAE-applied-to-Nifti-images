@@ -1,24 +1,26 @@
-import tensorflow as tf
 import os
-from lib import cv_utils
-from scripts.vae_with_kfolds import session_settings
-from lib import svm_utils
-from lib.evaluation_utils import get_average_over_metrics
-from lib import evaluation_utils
-from lib import output_utils
-from shutil import copyfile
-import numpy as np
 import tarfile
 from datetime import datetime
-from lib.neural_net import leaky_net_utils
+from shutil import copyfile
+
+import numpy as np
+import tensorflow as tf
+
+import lib.neural_net.kfrans_ops as ops
 import settings
+from lib import cv_utils
 from lib import cvae_over_regions
+from lib import evaluation_utils
+from lib import output_utils
+from lib import session_helper
+from lib import svm_utils
 from lib.aux_functionalities.os_aux import create_directories
+from lib.evaluation_utils import get_average_over_metrics
+from lib.neural_net import leaky_net_utils
 from nifti_regions_loader import \
     load_pet_data_3d, load_mri_data_3d
-import lib.kfrans_ops as ops
-from lib import session_helper
-
+from scripts.vae_with_kfolds import session_settings
+from settings import explicit_iter_per_region
 #images_used = "MRI"
 images_used = "PET"
 
@@ -31,20 +33,9 @@ regions_used = "three"
 list_regions = session_helper.select_regions_to_evaluate(regions_used)
 #list_regions = [47]
 
-explicit_iter_per_region = {
-    47: 160,
-    44: 100,
-    43: 130,
-    73: 130,
-    74: 130,
-    75: 60,
-
-}
-
 # Vae settings
 # Net Configuration
-hyperparams = {'latent_layer_dim': 100,
-               'kernel_size': 5,
+hyperparams = {'kernel_size': 5,
                'activation_layer': ops.lrelu,
                'features_depth': [1, 16, 32],
                'decay_rate': 0.002,
@@ -172,7 +163,6 @@ output_utils.print_recursive_dict(session_descriptor,
 file_session_descriptor.close()
 
 n_samples=0
-region_to_img_dict={}
 if images_used == "PET":
     region_to_3dimg_dict_pet, patient_labels, n_samples = \
         load_pet_data_3d(list_regions)

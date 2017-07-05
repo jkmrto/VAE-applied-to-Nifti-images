@@ -6,15 +6,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a70bc70e-9f0d-404b-b0fa-698d01cb0e18" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sweep_parameters/loop_over_dim_out_session_2017-05-27T10:11:46.498677.tar.gz" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sweep_parameters/loop_over_svm_minimum_error_session_2017-05-29T23:09:53.991885.tar.gz" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sweep_parameters/loop_over_svm_minimum_error_session_2017-05-30T07:39:06.263021.tar.gz" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/mri_gm_region_2.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/mri_gm_region_3.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/mri_wm_region_2.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/mri_wm_region_3.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tests_sources/pet_atlas.nii" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/vae_benchamark_with_kfold_deprecated.py" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/benchmark_cvae_swap_over_kernel.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/checkpoint" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/lib/kfrans_ops.py" afterPath="$PROJECT_DIR$/lib/neural_net/kfrans_ops.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/benchamark_cvae_with_kfold.py" afterPath="$PROJECT_DIR$/benchamark_cvae_with_kfold.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/cvae_over_regions.py" afterPath="$PROJECT_DIR$/lib/cvae_over_regions.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/vae/CVAE.py" afterPath="$PROJECT_DIR$/lib/vae/CVAE.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nifti_regions_loader.py" afterPath="$PROJECT_DIR$/nifti_regions_loader.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.py" afterPath="$PROJECT_DIR$/settings.py" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -47,8 +47,8 @@
                 <file leaf-file-name="nifti_regions_loader.py" pinned="false" current-in-tab="true">
                   <entry file="file://$PROJECT_DIR$/nifti_regions_loader.py">
                     <provider selected="true" editor-type-id="text-editor">
-                      <state relative-caret-position="522">
-                        <caret line="125" column="0" lean-forward="true" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
+                      <state relative-caret-position="329">
+                        <caret line="124" column="1" lean-forward="false" selection-start-line="124" selection-start-column="1" selection-end-line="124" selection-end-column="1" />
                         <folding>
                           <element signature="e#0#61#0" expanded="true" />
                         </folding>
@@ -94,19 +94,62 @@
     <favorites_list name="VAE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.49794802">
+    <splitter split-orientation="horizontal" split-proportion="0.5011673">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="benchamark_cvae_with_kfold.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="benchamark_cvae_with_kfold.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/benchamark_cvae_with_kfold.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-2052">
-                  <caret line="39" column="11" lean-forward="true" selection-start-line="39" selection-start-column="11" selection-end-line="39" selection-end-column="11" />
+                <state relative-caret-position="198">
+                  <caret line="11" column="23" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
                   <folding>
-                    <element signature="e#0#23#0" expanded="true" />
-                    <element signature="e#1530#1673#0" expanded="false" />
-                    <element signature="e#1702#1835#0" expanded="false" />
+                    <element signature="e#1438#1581#0" expanded="false" />
+                    <element signature="e#1610#1743#0" expanded="false" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="cvae_over_regions.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/lib/cvae_over_regions.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="421">
+                  <caret line="209" column="67" lean-forward="false" selection-start-line="209" selection-start-column="67" selection-end-line="209" selection-end-column="67" />
+                  <folding>
+                    <element signature="e#0#9#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="CVAE.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/lib/vae/CVAE.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="733">
+                  <caret line="197" column="37" lean-forward="false" selection-start-line="197" selection-start-column="37" selection-end-line="197" selection-end-column="37" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/settings.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="737">
+                  <caret line="51" column="1" lean-forward="false" selection-start-line="51" selection-start-column="1" selection-end-line="51" selection-end-column="1" />
+                  <folding>
+                    <element signature="e#0#9#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="kfrans_ops.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/lib/neural_net/kfrans_ops.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1404">
+                  <caret line="79" column="33" lean-forward="false" selection-start-line="79" selection-start-column="33" selection-end-line="79" selection-end-column="33" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -123,18 +166,18 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="loop_latent_layer_session_settings.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/scripts/vae_sweep_over_features/loop_latent_layer_session_settings.py">
+          <file leaf-file-name="loop_output_complex_majority_vote.csv" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/out/Sesion Sweep over latent dim/loop_output_complex_majority_vote.csv">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="162">
-                  <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+                <state relative-caret-position="72">
+                  <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="session_description.csv" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/out/Sesion Sweep over latent dim/session_description.csv">
+          <file leaf-file-name="loop_output_weighted_svm.csv" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/out/Sesion Sweep over latent dim/loop_output_weighted_svm.csv">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="0">
                   <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -143,51 +186,21 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="loop_output_complex_majority_vote.csv" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/out/Sesion Sweep over latent dim/loop_output_complex_majority_vote.csv">
+          <file leaf-file-name="loop_output_simple_majority_vote.csv" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/out/Sesion Sweep over latent dim/loop_output_simple_majority_vote.csv">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="378">
-                  <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+                <state relative-caret-position="0">
+                  <caret line="0" column="50" lean-forward="false" selection-start-line="0" selection-start-column="40" selection-end-line="0" selection-end-column="50" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="functions.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/lib/aux_functionalities/functions.py">
+          <file leaf-file-name="loop_output_decision_net.csv" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/out/Sesion Sweep over latent dim/loop_output_decision_net.csv">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="90">
-                  <caret line="9" column="64" lean-forward="false" selection-start-line="9" selection-start-column="64" selection-end-line="9" selection-end-column="64" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="leaky_relu_decision_net.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/lib/neural_net/leaky_relu_decision_net.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="521">
-                  <caret line="145" column="0" lean-forward="false" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="svm_utils.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/lib/svm_utils.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="251">
-                  <caret line="140" column="48" lean-forward="false" selection-start-line="140" selection-start-column="48" selection-end-line="140" selection-end-column="48" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="leaky_net_utils.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/lib/neural_net/leaky_net_utils.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="197">
-                  <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+                <state relative-caret-position="72">
+                  <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -197,12 +210,24 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="output_utils.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="output_utils.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/lib/output_utils.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="378">
-                  <caret line="21" column="24" lean-forward="false" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="24" />
+                  <caret line="21" column="4" lean-forward="false" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
                   <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="benchmark_cvae_swap_over_kernel.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/benchmark_cvae_swap_over_kernel.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="291">
+                  <caret line="321" column="31" lean-forward="false" selection-start-line="321" selection-start-column="31" selection-end-line="321" selection-end-column="31" />
+                  <folding>
+                    <element signature="e#0#23#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -220,8 +245,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>activation</find>
-      <find>self.train_images</find>
       <find>train_images</find>
       <find>self.n_hidden</find>
       <find>self.n_samples</find>
@@ -250,6 +273,8 @@
       <find>after_input_architecture</find>
       <find>vae_session_conf</find>
       <find>tar_file_main_output_path</find>
+      <find>self.n_z</find>
+      <find>laten_l</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -258,8 +283,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/scripts/vae_with_kfolds/session_settings.py" />
-        <option value="$PROJECT_DIR$/recollect_kfolds_results.sh" />
         <option value="$PROJECT_DIR$/test" />
         <option value="$PROJECT_DIR$/kvfrans/main.py" />
         <option value="$PROJECT_DIR$/main_pet.py" />
@@ -297,9 +320,6 @@
         <option value="$PROJECT_DIR$/vae_benchamark_with_kfold_deprecated.py" />
         <option value="$PROJECT_DIR$/lib/vae/VAE.py" />
         <option value="$PROJECT_DIR$/lib/output_utils.py" />
-        <option value="$PROJECT_DIR$/benchamark_cvae_with_kfold.py" />
-        <option value="$PROJECT_DIR$/lib/cvae_over_regions.py" />
-        <option value="$PROJECT_DIR$/lib/vae/CVAE.py" />
         <option value="$PROJECT_DIR$/cvae_loop_over_latent_layer.py" />
         <option value="$PROJECT_DIR$/lib/cv_utils.py" />
         <option value="$PROJECT_DIR$/benchmark_vae_with_kfold.py" />
@@ -308,7 +328,12 @@
         <option value="$PROJECT_DIR$/lib/aux_functionalities/functions.py" />
         <option value="$PROJECT_DIR$/benchmark_vae_swap_latent_layer_dim.py" />
         <option value="$PROJECT_DIR$/regions_dimensions.csv" />
+        <option value="$PROJECT_DIR$/settings.py" />
+        <option value="$PROJECT_DIR$/benchamark_cvae_with_kfold.py" />
         <option value="$PROJECT_DIR$/nifti_regions_loader.py" />
+        <option value="$PROJECT_DIR$/lib/vae/CVAE.py" />
+        <option value="$PROJECT_DIR$/lib/cvae_over_regions.py" />
+        <option value="$PROJECT_DIR$/benchmark_cvae_swap_over_kernel.py" />
       </list>
     </option>
   </component>
@@ -407,6 +432,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="neural_net" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VAN-applied-to-Nifti-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="data_loader" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -418,24 +461,24 @@
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.JSON" />
-    <property name="add_unversioned_files" value="/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_06-14:11/images/train_test_grad_error.png&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/png/desc_grad_graph/grad_desc_region_11.png&#10;/home/jkmrto/VAN-applied-to-Nifti-images/credentials.txt&#10;/home/jkmrto/VAN-applied-to-Nifti-images/regions_dimensions.csv&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/01_04_2017_00:00 arch: 1000_800_500_100/post_train/first_test/neural_net-2017_04_22-17:53-42_21_1/post_train/curva_roc.png&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_07-13:28/post_train/test_out/curva_roc.png&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_06-21:09/post_train/train_out/curva_roc.png&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/out/01_04_2017_00:00 arch: 1000_800_500_100/test/first_test/patient_score_per_region.log&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/recollect_kfolds_results.sh&#10;/home/jkmrto/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_06-21:09/post_train/test_out/curva_roc.png&#10;/home/jkmrto/VAN-applied-to-Nifti-images/out/Sesion Sweep over latent dim/loop_output_complex_majority_vote.csv&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/png/desc_grad_graph/grad_desc_region_6.png&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_06-10:04/logs/test_error.log&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/README.md&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/png/desc_grad_graph/grad_desc_region_4.png" />
+    <property name="add_unversioned_files" value="/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_06-14:11/images/train_test_grad_error.png&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/png/desc_grad_graph/grad_desc_region_11.png&#10;/home/jkmrto/VAN-applied-to-Nifti-images/credentials.txt&#10;/home/jkmrto/VAN-applied-to-Nifti-images/regions_dimensions.csv&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/01_04_2017_00:00 arch: 1000_800_500_100/post_train/first_test/neural_net-2017_04_22-17:53-42_21_1/post_train/curva_roc.png&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_07-13:28/post_train/test_out/curva_roc.png&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_06-21:09/post_train/train_out/curva_roc.png&#10;/home/jkmrto/VAN-applied-to-Nifti-images/out/Sesion Sweep over latent dim/loop_output_weighted_svm.csv&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/out/01_04_2017_00:00 arch: 1000_800_500_100/test/first_test/patient_score_per_region.log&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/recollect_kfolds_results.sh&#10;/home/jkmrto/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_06-21:09/post_train/test_out/curva_roc.png&#10;/home/jkmrto/VAN-applied-to-Nifti-images/out/Sesion Sweep over latent dim/loop_output_complex_majority_vote.csv&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/png/desc_grad_graph/grad_desc_region_6.png&#10;/media/jkmrto/Multimedia/VAN-applied-to-Nifti-images/out/05_05_2017_08:19 arch: 1000_800_500_100/post_train/svm/neural_net-2017_05_06-10:04/logs/test_error.log&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/README.md&#10;/media/jkmrto/LinuxData/MIT/TFG/VAE/png/desc_grad_graph/grad_desc_region_4.png" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/lib/vae" />
-      <recent name="$PROJECT_DIR$/lib" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/scripts" />
-      <recent name="$PROJECT_DIR$/scripts/vae_with_kfolds" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/scripts/vae_with_kfolds" />
       <recent name="$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM" />
       <recent name="$PROJECT_DIR$/data" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/neural_net" />
+      <recent name="$PROJECT_DIR$/lib/vae" />
+      <recent name="$PROJECT_DIR$/lib" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/scripts" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.nifti_regions_loader">
+  <component name="RunManager" selected="Python.benchmark_cvae_swap_over_kernel">
     <configuration default="false" name="cvae_main_with_pet" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -449,23 +492,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="VAE" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/benchamark_cvae_with_kfold.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="test_over_segmenting_regions" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/lib" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="VAE" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lib/nifti_regions_loader.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -517,6 +543,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="VAE" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/benchmark_vae_swap_latent_layer_dim.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="benchmark_cvae_swap_over_kernel" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="VAE" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/benchmark_cvae_swap_over_kernel.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -668,18 +711,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.cvae_main_with_pet" />
-      <item index="1" class="java.lang.String" itemvalue="Python.test_over_segmenting_regions" />
-      <item index="2" class="java.lang.String" itemvalue="Python.nifti_regions_loader" />
-      <item index="3" class="java.lang.String" itemvalue="Python.benchmark_vae_with_kfold" />
-      <item index="4" class="java.lang.String" itemvalue="Python.benchmark_vae_swap_latent_layer_dim" />
+      <item index="1" class="java.lang.String" itemvalue="Python.nifti_regions_loader" />
+      <item index="2" class="java.lang.String" itemvalue="Python.benchmark_vae_with_kfold" />
+      <item index="3" class="java.lang.String" itemvalue="Python.benchmark_vae_swap_latent_layer_dim" />
+      <item index="4" class="java.lang.String" itemvalue="Python.benchmark_cvae_swap_over_kernel" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.nifti_regions_loader" />
-        <item index="1" class="java.lang.String" itemvalue="Python.benchmark_vae_swap_latent_layer_dim" />
-        <item index="2" class="java.lang.String" itemvalue="Python.cvae_main_with_pet" />
-        <item index="3" class="java.lang.String" itemvalue="Python.benchmark_vae_with_kfold" />
-        <item index="4" class="java.lang.String" itemvalue="Python.test_over_segmenting_regions" />
+        <item index="0" class="java.lang.String" itemvalue="Python.benchmark_cvae_swap_over_kernel" />
+        <item index="1" class="java.lang.String" itemvalue="Python.nifti_regions_loader" />
+        <item index="2" class="java.lang.String" itemvalue="Python.benchmark_vae_swap_latent_layer_dim" />
+        <item index="3" class="java.lang.String" itemvalue="Python.cvae_main_with_pet" />
+        <item index="4" class="java.lang.String" itemvalue="Python.benchmark_vae_with_kfold" />
       </list>
     </recent_temporary>
   </component>
@@ -716,17 +759,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1855" height="1176" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20196506" sideWeight="0.49384615" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2985808" sideWeight="0.49384615" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924694" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41684434" sideWeight="0.503692" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2625232" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26159555" sideWeight="0.4978903" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42207792" sideWeight="0.49683544" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42207792" sideWeight="0.49683544" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15981013" sideWeight="0.5061538" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25510204" sideWeight="0.49630803" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25510204" sideWeight="0.49630803" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32964134" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16465423" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -780,18 +823,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///usr/local/lib/python3.5/dist-packages/tflearn/helpers/trainer.py" />
-    <entry file="file:///usr/local/lib/python3.5/dist-packages/tflearn/models/dnn.py" />
-    <entry file="file://$PROJECT_DIR$/cvae_hub.py" />
-    <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/tensorflow/python/ops/random_ops.py" />
-    <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/tensorflow/python/debug/wrappers/local_cli_wrapper.py" />
-    <entry file="file://$USER_HOME$/.PyCharmCE2016.3/system/python_stubs/-1247971764/numpy/random/mtrand.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26877">
-          <caret line="1585" column="10" lean-forward="false" selection-start-line="1585" selection-start-column="4" selection-end-line="1585" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cvae_three_layers.py" />
     <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/tensorflow/python/framework/common_shapes.py" />
     <entry file="file://$USER_HOME$/.local/lib/python3.5/site-packages/tensorflow/python/ops/gen_array_ops.py" />
@@ -817,13 +848,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main_deprecated.py" />
-    <entry file="file://$PROJECT_DIR$/lib/kfrans_ops.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="92" column="44" lean-forward="false" selection-start-line="76" selection-start-column="0" selection-end-line="92" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/loop_over_svm_error.py" />
     <entry file="file://$PROJECT_DIR$/scripts/vae_with_cv_GM_and_WM/vae_over_regions.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -906,24 +930,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/cvae_over_regions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="14" column="5" lean-forward="false" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/vae/CVAE.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="764">
-          <caret line="217" column="43" lean-forward="true" selection-start-line="217" selection-start-column="43" selection-end-line="217" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/cv_utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -990,14 +996,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/out/Sesion Sweep over latent dim/loop_output_complex_majority_vote.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/vae_with_kfolds/vae_over_regions_kfolds.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="347">
@@ -1006,21 +1004,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/output_utils.py">
+    <entry file="file://$PROJECT_DIR$/regions_dimensions.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="21" column="24" lean-forward="false" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="24" />
+        <state relative-caret-position="54">
+          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nifti_regions_loader.py">
+    <entry file="file://$PROJECT_DIR$/vae_benchamark_with_kfold_deprecated.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="522">
-          <caret line="125" column="0" lean-forward="true" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#61#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-73">
+          <caret line="155" column="0" lean-forward="false" selection-start-line="155" selection-start-column="0" selection-end-line="156" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/checkpoint">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/neural_net/kfrans_ops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1404">
+          <caret line="79" column="33" lean-forward="false" selection-start-line="79" selection-start-column="33" selection-end-line="79" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1034,30 +1046,101 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/regions_dimensions.csv">
+    <entry file="file://$PROJECT_DIR$/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="16" />
+        <state relative-caret-position="737">
+          <caret line="51" column="1" lean-forward="false" selection-start-line="51" selection-start-column="1" selection-end-line="51" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/output_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="21" column="4" lean-forward="false" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nifti_regions_loader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="329">
+          <caret line="124" column="1" lean-forward="false" selection-start-line="124" selection-start-column="1" selection-end-line="124" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#61#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/benchamark_cvae_with_kfold.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2052">
-          <caret line="39" column="11" lean-forward="true" selection-start-line="39" selection-start-column="11" selection-end-line="39" selection-end-column="11" />
+        <state relative-caret-position="198">
+          <caret line="11" column="23" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding>
-            <element signature="e#0#23#0" expanded="true" />
-            <element signature="e#1530#1673#0" expanded="false" />
-            <element signature="e#1702#1835#0" expanded="false" />
+            <element signature="e#1438#1581#0" expanded="false" />
+            <element signature="e#1610#1743#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vae_benchamark_with_kfold_deprecated.py">
+    <entry file="file://$PROJECT_DIR$/lib/vae/CVAE.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-73">
-          <caret line="155" column="0" lean-forward="false" selection-start-line="155" selection-start-column="0" selection-end-line="156" selection-end-column="66" />
+        <state relative-caret-position="733">
+          <caret line="197" column="37" lean-forward="false" selection-start-line="197" selection-start-column="37" selection-end-line="197" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/cvae_over_regions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="421">
+          <caret line="209" column="67" lean-forward="false" selection-start-line="209" selection-start-column="67" selection-end-line="209" selection-end-column="67" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/benchmark_cvae_swap_over_kernel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="321" column="31" lean-forward="false" selection-start-line="321" selection-start-column="31" selection-end-line="321" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/Sesion Sweep over latent dim/loop_output_complex_majority_vote.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/Sesion Sweep over latent dim/loop_output_weighted_svm.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/Sesion Sweep over latent dim/loop_output_simple_majority_vote.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="50" lean-forward="false" selection-start-line="0" selection-start-column="40" selection-end-line="0" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/Sesion Sweep over latent dim/loop_output_decision_net.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>

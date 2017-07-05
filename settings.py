@@ -40,3 +40,13 @@ svm_folder_name_test_out = "test_out"
 svm_folder_name_train_out = "train_out"
 
 # DECISION NEURAL NET
+
+explicit_iter_per_region = {
+    47: 160,
+    44: 100,
+    43: 130,
+    73: 130,
+    74: 130,
+    75: 60,
+
+}

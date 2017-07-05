@@ -4,7 +4,7 @@ from datetime import datetime
 import numpy as np
 import tensorflow as tf
 
-import lib.kfrans_ops as ops
+import lib.neural_net.kfrans_ops as ops
 from lib import cv_utils
 from lib import session_helper
 from lib import session_helper as session
@@ -12,8 +12,8 @@ from lib import utils
 from lib.aux_functionalities.os_aux import create_directories
 from lib.data_loader import MRI_stack_NORAD
 from lib.data_loader import mri_atlas
-from nifti_regions_loader import load_pet_regions_segmented
 from lib.vae import VAE, CVAE
+from nifti_regions_loader import load_pet_regions_segmented
 from scripts.vae_with_cv_GM_and_WM import session_settings
 
 
@@ -206,7 +206,8 @@ def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
             max_train_iter = session_conf['n_iters']
 
         model.train(X=train_cube_images, n_iters=max_train_iter,
-                    batchsize=session_conf["batch_size"])
+                    batchsize=session_conf["batch_size"],
+                    iter_show_error=session_conf["show_error_iter"])
 
         # Script para pintar
         print("Region {} Trained!".format(region_selected))
@@ -216,7 +217,7 @@ def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
         train_output = model.encode(train_cube_images)
         test_output = model.encode(test_cube_images)
 
-        per_region_results[str(region_selected)] = {}
+        per_region_results[region_selected] = {}
 
         per_region_results[region_selected]['train_output'] = train_output
         per_region_results[region_selected]['test_output'] = test_output

@@ -119,10 +119,10 @@ def load_pet_regions_segmented(list_regions, folder_to_store_3d_images=None,
     return dic_regions_segmented
 
 
-load_pet_regions_segmented(list_regions=session_helper.select_regions_to_evaluate("all"),
-                           folder_to_store_3d_images=None,
-                           bool_logs=True,
-                           out_csv_region_dimensions="regions_dimensions.csv")
+#load_pet_regions_segmented(list_regions=session_helper.select_regions_to_evaluate("all"),
+#                           folder_to_store_3d_images=None,
+#                           bool_logs=True,
+#                           out_csv_region_dimensions="regions_dimensions.csv")
 
 def load_mri_regions_segmented3d(list_regions, folder_to_store_3d_images=None,
                                  bool_logs=True):
