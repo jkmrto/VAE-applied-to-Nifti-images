@@ -1,24 +1,19 @@
 import tensorflow as tf
 import os
 from lib import cv_utils
-from lib.data_loader import MRI_stack_NORAD
-from lib.data_loader import PET_stack_NORAD
-from lib import session_helper as session
 from scripts.vae_with_kfolds import session_settings
 from scripts.vae_with_kfolds import vae_over_regions_kfolds
 from lib import svm_utils
-from lib.data_loader import mri_atlas
 from lib.evaluation_utils import get_average_over_metrics
 from lib import evaluation_utils
 from lib import output_utils
 from shutil import copyfile
 from nifti_regions_loader import \
-    load_mri_regions_flatten, load_pet_regions_flatten
+    load_mri_data, load_pet_data
 import numpy as np
 import tarfile
 from datetime import datetime
 from lib.neural_net import leaky_net_utils
-from lib.data_loader import pet_atlas
 import settings
 from lib.aux_functionalities.os_aux import create_directories
 
@@ -177,19 +172,11 @@ file_session_descriptor.close()
 
 n_samples = 0
 if images_used == "PET":
-
-    dic_regions_to_flatten_voxels_pet = load_pet_regions_flatten(list_regions)
-    patient_labels = PET_stack_NORAD.load_patients_labels()
-    atlas = pet_atlas.load_atlas()
-    n_samples = dic_regions_to_flatten_voxels_pet[list_regions[0]].shape[0]
-
+    dic_regions_to_flatten_voxels_pet, patient_labels, n_samples = \
+        load_pet_data
 elif images_used == "MRI":
-    # Loading the stack of images
-    dic_regions_to_flatten_voxels_mri_gm, dic_regions_to_flatten_voxels_mri_wm = \
-        load_mri_regions_flatten(list_regions)
-    patient_labels = MRI_stack_NORAD.load_patients_labels()
-    atlas = mri_atlas.load_atlas_mri()
-    n_samples = dic_regions_to_flatten_voxels_mri_gm[list_regions[0]].shape[0]
+    dic_regions_to_flatten_voxels_mri_gm, dic_regions_to_flatten_voxels_mri_wm, \
+        patient_labels, n_samples = load_mri_data(list_regions)
 
 # Load regions index and create kfolds folder
 

@@ -11,6 +11,8 @@ from lib.data_loader import pet_atlas
 from lib import session_helper as session
 import settings
 
+"The MRI segmentation 3d functions has not been tested yet"
+
 
 def recortar_region(stack_dict, region, atlas, thval=0):
     """
@@ -53,7 +55,8 @@ def recortar_region(stack_dict, region, atlas, thval=0):
         try:
             image[real_region_voxels.tolist()] = voxels_patient_region_selected
         except:
-            voxels_patient_region_selected = voxels_patient_region_selected.reshape(voxels_patient_region_selected.size,1)
+            voxels_patient_region_selected = voxels_patient_region_selected.reshape(voxels_patient_region_selected.size,
+                                                                                    1)
             image[real_region_voxels.tolist()] = voxels_patient_region_selected
 
         image = np.reshape(image, imgsize, "F")
@@ -115,7 +118,7 @@ def load_pet_regions_segmented(list_regions, folder_to_store_3d_images=None,
     return dic_regions_segmented
 
 
-#load_pet_regions_segmented([2, 3, 4, 5, 6, 7, 8],
+# load_pet_regions_segmented([2, 3, 4, 5, 6, 7, 8],
 #                           folder_to_store_3d_images=None,
 #                           bool_logs=True,
 #                           out_csv_region_dimensions="regions_dimensions.csv")
@@ -238,6 +241,24 @@ def load_pet_regions_flatten(list_regions):
 
 
 # out = load_pet_regions_flatten([2, 3, 4, 5, 6])
+
+def load_pet_data(list_regions):
+
+    dic_regions_to_flatten_voxels_pet = load_pet_regions_flatten(list_regions)
+    patient_labels = PET_stack_NORAD.load_patients_labels()
+    n_samples = dic_regions_to_flatten_voxels_pet[list_regions[0]].shape[0]
+
+    return dic_regions_to_flatten_voxels_pet, patient_labels, n_samples
+
+def load_mri_data(list_regions):
+    # Loading the stack of images
+    dic_regions_to_flatten_voxels_mri_gm, dic_regions_to_flatten_voxels_mri_wm = \
+        load_mri_regions_flatten(list_regions)
+    patient_labels = MRI_stack_NORAD.load_patients_labels()
+    n_samples = dic_regions_to_flatten_voxels_mri_gm[list_regions[0]].shape[0]
+
+    return dic_regions_to_flatten_voxels_mri_gm, dic_regions_to_flatten_voxels_mri_wm, \
+        patient_labels, n_samples
 
 
 def test(nifti_region_to_save, path_where_store_out="pet_regions_segmented"):
