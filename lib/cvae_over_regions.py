@@ -1,21 +1,20 @@
 import os
-import tensorflow as tf
-from lib.data_loader import mri_atlas
-from lib import session_helper as session
 from datetime import datetime
-from lib.data_loader import MRI_stack_NORAD
-from lib import cv_utils
-from lib import utils
-from lib.vae import VAE
-from lib import session_helper
-from lib.test_over_segmenting_regions import load_regions_segmented
-from lib.aux_functionalities.os_aux import create_directories
-from scripts.vae_with_cv_GM_and_WM import session_settings
+
+import numpy as np
+import tensorflow as tf
+
 import lib.kfrans_ops as ops
 from lib import cv_utils
-from lib.session_helper import generate_session_descriptor
-import numpy as np
-import main_kvfrans3d
+from lib import session_helper
+from lib import session_helper as session
+from lib import utils
+from lib.aux_functionalities.os_aux import create_directories
+from lib.data_loader import MRI_stack_NORAD
+from lib.data_loader import mri_atlas
+from lib.test_over_segmenting_regions import load_regions_segmented
+from lib.vae import VAE, CVAE
+from scripts.vae_with_cv_GM_and_WM import session_settings
 
 
 def init_session_folders(architecture, path_to_root):
@@ -195,15 +194,18 @@ def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
             region_voxels_values_test = region_voxels_values_test / max_denormalize
 
         tf.reset_default_graph()
-        model = main_kvfrans3d.LatentAttention(hyperparams)
+        model = CVAE.LatentAttention(hyperparams)
         region_suffix = 'region_' + str(region_selected)
 
         if region_selected in explicit_iter_per_region:
-            max_train_iter = explicit_iter_per_region[region_selected]
+            if explicit_iter_per_region[region_selected] < session_conf['n_iters']:
+                max_train_iter = explicit_iter_per_region[region_selected]
+            else:
+                max_train_iter = session_conf['n_iters']
         else:
             max_train_iter = session_conf['n_iters']
 
-        model.train(X=train_cube_images, n_iters=session_conf['n_iters'],
+        model.train(X=train_cube_images, n_iters=max_train_iter,
                     batchsize=session_conf["batch_size"])
 
         # Script para pintar

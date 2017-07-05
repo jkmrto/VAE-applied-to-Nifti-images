@@ -258,8 +258,6 @@ for k_fold_index in range(0, n_folds, 1):
     if images_used == "PET":
 
         print("Train over regions")
-
-
         vae_output = cvae_over_regions.execute_without_any_logs(
             region_train_cubes_dict=reg_to_group_to_images_dict["train"],
             hyperparams=hyperparams,
