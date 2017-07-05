@@ -10,4 +10,4 @@ pet_regions_segmented/
 regions_dimensions.csv
 .vscode/
 .idea/
-
+__pycache__/
