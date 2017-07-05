@@ -1,5 +1,6 @@
 out/
 data/
+test/
 data.tgz
 credentials.txt
 recollect_kfolds_results.sh
@@ -8,4 +9,4 @@ tests_sources/
 pet_regions_segmented/
 .vscode/
 .idea/
-.test/
+
