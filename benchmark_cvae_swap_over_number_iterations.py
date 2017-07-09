@@ -31,7 +31,7 @@ print("Time session init: {}".format(session_datetime))
 # Meta settings.
 #images_used = "PET"
 images_used = "MRI"
-n_folds = 2
+n_folds = 10
 bool_test = False
 regions_used = "most_important"
 list_regions = session.select_regions_to_evaluate(regions_used)
@@ -41,8 +41,10 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 # Net Configuration
 #kernel_list = [2, 3, 4, 5, 6, 7, 8, 9, 10]
 kernel_list = [5]
+iterations_list = [50, 100, 150, 200, 250, 300, 400, 500, 600, 800, 100]
 
 hyperparams = {
+               "kernel_size": 5,
                "latent_layer_dim": 100,
                'activation_layer': ops.lrelu,
                'features_depth': [1, 16, 32],
@@ -54,9 +56,8 @@ hyperparams = {
 cvae_session_conf = {
     "batch_size": 32,
     "bool_normalized": False,
-    "n_iters": 100,
     "save_meta_bool": False,
-    "show_error_iter": 10,
+    "show_error_iter": 1,
 }
 
 # OUTPUT: Files initialization
@@ -117,11 +118,11 @@ list_averages_simple_majority_vote = []
 list_averages_decision_net = []
 list_averages_complex_majority_vote = []
 
-for kernel in kernel_list:
+for n_iteration in iterations_list:
 
-    print( "Evaluating the system with a kernel size of {} ".format(kernel))
+    print( "Evaluating the system with a n_iteration of {} dim".format(n_iteration))
 
-    hyperparams["kernel_size"] = kernel
+    cvae_session_conf["n_iters"] = n_iteration
 
     # OUTPUT SETTINGS
     # OUTPUT: List of dictionaries
@@ -277,7 +278,7 @@ for kernel in kernel_list:
         svm_weighted_regions_k_folds_coefs.append(aux_dic_regions_weight_coefs)
 
     # GET AVERAGE RESULTS OVER METRICS
-    extra_field = {"kernel size": str(kernel)}
+    extra_field = {"number of iterations": str(n_iteration)}
 
     averages_simple_majority_vote = get_average_over_metrics(
         simple_majority_vote_k_folds_results_test)
