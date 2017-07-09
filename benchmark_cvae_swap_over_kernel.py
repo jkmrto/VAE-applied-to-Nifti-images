@@ -29,9 +29,9 @@ session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
 
 # Meta settings.
-images_used = "PET"
-#images_used = "MRI"
-n_folds = 10
+#images_used = "PET"
+images_used = "MRI"
+n_folds = 2
 bool_test = False
 regions_used = "most_important"
 list_regions = session.select_regions_to_evaluate(regions_used)
@@ -39,7 +39,8 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 
 # Vae settings
 # Net Configuration
-kernel_list = [2, 3, 4, 5, 6, 7, 8, 9, 10]
+#kernel_list = [2, 3, 4, 5, 6, 7, 8, 9, 10]
+kernel_list = [5]
 
 hyperparams = {
                "latent_layer_dim": 100,
@@ -58,22 +59,6 @@ cvae_session_conf = {
     "show_error_iter": 1,
 }
 
-# DECISION NET CONFIGURATION
-decision_net_session_conf = {
-    "decision_net_tries": 1,
-    "field_to_select_try": "area under the curve",
-    "max_iter": 10,
-    "threshould_prefixed_to_0.5": True,
-}
-
-HYPERPARAMS_decision_net = {
-    "batch_size": 32,
-    "learning_rate": 1E-5,
-    "lambda_l2_reg": 0.000001,
-    "dropout": 0.9,
-    "nonlinearity": tf.nn.relu,
-}
-
 # OUTPUT: Files initialization
 loop_output_file_simple_majority_vote = os.path.join(
     loop_latent_layer_session_settings.path_kfolds_session_folder,
@@ -82,10 +67,6 @@ loop_output_file_simple_majority_vote = os.path.join(
 loop_output_file_complex_majority_vote = os.path.join(
     loop_latent_layer_session_settings.path_kfolds_session_folder,
     "loop_output_complex_majority_vote.csv")
-
-loop_output_file_decision_net = os.path.join(
-    loop_latent_layer_session_settings.path_kfolds_session_folder,
-    "loop_output_decision_net.csv")
 
 loop_output_file_weighted_svm = os.path.join(
     loop_latent_layer_session_settings.path_kfolds_session_folder,
@@ -101,7 +82,6 @@ tar_file_main_output_path = os.path.join(
 
 list_paths_files_to_store = [loop_output_file_simple_majority_vote,
                              loop_output_file_complex_majority_vote,
-                             loop_output_file_decision_net,
                              loop_output_file_weighted_svm,
                              loop_output_path_session_description]
 
@@ -116,11 +96,6 @@ session_descriptor['VAE'] = {}
 session_descriptor['Decision net'] = {}
 session_descriptor['VAE']["net configuration"] = hyperparams
 session_descriptor['VAE']["session configuration"] = cvae_session_conf
-session_descriptor['Decision net'][
-    "net configuration"] = HYPERPARAMS_decision_net
-session_descriptor['Decision net']["net configuration"]['architecture'] = \
-    "[nºregions, nºregions/2, 1]"
-session_descriptor['Decision net']['session_conf'] = decision_net_session_conf
 
 file_session_descriptor = open(loop_output_path_session_description, "w")
 output_utils.print_recursive_dict(session_descriptor,
@@ -301,23 +276,6 @@ for kernel in kernel_list:
             weighted_output_dic_test)
         svm_weighted_regions_k_folds_coefs.append(aux_dic_regions_weight_coefs)
 
-        # DECISION NEURAL NET
-        print("Decision neural net step")
-
-        # train score matriz [patients x regions]
-        input_layer_size = train_score_matriz.shape[1]
-        architecture = [input_layer_size, int(input_layer_size / 2), 1]
-
-        net_train_dic, net_test_dic = \
-            leaky_net_utils.train_leaky_neural_net_various_tries_over_svm_output(
-                decision_net_session_conf, architecture,
-                HYPERPARAMS_decision_net,
-                train_score_matriz, test_score_matriz, Y_train, Y_test,
-                bool_test=False)
-
-        decision_net_k_folds_results_train.append(net_train_dic)
-        decision_net_vote_k_folds_results_test.append(net_test_dic)
-
     # GET AVERAGE RESULTS OVER METRICS
     extra_field = {"kernel size": str(kernel)}
 
@@ -333,13 +291,8 @@ for kernel in kernel_list:
         svm_weighted_regions_k_folds_results_test)
     averages_svm_weighted.update(extra_field)
 
-    averages_decision_net = get_average_over_metrics(
-        decision_net_vote_k_folds_results_test)
-    averages_decision_net.update(extra_field)
-
     list_averages_svm_weighted.append(averages_svm_weighted)
     list_averages_simple_majority_vote.append(averages_simple_majority_vote)
-    list_averages_decision_net.append(averages_decision_net)
     list_averages_complex_majority_vote.append(averages_complex_majority_vote)
 
 # Outputs files
@@ -351,10 +304,6 @@ output_utils.print_dictionary_with_header(
 output_utils.print_dictionary_with_header(
     loop_output_file_complex_majority_vote,
     list_averages_complex_majority_vote)
-
-output_utils.print_dictionary_with_header(
-    loop_output_file_decision_net,
-    list_averages_decision_net)
 
 output_utils.print_dictionary_with_header(
     loop_output_file_weighted_svm,
