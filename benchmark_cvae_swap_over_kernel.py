@@ -21,7 +21,7 @@ print("Time session init: {}".format(session_datetime))
 
 # Meta settings.
 images_used = "PET"
-#images_used = "MRI"
+images_used = "MRI"
 n_folds = 3
 bool_test = False
 regions_used = "most_important"
