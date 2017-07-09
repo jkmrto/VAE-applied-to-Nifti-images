@@ -33,7 +33,6 @@ class VAE():
 
         self.session = tf.Session()
         self.hyper_params = hyperparams
-        self.session_descritpor = {}
         self.path_session_folder = path_to_session
 
         if not meta_graph:  # new model

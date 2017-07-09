@@ -24,21 +24,15 @@ bool_save_meta = False
 class CVAE():
     RESTORE_KEY = "restore"
 
-    def __init__(self, hyperparams, test_bool=False, meta_graph=None,
+    def __init__(self, hyperparams, test_bool=False, meta_path=None,
                  path_to_session=None):
 
-        self.session = tf.Session()
-
-        self.n_z = hyperparams['latent_layer_dim']
-        self.lambda_l2_reg = hyperparams['lambda_l2_regularization']
-        self.learning_rate = hyperparams['learning_rate']
-        self.features_depth = hyperparams['features_depth']
+        assert  "image_shape" in list(hyperparams), \
+            "image_shape should be specified in hyperparams"
         self.image_shape = hyperparams['image_shape']
-        self.total_size = hyperparams['total_size']
-        self.kernel_size = hyperparams['kernel_size']
-        self.activation_layer = hyperparams['activation_layer']
-        self.decay_rate_value = float(hyperparams['decay_rate'])
-        self.path_session_folder = path_to_session
+        self.total_size = np.array(self.image_shape).prod()
+
+        self.session = tf.Session()
 
         self.dim_in_first_layer = None
         self.dim_out_first_layer = None
@@ -48,27 +42,48 @@ class CVAE():
         if test_bool:
             print(hyperparams)
 
-        if meta_graph is None:
+        if meta_path is None:
+
+            # Initizalizing graph values
+            self.n_z = hyperparams['latent_layer_dim']
+            self.lambda_l2_reg = hyperparams['lambda_l2_regularization']
+            self.learning_rate = hyperparams['learning_rate']
+            self.features_depth = hyperparams['features_depth']
+            self.kernel_size = hyperparams['kernel_size']
+            self.activation_layer = hyperparams['activation_layer']
+            self.decay_rate_value = float(hyperparams['decay_rate'])
+            self.path_session_folder = path_to_session
+
             self.__build_graph()
 
-            if None is not self.path_session_folder:
+            if self.path_session_folder is not None:
                 self.init_session_folders()
 
-                #  handles = [self.images, self.decay_rate, self.z_mean, self.z_stddev,
-                #            ]
-                #   for handle in handles:
-                #       tf.add_to_collection(CVAE.RESTORE_KEY, handle)
+            handles = [self.in_flat_images, self.z_mean, self.z_stddev]
+            for handle in handles:
+                tf.add_to_collection(CVAE.RESTORE_KEY, handle)
+        else:
+            new_saver = tf.train.import_meta_graph(meta_path + ".meta")
+            new_saver.restore(self.session, meta_path)
+
+            handles = self.session.graph.get_collection_ref(CVAE.RESTORE_KEY)
+            self.in_flat_images, self.z_mean, self.z_stddev = handles[0:3]
 
         self.session.run(tf.initialize_all_variables())
 
     def __build_graph(self):
+        """
+        self.in_flat_images tensor--sh[n_samples x total_size]
+        :return:
+        """
+
         # Placeholder location
         self.decay_rate = tf.placeholder_with_default(
             self.decay_rate_value, shape=[], name="decay_rate")
 
-        self.images = tf.placeholder(tf.float32, [None, self.total_size])
+        self.in_flat_images = tf.placeholder(tf.float32, [None, self.total_size])
 
-        image_matrix = tf.reshape(self.images,
+        image_matrix = tf.reshape(self.in_flat_images,
                                   [-1, self.image_shape[0], self.image_shape[1],
                                    self.image_shape[2], 1])
         self.dim_in_first_layer = tf.shape(image_matrix)
@@ -80,7 +95,7 @@ class CVAE():
 
         self.generated_images = self.generation(guessed_z)
         generated_flat = tf.reshape(self.generated_images,
-                                    tf.shape(self.images))
+                                    tf.shape(self.in_flat_images))
 
         self.cost = self.__cost_calculation(generated_flat, self.z_mean,
                                             self.z_stddev)
@@ -116,8 +131,8 @@ class CVAE():
 
     def __cost_calculation(self, images_reconstructed, z_mean, z_stddev):
         self.generation_loss = -tf.reduce_sum(
-            self.images * tf.log(1e-8 + images_reconstructed) + (
-                1 - self.images) * tf.log(1e-8 + 1 - images_reconstructed), 1)
+            self.in_flat_images * tf.log(1e-8 + images_reconstructed) + (
+                1 - self.in_flat_images) * tf.log(1e-8 + 1 - images_reconstructed), 1)
 
         self.latent_loss = 0.5 * tf.reduce_sum(
             tf.square(z_mean) + tf.square(z_stddev) - tf.log(
@@ -173,14 +188,28 @@ class CVAE():
         return w_mean, w_stddev
 
     def encode(self, input_images):
+        """
 
+        :param input_images: shape [n_samples]
+        :return:
+        """
         output_dic = {}
-        # np.array -> [float, float]
-        input_images_flat = np.reshape(input_images,
-                                       [input_images.shape[0], self.total_size])
-        feed_dict = {self.images: input_images_flat}
+
+        assert input_images.ndim in [2, 4], \
+            "The shape of the input should be [n_samples, voxels_flat]," \
+            " or  [n_samples, width, heigth, depth]"
+
+        if input_images.ndim == 4:
+            input_images_flat = np.reshape(input_images,
+                                           [input_images.shape[0],
+                                            self.total_size])
+        else:
+            input_images_flat = input_images
+
+        feed_dict = {self.in_flat_images: input_images_flat}
         out_encode = \
             self.session.run([self.z_mean, self.z_stddev], feed_dict=feed_dict)
+
         output_dic["mean"] = out_encode[0]
         output_dic["stdev"] = out_encode[1]
         return output_dic
@@ -214,15 +243,25 @@ class CVAE():
 
         return h2
 
+
+
+
+
+    def __save(self, saver, suffix_file_saver_name):
+
+        outfile = os.path.join(self.path_to_meta, suffix_file_saver_name)
+        saver.save(self.session, outfile, global_step=self.global_step)
+
     def train(self, X, n_iters=1000, batchsize=10, tempSGD_3dimages=False,
-              iter_show_error=10, save_bool=True, suffix_files_generated=" "):
+              iter_show_error=10, save_bool=True, suffix_files_generated=" ",
+              iter_to_save=100):
 
         saver = None
         if save_bool:
             saver = tf.train.Saver(tf.global_variables())
 
         try:
-            for iter in range(n_iters):
+            for iter in range(1, n_iters+1, 1):
 
                 batch_images = get_batch_from_samples_unsupervised_3d(
                     X, batch_size=batchsize)
@@ -230,7 +269,7 @@ class CVAE():
                                         [batch_images.shape[0],
                                          self.total_size])
 
-                feed_dict = {self.images: batch_flat}
+                feed_dict = {self.in_flat_images: batch_flat}
                 _, gen_loss, lat_loss, global_step, learning_rate = \
                     self.session.run(
                         (self.optimizer, self.generation_loss, self.latent_loss,
@@ -245,8 +284,12 @@ class CVAE():
                     if tempSGD_3dimages:
                         self.__generate_and_save_temp_3d_images(
                             regen_batch=batch_flat[0:2, :],
-                            suffix="region_{1}_iter_{0}".format(iter,
+                            suffix="{1}_iter_{0}".format(iter,
                                 suffix_files_generated))
+
+                if iter % iter_to_save == 0:
+                    if save_bool:
+                        self.__save(saver, suffix_files_generated)
 
         except(KeyboardInterrupt):
             print("iter %d: genloss %f latloss %f learning_rate %f" % (
@@ -256,7 +299,7 @@ class CVAE():
             sys.exit(0)
 
     def __generate_and_save_temp_3d_images(self, regen_batch, suffix):
-        feed_dict = {self.images: regen_batch}
+        feed_dict = {self.in_flat_images: regen_batch}
         generated_test = self.session.run(
             self.generated_images[1, :],
             feed_dict=feed_dict)
@@ -279,8 +322,7 @@ def auto_execute():
     hyperparams['features_depth'] = [1, 16, 32]
     hyperparams['image_shape'] = train_images.shape[1:]
     hyperparams['activation_layer'] = ops.lrelu
-    hyperparams['total_size'] = np.array(train_images.shape[1:]).prod()
-    hyperparams['decay_rate'] = 0.0002
+    hyperparams['decay_rate'] = 0.002
     hyperparams['learning_rate'] = 0.001
     hyperparams['lambda_l2_regularization'] = 0.0001
 
@@ -296,8 +338,34 @@ def auto_execute():
     model.train(X=train_images,
                 n_iters=500,
                 batchsize=32,
-                suffix_files_generated="3",
+                suffix_files_generated="region_3",
                 tempSGD_3dimages=True)
 
-
 #auto_execute()
+
+
+def auto_execute_encoder_over_trained_net():
+    pass
+
+    regions_used = "three"
+    region_selected = 3
+    list_regions = session_helper.select_regions_to_evaluate(regions_used)
+    train_images = load_pet_regions_segmented(list_regions)[region_selected]
+
+    hyperparams = {}
+    hyperparams['image_shape'] = train_images.shape[1:]
+
+    session_name = "test_over_cvae"
+    path_to_session = \
+        os.path.join(settings.path_to_general_out_folder, session_name)
+    path_to_meta_files = os.path.join(path_to_session, "meta", "region_3-500")
+
+    cvae = CVAE(hyperparams=hyperparams,
+                meta_path=path_to_meta_files)
+
+    print("encoding")
+    encoding = cvae.encode(train_images)  # [mu, sigma]
+
+    return encoding
+
+encoding = auto_execute_encoder_over_trained_net()
