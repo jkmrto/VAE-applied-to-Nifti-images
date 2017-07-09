@@ -194,7 +194,7 @@ def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
             region_voxels_values_test = region_voxels_values_test / max_denormalize
 
         tf.reset_default_graph()
-        model = CVAE.LatentAttention(hyperparams)
+        model = CVAE.CVAE(hyperparams)
         region_suffix = 'region_' + str(region_selected)
 
         if region_selected in explicit_iter_per_region:

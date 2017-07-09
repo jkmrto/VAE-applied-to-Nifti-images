@@ -1,27 +1,31 @@
 import os
-
+from lib.aux_functionalities.os_aux import create_directories
 import nibabel as nib
 import numpy as np
 import tensorflow as tf
-
 import lib.neural_net.kfrans_ops as ops
 import settings
+import sys
+from datetime import datetime
 from lib import session_helper
 from lib.aux_functionalities.functions import \
     get_batch_from_samples_unsupervised_3d
 from nifti_regions_loader import load_pet_regions_segmented
-
-path_to_nii_output = os.path.join(settings.path_to_project, "test_over_cvae")
 
 
 def from_3d_image_to_nifti_file(path_to_save, image3d):
     img = nib.Nifti1Image(image3d, np.eye(4))
     img.to_filename("{}.nii".format(path_to_save))
 
+
 bool_save_meta = False
 
-class LatentAttention():
-    def __init__(self, hyperparams):
+
+class CVAE():
+    RESTORE_KEY = "restore"
+
+    def __init__(self, hyperparams, test_bool=False, meta_graph=None,
+                 path_to_session=None):
 
         self.session = tf.Session()
 
@@ -33,19 +37,40 @@ class LatentAttention():
         self.total_size = hyperparams['total_size']
         self.kernel_size = hyperparams['kernel_size']
         self.activation_layer = hyperparams['activation_layer']
+        self.decay_rate_value = float(hyperparams['decay_rate'])
+        self.path_session_folder = path_to_session
 
         self.dim_in_first_layer = None
         self.dim_out_first_layer = None
         self.dim_out_second_layer = None
         self.input_dense_layer_dim = None
 
+        if test_bool:
+            print(hyperparams)
+
+        if meta_graph is None:
+            self.__build_graph()
+
+            if None is not self.path_session_folder:
+                self.init_session_folders()
+
+                #  handles = [self.images, self.decay_rate, self.z_mean, self.z_stddev,
+                #            ]
+                #   for handle in handles:
+                #       tf.add_to_collection(CVAE.RESTORE_KEY, handle)
+
+        self.session.run(tf.initialize_all_variables())
+
+    def __build_graph(self):
+        # Placeholder location
         self.decay_rate = tf.placeholder_with_default(
-            float(hyperparams['decay_rate']), shape=[],  name="decay_rate")
+            self.decay_rate_value, shape=[], name="decay_rate")
 
         self.images = tf.placeholder(tf.float32, [None, self.total_size])
+
         image_matrix = tf.reshape(self.images,
-                                [-1, self.image_shape[0], self.image_shape[1],
-                                self.image_shape[2], 1])
+                                  [-1, self.image_shape[0], self.image_shape[1],
+                                   self.image_shape[2], 1])
         self.dim_in_first_layer = tf.shape(image_matrix)
 
         self.z_mean, self.z_stddev = self.recognition(image_matrix)
@@ -57,19 +82,37 @@ class LatentAttention():
         generated_flat = tf.reshape(self.generated_images,
                                     tf.shape(self.images))
 
-        self.cost = self.__cost_calculation(generated_flat, self.z_mean, self.z_stddev )
+        self.cost = self.__cost_calculation(generated_flat, self.z_mean,
+                                            self.z_stddev)
 
         self.global_step = tf.Variable(0, trainable=False)
 
         self.temp_learning_rate = self.learning_rate * \
-            tf.exp(- tf.multiply(tf.cast(self.global_step, tf.float32),
-                                 self.decay_rate))
+                                  tf.exp(- tf.multiply(
+                                      tf.cast(self.global_step, tf.float32),
+                                      self.decay_rate))
 
         self.optimizer = tf.train.AdamOptimizer(
             self.temp_learning_rate).minimize(
             self.cost, global_step=self.global_step)
 
-        self.session.run(tf.initialize_all_variables())
+    def init_session_folders(self):
+        """
+        This method will create inside the "out" folder a folder with the datetime
+        of the execution of the neural net and with, with 3 folders inside it
+        :return:
+        """
+        self.path_to_images = os.path.join(self.path_session_folder, "images")
+        self.path_to_logs = os.path.join(self.path_session_folder, "logs")
+        self.path_to_meta = os.path.join(self.path_session_folder, "meta")
+        self.path_to_grad_desc_error = \
+            os.path.join(self.path_to_logs, "DescGradError")
+        self.path_to_3dtemp_images = \
+            os.path.join(self.path_to_images, "temp_3d_images")
+
+        create_directories([self.path_session_folder, self.path_to_images,
+                            self.path_to_logs, self.path_to_meta,
+                            self.path_to_3dtemp_images])
 
     def __cost_calculation(self, images_reconstructed, z_mean, z_stddev):
         self.generation_loss = -tf.reduce_sum(
@@ -94,7 +137,6 @@ class LatentAttention():
                 cost += l2_reg
 
         return cost
-
 
     # encoder
     def recognition(self, input_images):
@@ -130,19 +172,18 @@ class LatentAttention():
 
         return w_mean, w_stddev
 
-    def encode (self, input_images):
+    def encode(self, input_images):
 
         output_dic = {}
         # np.array -> [float, float]
         input_images_flat = np.reshape(input_images,
-                                [input_images.shape[0], self.total_size])
+                                       [input_images.shape[0], self.total_size])
         feed_dict = {self.images: input_images_flat}
         out_encode = \
             self.session.run([self.z_mean, self.z_stddev], feed_dict=feed_dict)
         output_dic["mean"] = out_encode[0]
         output_dic["stdev"] = out_encode[1]
         return output_dic
-
 
     # decoder
     def generation(self, z):
@@ -173,43 +214,62 @@ class LatentAttention():
 
         return h2
 
-    def train(self, X, n_iters=1000, batchsize=10, path_tempSGD_3dimages=None,
-              iter_show_error=10):
+    def train(self, X, n_iters=1000, batchsize=10, tempSGD_3dimages=False,
+              iter_show_error=10, save_bool=True, suffix_files_generated=" "):
 
-        for iter in range(n_iters):
+        saver = None
+        if save_bool:
+            saver = tf.train.Saver(tf.global_variables())
 
-            batch_images = get_batch_from_samples_unsupervised_3d(
-                X, batch_size=batchsize)
-            batch_flat = np.reshape(batch_images,
-                               [batch_images.shape[0], self.total_size])
+        try:
+            for iter in range(n_iters):
 
-            feed_dict = {self.images: batch_flat}
-            _, gen_loss, lat_loss, global_step, learning_rate = \
-                self.session.run(
-                    (self.optimizer, self.generation_loss, self.latent_loss,
-                     self.global_step, self.temp_learning_rate),
-                    feed_dict=feed_dict)
-            # dumb hack to print cost every epoch
+                batch_images = get_batch_from_samples_unsupervised_3d(
+                    X, batch_size=batchsize)
+                batch_flat = np.reshape(batch_images,
+                                        [batch_images.shape[0],
+                                         self.total_size])
 
-            if iter % iter_show_error  == 0:
-                print("iter %d: genloss %f latloss %f learning_rate %f"  % (
-                    iter, np.mean(gen_loss), np.mean(lat_loss), learning_rate))
+                feed_dict = {self.images: batch_flat}
+                _, gen_loss, lat_loss, global_step, learning_rate = \
+                    self.session.run(
+                        (self.optimizer, self.generation_loss, self.latent_loss,
+                         self.global_step, self.temp_learning_rate),
+                        feed_dict=feed_dict)
 
-            if iter % iter_show_error == 0:
-                feed_dict = {self.images:batch_flat[0:2, :]}
-                generated_test = self.session.run(self.generated_images[1, :],
-                                                  feed_dict=feed_dict)
-                if path_tempSGD_3dimages is not None:
-                    image_3d = np.reshape(generated_test, self.image_shape)
-                    image_3d = image_3d.astype(float)
-                    file_path = os.path.join(path_to_nii_output,
-                                         "epoc_{}".format(iter))
-                    from_3d_image_to_nifti_file(file_path, image_3d)
+                if iter % iter_show_error == 0:
+                    print("iter %d: genloss %f latloss %f learning_rate %f" % (
+                        iter, np.mean(gen_loss), np.mean(lat_loss),
+                        learning_rate))
+
+                    if tempSGD_3dimages:
+                        self.__generate_and_save_temp_3d_images(
+                            regen_batch=batch_flat[0:2, :],
+                            suffix="region_{1}_iter_{0}".format(iter,
+                                suffix_files_generated))
+
+        except(KeyboardInterrupt):
+            print("iter %d: genloss %f latloss %f learning_rate %f" % (
+                iter, np.mean(gen_loss), np.mean(lat_loss), learning_rate))
+            now = datetime.now().isoformat()[11:]
+            print("------- Training end: {} -------\n".format(now))
+            sys.exit(0)
+
+    def __generate_and_save_temp_3d_images(self, regen_batch, suffix):
+        feed_dict = {self.images: regen_batch}
+        generated_test = self.session.run(
+            self.generated_images[1, :],
+            feed_dict=feed_dict)
+
+        image_3d = np.reshape(generated_test, self.image_shape)
+        image_3d = image_3d.astype(float)
+        file_path = os.path.join(self.path_to_3dtemp_images, suffix)
+        from_3d_image_to_nifti_file(file_path, image_3d)
 
 
 def auto_execute():
-    regions_used = "all"
-    region_selected = 38
+    regions_used = "three"
+    region_selected = 3
     list_regions = session_helper.select_regions_to_evaluate(regions_used)
     train_images = load_pet_regions_segmented(list_regions)[region_selected]
 
@@ -224,5 +284,20 @@ def auto_execute():
     hyperparams['learning_rate'] = 0.001
     hyperparams['lambda_l2_regularization'] = 0.0001
 
-    model = LatentAttention(hyperparams=hyperparams)
-    model.train(X=train_images, n_iters=1000, batchsize=50)
+    session_name = "test_over_cvae"
+    path_to_session = \
+        os.path.join(settings.path_to_general_out_folder, session_name)
+
+    model = CVAE(hyperparams=hyperparams,
+                 test_bool=True,
+                 meta_graph=None,
+                 path_to_session=path_to_session)
+
+    model.train(X=train_images,
+                n_iters=500,
+                batchsize=32,
+                suffix_files_generated="3",
+                tempSGD_3dimages=True)
+
+
+#auto_execute()
