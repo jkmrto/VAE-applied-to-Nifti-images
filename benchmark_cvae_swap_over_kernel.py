@@ -29,8 +29,8 @@ session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
 
 # Meta settings.
-#images_used = "PET"
-images_used = "MRI"
+images_used = "PET"
+#images_used = "MRI"
 n_folds = 2
 bool_test = False
 regions_used = "most_important"
