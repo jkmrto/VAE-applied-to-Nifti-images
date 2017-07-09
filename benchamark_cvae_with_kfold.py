@@ -5,22 +5,23 @@ from shutil import copyfile
 
 import numpy as np
 import tensorflow as tf
+from lib.evaluation_utils import get_average_over_metrics
 
 import lib.neural_net.kfrans_ops as ops
 import settings
-from lib import cv_utils
-from lib import cvae_over_regions
 from lib import evaluation_utils
 from lib import output_utils
 from lib import session_helper
 from lib import svm_utils
 from lib.aux_functionalities.os_aux import create_directories
-from lib.evaluation_utils import get_average_over_metrics
 from lib.neural_net import leaky_net_utils
+from lib.over_regions_lib import cvae_over_regions
+from lib.utils import cv_utils
 from nifti_regions_loader import \
     load_pet_data_3d, load_mri_data_3d
 from scripts.vae_with_kfolds import session_settings
 from settings import explicit_iter_per_region
+
 #images_used = "MRI"
 images_used = "PET"
 

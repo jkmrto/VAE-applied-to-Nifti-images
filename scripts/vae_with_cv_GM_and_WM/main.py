@@ -1,7 +1,7 @@
 import tensorflow as tf
 
-from lib import cv_utils
 from lib.data_loader import MRI_stack_NORAD
+from lib.utils import cv_utils
 from scripts.vae_with_cv_GM_and_WM import session_settings
 
 cv_rate = 0.8

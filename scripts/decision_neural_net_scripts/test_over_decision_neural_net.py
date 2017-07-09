@@ -1,13 +1,12 @@
-from lib.neural_net.decision_neural_net import DecisionNeuralNet
-from lib.aux_functionalities.os_aux import create_directories
-from lib.aux_functionalities.functions import print_dictionary
-from sklearn import metrics
-import numpy as np
-import matplotlib.pyplot as plt
-import tensorflow as tf
-import settings
-from lib.evaluation_utils import evaluation_output
 import os
+
+import numpy as np
+import tensorflow as tf
+
+import settings
+from lib.aux_functionalities.os_aux import create_directories
+from lib.neural_net.decision_neural_net import DecisionNeuralNet
+from lib.utils.evaluation_utils import evaluation_output
 
 iter = 300000
 iden_session = "03_05_2017_08:12 arch: 1000_800_500_100"

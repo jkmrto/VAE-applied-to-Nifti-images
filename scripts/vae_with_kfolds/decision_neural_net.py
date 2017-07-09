@@ -1,16 +1,13 @@
 import os
-import settings as set
-import numpy as np
-from lib.aux_functionalities.os_aux import create_directories
-from lib.svm_utils import load_svm_output_score
-from lib.session_helper import generate_session_descriptor
-from lib.neural_net.decision_neural_net import DecisionNeuralNet
-from scripts.vae_with_cv_GM_and_WM import svm_session_settings as svm_settings
+
 import tensorflow as tf
-from lib.aux_functionalities import functions
-from datetime import datetime
 from lib.evaluation_utils import evaluation_output
-from lib.cv_utils import get_label_per_patient
+from lib.svm_utils import load_svm_output_score
+
+from lib.neural_net.decision_neural_net import DecisionNeuralNet
+from lib.session_helper import generate_session_descriptor
+from lib.utils.cv_utils import get_label_per_patient
+
 # LOADING DATA
 X_train = load_svm_output_score(path_file_train_score)['data_normalize']
 X_test = load_svm_output_score(path_file_test_score)['data_normalize']

@@ -1,9 +1,9 @@
 import tensorflow as tf
 
 import settings
-from lib.math_utils import sample_gaussian
 from lib.mnist import mnist_functions
 from lib.mnist.mnist_plot import plotSubset
+from lib.utils.math_utils import sample_gaussian
 from lib.vae import VAE
 
 ARCHITECTURE = [28**2, # 784 pixels

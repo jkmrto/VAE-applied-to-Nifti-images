@@ -1,16 +1,15 @@
-import numpy as np  # Se genera la mascara a partir del atlas
-from lib.data_loader import PET_stack_NORAD
-from lib.data_loader import pet_atlas
-from lib import session_helper
+import os
+
 import nibabel as nib
+import numpy as np  # Se genera la mascara a partir del atlas
+
+import settings
+from lib import session_helper as session
 from lib.data_loader import MRI_stack_NORAD
 from lib.data_loader import PET_stack_NORAD
-import os
-from lib import output_utils
 from lib.data_loader import mri_atlas
 from lib.data_loader import pet_atlas
-from lib import session_helper as session
-import settings
+from lib.utils import output_utils
 
 "The MRI segmentation 3d functions has not been tested yet"
 

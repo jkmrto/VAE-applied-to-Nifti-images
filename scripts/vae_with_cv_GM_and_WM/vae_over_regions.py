@@ -1,15 +1,17 @@
 import os
-import tensorflow as tf
-from lib.data_loader import mri_atlas
-from lib import session_helper as session
 from datetime import datetime
-from lib.data_loader import MRI_stack_NORAD
-from lib import cv_utils
+
+import tensorflow as tf
+
+from lib import session_helper as session
 from lib import utils
-from lib.vae import VAE
 from lib.aux_functionalities.os_aux import create_directories
-from scripts.vae_with_cv_GM_and_WM import session_settings
+from lib.data_loader import MRI_stack_NORAD
+from lib.data_loader import mri_atlas
 from lib.session_helper import generate_session_descriptor
+from lib.utils import cv_utils
+from lib.vae import VAE
+from scripts.vae_with_cv_GM_and_WM import session_settings
 
 
 def init_session_folders(architecture, path_to_root):

@@ -1,21 +1,23 @@
-import tensorflow as tf
 import os
-from lib import cv_utils
-from scripts.vae_with_kfolds import session_settings
-from scripts.vae_with_kfolds import vae_over_regions_kfolds
-from lib import svm_utils
-from lib.evaluation_utils import get_average_over_metrics
-from lib import evaluation_utils
-from lib import output_utils
-from shutil import copyfile
-from nifti_regions_loader import \
-    load_mri_data_flat, load_pet_data_flat
-import numpy as np
 import tarfile
 from datetime import datetime
-from lib.neural_net import leaky_net_utils
+from shutil import copyfile
+
+import numpy as np
+import tensorflow as tf
+from lib.evaluation_utils import get_average_over_metrics
+
 import settings
+from lib import evaluation_utils
+from lib import output_utils
+from lib import svm_utils
 from lib.aux_functionalities.os_aux import create_directories
+from lib.neural_net import leaky_net_utils
+from lib.utils import cv_utils
+from nifti_regions_loader import \
+    load_mri_data_flat, load_pet_data_flat
+from scripts.vae_with_kfolds import session_settings
+from scripts.vae_with_kfolds import vae_over_regions_kfolds
 
 """
 Still need to test MRI with this script,

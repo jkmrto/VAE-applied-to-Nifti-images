@@ -1,21 +1,15 @@
 import os
-import settings
-from sklearn import metrics
-import matplotlib.pyplot as plt
-from sklearn.metrics import roc_curve
-from lib.data_loader.MRI_stack_NORAD import load_patients_labels
-from lib.svm_utils import load_svm_output_score
-from lib.aux_functionalities.os_aux import create_directories
-from lib.aux_functionalities.functions import print_dictionary
-from lib.evaluation_utils import evaluation_output
-from scripts.vae_with_cv_GM_and_WM import svm_session_settings as svm_settings
-from scripts.vae_with_cv_GM_and_WM import session_settings as main_settings
 from datetime import datetime
-import numpy as np
-from lib.aux_functionalities import functions
-from lib.cv_utils import get_label_per_patient
-import settings as set
 
+import numpy as np
+from lib.evaluation_utils import evaluation_output
+from lib.svm_utils import load_svm_output_score
+
+import settings as set
+from lib.aux_functionalities import functions
+from lib.aux_functionalities.os_aux import create_directories
+from lib.utils.cv_utils import get_label_per_patient
+from scripts.vae_with_cv_GM_and_WM import session_settings as main_settings
 
 TYPE_SESSION_DECISION = "majority_vote"
 TEST_OUTPUT_FOLDER = "test_out"

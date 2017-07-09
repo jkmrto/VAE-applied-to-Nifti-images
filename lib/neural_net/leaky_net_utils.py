@@ -1,8 +1,8 @@
 import tensorflow as tf
-from lib.evaluation_utils import simple_evaluation_output
+
 from lib.neural_net.leaky_relu_decision_net import DecisionNeuralNet as \
     DecisionNeuralNet_leaky_relu_3layers_with_sigmoid
-from lib.neural_net.decision_neural_net import DecisionNeuralNet
+from lib.utils.evaluation_utils import simple_evaluation_output
 
 
 def train_leaky_neural_net_various_tries_over_svm_output(

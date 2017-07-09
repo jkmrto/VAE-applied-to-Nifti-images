@@ -1,9 +1,11 @@
-from lib.aux_functionalities.functions import print_dictionary
-from sklearn import metrics
-from matplotlib import pyplot as plt
-import numpy as np
-from lib import svm_utils
 import copy
+
+import numpy as np
+from matplotlib import pyplot as plt
+from sklearn import metrics
+
+from lib.aux_functionalities.functions import print_dictionary
+from lib.utils import svm_utils
 
 
 def evaluation_output(path_to_resume_file, path_to_roc_png,

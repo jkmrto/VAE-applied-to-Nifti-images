@@ -1,14 +1,16 @@
 import os
 import sys
 from datetime import datetime
+
 import numpy as np
 import tensorflow as tf
+
 import lib.loss_function as loss
-from lib.math_utils import sample_gaussian
-from lib.neural_net.layers import Dense
-from lib.aux_functionalities.os_aux import create_directories
-from lib.utils import compose_all
 from lib.aux_functionalities.functions import get_batch_from_samples_unsupervised
+from lib.aux_functionalities.os_aux import create_directories
+from lib.neural_net.layers import Dense
+from lib.utils import compose_all
+from lib.utils.math_utils import sample_gaussian
 
 
 class VAE():

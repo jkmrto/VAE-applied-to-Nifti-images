@@ -1,14 +1,16 @@
 import os
-import settings
-import numpy as np
-from lib.data_loader.MRI_stack_NORAD import load_patients_labels
-from lib.aux_functionalities.os_aux import create_directories
-from lib.svm_utils import load_svm_output_score
-from lib.neural_net.decision_neural_net import DecisionNeuralNet
-import tensorflow as tf
-from lib.aux_functionalities import functions
 from datetime import datetime
+
+import numpy as np
+import tensorflow as tf
 from sklearn.model_selection import train_test_split
+
+import settings
+from lib.aux_functionalities import functions
+from lib.aux_functionalities.os_aux import create_directories
+from lib.data_loader.MRI_stack_NORAD import load_patients_labels
+from lib.neural_net.decision_neural_net import DecisionNeuralNet
+from lib.utils.svm_utils import load_svm_output_score
 
 TYPE_SESSION_DECISION = "neural_net"
 

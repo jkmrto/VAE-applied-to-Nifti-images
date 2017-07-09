@@ -1,13 +1,15 @@
-import tensorflow as tf
-from lib.aux_functionalities.os_aux import create_directories
 import os
-from lib import svm_utils
-from lib import session_helper
-from lib.data_loader import mri_atlas
+
+import tensorflow as tf
+
 import settings
-from lib.vae import VAE
-from lib.data_loader import MRI_stack_NORAD
+from lib import session_helper
 from lib import utils
+from lib.aux_functionalities.os_aux import create_directories
+from lib.data_loader import MRI_stack_NORAD
+from lib.data_loader import mri_atlas
+from lib.utils import svm_utils
+from lib.vae import VAE
 
 # SVM CONFIGURATION
 # iden_session = "02_05_2017_21:09 arch: 1000_800_500_100_2"

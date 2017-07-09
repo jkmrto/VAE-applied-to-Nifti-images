@@ -1,20 +1,21 @@
 import os
-from lib.cv_utils import get_test_and_train_labels_from_kfold_dict_entry, generate_k_folder_in_dict
-from lib import cv_utils
-from lib import session_helper as session
-from scripts.vae_sweep_over_features import loop_latent_layer_session_settings
-from lib import svm_utils
-from lib.evaluation_utils import get_average_over_metrics
-from lib import evaluation_utils
-from lib import output_utils
-
-from lib import cvae_over_regions
 import tarfile
 from datetime import datetime
+
+from lib.evaluation_utils import get_average_over_metrics
+
 import lib.neural_net.kfrans_ops as ops
-from settings import explicit_iter_per_region
+from lib import evaluation_utils
+from lib import output_utils
+from lib import session_helper as session
+from lib import svm_utils
+from lib.over_regions_lib import cvae_over_regions
+from lib.utils import cv_utils
+from lib.utils.cv_utils import get_test_and_train_labels_from_kfold_dict_entry, generate_k_folder_in_dict
 from nifti_regions_loader import \
     load_pet_data_3d, load_mri_data_3d
+from scripts.vae_sweep_over_features import loop_latent_layer_session_settings
+from settings import explicit_iter_per_region
 
 session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
@@ -172,7 +173,7 @@ for kernel in kernel_list:
                 explicit_iter_per_region=explicit_iter_per_region
             )
 
-            print("Training MRI regions over GM")
+            print("Training MRI regions over WM")
             vae_output["wm"] = cvae_over_regions.execute_without_any_logs(
                 region_train_cubes_dict=reg_to_group_to_images_dict_mri_wm["train"],
                 hyperparams=hyperparams,

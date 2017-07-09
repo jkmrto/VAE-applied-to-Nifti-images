@@ -76,10 +76,10 @@ def load_svm_output_score(score_file, plot_hist=False):
 
 
 def svm_mri_over_vae_output(vae_output, Y_train, Y_test, list_regions, bool_test=False,
-                        minimum_training_svm_error=0.001):
+                            minimum_training_svm_error=0.001):
 
-    n_train_patient = vae_output['wm'][list_regions[0]]['train_output'][0].shape[0]
-    n_test_patient = vae_output['wm'][list_regions[0]]['test_output'][0].shape[0]
+    n_train_patient = Y_train.shape[0]
+    n_test_patient = Y_test.shape[0]
 
     train_score_matriz = np.zeros((n_train_patient, len(list_regions)))
     test_score_matriz = np.zeros((n_test_patient, len(list_regions)))
@@ -96,11 +96,11 @@ def svm_mri_over_vae_output(vae_output, Y_train, Y_test, list_regions, bool_test
         train_output_gm = vae_output['gm'][region_selected]['train_output']
         test_output_gm = vae_output['gm'][region_selected]['test_output']
 
-        train_means_gm = train_output_wm[0]
-        test_means_gm = test_output_wm[0]
+        train_means_gm = train_output_wm["mean"]
+        test_means_gm = test_output_wm["mean"]
 
-        train_means_wm = train_output_gm[0]
-        test_means_wm = test_output_gm[0]
+        train_means_wm = train_output_gm["mean"]
+        test_means_wm = test_output_gm["mean"]
 
         wm_and_gm_train_data = np.concatenate((train_means_gm, train_means_wm),
                                               axis=1)

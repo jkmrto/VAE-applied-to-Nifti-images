@@ -1,24 +1,22 @@
-import tensorflow as tf
 import os
-from lib.cv_utils import get_test_and_train_labels_from_kfold_dict_entry, generate_k_folder_in_dict
-from lib import cv_utils
-from lib import session_helper as session
-from scripts.vae_sweep_over_features import loop_latent_layer_session_settings
-from scripts.vae_with_kfolds import vae_over_regions_kfolds
-from lib import svm_utils
+import tarfile
+from copy import deepcopy
+from datetime import datetime
+
+import tensorflow as tf
 from lib.evaluation_utils import get_average_over_metrics
+
 from lib import evaluation_utils
 from lib import output_utils
-from copy import deepcopy
-import numpy as np
-import tarfile
-from datetime import datetime
+from lib import session_helper as session
+from lib import svm_utils
+from lib.neural_net import leaky_net_utils
+from lib.utils import cv_utils
+from lib.utils.cv_utils import get_test_and_train_labels_from_kfold_dict_entry, generate_k_folder_in_dict
 from nifti_regions_loader import \
     load_mri_data_flat, load_pet_data_flat
-from lib.neural_net.leaky_relu_decision_net import DecisionNeuralNet as \
-    DecisionNeuralNet_leaky_relu_3layers_with_sigmoid
-from lib.neural_net.decision_neural_net import DecisionNeuralNet
-from lib.neural_net import leaky_net_utils
+from scripts.vae_sweep_over_features import loop_latent_layer_session_settings
+from scripts.vae_with_kfolds import vae_over_regions_kfolds
 
 session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))

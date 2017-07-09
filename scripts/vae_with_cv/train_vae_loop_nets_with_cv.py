@@ -1,16 +1,18 @@
-import tensorflow as tf
-from lib.aux_functionalities.os_aux import create_directories
-from lib.session_helper import generate_session_descriptor
-from lib import session_helper
-from datetime import datetime
-from lib.session_helper import plot_grad_desc_error_per_region
-from lib.cv_utils import generate_and_store_train_and_test_index
-import settings
 import os
-from lib.data_loader import mri_atlas
-from lib.vae import VAE
-from lib.data_loader import MRI_stack_NORAD
+from datetime import datetime
+
+import tensorflow as tf
+
+import settings
+from lib import session_helper
 from lib import utils
+from lib.aux_functionalities.os_aux import create_directories
+from lib.data_loader import MRI_stack_NORAD
+from lib.data_loader import mri_atlas
+from lib.session_helper import generate_session_descriptor
+from lib.session_helper import plot_grad_desc_error_per_region
+from lib.utils.cv_utils import generate_and_store_train_and_test_index
+from lib.vae import VAE
 
 
 def init_session_folders(architecture):
