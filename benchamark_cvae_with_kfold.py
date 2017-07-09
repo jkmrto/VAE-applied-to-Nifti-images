@@ -25,27 +25,31 @@ from settings import explicit_iter_per_region
 images_used = "PET"
 
 # Meta settings.
-n_folds = 3
+n_folds = 10
 bool_test = False
 bool_log_svm_output = True
-regions_used = "three"
+regions_used = "most_important"
 #regions_used = "three"
 list_regions = session_helper.select_regions_to_evaluate(regions_used)
 #list_regions = [47]
 
 # Vae settings
 # Net Configuration
-hyperparams = {'kernel_size': 5,
+hyperparams = {
+               "latent_layer_dim": 100,
+               'kernel_size': 5,
                'activation_layer': ops.lrelu,
                'features_depth': [1, 16, 32],
                'decay_rate': 0.002,
                'learning_rate': 0.001,
-               'lambda_l2_regularization': 0.0001}
+               'lambda_l2_regularization': 1E-5}
 
 # Vae session cofiguration
 cvae_session_conf = {'bool_normalized': False,
-                'n_iters': 20,
-                "batch_size": 16}
+                'n_iters': 300,
+                "batch_size": 32,
+                "show_error_iter": 10,
+                     }
 
 # DECISION NET CONFIGURATION
 decision_net_session_conf = {

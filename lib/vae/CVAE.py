@@ -191,7 +191,7 @@ class LatentAttention():
                     feed_dict=feed_dict)
             # dumb hack to print cost every epoch
 
-            if iter % 10  == 0:
+            if iter % iter_show_error  == 0:
                 print("iter %d: genloss %f latloss %f learning_rate %f"  % (
                     iter, np.mean(gen_loss), np.mean(lat_loss), learning_rate))
 

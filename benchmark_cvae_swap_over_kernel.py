@@ -31,29 +31,29 @@ print("Time session init: {}".format(session_datetime))
 # Meta settings.
 images_used = "PET"
 #images_used = "MRI"
-n_folds = 2
+n_folds = 10
 bool_test = False
-regions_used = "three"
+regions_used = "most_important"
 list_regions = session.select_regions_to_evaluate(regions_used)
 
 
 # Vae settings
 # Net Configuration
-kernel_list = [2, 5]
+kernel_list = [2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 hyperparams = {
-               "latent_layer_dim": 10,
+               "latent_layer_dim": 100,
                'activation_layer': ops.lrelu,
-               'features_depth': [1, 2, 4],
+               'features_depth': [1, 16, 32],
                'decay_rate': 0.002,
                'learning_rate': 0.001,
                'lambda_l2_regularization': 0.0001}
 
 # Vae session cofiguration
 cvae_session_conf = {
-    "batch_size": 8,
+    "batch_size": 32,
     "bool_normalized": False,
-    "n_iters": 10,
+    "n_iters": 100,
     "save_meta_bool": False,
     "show_error_iter": 1,
 }
