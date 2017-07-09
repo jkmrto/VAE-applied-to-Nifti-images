@@ -59,17 +59,28 @@ class CVAE():
             if self.path_session_folder is not None:
                 self.init_session_folders()
 
-            handles = [self.in_flat_images, self.z_mean, self.z_stddev]
+            handles = [self.in_flat_images, self.z_mean, self.z_stddev,
+                       self.z_in_, self.regenerated_3d_images_]
             for handle in handles:
                 tf.add_to_collection(CVAE.RESTORE_KEY, handle)
+
+            self.session.run(tf.initialize_all_variables())
         else:
             new_saver = tf.train.import_meta_graph(meta_path + ".meta")
             new_saver.restore(self.session, meta_path)
 
+            # initializing attributes
             handles = self.session.graph.get_collection_ref(CVAE.RESTORE_KEY)
-            self.in_flat_images, self.z_mean, self.z_stddev = handles[0:3]
+            self.in_flat_images, self.z_mean, self.z_stddev, \
+            self.z_in_, self.regenerated_3d_images_= handles[0:5]
 
-        self.session.run(tf.initialize_all_variables())
+            # initialing variables
+            self.n_z = self.z_in_.get_shape().as_list()[1]
+            print(self.n_z)
+
+        file_writer = tf.summary.FileWriter('tensorboard',
+                                            graph=self.session.graph)
+        file_writer.close()
 
     def __build_graph(self):
         """
@@ -81,7 +92,8 @@ class CVAE():
         self.decay_rate = tf.placeholder_with_default(
             self.decay_rate_value, shape=[], name="decay_rate")
 
-        self.in_flat_images = tf.placeholder(tf.float32, [None, self.total_size])
+        self.in_flat_images = tf.placeholder(tf.float32, [None, self.total_size],
+                                             "input_images")
 
         image_matrix = tf.reshape(self.in_flat_images,
                                   [-1, self.image_shape[0], self.image_shape[1],
@@ -93,7 +105,7 @@ class CVAE():
                                    dtype=tf.float32)
         guessed_z = self.z_mean + (self.z_stddev * samples)
 
-        self.generated_images = self.generation(guessed_z)
+        self.generated_images = self.__generation(guessed_z, reuse_bool=False)
         generated_flat = tf.reshape(self.generated_images,
                                     tf.shape(self.in_flat_images))
 
@@ -110,6 +122,18 @@ class CVAE():
         self.optimizer = tf.train.AdamOptimizer(
             self.temp_learning_rate).minimize(
             self.cost, global_step=self.global_step)
+
+        # ops to directly explore latent space
+        # defaults to prior z ~ N(0, I)
+
+        self.z_in_ = tf.placeholder(tf.float32,
+            shape=[None, self.n_z], name="latent_in")
+        generated_images_ = self.__generation(self.z_in_, reuse_bool=True)
+
+        self.regenerated_3d_images_ = \
+            tf.reshape(generated_images_,
+                       [-1, self.image_shape[0], self.image_shape[1],
+                                   self.image_shape[2]])
 
     def init_session_folders(self):
         """
@@ -195,16 +219,8 @@ class CVAE():
         """
         output_dic = {}
 
-        assert input_images.ndim in [2, 4], \
-            "The shape of the input should be [n_samples, voxels_flat]," \
-            " or  [n_samples, width, heigth, depth]"
-
-        if input_images.ndim == 4:
-            input_images_flat = np.reshape(input_images,
-                                           [input_images.shape[0],
-                                            self.total_size])
-        else:
-            input_images_flat = input_images
+        input_images_flat=\
+            self.__inspect_and_reshape_to_flat_input_images(input_images)
 
         feed_dict = {self.in_flat_images: input_images_flat}
         out_encode = \
@@ -215,8 +231,8 @@ class CVAE():
         return output_dic
 
     # decoder
-    def generation(self, z):
-        with tf.variable_scope("generation"):
+    def __generation(self, z, reuse_bool):
+        with tf.variable_scope("generation", reuse=reuse_bool):
             z_develop = ops.dense(z, self.n_z, self.input_dense_layer_dim[1],
                                   scope='z_matrix')
 
@@ -243,9 +259,42 @@ class CVAE():
 
         return h2
 
+    def __inspect_and_reshape_to_flat_input_images(self, input_images):
+        """
 
+        :param input_images: sh[n_samples, voxels_flat] ||
+                             sh[n_samples, voxels_flat]
 
+        :return: np.array sh[n_samples, voxels_flat]
+        """
+        assert input_images.ndim in [2, 4], \
+            "The shape of the input should be [n_samples, voxels_flat]," \
+            " or  [n_samples, width, heigth, depth]"
 
+        if input_images.ndim == 4:
+            input_images_flat = np.reshape(input_images,
+                                           [input_images.shape[0],
+                                            self.total_size])
+        else:
+            input_images_flat = input_images
+
+        return input_images_flat
+
+    def decoder(self, latent_layer_input, original_images):
+        """
+
+        :param input_images: shape [n_samples]
+        :return:
+        """
+
+        input_images = \
+            self.__inspect_and_reshape_to_flat_input_images(original_images)
+
+        feed_dict = {self.z_in_: latent_layer_input,
+                     self.in_flat_images: input_images}
+
+        return self.session.run(self.regenerated_3d_images_,
+                                feed_dict=feed_dict)
 
     def __save(self, saver, suffix_file_saver_name):
 
@@ -310,7 +359,7 @@ class CVAE():
         from_3d_image_to_nifti_file(file_path, image_3d)
 
 
-def auto_execute():
+def auto_execute_with_session_folders():
     regions_used = "three"
     region_selected = 3
     list_regions = session_helper.select_regions_to_evaluate(regions_used)
@@ -332,20 +381,19 @@ def auto_execute():
 
     model = CVAE(hyperparams=hyperparams,
                  test_bool=True,
-                 meta_graph=None,
+                 meta_path=None,
                  path_to_session=path_to_session)
 
     model.train(X=train_images,
-                n_iters=500,
+                n_iters=50,
                 batchsize=32,
                 suffix_files_generated="region_3",
-                tempSGD_3dimages=True)
+                tempSGD_3dimages=True,
+                iter_to_save=50)
 
-#auto_execute()
 
 
-def auto_execute_encoder_over_trained_net():
-    pass
+def auto_execute_encoding_over_trained_net():
 
     regions_used = "three"
     region_selected = 3
@@ -368,4 +416,38 @@ def auto_execute_encoder_over_trained_net():
 
     return encoding
 
-encoding = auto_execute_encoder_over_trained_net()
+#encoding = auto_execute_encoder_over_trained_net()
+
+
+def auto_execute_encoding_and_decoding_over_trained_net():
+
+    regions_used = "three"
+    region_selected = 3
+    list_regions = session_helper.select_regions_to_evaluate(regions_used)
+    train_images = load_pet_regions_segmented(list_regions)[region_selected]
+
+    hyperparams = {}
+    hyperparams['image_shape'] = train_images.shape[1:]
+
+    session_name = "test_over_cvae"
+    path_to_session = \
+        os.path.join(settings.path_to_general_out_folder, session_name)
+    path_to_meta_files = os.path.join(path_to_session, "meta", "region_3-50")
+    path_to_images = os.path.join(path_to_session, "images")
+
+    cvae = CVAE(hyperparams=hyperparams,
+                meta_path=path_to_meta_files)
+
+    print("encoding")
+    encoding_out = cvae.encode(train_images)  # [mean, stdev]
+    z_in = encoding_out["mean"]
+    print(type(z_in))
+    print(z_in.shape)
+    images_3d_regenerated = cvae.decoder(latent_layer_input=z_in,
+                                         original_images=train_images)
+
+    from_3d_image_to_nifti_file(path_to_save= os.path.join(path_to_images, "example")
+                                , image3d = images_3d_regenerated[0,:,:,:])
+
+auto_execute_with_session_folders()
+auto_execute_encoding_and_decoding_over_trained_net()
