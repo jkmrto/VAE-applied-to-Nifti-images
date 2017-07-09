@@ -298,7 +298,7 @@ class CVAE():
         saver.save(self.session, outfile, global_step=self.global_step)
 
     def train(self, X, n_iters=1000, batchsize=10, tempSGD_3dimages=False,
-              iter_show_error=10, save_bool=True, suffix_files_generated=" ",
+              iter_show_error=10, save_bool=False, suffix_files_generated=" ",
               iter_to_save=100):
 
         saver = None

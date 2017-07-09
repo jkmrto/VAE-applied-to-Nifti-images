@@ -205,9 +205,12 @@ def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
         else:
             max_train_iter = session_conf['n_iters']
 
-        model.train(X=train_cube_images, n_iters=max_train_iter,
+        model.train(X=train_cube_images,
+                    n_iters=max_train_iter,
                     batchsize=session_conf["batch_size"],
-                    iter_show_error=session_conf["show_error_iter"])
+                    iter_show_error=session_conf["show_error_iter"],
+                    tempSGD_3dimages=False,
+                    save_bool=False)
 
         # Script para pintar
         print("Region {} Trained!".format(region_selected))
