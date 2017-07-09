@@ -78,10 +78,6 @@ class CVAE():
             self.n_z = self.z_in_.get_shape().as_list()[1]
             print(self.n_z)
 
-        file_writer = tf.summary.FileWriter('tensorboard',
-                                            graph=self.session.graph)
-        file_writer.close()
-
     def __build_graph(self):
         """
         self.in_flat_images tensor--sh[n_samples x total_size]
@@ -392,7 +388,6 @@ def auto_execute_with_session_folders():
                 iter_to_save=50)
 
 
-
 def auto_execute_encoding_over_trained_net():
 
     regions_used = "three"
@@ -449,5 +444,5 @@ def auto_execute_encoding_and_decoding_over_trained_net():
     from_3d_image_to_nifti_file(path_to_save= os.path.join(path_to_images, "example")
                                 , image3d = images_3d_regenerated[0,:,:,:])
 
-auto_execute_with_session_folders()
-auto_execute_encoding_and_decoding_over_trained_net()
+#auto_execute_with_session_folders()
+#auto_execute_encoding_and_decoding_over_trained_net()
