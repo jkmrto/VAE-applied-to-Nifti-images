@@ -169,11 +169,11 @@ def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
     :return:
     """
     per_region_results = {}
+    regions_whose_net_not_converge = []
 
     # LOOP OVER REGIONS
     for region_selected in list_regions:
         print("Region Nº {} selected".format(region_selected))
-
 
         # Selecting the cubes_images of the region selected
         train_cube_images = region_train_cubes_dict[region_selected]
@@ -195,7 +195,6 @@ def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
 
         tf.reset_default_graph()
         model = CVAE.CVAE(hyperparams)
-        region_suffix = 'region_' + str(region_selected)
 
         if region_selected in explicit_iter_per_region:
             if explicit_iter_per_region[region_selected] < session_conf['n_iters']:
@@ -205,33 +204,40 @@ def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
         else:
             max_train_iter = session_conf['n_iters']
 
-        model.train(X=train_cube_images,
-                    n_iters=max_train_iter,
-                    batchsize=session_conf["batch_size"],
-                    iter_show_error=session_conf["show_error_iter"],
-                    tempSGD_3dimages=False,
-                    save_bool=False)
+        out = model.train(X=train_cube_images,
+                          n_iters=max_train_iter,
+                          batchsize=session_conf["batch_size"],
+                          iter_show_error=session_conf["show_error_iter"],
+                          tempSGD_3dimages=False,
+                          save_bool=False,
+                          break_if_nan_error_value=True)
 
-        # Script para pintar
-        print("Region {} Trained!".format(region_selected))
+        if out == -1:
+            print("Region {} Training process failed!"
+                  "SGD doesnt converge".format(region_selected))
+            regions_whose_net_not_converge.append(region_selected)
 
-        # ENCODING PHASE
-        # Encoding samples for the next step
-        train_output = model.encode(train_cube_images)
-        test_output = model.encode(test_cube_images)
+        elif out == 0:
+            print("Region {} Correctly Trained!".format(region_selected))
 
-        per_region_results[region_selected] = {}
+            # ENCODING PHASE
+            # Encoding samples for the next step
+            train_output = model.encode(train_cube_images)
+            test_output = model.encode(test_cube_images)
 
-        per_region_results[region_selected]['train_output'] = train_output
-        per_region_results[region_selected]['test_output'] = test_output
+            per_region_results[region_selected] = {}
 
-    return per_region_results
+            per_region_results[region_selected]['train_output'] = train_output
+            per_region_results[region_selected]['test_output'] = test_output
+
+    return per_region_results, regions_whose_net_not_converge
 
 
 def auto_execute_without_logs():
     regions_used = "three"
     list_regions = session_helper.select_regions_to_evaluate(regions_used)
-    region_to_img_dict = load_pet_regions_segmented(list_regions, bool_logs=False)
+    region_to_img_dict = load_pet_regions_segmented(list_regions,
+                                                    bool_logs=False)
 
     n_folds = 10
     n_samples = region_to_img_dict[1].shape[0]
@@ -264,27 +270,6 @@ def auto_execute_without_logs():
 
     return results
 
+
 # out = auto_execute_without_logs()
 
-
-def auto_execute_without_logs():
-    regions_used = "three"
-    region_selected = 38
-    list_regions = session_helper.select_regions_to_evaluate(regions_used)
-    train_images = load_pet_regions_segmented(list_regions, bool_logs=False)
-
-    hyperparams = {'latent_layer_dim': 100, 'kernel_size': 5,
-                   'activation_layer': ops.lrelu,
-                   'features_depth': [1, 16, 32],
-                   'decay_rate': 0.0002, 'learning_rate': 0.001,
-                   'lambda_l2_regularization': 0.0001}
-
-    session_conf = {'bool_normalized': False,
-                    'n_iters': 50,
-                    "batch_size": 16}
-
-    results = execute_without_any_logs(train_images, hyperparams,
-                                       session_conf,
-                                       list_regions, path_to_root=None)
-
-    # auto_execute_without_logs()

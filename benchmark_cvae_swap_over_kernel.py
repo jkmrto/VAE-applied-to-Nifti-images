@@ -1,14 +1,15 @@
 import os
 import tarfile
+import sys
 from datetime import datetime
 
-from lib.evaluation_utils import get_average_over_metrics
+from lib.utils.evaluation_utils import get_average_over_metrics
 
 import lib.neural_net.kfrans_ops as ops
-from lib import evaluation_utils
-from lib import output_utils
+from lib.utils import evaluation_utils
+from lib.utils import output_utils
 from lib import session_helper as session
-from lib import svm_utils
+from lib.utils import svm_utils
 from lib.over_regions_lib import cvae_over_regions
 from lib.utils import cv_utils
 from lib.utils.cv_utils import get_test_and_train_labels_from_kfold_dict_entry, generate_k_folder_in_dict
@@ -22,17 +23,17 @@ print("Time session init: {}".format(session_datetime))
 
 # Meta settings.
 images_used = "PET"
-images_used = "MRI"
-n_folds = 3
+#images_used = "MRI"
+n_folds = 10
 bool_test = False
 regions_used = "most_important"
 list_regions = session.select_regions_to_evaluate(regions_used)
-
+#list_regions = [85, 6, 7]
 
 # Vae settings
 # Net Configuration
-#kernel_list = [2, 3, 4, 5, 6, 7, 8, 9, 10]
-kernel_list = [5,4]
+kernel_list = [2, 3, 4, 5, 6, 7, 8, 9, 10]
+#kernel_list = [6]
 
 hyperparams = {
                "latent_layer_dim": 100,
@@ -163,7 +164,8 @@ for kernel in kernel_list:
 
         if images_used == "MRI":
             print("Training MRI regions over GM")
-            vae_output["gm"] = cvae_over_regions.execute_without_any_logs(
+            vae_output["gm"], regions_whose_net_not_converge_gm = \
+                cvae_over_regions.execute_without_any_logs(
                 region_train_cubes_dict=reg_to_group_to_images_dict_mri_gm["train"],
                 hyperparams=hyperparams,
                 session_conf=cvae_session_conf,
@@ -173,8 +175,12 @@ for kernel in kernel_list:
                 explicit_iter_per_region=explicit_iter_per_region
             )
 
+            print("Not converging regions GM {}".format(
+                str(regions_whose_net_not_converge_gm)))
+
             print("Training MRI regions over WM")
-            vae_output["wm"] = cvae_over_regions.execute_without_any_logs(
+            vae_output["wm"], regions_whose_net_not_converge_wm,\
+                = cvae_over_regions.execute_without_any_logs(
                 region_train_cubes_dict=reg_to_group_to_images_dict_mri_wm["train"],
                 hyperparams=hyperparams,
                 session_conf=cvae_session_conf,
@@ -184,13 +190,32 @@ for kernel in kernel_list:
                 explicit_iter_per_region=explicit_iter_per_region
             )
 
+            print("Not converging regions GM {}".format(
+                str(regions_whose_net_not_converge_wm)))
+
+            regions_whose_net_not_converge = regions_whose_net_not_converge_gm\
+                             + [x for x in str(regions_whose_net_not_converge_wm)
+                                if x not in regions_whose_net_not_converge_gm]
+
+            print("Not converging total regions {}".format(
+                str(regions_whose_net_not_converge)))
+
+            available_regions = [region for region in list_regions
+                                 if region is not regions_whose_net_not_converge]
+
+            if len(available_regions) == 0:
+                print("No one region neural net converges successfully,"
+                      "The parameters used should be changed. Exiting")
+                sys.exit(0)
+
             # [patient x region]
             train_score_matriz, test_score_matriz = svm_utils.svm_mri_over_vae_output(
-                vae_output, Y_train, Y_test, list_regions, bool_test=bool_test)
+                vae_output, Y_train, Y_test, available_regions, bool_test=bool_test)
 
         if images_used == "PET":
             print("Train over regions")
-            vae_output = cvae_over_regions.execute_without_any_logs(
+            vae_output, regions_whose_net_not_converge = \
+                cvae_over_regions.execute_without_any_logs(
                 region_train_cubes_dict=reg_to_group_to_images_dict_pet["train"],
                 hyperparams=hyperparams,
                 session_conf=cvae_session_conf,
@@ -200,8 +225,19 @@ for kernel in kernel_list:
                 explicit_iter_per_region=explicit_iter_per_region
             )
 
+            print("Not converging total regions {}".format(
+                str(regions_whose_net_not_converge)))
+
+            available_regions = [region for region in list_regions
+                                 if region not in regions_whose_net_not_converge]
+
+            if len(available_regions) == 0:
+                print("No one region neural net converges successfully,"
+                      "The parameters used should be changed. Exiting")
+                sys.exit(0)
+
             train_score_matriz, test_score_matriz = svm_utils.svm_pet_over_vae_output(
-                vae_output, Y_train, Y_test, list_regions, bool_test=bool_test)
+                vae_output, Y_train, Y_test, available_regions, bool_test=bool_test)
 
         data = {}
         data["test"] = {}
@@ -259,7 +295,7 @@ for kernel in kernel_list:
         weighted_output_dic_test, weighted_output_dic_train, \
         aux_dic_regions_weight_coefs = \
             evaluation_utils.weighted_svm_decision_evaluation(data,
-                                                              list_regions,
+                                                              available_regions,
                                                               bool_test=bool_test)
 
         svm_weighted_regions_k_folds_results_train.append(

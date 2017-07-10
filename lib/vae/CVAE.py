@@ -6,6 +6,7 @@ import tensorflow as tf
 import lib.neural_net.kfrans_ops as ops
 import settings
 import sys
+import math
 from datetime import datetime
 from lib import session_helper
 from lib.aux_functionalities.functions import \
@@ -299,7 +300,7 @@ class CVAE():
 
     def train(self, X, n_iters=1000, batchsize=10, tempSGD_3dimages=False,
               iter_show_error=10, save_bool=False, suffix_files_generated=" ",
-              iter_to_save=100):
+              iter_to_save=100, break_if_nan_error_value=True):
 
         saver = None
         if save_bool:
@@ -321,6 +322,16 @@ class CVAE():
                          self.global_step, self.temp_learning_rate),
                         feed_dict=feed_dict)
 
+                if break_if_nan_error_value:
+                    # Evaluate if the net is not converging and the error
+                    # is a nan value, breaking the SGD loop
+                    if math.isnan(np.mean(gen_loss)) or \
+                            math.isnan(np.mean(lat_loss)):
+                        print("iter %d: genloss %f latloss %f learning_rate %f" % (
+                            iter, np.mean(gen_loss), np.mean(lat_loss),
+                            learning_rate))
+                        return -1
+
                 if iter % iter_show_error == 0:
                     print("iter %d: genloss %f latloss %f learning_rate %f" % (
                         iter, np.mean(gen_loss), np.mean(lat_loss),
@@ -335,6 +346,8 @@ class CVAE():
                 if iter % iter_to_save == 0:
                     if save_bool:
                         self.__save(saver, suffix_files_generated)
+            # End loop, End SGD
+            return 0
 
         except(KeyboardInterrupt):
             print("iter %d: genloss %f latloss %f learning_rate %f" % (

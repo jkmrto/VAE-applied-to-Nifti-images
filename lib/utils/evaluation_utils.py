@@ -188,6 +188,13 @@ def complex_majority_vote_evaluation(data, bool_test=False):
 
 
 def weighted_svm_decision_evaluation(data, list_regions, bool_test=False):
+    """
+
+    :param data: Dicitionary["test"|"train"]["label"|"data"]
+    :param list_regions: List 
+    :param bool_test:
+    :return:
+    """
 
     test_score_matriz = data["test"]["data"]
     Y_test = data["test"]["label"]
