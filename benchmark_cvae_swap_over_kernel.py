@@ -2,9 +2,7 @@ import os
 import tarfile
 import sys
 from datetime import datetime
-
 from lib.utils.evaluation_utils import get_average_over_metrics
-
 import lib.neural_net.kfrans_ops as ops
 from lib.utils import evaluation_utils
 from lib.utils import output_utils
@@ -12,18 +10,30 @@ from lib import session_helper as session
 from lib.utils import svm_utils
 from lib.over_regions_lib import cvae_over_regions
 from lib.utils import cv_utils
+import settings
+import os
 from lib.utils.cv_utils import get_test_and_train_labels_from_kfold_dict_entry, generate_k_folder_in_dict
 from nifti_regions_loader import \
     load_pet_data_3d, load_mri_data_3d
-from scripts.vae_sweep_over_features import loop_latent_layer_session_settings
 from settings import explicit_iter_per_region
+from lib.aux_functionalities.os_aux import create_directories
 
 session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
 
-# Meta settings.
-images_used = "PET"
-#images_used = "MRI"
+# META SETTINGS
+#images_used = "PET"
+images_used = "MRI"
+
+# Session settings
+session_name = "CVAE_session_swap_kernel"
+session_name = session_name + "_" + images_used
+session_path = os.path.join(settings.path_to_general_out_folder,
+                             session_name)
+create_directories([session_path])
+
+
+# SWAAP SETTINGS
 n_folds = 10
 bool_test = False
 regions_used = "most_important"
@@ -54,24 +64,19 @@ cvae_session_conf = {
 
 # OUTPUT: Files initialization
 loop_output_file_simple_majority_vote = os.path.join(
-    loop_latent_layer_session_settings.path_kfolds_session_folder,
-    "loop_output_simple_majority_vote.csv")
+    session_path, "loop_output_simple_majority_vote.csv")
 
 loop_output_file_complex_majority_vote = os.path.join(
-    loop_latent_layer_session_settings.path_kfolds_session_folder,
-    "loop_output_complex_majority_vote.csv")
+    session_path, "loop_output_complex_majority_vote.csv")
 
 loop_output_file_weighted_svm = os.path.join(
-    loop_latent_layer_session_settings.path_kfolds_session_folder,
-    "loop_output_weighted_svm.csv")
+    session_path, "loop_output_weighted_svm.csv")
 
 loop_output_path_session_description = os.path.join(
-    loop_latent_layer_session_settings.path_kfolds_session_folder,
-    "session_description.csv")
+    session_path, "session_description.csv")
 
 tar_file_main_output_path = os.path.join(
-    loop_latent_layer_session_settings.path_kfolds_session_folder,
-    "loop_over_dim_out_session_{}.tar.gz".format(session_datetime))
+    session_path, "{0}_{1}.tar.gz".format(session_name, session_datetime))
 
 list_paths_files_to_store = [loop_output_file_simple_majority_vote,
                              loop_output_file_complex_majority_vote,

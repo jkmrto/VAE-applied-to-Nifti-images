@@ -91,7 +91,7 @@ def execute_saving_meta_graph_without_any_cv(region_cubes_dict, hyperparams,
 
 def auto_execute_saving_meta_graph_without_any_cv(hyperparams=None,
                                                   session_conf=None):
-    regions_used = "three"
+    regions_used = "all"
     list_regions = session_helper.select_regions_to_evaluate(regions_used)
     region_to_img_dict = load_pet_regions_segmented(list_regions,
                                                     bool_logs=False)
