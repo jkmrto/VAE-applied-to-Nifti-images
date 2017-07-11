@@ -5,14 +5,6 @@ from lib.aux_functionalities import functions
 from lib.aux_functionalities.functions import print_dictionary
 import numpy as np
 
-folder_meta = "meta"
-folder_images = "images"
-folder_post_encoding = "post_encoding"
-folder_encoding_out = "encoding_out"
-folder_encoding_out_train = os.path.join(folder_encoding_out, "train_out")
-folder_encoding_out_test = os.path.join(folder_encoding_out, "test_out")
-folder_log = "logs"
-fodler_cv = "cv"
 
 # Encoding results file
 region_mean_file = "region_{}_mean.txt"

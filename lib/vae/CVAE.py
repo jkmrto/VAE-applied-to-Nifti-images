@@ -58,7 +58,7 @@ class CVAE():
             self.__build_graph()
 
             if self.path_session_folder is not None:
-                self.init_session_folders()
+                self.__init_session_folders()
 
             handles = [self.in_flat_images, self.z_mean, self.z_stddev,
                        self.z_in_, self.regenerated_3d_images_]
@@ -132,7 +132,7 @@ class CVAE():
                        [-1, self.image_shape[0], self.image_shape[1],
                                    self.image_shape[2]])
 
-    def init_session_folders(self):
+    def __init_session_folders(self):
         """
         This method will create inside the "out" folder a folder with the datetime
         of the execution of the neural net and with, with 3 folders inside it
