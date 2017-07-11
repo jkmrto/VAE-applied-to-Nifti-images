@@ -121,7 +121,7 @@ def auto_execute_saving_meta_graph_without_any_cv(hyperparams=None,
         path_to_root=settings.path_to_general_out_folder,
         session_prefix="test_saving_meta_PET")
 
-auto_execute_saving_meta_graph_without_any_cv()
+#auto_execute_saving_meta_graph_without_any_cv()
 
 
 def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
