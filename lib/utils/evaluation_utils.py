@@ -71,13 +71,20 @@ def simple_evaluation_output(y_obtained, y_test,
 
     precision = metrics.average_precision_score(y_test, y_obtained)
     auc = metrics.roc_auc_score(y_test, y_obtained)
-    output_dic = {"precision": precision,
-                  "area under the curve": auc,
-                  "accuracy": accuracy,
-                  "f1_score": f1_score,
-                  "recall_score": recall_score}
 
-    return threshold, output_dic
+    # Roc evaluation
+    [fpr, tpr, thresholds_roc] = metrics.roc_curve(y_test, y_obtained)
+    roc_dic = {"fpr": fpr,
+               "tpr": tpr,
+               "thresholds": thresholds_roc}
+
+    metrics_dic = {"precision": precision,
+                   "area under the curve": auc,
+                   "accuracy": accuracy,
+                   "f1_score": f1_score,
+                   "recall_score": recall_score}
+
+    return threshold, metrics_dic, roc_dic
 
 
 def assign_binary_labels_based_on_threshold(scores, threshold):
@@ -127,16 +134,17 @@ def simple_majority_vote(train_score_matrix, test_score_matrix, Y_train, Y_test,
     means_activation_train = np.row_stack(train_labels_obatained.mean(axis=1))
     means_activation_test = np.row_stack(test_labels_obatained.mean(axis=1))
 
-    threshold = 0
-    _, output_dic_train = simple_evaluation_output(means_activation_train,
-                                                   Y_train,
-                                                   threshold,
-                                                   bool_test=bool_test)
-    _, output_dic_test = simple_evaluation_output(means_activation_test, Y_test,
-                                                  threshold,
-                                                  bool_test=bool_test)
+    threshold = 0.5
+    _, output_dic_train, roc_dic_train = simple_evaluation_output(
+        means_activation_train, Y_train, threshold, bool_test=bool_test)
+    _, output_dic_test, roc_dic_test = simple_evaluation_output(
+        means_activation_test, Y_test, threshold, bool_test=bool_test)
 
-    return output_dic_train, output_dic_test
+    roc_dic = {
+        "train": roc_dic_train,
+        "test": roc_dic_test,
+    }
+    return output_dic_train, output_dic_test, roc_dic
 
 
 def get_average_over_metrics(list_dicts):
@@ -154,7 +162,6 @@ def get_average_over_metrics(list_dicts):
 
 
 def complex_majority_vote_evaluation(data, bool_test=False):
-
     test_score_matriz = data["test"]["data"]
     Y_test = data["test"]["label"]
     train_score_matriz = data["train"]["data"]
@@ -173,18 +180,26 @@ def complex_majority_vote_evaluation(data, bool_test=False):
         print(test_train_score)
         print(test_test_score)
 
-    threshold = 0
-    _, complex_output_dic_train = simple_evaluation_output(complex_means_train,
-                                                           Y_train, threshold,
-                                                           bool_test=bool_test)
-    _, complex_output_dic_test = simple_evaluation_output(complex_means_test,
-                                                          Y_test, threshold,
-                                                          bool_test=bool_test)
+    threshold = 0.5
+    _, complex_output_dic_train, roc_dic_train = simple_evaluation_output(
+        complex_means_train,
+        Y_train, threshold,
+        bool_test=bool_test)
+
+    _, complex_output_dic_test, roc_dic_test = simple_evaluation_output(
+        complex_means_test,
+        Y_test, threshold,
+        bool_test=bool_test)
+
+    roc_dic = {
+        "train": roc_dic_train,
+        "test": roc_dic_test,
+    }
 
     print("Complex Majority Vote Test: " + str(complex_output_dic_test))
     print("Complex Majority Vote Train: " + str(complex_output_dic_train))
 
-    return complex_output_dic_test, complex_output_dic_train
+    return complex_output_dic_test, complex_output_dic_train, roc_dic
 
 
 def weighted_svm_decision_evaluation(data, list_regions, bool_test=False):
@@ -214,12 +229,20 @@ def weighted_svm_decision_evaluation(data, list_regions, bool_test=False):
 
     # SVM weighted REGIONS RESULTS EVALUATION RESULTS
     threshold = 0
-    _, weighted_output_dic_train = simple_evaluation_output(scores_train,
-                                                            Y_train, 0,
-                                                            bool_test=bool_test)
-    _, weighted_output_dic_test = simple_evaluation_output(scores_test,
-                                                           Y_test, 0,
-                                                           bool_test=bool_test)
+    _, weighted_output_dic_train, roc_dic_train = simple_evaluation_output(
+        scores_train,
+        Y_train, 0,
+        bool_test=bool_test)
+
+    _, weighted_output_dic_test, roc_dic_test = simple_evaluation_output(
+        scores_test,
+        Y_test, 0,
+        bool_test=bool_test)
+
+    roc_dic = {
+        "train": roc_dic_train,
+        "test": roc_dic_test,
+    }
 
     aux_dic_regions_weight_coefs = {}
     [aux_dic_regions_weight_coefs.update({str(region): coef}) for region, coef
@@ -230,4 +253,4 @@ def weighted_svm_decision_evaluation(data, list_regions, bool_test=False):
     print("Weighted SVM  Coefs Gotten: " + str(aux_dic_regions_weight_coefs))
 
     return weighted_output_dic_test, weighted_output_dic_train, \
-           aux_dic_regions_weight_coefs
+           aux_dic_regions_weight_coefs, roc_dic

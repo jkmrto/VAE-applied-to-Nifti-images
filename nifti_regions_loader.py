@@ -14,7 +14,33 @@ from lib.utils import output_utils
 "The MRI segmentation 3d functions has not been tested yet"
 
 
-def recortar_region(stack_dict, region, atlas, thval=0):
+def get_region_indexes_in_3d_figure(atlas, region, stack_dict, reshape_kind="F"):
+    """
+
+    :param atlas: dic[region] -> index to voxels belonged to that region sh[len]
+    :param region: region_index
+    :param stack_dict: dict['total_size'|'img_size'|'voxel_index']
+     stack_dict['voxel_index'] -> no background voxels index
+    :param reshape_kind:
+    :return:
+    """
+    total_size = stack_dict['total_size']
+    imgsize = stack_dict['imgsize']
+    voxels_index = stack_dict['voxel_index']
+
+    # atlas template
+    mask_atlas = np.zeros(imgsize)
+    mask_atlas = np.reshape(mask_atlas, [total_size], reshape_kind)
+    map_region_voxels = atlas[region]
+    no_bg_region_voxels_index = voxels_index[map_region_voxels]
+    mask_atlas[no_bg_region_voxels_index] = 1
+
+    mask_atlas = np.reshape(mask_atlas, imgsize, reshape_kind)
+
+    return mask_atlas, no_bg_region_voxels_index
+
+
+def recortar_region(stack_dict, region, atlas, thval=0, reshape_kind="F"):
     """
     stack_dict = {'stack', 'imgsize', 'total_size', 'voxel_index'}
     """
@@ -22,15 +48,10 @@ def recortar_region(stack_dict, region, atlas, thval=0):
     imgsize = stack_dict['imgsize']
     stack = stack_dict['stack']
     voxels_index = stack_dict['voxel_index']
-
-    # atlas template
-    mask_atlas = np.zeros(imgsize)
-    mask_atlas = np.reshape(mask_atlas, [total_size], "F")
     map_region_voxels = atlas[region]
-    real_region_voxels = voxels_index[map_region_voxels]
-    mask_atlas[real_region_voxels] = 1
 
-    mask_atlas = np.reshape(mask_atlas, imgsize, "F")
+    mask_atlas, no_bg_region_voxels_index=\
+        get_region_indexes_in_3d_figure(atlas, region, stack_dict, reshape_kind="F")
 
     eq = [[2, 1], [2, 0], [0, 0]]
     ndim = len(mask_atlas.shape)
@@ -53,13 +74,13 @@ def recortar_region(stack_dict, region, atlas, thval=0):
         voxels_patient_region_selected = stack[patient, map_region_voxels]
 
         try:
-            image[real_region_voxels.tolist()] = voxels_patient_region_selected
+            image[no_bg_region_voxels_index.tolist()] = voxels_patient_region_selected
         except:
             voxels_patient_region_selected = voxels_patient_region_selected.reshape(voxels_patient_region_selected.size,
                                                                                     1)
-            image[real_region_voxels.tolist()] = voxels_patient_region_selected
+            image[no_bg_region_voxels_index.tolist()] = voxels_patient_region_selected
 
-        image = np.reshape(image, imgsize, "F")
+        image = np.reshape(image, imgsize, reshape_kind)
 
         out_image = image[minidx[0]:maxidx[0],
                     minidx[1]:maxidx[1], minidx[2]:maxidx[2]]
@@ -70,6 +91,14 @@ def recortar_region(stack_dict, region, atlas, thval=0):
 
 def load_pet_regions_segmented(list_regions, folder_to_store_3d_images=None,
                                bool_logs=True, out_csv_region_dimensions=None):
+    """
+
+    :param list_regions:
+    :param folder_to_store_3d_images:
+    :param bool_logs:
+    :param out_csv_region_dimensions:
+    :return: dic[region] -> ty[np.array] sh[n_samples, w, h, d]
+    """
     dic_regions_segmented = {}
     list_dics_regions_dimensions = []
 
@@ -117,6 +146,8 @@ def load_pet_regions_segmented(list_regions, folder_to_store_3d_images=None,
 
     return dic_regions_segmented
 
+#region_sample = load_pet_regions_segmented(list_regions=[1])[1][1,:,:,:]
+#print(region_sample.shape)
 
 #load_pet_regions_segmented(list_regions=session_helper.select_regions_to_evaluate("all"),
 #                           folder_to_store_3d_images=None,
@@ -264,6 +295,14 @@ def load_mri_data_flat(list_regions):
 
 
 def load_pet_data_3d(list_regions):
+    """
+
+    :param list_regions:
+    :return:
+    region_to_3d_img_dict_pet: dict[region] -> 3d_image sh[n_samples, w, h, d]
+    patient_labels: ty[np.array] sh[n_samples] ]0,1[
+    n_samples: value sh[1]
+    """
     region_to_3dimg_dict_pet = load_pet_regions_segmented(list_regions, bool_logs=False)
     patient_labels = PET_stack_NORAD.load_patients_labels()
     n_samples = len(patient_labels)

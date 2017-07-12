@@ -1,23 +1,17 @@
 import os
 from lib.aux_functionalities.os_aux import create_directories
-import nibabel as nib
 import numpy as np
 import tensorflow as tf
 import lib.neural_net.kfrans_ops as ops
 import settings
 import sys
 import math
+from lib.utils import  output_utils
 from datetime import datetime
 from lib import session_helper
 from lib.aux_functionalities.functions import \
     get_batch_from_samples_unsupervised_3d
 from nifti_regions_loader import load_pet_regions_segmented
-
-
-def from_3d_image_to_nifti_file(path_to_save, image3d):
-    img = nib.Nifti1Image(image3d, np.eye(4))
-    img.to_filename("{}.nii".format(path_to_save))
-
 
 bool_save_meta = False
 
@@ -260,7 +254,7 @@ class CVAE():
         """
 
         :param input_images: sh[n_samples, voxels_flat] ||
-                             sh[n_samples, voxels_flat]
+                             sh[n_samples, w, h, d]
 
         :return: np.array sh[n_samples, voxels_flat]
         """
@@ -365,7 +359,7 @@ class CVAE():
         image_3d = np.reshape(generated_test, self.image_shape)
         image_3d = image_3d.astype(float)
         file_path = os.path.join(self.path_to_3dtemp_images, suffix)
-        from_3d_image_to_nifti_file(file_path, image_3d)
+        output_utils.from_3d_image_to_nifti_file(file_path, image_3d)
 
 
 def auto_execute_with_session_folders():
@@ -454,8 +448,9 @@ def auto_execute_encoding_and_decoding_over_trained_net():
     images_3d_regenerated = cvae.decoder(latent_layer_input=z_in,
                                          original_images=train_images)
 
-    from_3d_image_to_nifti_file(path_to_save= os.path.join(path_to_images, "example")
-                                , image3d = images_3d_regenerated[0,:,:,:])
+    output_utils.from_3d_image_to_nifti_file(
+        path_to_save= os.path.join(path_to_images, "example")
+       ,mage3d = images_3d_regenerated[0,:,:,:])
 
 #auto_execute_with_session_folders()
 #auto_execute_encoding_and_decoding_over_trained_net()
