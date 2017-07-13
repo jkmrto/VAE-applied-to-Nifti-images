@@ -229,8 +229,7 @@ for swap_variable_index in kernel_list:
                 str(regions_whose_net_not_converge)))
 
             available_regions = [region for region in list_regions
-                                 if
-                                 region is not regions_whose_net_not_converge]
+                                 if region not in regions_whose_net_not_converge]
 
             if len(available_regions) == 0:
                 print("No one region neural net converges successfully,"
