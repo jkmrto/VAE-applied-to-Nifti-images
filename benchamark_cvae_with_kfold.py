@@ -15,10 +15,10 @@ from lib import session_helper
 from lib import svm_utils
 from lib.aux_functionalities.os_aux import create_directories
 from lib.neural_net import leaky_net_utils
+from lib.nifti_regions_loader import \
+    load_pet_data_3d, load_mri_data_3d
 from lib.over_regions_lib import cvae_over_regions
 from lib.utils import cv_utils
-from nifti_regions_loader import \
-    load_pet_data_3d, load_mri_data_3d
 from scripts.vae_with_kfolds import session_settings
 from settings import explicit_iter_per_region
 

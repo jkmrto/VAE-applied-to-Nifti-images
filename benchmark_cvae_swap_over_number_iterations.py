@@ -9,11 +9,11 @@ from lib import evaluation_utils
 from lib import output_utils
 from lib import session_helper as session
 from lib import svm_utils
+from lib.nifti_regions_loader import \
+    load_pet_data_3d, load_mri_data_3d
 from lib.over_regions_lib import cvae_over_regions
 from lib.utils import cv_utils
 from lib.utils.cv_utils import get_test_and_train_labels_from_kfold_dict_entry, generate_k_folder_in_dict
-from nifti_regions_loader import \
-    load_pet_data_3d, load_mri_data_3d
 from scripts.vae_sweep_over_features import loop_latent_layer_session_settings
 from settings import explicit_iter_per_region
 

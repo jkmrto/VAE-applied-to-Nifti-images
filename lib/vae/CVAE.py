@@ -1,22 +1,25 @@
+import math
 import os
-from lib.aux_functionalities.os_aux import create_directories
+import sys
+from datetime import datetime
+
 import numpy as np
 import tensorflow as tf
+
 import lib.neural_net.kfrans_ops as ops
 import settings
-import sys
-import math
-from lib.utils import  output_utils
-from datetime import datetime
 from lib import session_helper
 from lib.aux_functionalities.functions import \
     get_batch_from_samples_unsupervised_3d
-from nifti_regions_loader import load_pet_regions_segmented
+from lib.aux_functionalities.os_aux import create_directories
+from lib.nifti_regions_loader import load_pet_regions_segmented
+from lib.utils import  output_utils
 
 bool_save_meta = False
 
 
 class CVAE():
+
     RESTORE_KEY = "restore"
 
     def __init__(self, hyperparams, test_bool=False, meta_path=None,
@@ -71,7 +74,6 @@ class CVAE():
 
             # initialing variables
             self.n_z = self.z_in_.get_shape().as_list()[1]
-            print(self.n_z)
 
     def __build_graph(self):
         """

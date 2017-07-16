@@ -1,24 +1,24 @@
 import os
-import tarfile
 import sys
+import tarfile
 from datetime import datetime
-from lib.utils.evaluation_utils import get_average_over_metrics
+
 import lib.neural_net.kfrans_ops as ops
-from lib.utils import evaluation_utils
-from lib.utils import output_utils
+import settings
 from lib import session_helper as session
-from lib.utils import svm_utils
+from lib.aux_functionalities.os_aux import create_directories
+from lib.nifti_regions_loader import \
+    load_pet_data_3d, load_mri_data_3d
 from lib.over_regions_lib import cvae_over_regions
 from lib.utils import cv_utils
-import settings
-import os
+from lib.utils import evaluation_utils
+from lib.utils import output_utils
+from lib.utils import svm_utils
 from lib.utils.auc_output_handler import stringfy_auc_information
 from lib.utils.cv_utils import get_test_and_train_labels_from_kfold_dict_entry, \
     generate_k_folder_in_dict
-from nifti_regions_loader import \
-    load_pet_data_3d, load_mri_data_3d
+from lib.utils.evaluation_utils import get_average_over_metrics
 from settings import explicit_iter_per_region
-from lib.aux_functionalities.os_aux import create_directories
 
 
 def array_to_str_csv_list(array):

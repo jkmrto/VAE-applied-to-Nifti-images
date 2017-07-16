@@ -1,21 +1,18 @@
 import os
+import sys
 from datetime import datetime
 
 import numpy as np
 import tensorflow as tf
-import settings
+
 import lib.neural_net.kfrans_ops as ops
+import settings
 from lib import session_helper
-from lib import session_helper as session
 from lib import utils
 from lib.aux_functionalities.os_aux import create_directories
-from lib.data_loader import MRI_stack_NORAD
-from lib.data_loader import mri_atlas
+from lib.nifti_regions_loader import load_pet_regions_segmented
 from lib.utils import cv_utils
-import sys
 from lib.vae import CVAE
-from nifti_regions_loader import load_pet_regions_segmented
-from scripts.vae_with_cv_GM_and_WM import session_settings
 
 
 def get_adequate_number_iterations(region_selected, explicit_iter_per_region,
