@@ -9,6 +9,7 @@ from lib import session_helper as session
 from lib.aux_functionalities.os_aux import create_directories
 from lib.nifti_regions_loader import \
     load_pet_data_3d, load_mri_data_3d
+
 from lib.over_regions_lib import cvae_over_regions
 from lib.utils import cv_utils
 from lib.utils import evaluation_utils
@@ -25,7 +26,6 @@ def array_to_str_csv_list(array):
     out = ",".join([str(value) for value in array.tolist()])
     #  print(out)
     return out
-
 
 session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
