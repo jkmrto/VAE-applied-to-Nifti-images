@@ -1,11 +1,11 @@
 import os
-
+from lib.utils import output_utils as output
 import numpy as np
 import tensorflow as tf
 import settings
 from lib import session_helper as session
 from lib.nifti_regions_loader import \
-    load_pet_data_3d, load_mri_data_3d
+    load_pet_data_3d, load_mri_data_3d, map_region_segmented_over_full_image
 from lib.vae import CVAE
 
 
@@ -73,9 +73,10 @@ elif images_used == "MRI":
 region_to_class_to_3d_means_images_pet = \
     get_mean_3d_images_over_samples(region_to_3dimg_dict_pet)
 
+reconstruction_per_region = {}
 
 for region in list_regions:
-
+    print("region {} selected".format(region))
     meta_region_file = "region_{0}-{1}".format(region, iters)
     path_meta_region = os.path.join(path_meta, meta_region_file)
     tf.reset_default_graph()
@@ -86,13 +87,27 @@ for region in list_regions:
     cvae = CVAE.CVAE(hyperparams=hyperparams, meta_path=path_meta_region)
 
     # encoding_images
+    print("Encoding")
     encoding_out = cvae.encode(region_to_class_to_3d_means_images_pet[region])
 
     if logs:
         print("Shape enconding_out mean {}".format(encoding_out["mean"].shape))
 
+    print("Decoding")
     images_3d_regenerated = cvae.decoder(latent_layer_input=encoding_out["mean"],
             original_images=region_to_class_to_3d_means_images_pet[region])
 
+    reconstruction_per_region[region] = images_3d_regenerated
     if logs:
         print("images regenerated shape {}".format(images_3d_regenerated.shape))
+
+
+print("Reconstructing images")
+whole_reconstruction = \
+    map_region_segmented_over_full_image(reconstruction_per_region, images_used)
+
+output.from_3d_image_to_nifti_file(path_to_save="example_neg",
+                                   image3d=whole_reconstruction[0, :, :, :])
+
+output.from_3d_image_to_nifti_file(path_to_save="example_pos",
+                                   image3d=whole_reconstruction[1, :, :, :])

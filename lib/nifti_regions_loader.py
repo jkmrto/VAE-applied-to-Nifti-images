@@ -470,13 +470,7 @@ def over_test():
 #over_test()
 
 
-def test_over_region_segmentation_and_reconstruction():
-    images_used = "PET"
-    test_out_folder = "test_segmentation_and_reconstruction"
-    regions_used = "all"
-    list_regions = session.select_regions_to_evaluate(regions_used)
-    patient_selected = 0
-    create_directories([test_out_folder])
+def load_parameters_and_atlas_by_images_used(images_used):
 
     atlas = None
     dict_parameters = None
@@ -490,6 +484,20 @@ def test_over_region_segmentation_and_reconstruction():
         atlas = pet_atlas.load_atlas()
         dict_parameters = PET_stack_NORAD.get_parameters()
         reshape_kind = "F"
+
+    return atlas, dict_parameters, reshape_kind
+
+
+def test_over_region_segmentation_and_reconstruction():
+    images_used = "PET"
+    test_out_folder = "test_segmentation_and_reconstruction"
+    regions_used = "all"
+    list_regions = session.select_regions_to_evaluate(regions_used)
+    patient_selected = 0
+    create_directories([test_out_folder])
+
+    atlas, dict_parameters, reshape_kind = \
+        load_parameters_and_atlas_by_images_used(images_used)
 
     dic_regions_segmented = load_pet_regions_segmented(list_regions=list_regions)
     image3d_reconstructed_flatten = np.zeros(dict_parameters['total_size'])  # template
@@ -526,3 +534,63 @@ def test_over_region_segmentation_and_reconstruction():
                                      regions_used, patient_selected)))
 
 #test_over_region_segmentation_and_reconstruction()
+
+
+def map_region_segmented_over_full_image(reconstruction_per_region, images_used):
+    """
+
+    :param reconstruction_per_region: dict[region] -> ty[np.darray],
+           sh[n_samples, w, h, d]
+    :return: whole_reconstruction
+
+    """
+    atlas, dict_parameters, reshape_kind = \
+        load_parameters_and_atlas_by_images_used(images_used)
+
+    list_regions = list(reconstruction_per_region.keys())
+    number_3dimages_to_reconstruct = \
+        reconstruction_per_region[list_regions[0]].shape[0]
+    whole_3d_image_size = dict_parameters["imgsize"]
+
+    whole_reconstruction = np.zeros([number_3dimages_to_reconstruct,
+        whole_3d_image_size[0], whole_3d_image_size[1], whole_3d_image_size[2]])
+
+    whole_reconstruction_length = np.array(whole_3d_image_size).prod()
+
+    for region in list_regions:
+
+        # Loading region masks
+        whole_mask_flatten, mask_segmented_flatten=\
+            get_whole_region_mask_and_region_segmented_mask(
+            region=region,
+            dict_parameters=dict_parameters,
+            atlas=atlas,
+            reshape_kind=reshape_kind)
+
+        for image_index in range(0,number_3dimages_to_reconstruct,1):
+            region_3dimage_selected = \
+                reconstruction_per_region[region][image_index, :, :, :]
+
+            image_whole_reconstruction = whole_reconstruction[image_index, :,:,:]
+
+            length_region_segmented_flatten = \
+                np.array(region_3dimage_selected.shape).prod()
+
+            # Reshape to flatten both arrays
+            image_whole_reconstruction_flatten = np.reshape(image_whole_reconstruction,
+                [whole_reconstruction_length], reshape_kind)
+
+            region_3dimage_selected_flatten = np.reshape(region_3dimage_selected,
+                [length_region_segmented_flatten], reshape_kind)
+
+            segmented_voxels_selected = region_3dimage_selected_flatten[
+                mask_segmented_flatten == 1]
+
+            image_whole_reconstruction_flatten[
+                whole_mask_flatten == 1] = segmented_voxels_selected
+
+            whole_reconstruction[image_index, :, :, :] = \
+                np.reshape(image_whole_reconstruction_flatten,
+                    whole_3d_image_size, reshape_kind)
+
+    return whole_reconstruction
