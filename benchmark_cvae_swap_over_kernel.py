@@ -49,7 +49,7 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 
 # Vae settings
 # Net Configuration
-kernel_list = [6,7,8,9,10]
+kernel_list = [2,3,4,5,6,7,8,9,10]
 # kernel_list = [6]
 
 hyperparams = {
