@@ -5,6 +5,21 @@ import nibabel as nib
 from matplotlib import pyplot as plt
 
 
+def get_parameters():
+    """
+    function creates to avoid loading in memory the full stack
+    :return: Dict['imgsize|total_size|voxel_index]
+    """
+    f = sio.loadmat(settings.PET_stack_path)
+    images_size = [79, 95, 68]
+    voxels_index = f['maskind'][0]
+    total_voxels = np.array(images_size).prod()
+
+    return {'voxel_index': voxels_index,
+            'imgsize':images_size,
+            'total_size': total_voxels}
+
+
 def get_full_stack():
     """
     This function returns a dictionary with these three values:

@@ -33,6 +33,7 @@ def test_over_atlas():
     img = nib.Nifti1Image(img_data, np.eye(4))
     img.to_filename(os.path.join(path, "pet_atlas"))
 
+
 def get_super_region_to_voxels():
     """
     This functions returns a dictionary.

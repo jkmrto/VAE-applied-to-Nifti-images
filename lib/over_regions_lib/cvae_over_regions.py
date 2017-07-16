@@ -98,7 +98,7 @@ def auto_execute_saving_meta_graph_without_any_cv(hyperparams=None,
 
     # Autoenconder configuration
     if hyperparams is None:
-        hyperparams = {'latent_layer_dim': 20,
+        hyperparams = {'latent_layer_dim': 100,
                        'kernel_size': 5,
                        'activation_layer': ops.lrelu,
                        'features_depth': [1, 16, 32],
@@ -109,7 +109,7 @@ def auto_execute_saving_meta_graph_without_any_cv(hyperparams=None,
     if session_conf is None:
     # SESSION CONFIGURATION
         session_conf = {'bool_normalized': False,
-                       'n_iters': 500,
+                       'n_iters': 100,
                         "batch_size": 16,
                         "show_error_iter": 10}
 
@@ -121,7 +121,7 @@ def auto_execute_saving_meta_graph_without_any_cv(hyperparams=None,
         path_to_root=settings.path_to_general_out_folder,
         session_prefix="test_saving_meta_PET")
 
-#auto_execute_saving_meta_graph_without_any_cv()
+auto_execute_saving_meta_graph_without_any_cv()
 
 
 def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,

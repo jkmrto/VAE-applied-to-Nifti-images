@@ -6,6 +6,20 @@ from matplotlib import pyplot as plt
 # Script con la materia gris
 
 
+def get_parameters():
+    """
+    function creates to avoid loading in memory the full stack
+    :return: Dict['imgsize|total_size|voxel_index]
+    """
+    f = sio.loadmat(settings.MRI_stack_path_GM)
+    imgsize = f['imgsize'].astype('uint32').tolist()[0]
+    total_voxels = np.array(imgsize).prod()
+
+    return {'voxel_index': f['nobck_idx'],
+            'imgsize':imgsize,
+            'total_size': total_voxels}
+
+
 def get_gm_stack():
     """
     This function returns a dictionary with these three values:
