@@ -322,7 +322,10 @@ class CVAE():
                     # Evaluate if the net is not converging and the error
                     # is a nan value, breaking the SGD loop
                     if math.isnan(np.mean(gen_loss)) or \
-                            math.isnan(np.mean(lat_loss)):
+                            math.isnan(np.mean(lat_loss)) or \
+                            math.isinf(np.mean(lat_loss)) or \
+                            math.isinf(np.mean(gen_loss)):
+
                         print("iter %d: genloss %f latloss %f learning_rate %f" % (
                             iter, np.mean(gen_loss), np.mean(lat_loss),
                             learning_rate))
