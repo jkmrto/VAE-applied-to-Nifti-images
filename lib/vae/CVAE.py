@@ -12,7 +12,7 @@ from lib import session_helper
 from lib.aux_functionalities.functions import \
     get_batch_from_samples_unsupervised_3d
 from lib.aux_functionalities.os_aux import create_directories
-from lib.nifti_regions_loader import load_pet_regions_segmented
+from lib.data_loader.pet_loader import load_pet_regions_segmented
 from lib.utils import  output_utils
 
 bool_save_meta = False

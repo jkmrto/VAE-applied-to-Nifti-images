@@ -7,9 +7,8 @@ import lib.neural_net.kfrans_ops as ops
 import settings
 from lib import session_helper as session
 from lib.aux_functionalities.os_aux import create_directories
-from lib.nifti_regions_loader import \
-    load_pet_data_3d, load_mri_data_3d
-
+from lib.data_loader.pet_loader import load_pet_data_3d
+from lib.data_loader.mri_loader import load_mri_data_3d
 from lib.over_regions_lib import cvae_over_regions
 from lib.utils import cv_utils
 from lib.utils import evaluation_utils
@@ -31,8 +30,8 @@ session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
 
 # META SETTINGS
-#images_used = "PET"
-images_used = "MRI"
+images_used = "PET"
+#images_used = "MRI"
 # Session settings
 session_name = "CVAE_session_swap_kernel"
 session_name = session_name + "_" + images_used
@@ -40,7 +39,7 @@ session_path = os.path.join(settings.path_to_general_out_folder, session_name)
 create_directories([session_path])
 
 # SWAAP SETTINGS
-n_folds = 10
+n_folds = 2
 bool_test = False
 swap_over = "kernel_size"
 regions_used = "most_important"
@@ -49,7 +48,7 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 
 # Vae settings
 # Net Configuration
-kernel_list = [2,3,4,5,6,7,8,9,10]
+kernel_list = [2]
 # kernel_list = [6]
 
 hyperparams = {

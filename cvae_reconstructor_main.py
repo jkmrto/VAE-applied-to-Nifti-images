@@ -1,80 +1,44 @@
 import os
-from lib.utils import output_utils as output
+
 import numpy as np
 import tensorflow as tf
+
 import settings
 from lib import session_helper as session
-from lib.nifti_regions_loader import \
-    load_pet_data_3d, load_mri_data_3d, map_region_segmented_over_full_image
+from lib import reconstruct_helpers as recons
+from lib.data_loader import utils_images3d
+from lib.utils import output_utils as output
 from lib.vae import CVAE
 
-
-def get_mean_3d_images_over_samples(region_to_3dimg_dict_pet):
-    """
-
-    :param region_to_3dimg_dict_pet: dict[region] -> 3d_image sh[n_samples, w, h, d]
-    :return: dict[region]-> np.array 3d_mean_image sh[2, w, h, d]
-                         -> array with the mean image negative pos 0, positive pos 1
-    """
-    region_to_class_to_3d_means_imgs = {}
-
-    for region, cube_images in region_to_3dimg_dict_pet.items():
-        class_to_3d_means_imgs = np.zeros([2, cube_images.shape[1],
-                                          cube_images.shape[2], cube_images.shape[3]])
-
-        index_to_selected_images = patient_labels == 0
-        index_to_selected_images = index_to_selected_images.flatten()
-        class_to_3d_means_imgs[0] = \
-            cube_images[index_to_selected_images.tolist(), :, :, :].mean(axis=0)
-
-        index_to_selected_images = patient_labels == 1
-        index_to_selected_images = index_to_selected_images.flatten()
-        class_to_3d_means_imgs[1] = \
-            cube_images[index_to_selected_images, :, :, :].mean(axis=0)
-
-        region_to_class_to_3d_means_imgs[region] = class_to_3d_means_imgs
-
-    return region_to_class_to_3d_means_imgs
-
-
-
-# Meta settings
-#session_name = "test_saving_meta_PET_11_07_2017_15:15"
+logs = True
+regions_used = "all"
 session_name = "test_saving_meta_PET_15_07_2017_21:34"
-#images_used = "MRI"
+
+#images_used = "MRI_WM"
+#images_used = "MRI_GM"
 images_used = "PET"
 
 #vae_used = "dense_vae"
 vae_used = "conv_vae"
 iters = 100
 
-regions_used = "all"
+#where_to_mean_data = "after_encoding"
+where_to_mean_data = "before_encoding"
+
 list_regions = session.select_regions_to_evaluate(regions_used)
 path_session = os.path.join(settings.path_to_general_out_folder, session_name)
 path_meta = os.path.join(path_session, "meta")
 print(path_meta)
 
-
+stack_region_to_3dimg, patient_labels, n_samples, cmap = \
+    recons.load_desired_stacked_and_parameters(images_used, list_regions, )
 # Loading dataç
-logs = False
-n_samples=0
-patient_labels = []
-region_to_3dimg_dict_pet = None
 
-if images_used == "PET":
-    print("Loading Pet images")
-    region_to_3dimg_dict_pet, patient_labels, n_samples = \
-        load_pet_data_3d(list_regions)
-
-elif images_used == "MRI":
-    region_to_3dimg_dict_mri_gm, region_to_3dimg_dict_mri_wm,\
-    patient_labels, n_samples = load_mri_data_3d(list_regions)
-
-region_to_class_to_3d_means_images_pet = \
-    get_mean_3d_images_over_samples(region_to_3dimg_dict_pet)
+data_to_encode_per_region = \
+    recons.get_data_to_encode_per_region(stack_region_to_3dimg,
+                                         where_to_mean_data, patient_labels)
 
 reconstruction_per_region = {}
-
 for region in list_regions:
     print("region {} selected".format(region))
     meta_region_file = "region_{0}-{1}".format(region, iters)
@@ -83,19 +47,22 @@ for region in list_regions:
 
     # CVAE encoding
     hyperparams = {}
-    hyperparams['image_shape'] = region_to_class_to_3d_means_images_pet[region].shape[1:]
+    hyperparams['image_shape'] = data_to_encode_per_region[region].shape[1:]
     cvae = CVAE.CVAE(hyperparams=hyperparams, meta_path=path_meta_region)
 
     # encoding_images
     print("Encoding")
-    encoding_out = cvae.encode(region_to_class_to_3d_means_images_pet[region])
+    encoding_out = cvae.encode(data_to_encode_per_region[region])
+
+    data_to_decode = recons.get_data_to_decode(
+        where_to_mean_data, encoding_out["mean"], patient_labels)
 
     if logs:
-        print("Shape enconding_out mean {}".format(encoding_out["mean"].shape))
+        print("Shape enconding_out mean {}".format(data_to_decode.shape))
 
     print("Decoding")
-    images_3d_regenerated = cvae.decoder(latent_layer_input=encoding_out["mean"],
-            original_images=region_to_class_to_3d_means_images_pet[region])
+    images_3d_regenerated = cvae.decoder(latent_layer_input=data_to_decode,
+            original_images=data_to_encode_per_region[region])
 
     reconstruction_per_region[region] = images_3d_regenerated
     if logs:
@@ -104,10 +71,22 @@ for region in list_regions:
 
 print("Reconstructing images")
 whole_reconstruction = \
-    map_region_segmented_over_full_image(reconstruction_per_region, images_used)
+    utils_images3d.map_region_segmented_over_full_image(reconstruction_per_region, images_used)
 
 output.from_3d_image_to_nifti_file(path_to_save="example_neg",
                                    image3d=whole_reconstruction[0, :, :, :])
 
 output.from_3d_image_to_nifti_file(path_to_save="example_pos",
                                    image3d=whole_reconstruction[1, :, :, :])
+
+recons.plot_most_discriminative_section(
+    img3d_1=whole_reconstruction[0, :, :, :],
+    img3d_2=whole_reconstruction[1, :, :, :],
+    path_to_save_image="cvae_reconstructor_main.png",
+    cmap=cmap)
+
+if logs:
+    evaluate_difference_full_image = whole_reconstruction[0, :, :, :].flatten() \
+                                     - whole_reconstruction[1, :, :, :].flatten()
+    total_difference = sum(abs(evaluate_difference_full_image))
+    print("Total difference between images reconstructed {0}".format(total_difference))

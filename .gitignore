@@ -6,6 +6,8 @@ credentials.txt
 recollect_kfolds_results.sh
 test_over_cvae/
 tests_sources/
+example_pos.nii
+example_neg.nii
 pet_regions_segmented/
 regions_dimensions.csv
 .vscode/

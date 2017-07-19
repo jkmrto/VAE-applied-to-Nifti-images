@@ -10,7 +10,7 @@ import settings
 from lib import session_helper
 from lib import utils
 from lib.aux_functionalities.os_aux import create_directories
-from lib.nifti_regions_loader import load_pet_regions_segmented
+from lib.data_loader.pet_loader import load_pet_regions_segmented
 from lib.utils import cv_utils
 from lib.vae import CVAE
 

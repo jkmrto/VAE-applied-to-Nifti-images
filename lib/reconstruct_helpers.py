@@ -1,0 +1,167 @@
+import numpy as np
+from lib.data_loader import pet_loader
+from lib.data_loader import mri_loader
+from matplotlib import pyplot as plt
+
+
+def load_desired_stacked_and_parameters(images_used, list_regions):
+    """ Complete function for MRI"""
+    n_samples = 0
+    patient_labels = []
+    stack_region_to_3dimg = None
+    cmap = None
+
+    if images_used == "PET":
+        print("Loading Pet images")
+        stack_region_to_3dimg, patient_labels, n_samples = \
+            pet_loader.load_pet_data_3d(list_regions)
+        cmap="jet"
+
+    elif images_used in ["MRI_GM", "MRI_WM"]:
+        region_to_3dimg_dict_mri_gm, region_to_3dimg_dict_mri_wm,\
+        patient_labels, n_samples = mri_loader.load_mri_data_3d(list_regions)
+        if images_used == "MRI_GM":
+            stack_region_to_3dimg = region_to_3dimg_dict_mri_gm
+            cmap = "Greys"
+        elif images_used == "MRI_WM":
+            stack_region_to_3dimg = region_to_3dimg_dict_mri_wm
+            cmap = "Greys"
+
+    return stack_region_to_3dimg, patient_labels, n_samples, cmap
+
+
+def get_data_to_encode_per_region(region_to_3dimg_dict_pet,
+                                  where_to_mean_data,
+                                  patient_labels):
+    data_to_encode_per_region = None
+    if where_to_mean_data == "before_encoding":
+        data_to_encode_per_region = \
+            get_mean_3d_images_over_samples_per_region(
+                region_to_3dimg_dict_pet = region_to_3dimg_dict_pet,
+                patient_labels = patient_labels)
+    elif where_to_mean_data == "after_encoding":
+        data_to_encode_per_region = region_to_3dimg_dict_pet
+
+    return data_to_encode_per_region
+
+
+def get_data_to_decode(where_to_mean_data, samples, patient_labels):
+    data_to_decode = None
+    if where_to_mean_data == "after_encode":
+        data_to_decode = get_means_by_label_over_flat_samples(
+            data_samples=samples,
+            patient_labels=patient_labels)
+    else:
+        data_to_decode = samples
+
+    return data_to_decode
+
+
+def get_mean_3d_images_over_samples_per_region(region_to_3dimg_dict_pet, patient_labels):
+    """
+
+    :param region_to_3dimg_dict_pet: dict[region] -> 3d_image sh[n_samples, w, h, d]
+    :return: dict[region]-> np.array 3d_mean_image sh[2, w, h, d]
+                         -> array with the mean image negative pos 0, positive pos 1
+    """
+    region_to_class_to_3d_means_imgs = {}
+
+    for region, cube_images in region_to_3dimg_dict_pet.items():
+        class_to_3d_means_imgs = np.zeros([2, cube_images.shape[1],
+                                          cube_images.shape[2], cube_images.shape[3]])
+
+        index_to_selected_images = patient_labels == 0
+        index_to_selected_images = index_to_selected_images.flatten()
+        class_to_3d_means_imgs[0] = \
+            cube_images[index_to_selected_images.tolist(), :, :, :].mean(axis=0)
+
+        index_to_selected_images = patient_labels == 1
+        index_to_selected_images = index_to_selected_images.flatten()
+        class_to_3d_means_imgs[1] = \
+            cube_images[index_to_selected_images, :, :, :].mean(axis=0)
+
+        region_to_class_to_3d_means_imgs[region] = class_to_3d_means_imgs
+
+    return region_to_class_to_3d_means_imgs
+
+
+def get_mean_over_flat_samples_per_region(dict_region_to_img, patient_labels):
+    """
+    """
+    region_to_class_to_3d_means_imgs = {}
+
+    for region, images in dict_region_to_img.items():
+        region_to_class_to_3d_means_imgs[region] = \
+            get_means_by_label_over_flat_samples(images, patient_labels)
+
+    return region_to_class_to_3d_means_imgs
+
+
+def get_means_by_label_over_flat_samples(data_samples, patient_labels):
+    mean_images = np.zeros([2, data_samples.shape[1]])
+
+    mean_images[0, :] = get_mean_over_selected_samples(data_samples, 0, patient_labels)
+    mean_images[1, :] = get_mean_over_selected_samples(data_samples, 1, patient_labels)
+
+    return mean_images
+
+
+def get_mean_over_selected_samples(images, label_selected, patient_labels):
+    index_to_selected_images = patient_labels == label_selected
+    index_to_selected_images = index_to_selected_images.flatten()
+    mean_over_images_selected = images[index_to_selected_images.tolist(), :].mean(axis=0)
+    return mean_over_images_selected
+
+
+def evaluate_cubes_difference_by_planes(cube1, cube2, bool_test=False):
+   if bool_test:
+        print(cube1.shape)
+        print(cube2.shape)
+
+   cube_dif = cube1 - cube2
+   cube_dif = cube_dif.__abs__()
+
+   if bool_test:
+       print("Diferncia dentre los cubos: {}".format(cube_dif.sum()))
+
+   v1 = cube_dif.sum(axis=2).sum(axis=1)
+   v2 = cube_dif.sum(axis=2).sum(axis=0)
+   v3 = cube_dif.sum(axis=0).sum(axis=0)
+
+   return np.argmax(v1), np.argmax(v2), np.argmax(v3)
+
+
+def reconstruct_3d_image_from_flat_and_index(
+        image_flatten, voxels_index, imgsize, reshape_kind):
+
+    mri_image = np.zeros(imgsize)
+    mri_image = mri_image.flatten()
+    mri_image[voxels_index] = np.reshape(image_flatten,
+                                         [image_flatten.shape[0], 1])
+    mri_image_3d = np.reshape(mri_image, imgsize, reshape_kind)
+
+    return mri_image_3d
+
+
+def plot_most_discriminative_section(img3d_1, img3d_2,
+                                     path_to_save_image, cmap):
+
+    dim1, dim2, dim3 = \
+        evaluate_cubes_difference_by_planes(cube1=img3d_1,
+                                            cube2=img3d_2,
+                                            bool_test=True)
+    fig = plt.figure()
+    fig.suptitle("Title centered above all subplots", fontsize=14)
+    plt.subplot(321)
+    plt.imshow(np.rot90(img3d_1[dim1, :, :]), cmap=cmap)
+    plt.subplot(323)
+    plt.imshow(np.rot90(img3d_1[:, dim2, :]), cmap=cmap)
+    plt.subplot(325)
+    plt.imshow(img3d_1[:, :, dim3], cmap=cmap)
+    plt.subplot(322)
+    plt.imshow(np.rot90(img3d_2[dim1, :, :]), cmap=cmap)
+    plt.subplot(324)
+    plt.imshow(np.rot90(img3d_2[:, dim2, :]), cmap=cmap)
+    plt.subplot(326)
+    plt.imshow(img3d_2[:, :, dim3], cmap=cmap)
+    plt.savefig(filename=path_to_save_image, format="png")
