@@ -12,7 +12,7 @@ from lib.vae import CVAE
 
 
 logs = True
-regions_used = "three"
+regions_used = "all"
 session_name = "test_saving_meta_PET_15_07_2017_21:34"
 
 #images_used = "MRI_WM"
