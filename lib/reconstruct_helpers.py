@@ -1,10 +1,7 @@
 import numpy as np
 from lib.data_loader import pet_loader
 from lib.data_loader import mri_loader
-import matplotlib
 from matplotlib import pyplot as plt
-matplotlib.use('Agg')
-
 
 def load_desired_stacked_and_parameters(images_used, list_regions):
     """ Complete function for MRI"""

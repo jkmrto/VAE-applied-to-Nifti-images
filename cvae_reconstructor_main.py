@@ -1,8 +1,8 @@
+import matplotlib
+matplotlib.use('Agg')
 import os
-
 import numpy as np
 import tensorflow as tf
-
 import settings
 from lib import session_helper as session
 from lib import reconstruct_helpers as recons
@@ -10,8 +10,9 @@ from lib.data_loader import utils_images3d
 from lib.utils import output_utils as output
 from lib.vae import CVAE
 
+
 logs = True
-regions_used = "all"
+regions_used = "three"
 session_name = "test_saving_meta_PET_15_07_2017_21:34"
 
 #images_used = "MRI_WM"
