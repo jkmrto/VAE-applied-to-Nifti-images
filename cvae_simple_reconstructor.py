@@ -42,7 +42,7 @@ images_used = "PET"
 
 #vae_used = "dense_vae"
 
-iters = 500
+max_iters = 500
 
 list_regions = session.select_regions_to_evaluate(regions_used)
 path_session = os.path.join(settings.path_to_general_out_folder, session_name)
@@ -70,7 +70,7 @@ for region, cube_images in stack_region_to_3dimg.items():
 reconstruction_per_region = {}
 for region in list_regions:
 
-    max_iters = get_adequate_number_iterations(
+    iters = get_adequate_number_iterations(
         region_selected=region,
         explicit_iter_per_region = explicit_iter_per_region,
         predefined_iters = max_iters)
