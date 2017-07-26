@@ -78,15 +78,16 @@ def delete_cv_gm_wm_premetada_session():
     clear_meta_folder(GM_session_to_clean)
 
 
-def delete_simple_session():
-    main_session_name = ""
-    vae_session = "cvae_create_meta_nets_iter_500_26_07_2017_20:15"
+def delete_simple_session(session_to_clean_meta_folder=None):
 
-    session_to_clean = os.path.join(settings.path_to_general_out_folder,
-                                    vae_session, "meta")
+    if session_to_clean_meta_folder is  None:
+        vae_session = "cvae_create_meta_nets_iter_500_26_07_2017_20:15"
+
+        session_to_clean_meta_folder = os.path.join(settings.path_to_general_out_folder,
+                                vae_session, "meta")
 
     # clear_meta_folder(WM_session_to_clean)
-    clear_meta_folder(session_to_clean)
+    clear_meta_folder(session_to_clean_meta_folder)
 
 
 #delete_cv_gm_wm_premetada_session()
