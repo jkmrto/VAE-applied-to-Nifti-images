@@ -10,7 +10,10 @@ from lib.data_loader import utils_images3d
 from lib.utils import output_utils as output
 from lib.vae import CVAE
 
-
+path_image = "reconstruction_individual_images.png"
+#AD 123
+#NOR 22
+patients_selected_per_class = {"NOR": 22, "AD": 123}
 logs = True
 regions_used = "all"
 session_name = "test_saving_meta_PET_15_07_2017_21:34"
@@ -24,7 +27,8 @@ vae_used = "conv_vae"
 iters = 100
 
 #where_to_mean_data = "after_encoding"
-where_to_mean_data = "before_encoding"
+#where_to_mean_data = "before_encoding"
+where_to_mean_data = "no_mean_individual_input"
 
 list_regions = session.select_regions_to_evaluate(regions_used)
 path_session = os.path.join(settings.path_to_general_out_folder, session_name)
@@ -33,11 +37,12 @@ print(path_meta)
 
 stack_region_to_3dimg, patient_labels, n_samples, cmap = \
     recons.load_desired_stacked_and_parameters(images_used, list_regions, )
-# Loading dataç
 
 data_to_encode_per_region = \
-    recons.get_data_to_encode_per_region(stack_region_to_3dimg,
-                                         where_to_mean_data, patient_labels)
+    recons.get_data_to_encode_per_region(
+        stack_region_to_3dimg,where_to_mean_data, patient_labels,
+        patients_selected_if_individual_treatment=
+        patients_selected_per_class)
 
 reconstruction_per_region = {}
 for region in list_regions:
@@ -70,9 +75,10 @@ for region in list_regions:
         print("images regenerated shape {}".format(images_3d_regenerated.shape))
 
 
-print("Reconstructing images")
+print("Mapping Reconstructing images")
 whole_reconstruction = \
     utils_images3d.map_region_segmented_over_full_image(reconstruction_per_region, images_used)
+print("Mapping Reconstructing images ended")
 
 output.from_3d_image_to_nifti_file(path_to_save="example_neg",
                                    image3d=whole_reconstruction[0, :, :, :])
@@ -83,7 +89,7 @@ output.from_3d_image_to_nifti_file(path_to_save="example_pos",
 recons.plot_most_discriminative_section(
     img3d_1=whole_reconstruction[0, :, :, :],
     img3d_2=whole_reconstruction[1, :, :, :],
-    path_to_save_image="cvae_reconstructor_main.png",
+    path_to_save_image=path_image,
     cmap=cmap)
 
 if logs:

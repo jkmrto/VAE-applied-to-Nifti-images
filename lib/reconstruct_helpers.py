@@ -3,6 +3,7 @@ from lib.data_loader import pet_loader
 from lib.data_loader import mri_loader
 from matplotlib import pyplot as plt
 
+
 def load_desired_stacked_and_parameters(images_used, list_regions):
     """ Complete function for MRI"""
     n_samples = 0
@@ -31,13 +32,28 @@ def load_desired_stacked_and_parameters(images_used, list_regions):
 
 def get_data_to_encode_per_region(region_to_3dimg_dict_pet,
                                   where_to_mean_data,
-                                  patient_labels):
+                                  patient_labels,
+                                  patients_selected_if_individual_treatment):
+    """
+
+    :param region_to_3dimg_dict_pet:  dict[region] -> 3d_img sh[n_samples,w,h,d]
+    :param where_to_mean_data:
+    :param patient_labels:
+    :param patients_selected_if_individual_treatment: dict["NOR"|"AD"] -> index_patient_selected
+    :return:
+    """
     data_to_encode_per_region = None
     if where_to_mean_data == "before_encoding":
         data_to_encode_per_region = \
             get_mean_3d_images_over_samples_per_region(
                 region_to_3dimg_dict_pet = region_to_3dimg_dict_pet,
                 patient_labels = patient_labels)
+    elif where_to_mean_data == "no_mean_individual_input":
+        data_to_encode_per_region = \
+            get_representatives_samples_over_region_per_patient_indexes(
+                region_to_3d_images_dict=region_to_3dimg_dict_pet,
+                indexes_per_group=patients_selected_if_individual_treatment)
+
     elif where_to_mean_data == "after_encoding":
         data_to_encode_per_region = region_to_3dimg_dict_pet
 
@@ -50,13 +66,38 @@ def get_data_to_decode(where_to_mean_data, samples, patient_labels):
         data_to_decode = get_means_by_label_over_flat_samples(
             data_samples=samples,
             patient_labels=patient_labels)
-    else:
+
+    elif where_to_mean_data== "before_encoding":
+        data_to_decode = samples
+
+    elif where_to_mean_data == "no_mean_individual_input":
         data_to_decode = samples
 
     return data_to_decode
 
 
-def get_mean_3d_images_over_samples_per_region(region_to_3dimg_dict_pet, patient_labels):
+def get_representatives_samples_over_region_per_patient_indexes(
+        region_to_3d_images_dict, indexes_per_group):
+
+    region_to_class_to_3d_means_imgs = {}
+
+    for region, cube_images in region_to_3d_images_dict.items():
+        class_to_3d_means_imgs = np.zeros([2, cube_images.shape[1],
+                                          cube_images.shape[2], cube_images.shape[3]])
+
+        class_to_3d_means_imgs[0,:,:,:] = \
+            cube_images[indexes_per_group["NOR"], :, :, :]
+
+        class_to_3d_means_imgs[1,:,:,:] = \
+            cube_images[indexes_per_group["AD"], :, :, :]
+
+        region_to_class_to_3d_means_imgs[region] = class_to_3d_means_imgs
+
+    return region_to_class_to_3d_means_imgs
+
+
+def get_mean_3d_images_over_samples_per_region(region_to_3dimg_dict_pet,
+                                               patient_labels):
     """
 
     :param region_to_3dimg_dict_pet: dict[region] -> 3d_image sh[n_samples, w, h, d]
@@ -135,8 +176,12 @@ def reconstruct_3d_image_from_flat_and_index(
 
     mri_image = np.zeros(imgsize)
     mri_image = mri_image.flatten()
-    mri_image[voxels_index] = np.reshape(image_flatten,
-                                         [image_flatten.shape[0], 1])
+    try:
+        mri_image[voxels_index] = np.reshape(image_flatten,
+                                             [image_flatten.shape[0], 1])
+    except:
+        mri_image[voxels_index] = image_flatten
+
     mri_image_3d = np.reshape(mri_image, imgsize, reshape_kind)
 
     return mri_image_3d
