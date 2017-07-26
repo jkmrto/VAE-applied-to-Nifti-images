@@ -10,13 +10,15 @@ regions_used = "all"
 list_regions = session_helper.select_regions_to_evaluate(regions_used)
 region_to_img_dict = load_pet_regions_segmented(list_regions,
                                                 bool_logs=False)
-explicit_iter_per_region = {}
+explicit_iter_per_region = {
+    73: 300,
+}
 
 hyperparams = {'latent_layer_dim': 100,
                'kernel_size': 5,
                'activation_layer': ops.lrelu,
                'features_depth': [1, 16, 32],
-               'decay_rate': 0.002,
+               'decay_rate': 0.005,
                'learning_rate': 0.001,
                'lambda_l2_regularization': 0.0001}
 
