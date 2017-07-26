@@ -34,7 +34,7 @@ path_to_session = execute_saving_meta_graph_without_any_cv(
     session_conf=session_conf,
     list_regions=list_regions,
     path_to_root=settings.path_to_general_out_folder,
-    session_prefix="cvae_create_meta_nets_iter_500",
+    session_prefix="cvae_create_meta_nets_iter_1000",
     explicit_iter_per_region=explicit_iter_per_region)
 
 # deleting temporal meta data generated
