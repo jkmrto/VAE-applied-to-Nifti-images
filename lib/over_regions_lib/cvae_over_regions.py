@@ -4,7 +4,7 @@ from datetime import datetime
 
 import numpy as np
 import tensorflow as tf
-
+from lib.utils import output_utils
 import lib.neural_net.kfrans_ops as ops
 import settings
 from lib import session_helper
@@ -17,7 +17,7 @@ from lib.vae import CVAE
 
 def get_adequate_number_iterations(region_selected, explicit_iter_per_region,
                                    predefined_iters):
-    if region_selected in explicit_iter_per_region:
+    if region_selected in explicit_iter_per_region.keys():
         if explicit_iter_per_region[region_selected] < predefined_iters:
             max_train_iter = explicit_iter_per_region[region_selected]
         else:
@@ -32,13 +32,26 @@ def execute_saving_meta_graph_without_any_cv(region_cubes_dict, hyperparams,
                                              session_conf, list_regions,
                                              path_to_root,
                                              session_prefix="",
-                                             explicit_iter_per_region=[]):
+                                             explicit_iter_per_region={}):
 
     own_datetime = datetime.now().strftime(r"%d_%m_%_Y_%H:%M")
     session_name = session_prefix + "_" + own_datetime
 
     path_to_session = os.path.join(path_to_root, session_name)
     create_directories([path_to_session])
+
+    #Session description issues
+    session_descriptor = {}
+    session_descriptor['VAE hyperparameters'] = hyperparams
+    session_descriptor['VAE session configuration'] = session_conf
+    path_session_description_file = os.path.join(path_to_session,
+                                                 "session_description.txt")
+
+    file_session_descriptor = open(path_session_description_file, "w")
+    output_utils.print_recursive_dict(session_descriptor,
+                                      file=file_session_descriptor)
+    file_session_descriptor.close()
+
 
     # LOOP OVER REGIONS
     for region_selected in list_regions:
@@ -62,7 +75,7 @@ def execute_saving_meta_graph_without_any_cv(region_cubes_dict, hyperparams,
                                                         explicit_iter_per_region,
                                                         predefined_iters=
                                                         session_conf["n_iters"])
-
+        print("Numbers Iters requered {}".format(max_train_iter))
         out = model.train(X=train_cube_images,
                           n_iters=max_train_iter,
                           batchsize=session_conf["batch_size"],
