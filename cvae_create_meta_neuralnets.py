@@ -19,12 +19,12 @@ hyperparams = {'latent_layer_dim': 100,
                'kernel_size': 5,
                'activation_layer': ops.lrelu,
                'features_depth': [1, 16, 32],
-               'decay_rate': 0.005,
+               'decay_rate': 0.0025,
                'learning_rate': 0.001,
                'lambda_l2_regularization': 0.0001}
 
 session_conf = {'bool_normalized': True,
-                'n_iters': 500,
+                'n_iters': 1000,
                 "batch_size": 16,
                 "show_error_iter": 10}
 
