@@ -91,4 +91,4 @@ def delete_simple_session(session_to_clean_meta_folder=None):
 
 
 #delete_cv_gm_wm_premetada_session()
-delete_simple_session()
+#delete_simple_session()
