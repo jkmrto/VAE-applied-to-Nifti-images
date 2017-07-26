@@ -80,7 +80,7 @@ def delete_cv_gm_wm_premetada_session():
 
 def delete_simple_session():
     main_session_name = ""
-    vae_session = "02_06_2017_23:20 arch: 1000_800_500_200"
+    vae_session = "cvae_create_meta_nets_iter_500_26_07_2017_20:15"
 
     session_to_clean = os.path.join(settings.path_to_general_out_folder,
                                     vae_session, "meta")
