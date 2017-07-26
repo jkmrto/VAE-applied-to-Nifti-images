@@ -70,10 +70,10 @@ for region, cube_images in stack_region_to_3dimg.items():
 reconstruction_per_region = {}
 for region in list_regions:
 
-    get_adequate_number_iterations(
+    max_iters = get_adequate_number_iterations(
         region_selected=region,
         explicit_iter_per_region = explicit_iter_per_region,
-        predefined_iters = iters)
+        predefined_iters = max_iters)
 
     print("region {} selected".format(region))
     meta_region_file = "region_{0}-{1}".format(region, iters)
