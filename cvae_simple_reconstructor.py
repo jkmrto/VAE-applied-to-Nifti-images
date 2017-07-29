@@ -35,7 +35,7 @@ p1 = 52
 p2 = 51
 p3 = 13
 
-path_image = "simple_individual_reconstruction.png"
+path_image = "sample_120_reconstruction.png"
 #AD 123
 #NOR 22
 logs = True
@@ -128,5 +128,5 @@ recons.plot_section_indicated(
     img3d_1=whole_reconstruction[0, :, :, :],
     img3d_2=origin_image[0, :, :, :],
     p1=p1, p2=p2, p3=p3,
-    path_to_save_image="path_image.png",
+    path_to_save_image=path_image,
     cmap=cmap)
