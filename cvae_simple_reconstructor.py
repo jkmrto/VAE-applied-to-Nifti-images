@@ -36,7 +36,7 @@ path_image = "simple_individual_reconstruction.png"
 logs = True
 sample = 30
 regions_used = "all"
-session_name = "cvae_create_meta_nets_iter_500_26_07_2017_20:15"
+session_name = "cvae_create_meta_nets_iter_1000_27_07_2017_00:40"
 
 images_used = "PET"
 

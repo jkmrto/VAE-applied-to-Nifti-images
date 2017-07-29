@@ -1,0 +1,1 @@
+hipocampo_regions = [38,39,40]
