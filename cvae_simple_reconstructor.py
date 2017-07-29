@@ -35,11 +35,11 @@ p1 = 52
 p2 = 51
 p3 = 13
 
-path_image = "out/sample_120_reconstruction.png"
+path_image = "out/sample_10_reconstruction.png"
 #AD 123
 #NOR 22
 logs = True
-sample = 120
+sample = 10
 regions_used = "all"
 session_name = "cvae_create_meta_nets_iter_1000_27_07_2017_00:40"
 
