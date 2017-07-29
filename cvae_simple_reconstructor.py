@@ -13,6 +13,7 @@ from lib.data_loader import utils_images3d
 from lib.utils import output_utils as output
 from lib.vae import CVAE
 
+
 def get_adequate_number_iterations(region_selected, explicit_iter_per_region,
                                    predefined_iters):
     if region_selected in explicit_iter_per_region.keys():
@@ -30,11 +31,9 @@ explicit_iter_per_region = {
     73: 300,
 }
 
-
 p1 = 52
 p2 = 51
 p3 = 13
-
 
 path_image = "simple_individual_reconstruction.png"
 #AD 123

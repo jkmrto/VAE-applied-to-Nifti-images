@@ -15,7 +15,7 @@ explicit_iter_per_region = {
     73: 300,
 }
 
-hyperparams = {'latent_layer_dim': 100,
+hyperparams = {'latent_layer_dim': 1000,
                'kernel_size': 5,
                'activation_layer': ops.lrelu,
                'features_depth': [1, 16, 32],
