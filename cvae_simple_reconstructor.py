@@ -30,19 +30,25 @@ explicit_iter_per_region = {
     73: 300,
 }
 
+
+p1 = 52
+p2 = 51
+p3 = 13
+
+
 path_image = "simple_individual_reconstruction.png"
 #AD 123
 #NOR 22
 logs = True
-sample = 30
+sample = 120
 regions_used = "all"
 session_name = "cvae_create_meta_nets_iter_1000_27_07_2017_00:40"
 
 images_used = "PET"
 
 #vae_used = "dense_vae"
+max_iters = 1000
 
-max_iters = 500
 
 list_regions = session.select_regions_to_evaluate(regions_used)
 path_session = os.path.join(settings.path_to_general_out_folder, session_name)
@@ -119,14 +125,9 @@ output.from_3d_image_to_nifti_file(path_to_save="example_neg",
 output.from_3d_image_to_nifti_file(path_to_save="example_pos",
                                    image3d=origin_image[0, :, :, :])
 
-recons.plot_most_discriminative_section(
+recons.plot_section_indicated(
     img3d_1=whole_reconstruction[0, :, :, :],
     img3d_2=origin_image[0, :, :, :],
-    path_to_save_image=path_image,
-    cmap=cmap)
-
-if logs:
-    evaluate_difference_full_image = whole_reconstruction[0, :, :, :].flatten() \
-                                     - origin_image[0, :, :, :].flatten()
-    total_difference = sum(abs(evaluate_difference_full_image))
-    print("Total difference between images reconstructed {0}".format(total_difference))
+    p1=p1, p2=p2, p3=p3,
+    path_to_save_image="path_image.png",
+    cmap="cmap")
