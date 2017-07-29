@@ -130,4 +130,4 @@ recons.plot_section_indicated(
     img3d_2=origin_image[0, :, :, :],
     p1=p1, p2=p2, p3=p3,
     path_to_save_image="path_image.png",
-    cmap="cmap")
+    cmap=cmap)
