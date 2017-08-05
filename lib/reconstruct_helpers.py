@@ -176,6 +176,7 @@ def reconstruct_3d_image_from_flat_and_index(
 
     mri_image = np.zeros(imgsize)
     mri_image = mri_image.flatten()
+
     try:
         mri_image[voxels_index] = np.reshape(image_flatten,
                                              [image_flatten.shape[0], 1])
@@ -215,3 +216,6 @@ def plot_section_indicated(img3d_1, img3d_2, p1, p2, p3, path_to_save_image, cma
     plt.subplot(326)
     plt.imshow(img3d_2[:, :, p3], cmap=cmap)
     plt.savefig(filename=path_to_save_image, format="png")
+
+
+

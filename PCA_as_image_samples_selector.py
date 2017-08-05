@@ -4,12 +4,6 @@ from sklearn.decomposition import PCA
 from matplotlib import pyplot
 
 
-def evaluate_dif(array1, array2):
-
-    diff = sum(abs(array1 - array2))
-    return diff
-
-
 print("Loading Pet images")
 stack_dict = PET_stack_NORAD.get_full_stack()
 stack = stack_dict['stack']
@@ -53,7 +47,7 @@ shape = out.shape
 out_matrix = np.zeros([shape[0], shape[0]])
 for i in range(0, shape[0], 1):
     for j in range(0, shape[0], 1):
-        out_matrix[i, j] = evaluate_dif(array1=out[i, :],
+        out_matrix[i, j] = recons.evaluate_diff_flatr(array1=out[i, :],
                                         array2=out[j, :])
 
 print(out_matrix)

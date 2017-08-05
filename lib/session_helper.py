@@ -88,3 +88,16 @@ def load_encoding_per_folder(path_to_out, region_selected):
     out['desvs'] = np.genfromtxt(path_to_out_desv, delimiter=",")
 
     return out
+
+
+def get_adequate_number_iterations(region_selected, explicit_iter_per_region,
+                                   predefined_iters):
+    if region_selected in explicit_iter_per_region.keys():
+        if explicit_iter_per_region[region_selected] < predefined_iters:
+            max_train_iter = explicit_iter_per_region[region_selected]
+        else:
+            max_train_iter = predefined_iters
+    else:
+        max_train_iter = predefined_iters
+
+    return max_train_iter

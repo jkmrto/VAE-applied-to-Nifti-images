@@ -24,6 +24,12 @@ def get_batch_from_samples_unsupervised(X, batch_size):
     return X[index, :]
 
 
+def get_batch_from_samples_supervised_3d(X, Y, batch_size):
+    index = np.random.choice(range(X.shape[0]), batch_size, replace=False)
+    index = index.tolist()
+    return X[index, :, :, :], Y[index]
+
+
 def get_batch_from_samples_unsupervised_3d(X, batch_size):
     index = np.random.choice(range(X.shape[0]), batch_size, replace=False)
     index = index.tolist()

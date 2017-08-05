@@ -15,19 +15,6 @@ from lib.utils import cv_utils
 from lib.vae import CVAE
 
 
-def get_adequate_number_iterations(region_selected, explicit_iter_per_region,
-                                   predefined_iters):
-    if region_selected in explicit_iter_per_region.keys():
-        if explicit_iter_per_region[region_selected] < predefined_iters:
-            max_train_iter = explicit_iter_per_region[region_selected]
-        else:
-            max_train_iter = predefined_iters
-    else:
-        max_train_iter = predefined_iters
-
-    return max_train_iter
-
-
 def execute_saving_meta_graph_without_any_cv(region_cubes_dict, hyperparams,
                                              session_conf, list_regions,
                                              path_to_root,
@@ -71,7 +58,8 @@ def execute_saving_meta_graph_without_any_cv(region_cubes_dict, hyperparams,
         tf.reset_default_graph()
         model = CVAE.CVAE(hyperparams, path_to_session=path_to_session)
 
-        max_train_iter = get_adequate_number_iterations(region_selected,
+        max_train_iter = session_helper.get_adequate_number_iterations(
+                                                        region_selected,
                                                         explicit_iter_per_region,
                                                         predefined_iters=
                                                         session_conf["n_iters"])
