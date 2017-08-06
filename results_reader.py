@@ -42,6 +42,12 @@ for row in reader:
     list_rows.append(row)
 
 
+container_dict_by_evaluation_method = {
+    "SVM_weighted": {},
+    "Complex_Majority_Vote": {},
+    "Simple_Majority_Vote": {},
+}
+
 
 for evaluation in evaluation_type:
     for execution in execution_type:

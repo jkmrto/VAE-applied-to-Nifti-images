@@ -19,6 +19,8 @@ explicit_iter_per_region = {
     74: 200,
 }
 
+extraploate_index = 5
+
 session_name = "cvae_supevised_create_meta_nets_layer_500_iters_06_08_2017_14:58"
 logs = True
 
@@ -76,6 +78,11 @@ for region in list_regions:
 
     data_to_decode = encoding_out["mean"]
 
+    # EXTRAPOLING OVER LATENT CODE
+    latent_code_dif_rate = data_to_decode[1, :, :, :] - data_to_decode[0, :, :, :]
+    data_to_decode[1,:,:,:] += latent_code_dif_rate * extraploate_index
+    data_to_decode[0,:,:,:] += (-latent_code_dif_rate * extraploate_index)
+
     if logs:
         print("Shape enconding_out mean {}".format(data_to_decode.shape))
 
@@ -120,7 +127,7 @@ recons.plot_section_indicated(
     path_to_save_image=os.path.join(path_reconstruction_images,
                                     "Original_NORvsOriginal_AD.png"),
     cmap=cmap,
-    tittle="Original AD vs original NOR")
+    tittle="Original NOR vs original AD")
 
 # Reconstructed AD vs Reconstructred Nor
 recons.plot_section_indicated(
@@ -132,7 +139,7 @@ recons.plot_section_indicated(
     path_to_save_image=os.path.join(path_reconstruction_images,
                                     "Reconstructed_NORvsReconstructed_AD.png"),
     cmap=cmap,
-    tittle="Reconstructed AD vs Reconstructed NOR")
+    tittle="Reconstructed NOR vs Reconstructed AD")
 
 # Reconstructed AD vs Original AD
 recons.plot_section_indicated(
