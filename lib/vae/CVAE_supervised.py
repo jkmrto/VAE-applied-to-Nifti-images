@@ -57,7 +57,8 @@ class CVAE():
             if self.path_session_folder is not None:
                 self.__init_session_folders()
 
-            handles = [self.in_flat_images, self.z_mean, self.z_stddev,
+            handles = [self.in_flat_images, self.in_labels,
+                       self.z_mean, self.z_stddev,
                        self.z_in_, self.regenerated_3d_images_]
             for handle in handles:
                 tf.add_to_collection(CVAE.RESTORE_KEY, handle)
@@ -69,8 +70,9 @@ class CVAE():
 
             # initializing attributes
             handles = self.session.graph.get_collection_ref(CVAE.RESTORE_KEY)
-            self.in_flat_images, self.z_mean, self.z_stddev, \
-            self.z_in_, self.regenerated_3d_images_= handles[0:5]
+            self.in_flat_images, self.in_labels,\
+            self.z_mean, self.z_stddev, \
+            self.z_in_, self.regenerated_3d_images_= handles[0:6]
 
             # initialing variables
             self.n_z = self.z_in_.get_shape().as_list()[1]
