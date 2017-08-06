@@ -5,7 +5,8 @@ import numpy as np
 
 logs = True
 hipocampo_regions = [38, 39, 40]
-
+sample_NOR = 10
+sample_AD = 120
 # atlas load index referred to not background flatten voxels
 atlas = pet_atlas.load_atlas()
 
@@ -48,13 +49,13 @@ print("Section selected per axis postion: {0}, {1}, {2}".format(m1, m2, m3))
 print("Section selected per axis maximum: {0}, {1}, {2}".format(p1, p2, p3))
 
 nor_3d_sample = recons.reconstruct_3d_image_from_flat_and_index(
-    image_flatten= stack[10,:],
+    image_flatten= stack[sample_NOR,:],
     voxels_index=voxels_index,
     imgsize=imgsize,
     reshape_kind=reshape_kind)
 
 ad_3d_sample = recons.reconstruct_3d_image_from_flat_and_index(
-    image_flatten= stack[120,:],
+    image_flatten= stack[sample_AD,:],
     voxels_index=voxels_index,
     imgsize=imgsize,
     reshape_kind=reshape_kind)

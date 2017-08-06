@@ -23,8 +23,8 @@ session_name = "cvae_supevised_create_meta_nets_layer_500_iters_06_08_2017_14:58
 logs = True
 
 # SAMPLES SELECTED
-sample_AD = 123
-sample_NOR = 22
+sample_NOR = 10
+sample_AD = 120
 samples_indexes = [sample_NOR, sample_AD]
 
 
