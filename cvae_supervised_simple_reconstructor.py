@@ -16,9 +16,10 @@ from lib.aux_functionalities.os_aux import create_directories
 
 explicit_iter_per_region = {
     73: 300,
+    74: 200,
 }
 
-session_name = "cvae_supevised_create_meta_nets_layer_500_iters_05_08_2017_23:15"
+session_name = "cvae_supevised_create_meta_nets_layer_500_iters_06_08_2017_14:40"
 logs = True
 
 # SAMPLES SELECTED

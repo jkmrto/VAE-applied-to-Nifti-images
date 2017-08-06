@@ -16,6 +16,7 @@ region_to_img_dict = load_pet_regions_segmented(list_regions,
                                                 bool_logs=False)
 explicit_iter_per_region = {
     73: 300,
+    74: 200,
 }
 
 hyperparams = {'latent_layer_dim': 100,
