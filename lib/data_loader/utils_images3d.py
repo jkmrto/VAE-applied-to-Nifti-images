@@ -141,3 +141,4 @@ def get_samples_in_stacked_region_to_3dsegmented_region(stack_region_to_3dimg,
     return origin_images_to_encode
 
 def get_stack_images_by_label(stack_region_to_3dimg, label, labels_selected):
+    pass
