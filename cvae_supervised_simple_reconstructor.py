@@ -19,7 +19,7 @@ explicit_iter_per_region = {
     74: 200,
 }
 
-session_name = "cvae_supevised_create_meta_nets_layer_500_iters_06_08_2017_14:40"
+session_name = "cvae_supevised_create_meta_nets_layer_500_iters_06_08_2017_14:58"
 logs = True
 
 # SAMPLES SELECTED
