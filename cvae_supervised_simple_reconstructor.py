@@ -39,7 +39,9 @@ max_iters = 500
 path_session = os.path.join(settings.path_to_general_out_folder, session_name)
 path_meta = os.path.join(path_session, "meta")
 path_images = os.path.join(path_session, "images")
-path_reconstruction_images = os.path.join(path_images, "simple_reconstructor")
+path_reconstruction_images = os.path.join(path_images,
+    "simple_reconstructor_with_extrapoling_{}".format(extraploate_index
+                                                      ))
 create_directories([path_reconstruction_images])
 
 
