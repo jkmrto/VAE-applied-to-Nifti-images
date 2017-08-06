@@ -50,3 +50,9 @@ explicit_iter_per_region = {
     75: 60,
 
 }
+
+planos_hipocampo = {
+    "p1": 52,
+    "p2": 51,
+    "p3": 13,
+}

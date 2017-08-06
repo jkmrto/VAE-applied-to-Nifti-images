@@ -99,7 +99,9 @@ class CVAE():
                                    dtype=tf.float32)
         guessed_z = self.z_mean + (self.z_stddev * samples)
 
-        concat_input = tf.concat(values=[guessed_z, self.in_labels], axis=1, name="concat")
+        concat_input = tf.concat(values=[guessed_z, self.in_labels],
+                                 axis=1, name="concat")
+
         self.generated_images = self.__generation(concat_input, reuse_bool=False)
         generated_flat = tf.reshape(self.generated_images,
                                     tf.shape(self.in_flat_images))
@@ -124,10 +126,10 @@ class CVAE():
         self.z_in_ = tf.placeholder(tf.float32,
             shape=[None, self.n_z], name="latent_in")
 
-        concat_input = tf.concat(values=[guessed_z, self.in_labels], axis=1,
+        concat_input_ = tf.concat(values=[self.z_in_, self.in_labels], axis=1,
                                  name="concat")
 
-        generated_images_ = self.__generation(concat_input, reuse_bool=True)
+        generated_images_ = self.__generation(concat_input_, reuse_bool=True)
 
         self.regenerated_3d_images_ = \
             tf.reshape(generated_images_,
@@ -279,7 +281,7 @@ class CVAE():
 
         return input_images_flat
 
-    def decoder(self, latent_layer_input, original_images):
+    def decoder(self, latent_layer_input, original_images, labels):
         """
 
         :param input_images: shape [n_samples]
@@ -290,7 +292,10 @@ class CVAE():
             self.__inspect_and_reshape_to_flat_input_images(original_images)
 
         feed_dict = {self.z_in_: latent_layer_input,
-                     self.in_flat_images: input_images}
+                     self.in_flat_images: input_images,
+                     self.in_labels:
+                         self.__generate_double_label(labels)
+                     }
 
         return self.session.run(self.regenerated_3d_images_,
                                 feed_dict=feed_dict)
@@ -382,6 +387,8 @@ class CVAE():
 
     @staticmethod
     def __generate_double_label(vector):
+        if isinstance(vector, list):
+            vector = np.array(vector)
         vector = np.reshape(vector, [vector.size, 1])
         v1 = vector
         v2 = np.abs(vector - 1)

@@ -200,7 +200,8 @@ def plot_most_discriminative_section(img3d_1, img3d_2,
                            dim3, path_to_save_image, cmap)
 
 
-def plot_section_indicated(img3d_1, img3d_2, p1, p2, p3, path_to_save_image, cmap):
+def plot_section_indicated(img3d_1, img3d_2, p1, p2, p3, path_to_save_image,
+                           cmap, tittle=""):
     fig = plt.figure()
     fig.suptitle("Title centered above all subplots", fontsize=14)
     plt.subplot(321)
@@ -215,6 +216,7 @@ def plot_section_indicated(img3d_1, img3d_2, p1, p2, p3, path_to_save_image, cma
     plt.imshow(np.rot90(img3d_2[:, p2, :]), cmap=cmap)
     plt.subplot(326)
     plt.imshow(img3d_2[:, :, p3], cmap=cmap)
+    plt.title(tittle)
     plt.savefig(filename=path_to_save_image, format="png")
 
 

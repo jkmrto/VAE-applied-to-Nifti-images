@@ -13,20 +13,6 @@ from lib.data_loader import utils_images3d
 from lib.utils import output_utils as output
 from lib.vae import CVAE
 
-
-def get_adequate_number_iterations(region_selected, explicit_iter_per_region,
-                                   predefined_iters):
-    if region_selected in explicit_iter_per_region.keys():
-        if explicit_iter_per_region[region_selected] < predefined_iters:
-            max_train_iter = explicit_iter_per_region[region_selected]
-        else:
-            max_train_iter = predefined_iters
-    else:
-        max_train_iter = predefined_iters
-
-    return max_train_iter
-
-
 explicit_iter_per_region = {
     73: 300,
 }
@@ -46,7 +32,7 @@ session_name = "cvae_create_meta_nets_iter_1000_27_07_2017_00:40"
 images_used = "PET"
 
 #vae_used = "dense_vae"
-max_iters = 1000
+max_iters = 500
 
 
 list_regions = session.select_regions_to_evaluate(regions_used)
@@ -75,7 +61,7 @@ for region, cube_images in stack_region_to_3dimg.items():
 reconstruction_per_region = {}
 for region in list_regions:
 
-    iters = get_adequate_number_iterations(
+    iters = session.get_adequate_number_iterations(
         region_selected=region,
         explicit_iter_per_region = explicit_iter_per_region,
         predefined_iters = max_iters)

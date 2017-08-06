@@ -64,7 +64,7 @@ def map_region_segmented_over_full_image(reconstruction_per_region, images_used)
 
     :param reconstruction_per_region: dict[region] -> ty[np.darray],
            sh[n_samples, w, h, d]
-    :return: whole_reconstruction: ty[np.darray] sh[h,w,d]
+    :return: whole_reconstruction: ty[np.darray] sh[n_samples, h,w,d]
 
     """
     atlas, dict_parameters, reshape_kind = \
@@ -90,6 +90,7 @@ def map_region_segmented_over_full_image(reconstruction_per_region, images_used)
             atlas=atlas,
             reshape_kind=reshape_kind)
 
+        # Loop over samples
         for image_index in range(0,number_3dimages_to_reconstruct,1):
             region_3dimage_selected = \
                 reconstruction_per_region[region][image_index, :, :, :]
@@ -117,3 +118,26 @@ def map_region_segmented_over_full_image(reconstruction_per_region, images_used)
                     whole_3d_image_size, reshape_kind)
 
     return whole_reconstruction
+
+
+def get_samples_in_stacked_region_to_3dsegmented_region(stack_region_to_3dimg,
+                                                        samples_indexes):
+    origin_images_to_encode = {}
+    n_samples = len(samples_indexes)
+
+    # selecting two samples required
+    for region, cube_images in stack_region_to_3dimg.items():
+        class_to_3d_means_imgs = np.zeros([n_samples, cube_images.shape[1],
+                                       cube_images.shape[2],
+                                       cube_images.shape[3]])
+
+        for index in range(0, n_samples,1):
+            class_to_3d_means_imgs[index, :, :, :] = \
+                cube_images[samples_indexes[index], :, :, :]
+
+
+        origin_images_to_encode[region] = class_to_3d_means_imgs
+
+    return origin_images_to_encode
+
+def get_stack_images_by_label(stack_region_to_3dimg, label, labels_selected):
