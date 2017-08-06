@@ -50,8 +50,7 @@ container_dict_by_evaluation_method = {
 
 intent = {' true_positive_rate',
           ' false_positive_rate',
-          'threshold '
-          ""}
+          'threshold '}
 
 for key in container_dict_by_evaluation_method.keys():
     container_dict_by_evaluation_method[key] = "test"

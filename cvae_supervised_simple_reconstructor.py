@@ -82,8 +82,8 @@ for region in list_regions:
 
     # EXTRAPOLING OVER LATENT CODE
     latent_code_dif_rate = data_to_decode[1, :] - data_to_decode[0, :]
-    data_to_decode[1,:] += latent_code_dif_rate * extraploate_index
-    data_to_decode[0,:] += (-latent_code_dif_rate * extraploate_index)
+    data_to_decode[1, :] += latent_code_dif_rate * extraploate_index
+    data_to_decode[0, :] += (-latent_code_dif_rate * extraploate_index)
 
     if logs:
         print("Shape enconding_out mean {}".format(data_to_decode.shape))
