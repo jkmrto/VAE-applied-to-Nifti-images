@@ -48,6 +48,14 @@ container_dict_by_evaluation_method = {
     "Simple_Majority_Vote": {},
 }
 
+intent = {' true_positive_rate',
+          ' false_positive_rate',
+          'threshold '
+          ""}
+
+for key in container_dict_by_evaluation_method.keys():
+    container_dict_by_evaluation_method[key] = "test"
+    container_dict_by_evaluation_method[key] = "train"
 
 for evaluation in evaluation_type:
     for execution in execution_type:
