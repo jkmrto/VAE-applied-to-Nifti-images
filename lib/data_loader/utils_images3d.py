@@ -141,5 +141,23 @@ def get_samples_in_stacked_region_to_3dsegmented_region(stack_region_to_3dimg,
     return origin_images_to_encode
 
 
-def get_stack_images_by_label(stack_region_to_3dimg, label, labels_selected):
-    pass
+def get_stack_3dimages_filtered_by_label(stack_region_to_3dimg, samples_label,
+                              label_selected):
+    """
+
+    :param stack_region_to_3dimg: stack[region] -> sh[n_samples, w_region,
+                                                      h_region, d_region ]
+    :param samples_label: ty[np.array] sh[n_samples] ct[0|1]
+    :param label_selected: ty[Integer] 0|1
+    :return:
+    """
+
+    stacker_filtered_region_to_3dimg = {}
+    for region, images in stack_region_to_3dimg.items():
+        index_to_selected_images = samples_label == label_selected
+        index_to_selected_images = index_to_selected_images.flatten()
+        stacker_filtered_region_to_3dimg[region] = \
+            images[index_to_selected_images.tolist(), :]
+
+    return stacker_filtered_region_to_3dimg
+

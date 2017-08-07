@@ -18,11 +18,11 @@ from lib.vae import CVAE
 def execute_saving_meta_graph_without_any_cv(region_cubes_dict, hyperparams,
                                              session_conf, list_regions,
                                              path_to_root,
-                                             session_prefix="",
+                                             session_prefix_name="",
                                              explicit_iter_per_region={}):
 
     own_datetime = datetime.now().strftime(r"%d_%m_%_Y_%H:%M")
-    session_name = session_prefix + "_" + own_datetime
+    session_name = session_prefix_name + "_" + own_datetime
 
     path_to_session = os.path.join(path_to_root, session_name)
     create_directories([path_to_session])
