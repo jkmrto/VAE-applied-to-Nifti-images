@@ -17,11 +17,8 @@ regions_used = "all"
 class_selected = "NOR"
 #class_selected = "AD"
 list_regions = session_helper.select_regions_to_evaluate(regions_used)
-print("Loading Pet images")
 region_to_img_dict = load_pet_regions_segmented(list_regions, bool_logs=False)
-print("Pet images loaded")
-labels = load_patients_labels()
-session_name = "cvae_over_{0}_iter_{1}_latent_layer_{1}"
+session_name = "cvae_over_{0}_iter_{1}_latent_layer_{2}"
 
 dic_class_to_label={
     "NOR": 0,
@@ -31,14 +28,8 @@ explicit_iter_per_region = {}
 
 filtered_stack = get_stack_3dimages_filtered_by_label(
     stack_region_to_3dimg=region_to_img_dict,
-    samples_label=labels,
+    samples_label=load_patients_labels(),
     label_selected=dic_class_to_label["AD"])
-print(filtered_stack[1].shape)
-
-filtered_stack = get_stack_3dimages_filtered_by_label(
-    stack_region_to_3dimg=region_to_img_dict,
-    samples_label=labels,
-    label_selected=dic_class_to_label["NOR"])
 print(filtered_stack[1].shape)
 
 hyperparams = {'latent_layer_dim': 100,
@@ -60,14 +51,14 @@ session_name = session_name.format(class_selected,
                                    session_conf["n_iters"])
 print(session_name)
 
-#path_to_session = execute_saving_meta_graph_without_any_cv(
-#    region_cubes_dict=filtered_stack,
-#    hyperparams=hyperparams,
-#    session_conf=session_conf,
-#    list_regions=list_regions,
-#    path_to_root=settings.path_to_general_out_folder,
-#    session_prefix_name=session_name,
-#    explicit_iter_per_region=explicit_iter_per_region)
+path_to_session = execute_saving_meta_graph_without_any_cv(
+    region_cubes_dict=filtered_stack,
+    hyperparams=hyperparams,
+    session_conf=session_conf,
+    list_regions=list_regions,
+    path_to_root=settings.path_to_general_out_folder,
+    session_prefix_name=session_name,
+    explicit_iter_per_region=explicit_iter_per_region)
 
 # deleting temporal meta data generated
 session_to_clean_meta_folder = os.path.join(path_to_session, "meta")
