@@ -30,7 +30,8 @@ filtered_stack = get_stack_3dimages_filtered_by_label(
     stack_region_to_3dimg=region_to_img_dict,
     samples_label=load_patients_labels(),
     label_selected=dic_class_to_label["AD"])
-print(filtered_stack[1].shape)
+print("Dimensions stacked filtered: {}".format(
+    filtered_stack[1].shape))
 
 hyperparams = {'latent_layer_dim': 100,
                'kernel_size': 5,

@@ -2,7 +2,7 @@ import os
 import sys
 import tarfile
 from datetime import datetime
-
+import time
 import lib.neural_net.kfrans_ops as ops
 import settings
 from lib import session_helper as session
@@ -19,6 +19,7 @@ from lib.utils.cv_utils import get_test_and_train_labels_from_kfold_dict_entry, 
     generate_k_folder_in_dict
 from lib.utils.evaluation_utils import get_average_over_metrics
 from settings import explicit_iter_per_region
+import timing_helper
 
 
 def array_to_str_csv_list(array):
@@ -33,7 +34,7 @@ print("Time session init: {}".format(session_datetime))
 images_used = "PET"
 #images_used = "MRI"
 # Session settings
-session_name = "CVAE_session_swap_kernel"
+session_name = "CVAE_{0}_session_swap_kernel".format(images_used)
 session_name = session_name + "_" + images_used
 session_path = os.path.join(settings.path_to_general_out_folder, session_name)
 create_directories([session_path])
@@ -48,7 +49,7 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 
 # Vae settings
 # Net Configuration
-kernel_list = [2]
+kernel_list = [2,3,4,5]
 # kernel_list = [6]
 
 hyperparams = {
@@ -78,6 +79,9 @@ loop_output_file_complex_majority_vote = os.path.join(
 loop_output_file_weighted_svm = os.path.join(
     session_path, "loop_output_weighted_svm.csv")
 
+loop_output_file_timing = os.path.join(
+    session_path, "loop_output_timing.csv")
+
 loop_output_path_session_description = os.path.join(
     session_path, "session_description.csv")
 
@@ -94,7 +98,7 @@ list_paths_files_to_store = [loop_output_file_simple_majority_vote,
 
 roc_logs_file = open(roc_logs_file_path, "w")
 
-# SESSION DESCRIPTOR ELLABORATION
+# SESSION DESCRIPTOR ELABORATION
 session_descriptor = {}
 session_descriptor['meta settings'] = {"n_folds": n_folds,
                                        "bool_test": bool_test,
@@ -125,6 +129,7 @@ list_averages_svm_weighted = []
 list_averages_simple_majority_vote = []
 list_averages_decision_net = []
 list_averages_complex_majority_vote = []
+list_averages_timing = []
 
 auc_header = "{0}; fold; evaluation; test|train; " \
              "false_positive_rate; true_positive_rate;" \
@@ -153,6 +158,17 @@ for swap_variable_index in kernel_list:
     svm_weighted_regions_k_folds_results_test = []
     svm_weighted_regions_k_folds_coefs = []
 
+    # Different timing dict per class NOR/AD
+    if images_used == "MRI":
+        timing = {
+            "MRI_GM_neuralnet": [],
+            "MRI_WM_neuralnet": [],
+        }
+    elif images_used == "PET":
+        timing = {
+            "PET":[]
+        }
+
     k_fold_dict = generate_k_folder_in_dict(
         n_samples, n_folds)
 
@@ -164,7 +180,6 @@ for swap_variable_index in kernel_list:
                 cv_utils.restructure_dictionary_based_on_cv_index_flat_images(
                     dict_train_test_index=k_fold_dict[k_fold_index],
                     region_to_img_dict=region_to_3dimg_dict_mri_gm)
-
             reg_to_group_to_images_dict_mri_wm = \
                 cv_utils.restructure_dictionary_based_on_cv_index_flat_images(
                     dict_train_test_index=k_fold_dict[k_fold_index],
@@ -185,24 +200,24 @@ for swap_variable_index in kernel_list:
         print("Number train samples {}".format(len(Y_train)))
 
         if images_used == "MRI":
+
             print("Training MRI regions over GM")
+            time_reference = time.time()
             vae_output["gm"], regions_whose_net_not_converge_gm = \
                 cvae_over_regions.execute_without_any_logs(
-                    region_train_cubes_dict=reg_to_group_to_images_dict_mri_gm[
-                        "train"],
+                    region_train_cubes_dict=reg_to_group_to_images_dict_mri_gm["train"],
                     hyperparams=hyperparams,
                     session_conf=cvae_session_conf,
                     list_regions=list_regions,
                     path_to_root=None,
-                    region_test_cubes_dict=reg_to_group_to_images_dict_mri_gm[
-                        "test"],
+                    region_test_cubes_dict=reg_to_group_to_images_dict_mri_gm["test"],
                     explicit_iter_per_region=explicit_iter_per_region
                 )
-
-            print("Not converging regions GM {}".format(
-                str(regions_whose_net_not_converge_gm)))
+            timing["MRI_GM_neuralnet"].append(time.time() - time_reference)
+            print("Not converging regions GM {}".format(str(regions_whose_net_not_converge_gm)))
 
             print("Training MRI regions over WM")
+            time_reference = time.time()
             vae_output["wm"], regions_whose_net_not_converge_wm, \
                 = cvae_over_regions.execute_without_any_logs(
                 region_train_cubes_dict=reg_to_group_to_images_dict_mri_wm[
@@ -215,6 +230,7 @@ for swap_variable_index in kernel_list:
                     "test"],
                 explicit_iter_per_region=explicit_iter_per_region
             )
+            timing["MRI_WM_neuralnet"].append(time.time() - time_reference)
 
             print("Not converging regions GM {}".format(
                 str(regions_whose_net_not_converge_wm)))
@@ -241,7 +257,8 @@ for swap_variable_index in kernel_list:
                 bool_test=bool_test)
 
         if images_used == "PET":
-            print("Train over regions")
+            print("Train PET over regions")
+            time_reference = time.time()
             vae_output, regions_whose_net_not_converge = \
                 cvae_over_regions.execute_without_any_logs(
                     region_train_cubes_dict=reg_to_group_to_images_dict_pet[
@@ -254,7 +271,7 @@ for swap_variable_index in kernel_list:
                         "test"],
                     explicit_iter_per_region=explicit_iter_per_region
                 )
-
+            timing["PET"].append(time.time() - time_reference)
             print("Not converging total regions {}".format(
                 str(regions_whose_net_not_converge)))
 
@@ -361,9 +378,19 @@ for swap_variable_index in kernel_list:
             weighted_output_dic_test)
         svm_weighted_regions_k_folds_coefs.append(aux_dic_regions_weight_coefs)
 
-    # GET AVERAGE RESULTS OVER METRICS
+    # KFOLD LOOP ENDED
+
+    # Extra field, swap over property
     extra_field = {swap_over: str(swap_variable_index)}
 
+    # Timing scripts, mean over kfolds results
+    average_timing = timing_helper.get_averages_timing_dict_per_images_used(
+        timing_dict=timing,
+        images_used=images_used
+    )
+    average_timing.update(extra_field)
+
+    # GET AVERAGE RESULTS OVER METRICS
     averages_simple_majority_vote = get_average_over_metrics(
         simple_majority_vote_k_folds_results_test)
     averages_simple_majority_vote.update(extra_field)
@@ -379,6 +406,7 @@ for swap_variable_index in kernel_list:
     list_averages_svm_weighted.append(averages_svm_weighted)
     list_averages_simple_majority_vote.append(averages_simple_majority_vote)
     list_averages_complex_majority_vote.append(averages_complex_majority_vote)
+    list_averages_timing.append(average_timing)
 
 # Outputs files
 # simple majority
@@ -393,6 +421,10 @@ output_utils.print_dictionary_with_header(
 output_utils.print_dictionary_with_header(
     loop_output_file_weighted_svm,
     list_averages_svm_weighted)
+
+output_utils.print_dictionary_with_header(
+    loop_output_file_timing,
+    list_averages_timing)
 
 # Tarfile to group the results
 tar = tarfile.open(tar_file_main_output_path, "w:gz")
