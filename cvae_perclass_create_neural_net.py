@@ -18,7 +18,7 @@ class_selected = "NOR"
 #class_selected = "AD"
 list_regions = session_helper.select_regions_to_evaluate(regions_used)
 region_to_img_dict = load_pet_regions_segmented(list_regions, bool_logs=False)
-session_name = "cvae_over_{0}_iter_{1}_latent_layer_{2}"
+session_name = "cvae_perclass_{0}_create_meta_net_iter_{1}_latent_layer_{2}"
 
 dic_class_to_label={
     "NOR": 0,
@@ -42,7 +42,7 @@ hyperparams = {'latent_layer_dim': 100,
                'lambda_l2_regularization': 0.0001}
 
 session_conf = {'bool_normalized': True,
-                'n_iters': 100,
+                'n_iters': 500,
                 "batch_size": 16,
                 "show_error_iter": 10}
 
