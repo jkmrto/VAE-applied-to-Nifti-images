@@ -13,6 +13,7 @@ from lib.aux_functionalities.os_aux import create_directories
 from lib.data_loader.pet_loader import load_pet_regions_segmented
 from lib.utils import cv_utils
 from lib.vae import CVAE
+from lib import session_helper as session
 
 
 def execute_saving_meta_graph_without_any_cv(region_cubes_dict, hyperparams,
@@ -117,7 +118,7 @@ def auto_execute_saving_meta_graph_without_any_cv(hyperparams=None,
         session_conf=session_conf,
         list_regions=list_regions,
         path_to_root=settings.path_to_general_out_folder,
-        session_prefix="test_saving_meta_PET")
+        session_prefix_name="test_saving_meta_PET")
 
 #auto_execute_saving_meta_graph_without_any_cv()
 
@@ -127,7 +128,7 @@ def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
                              region_test_cubes_dict=None,
                              explicit_iter_per_region=[]):
     """
-    :param voxels_values:
+    :param region_train_cubes_dict:
     :param hyperparams:
     :param session_conf:
     :param after_input_architecture:
@@ -163,10 +164,10 @@ def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
         tf.reset_default_graph()
         model = CVAE.CVAE(hyperparams)
 
-        max_train_iter = get_adequate_number_iterations(region_selected,
+        max_train_iter = session.get_adequate_number_iterations(region_selected,
                                                         explicit_iter_per_region,
                                                         predefined_iters=
-                                                        session_conf["n_iters"])
+                                                            session_conf["n_iters"])
 
         out = model.train(X=train_cube_images,
                           n_iters=max_train_iter,
