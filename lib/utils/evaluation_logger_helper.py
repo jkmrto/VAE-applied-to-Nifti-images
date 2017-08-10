@@ -30,19 +30,6 @@ class JSONEncoder(json.JSONEncoder):
 
         return json.JSONEncoder.default(self, o)
 
-def array_to_str_csv_list(array):
-    """
-
-    :param array: ty[np.ndarray | list]
-    :return:
-    """
-    if isinstance(array, np.ndarray):
-        array = array.tolist()
-
-    out = ",".join([str(value) for value in array])
-    print(out)
-    return out
-
 
 def validate_samples_to_map(samples_to_map):
 
@@ -96,7 +83,8 @@ def evaluation_container_to_log_file(path_file_test_out, path_file_full_out,
                 full_temp_array[test_indexes] = test_samples_to_map
                 full_temp_array[train_indexes] = train_samples_to_map
 
-                full_container[method][swap_variable][k_fold_index] = full_temp_array
+                full_container[method][swap_variable][k_fold_index] = \
+                    full_temp_array
 
             test_simplified_container[method][swap_variable] = test_temp_array
 

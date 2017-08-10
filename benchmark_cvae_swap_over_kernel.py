@@ -37,16 +37,16 @@ session_path = os.path.join(settings.path_to_general_out_folder, session_name)
 create_directories([session_path])
 
 # SWAAP SETTINGS
-n_folds = 2
+n_folds = 10
 bool_test = False
 swap_over = "kernel_size"
-regions_used = "three"
+regions_used = "most_important"
 list_regions = session.select_regions_to_evaluate(regions_used)
 # list_regions = [85, 6, 7]
 
 # Vae settings
 # Net Configuration
-kernel_list = [2, 5]
+kernel_list = [2,3,4,5,6,7,8,9,10]
 
 SVM_over_regions_threshold = None
 # SVM_over_regions_threshold = 0 # Middle value
