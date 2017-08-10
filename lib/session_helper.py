@@ -101,3 +101,20 @@ def get_adequate_number_iterations(region_selected, explicit_iter_per_region,
         max_train_iter = predefined_iters
 
     return max_train_iter
+
+
+def validate_threshold(threshold):
+    """
+    This function is on charge of guarantee that the threshold
+    indicated it is between 0 and 1
+    :param threshold:
+    :return:
+    """
+
+    if threshold is not None:
+        if threshold > 1:
+            return None
+        elif threshold < 0:
+            return None
+
+    return threshold

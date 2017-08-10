@@ -43,16 +43,19 @@ def evaluation_output(path_to_resume_file, path_to_roc_png,
 
 
 def simple_evaluation_output(y_obtained, y_test,
-                             thresholds_establised=None, bool_test=False):
+                             thresholds_establised=None,
+                             bool_test=False):
+
     y_obtained = np.row_stack(y_obtained)
     y_test = np.row_stack(y_test)
 
     if bool_test:
+        print("Log: y_obtained, y_true")
         print(np.hstack((y_obtained, y_test)))
 
     [fpr, tpr, thresholds_roc] = metrics.roc_curve(y_test, y_obtained)
 
-    if thresholds_establised == None:
+    if thresholds_establised is None:
         threshold = get_thresholds_from_roc_curve(fpr, tpr, thresholds_roc)
     else:
         threshold = thresholds_establised
@@ -113,38 +116,55 @@ def get_thresholds_from_roc_curve(fpr, tpr, thresholds):
     return thresholds_optimum
 
 
-def simple_majority_vote(train_score_matrix, test_score_matrix, Y_train, Y_test,
-                         bool_test=False):
+def simple_majority_vote(data, bool_test=False,  threshold_fixed=None):
     """
-    :param train_score_matriz: type: np.array[] => [patients x nºregions]
-    :param test_score_matriz:
+
+    :param data:
+    :param bool_test:
+    :param threshold_fixed:
     :return:
     """
 
-    threshold = 0
+    test_score_matriz = data["test"]["data"]
+    Y_test = data["test"]["label"]
+    train_score_matriz = data["train"]["data"]
+    Y_train = data["train"]["label"]
 
-    # simple majority vote
+    # This threshold is correctly set to zero because the decision
+    # plane in SVM which separates the two class, this is, the result
+    # of the function assigned to each sample
+    threshold_over_SVM_results = 0
+
+    # Over train labels(Y)
     train_labels_obatained = assign_binary_labels_based_on_threshold(
-        train_score_matrix, threshold)
+        train_score_matriz, threshold_over_SVM_results)
 
     test_labels_obatained = assign_binary_labels_based_on_threshold(
-        test_score_matrix, threshold)
+        test_score_matriz, threshold_over_SVM_results)
 
-    # Means over each over, this is evalutating the activation per patient
+    # Means over each sample, this is evalutating the activation per patient
     means_activation_train = np.row_stack(train_labels_obatained.mean(axis=1))
     means_activation_test = np.row_stack(test_labels_obatained.mean(axis=1))
 
-    threshold = 0.5
-    _, output_dic_train, roc_dic_train = simple_evaluation_output(
-        means_activation_train, Y_train, threshold, bool_test=bool_test)
-    _, output_dic_test, roc_dic_test = simple_evaluation_output(
-        means_activation_test, Y_test, threshold, bool_test=bool_test)
+    # threshold_fixed could be none, so it will be automatically set
+    trained_threshold, output_dic_train, roc_dic_train = simple_evaluation_output(
+        means_activation_train, Y_train, threshold_fixed, bool_test=bool_test)
 
-    roc_dic = {
-        "train": roc_dic_train,
-        "test": roc_dic_test,
+    output_dic_train, output_dic_test, roc_dic = \
+        evaluation_over_results_persample_hub(
+                Y_obtained_train=means_activation_train,
+                Y_obtained_test=means_activation_test,
+                Y_train=Y_train,
+                Y_test=Y_test,
+                threshold_fixed=threshold_fixed,
+                bool_test=bool_test)
+
+    means_activation = {
+        "test": means_activation_test,
+        "train": means_activation_train,
     }
-    return output_dic_train, output_dic_test, roc_dic
+
+    return output_dic_train, output_dic_test, roc_dic, means_activation
 
 
 def get_average_over_metrics(list_dicts):
@@ -161,7 +181,7 @@ def get_average_over_metrics(list_dicts):
     return out
 
 
-def complex_majority_vote_evaluation(data, bool_test=False):
+def complex_majority_vote_evaluation(data, bool_test=False, threshold_fixed=None):
     test_score_matriz = data["test"]["data"]
     Y_test = data["test"]["label"]
     train_score_matriz = data["train"]["data"]
@@ -180,29 +200,29 @@ def complex_majority_vote_evaluation(data, bool_test=False):
         print(test_train_score)
         print(test_test_score)
 
-    threshold = 0.5
-    _, complex_output_dic_train, roc_dic_train = simple_evaluation_output(
-        complex_means_train,
-        Y_train, threshold,
-        bool_test=bool_test)
+    output_dic_train, output_dic_test, roc_dic = \
+        evaluation_over_results_persample_hub(
+                Y_obtained_train=complex_means_train,
+                Y_obtained_test=complex_means_test,
+                Y_train=Y_train,
+                Y_test=Y_test,
+                threshold_fixed=threshold_fixed,
+                bool_test=bool_test)
 
-    _, complex_output_dic_test, roc_dic_test = simple_evaluation_output(
-        complex_means_test,
-        Y_test, threshold,
-        bool_test=bool_test)
-
-    roc_dic = {
-        "train": roc_dic_train,
-        "test": roc_dic_test,
+    means_activation = {
+        "test": complex_means_test,
+        "train": complex_means_train,
     }
 
-    print("Complex Majority Vote Test: " + str(complex_output_dic_test))
-    print("Complex Majority Vote Train: " + str(complex_output_dic_train))
+    if bool_test:
+        print("Complex Majority Vote Test: " + str(output_dic_test))
+        print("Complex Majority Vote Train: " + str(output_dic_train))
 
-    return complex_output_dic_test, complex_output_dic_train, roc_dic
+    return output_dic_test, output_dic_test, roc_dic, means_activation
 
 
-def weighted_svm_decision_evaluation(data, list_regions, bool_test=False):
+def weighted_svm_decision_evaluation(data, list_regions, bool_test=False,
+                                     threshold_fixed=None):
     """
 
     :param data: Dicitionary["test"|"train"]["label"|"data"]
@@ -227,30 +247,55 @@ def weighted_svm_decision_evaluation(data, list_regions, bool_test=False):
             train_score_matriz, Y_train.flatten(),
             test_score_matriz)
 
-    # SVM weighted REGIONS RESULTS EVALUATION RESULTS
-    threshold = 0
-    _, weighted_output_dic_train, roc_dic_train = simple_evaluation_output(
-        scores_train,
-        Y_train, 0,
-        bool_test=bool_test)
-
-    _, weighted_output_dic_test, roc_dic_test = simple_evaluation_output(
-        scores_test,
-        Y_test, 0,
-        bool_test=bool_test)
-
-    roc_dic = {
-        "train": roc_dic_train,
-        "test": roc_dic_test,
-    }
+    output_dic_train, output_dic_test, roc_dic = \
+        evaluation_over_results_persample_hub(
+                Y_obtained_train=scores_train,
+                Y_obtained_test=scores_test,
+                Y_train=Y_train,
+                Y_test=Y_test,
+                threshold_fixed=threshold_fixed,
+                bool_test=bool_test)
 
     aux_dic_regions_weight_coefs = {}
     [aux_dic_regions_weight_coefs.update({str(region): coef}) for region, coef
      in zip(list_regions, svm_coef)]
 
-    print("Weighted SVM Vote Test results: " + str(weighted_output_dic_test))
-    print("Weighted SVM  Vote Train results: " + str(weighted_output_dic_train))
+
+    evaluation_sample_scores = {
+        "test": scores_test,
+        "train": scores_train,
+    }
+
+    print("Weighted SVM Vote Test results: " + str(output_dic_test))
+    print("Weighted SVM  Vote Train results: " + str(output_dic_train))
     print("Weighted SVM  Coefs Gotten: " + str(aux_dic_regions_weight_coefs))
 
-    return weighted_output_dic_test, weighted_output_dic_train, \
-           aux_dic_regions_weight_coefs, roc_dic
+    return output_dic_test, output_dic_train, \
+           aux_dic_regions_weight_coefs, roc_dic, \
+           evaluation_sample_scores
+
+
+def evaluation_over_results_persample_hub(Y_obtained_train, Y_obtained_test,
+         Y_train, Y_test, threshold_fixed, bool_test):
+
+        # threshold_fixed could be none, so it will be automatically set
+    trained_threshold, output_dic_train, roc_dic_train = simple_evaluation_output(
+        Y_obtained_train,
+        Y_train,
+        threshold_fixed,
+        bool_test=bool_test)
+
+    if threshold_fixed is not None:
+        trained_threshold = threshold_fixed
+
+    _, output_dic_test, roc_dic_test = simple_evaluation_output(
+        Y_obtained_test,
+        Y_test, trained_threshold,
+        bool_test=bool_test)
+
+    roc_dic = {
+            "train": roc_dic_train,
+            "test": roc_dic_test,
+    }
+
+    return output_dic_train, output_dic_test, roc_dic

@@ -18,14 +18,10 @@ from lib.utils.auc_output_handler import stringfy_auc_information
 from lib.utils.cv_utils import get_test_and_train_labels_from_kfold_dict_entry, \
     generate_k_folder_in_dict
 from lib.utils.evaluation_utils import get_average_over_metrics
+from lib.utils.evaluation_logger_helper  import evaluation_container_to_log_file
 from settings import explicit_iter_per_region
 import timing_helper
 
-
-def array_to_str_csv_list(array):
-    out = ",".join([str(value) for value in array.tolist()])
-    #  print(out)
-    return out
 
 session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
@@ -33,6 +29,7 @@ print("Time session init: {}".format(session_datetime))
 # META SETTINGS
 images_used = "PET"
 #images_used = "MRI"
+
 # Session settings
 session_name = "CVAE_{0}_session_swap_kernel".format(images_used)
 session_name = session_name + "_" + images_used
@@ -43,14 +40,23 @@ create_directories([session_path])
 n_folds = 2
 bool_test = False
 swap_over = "kernel_size"
-regions_used = "most_important"
+regions_used = "three"
 list_regions = session.select_regions_to_evaluate(regions_used)
 # list_regions = [85, 6, 7]
 
 # Vae settings
 # Net Configuration
-kernel_list = [2,3,4,5]
-# kernel_list = [6]
+kernel_list = [2, 3, 4, 5]
+
+SVM_over_regions_threshold = None
+# SVM_over_regions_threshold = 0 # Middle value
+SMV_over_regions_threshold = None
+# SMV_over_regions_threshold = 0.5 # Middle value
+CMV_over_regions_threshold = None
+# CMV_over_regions_threshold = 0.5 # Middle value
+
+
+
 
 hyperparams = {
     "latent_layer_dim": 100,
@@ -69,6 +75,9 @@ cvae_session_conf = {
     "show_error_iter": 10,
 }
 
+# It could be None or a value content between 0 or 1
+
+
 # OUTPUT: Files initialization
 loop_output_file_simple_majority_vote = os.path.join(
     session_path, "loop_output_simple_majority_vote.csv")
@@ -82,6 +91,9 @@ loop_output_file_weighted_svm = os.path.join(
 loop_output_file_timing = os.path.join(
     session_path, "loop_output_timing.csv")
 
+evaluations_per_sample_log_file = os.path.join(
+    session_path, "score_evaluation_per_sample.log")
+
 loop_output_path_session_description = os.path.join(
     session_path, "session_description.csv")
 
@@ -94,19 +106,25 @@ list_paths_files_to_store = [loop_output_file_simple_majority_vote,
                              loop_output_file_complex_majority_vote,
                              loop_output_file_weighted_svm,
                              roc_logs_file_path,
-                             loop_output_path_session_description]
+                             loop_output_path_session_description,
+                             loop_output_file_timing,
+                             evaluations_per_sample_log_file]
 
 roc_logs_file = open(roc_logs_file_path, "w")
 
 # SESSION DESCRIPTOR ELABORATION
 session_descriptor = {}
-session_descriptor['meta settings'] = {"n_folds": n_folds,
-                                       "bool_test": bool_test,
-                                       "regions_used": regions_used,
-                                       "loop_over_kernel":
-                                           str(kernel_list)}
+session_descriptor['meta settings'] = {
+    "n_folds": n_folds,
+    "bool_test": bool_test,
+    "regions_used": regions_used,
+    "loop_over_kernel": str(kernel_list),
+    "Support_Vector_Machine over regions threshold": SVM_over_regions_threshold,
+    "Simple_Majority_Vote over regions threshold": SMV_over_regions_threshold,
+    "Complex_Majority_Vote over regions threshold": CMV_over_regions_threshold
+}
+
 session_descriptor['VAE'] = {}
-session_descriptor['Decision net'] = {}
 session_descriptor['VAE']["net configuration"] = hyperparams
 session_descriptor['VAE']["session configuration"] = cvae_session_conf
 
@@ -136,6 +154,14 @@ auc_header = "{0}; fold; evaluation; test|train; " \
             "threshold ".format(swap_over)
 roc_logs_file.write("{}\n".format(auc_header))
 
+dic_container_evaluations = {
+    "SVM": {},
+    "SMV": {},
+    "CMV": {},
+}
+
+k_fold_container = {}
+
 for swap_variable_index in kernel_list:
 
     print("Evaluating the system with a kernel size of {} ".format(
@@ -158,6 +184,13 @@ for swap_variable_index in kernel_list:
     svm_weighted_regions_k_folds_results_test = []
     svm_weighted_regions_k_folds_coefs = []
 
+    # initializing evaluation container
+    dic_container_evaluations["SVM"][swap_variable_index] = {}
+    dic_container_evaluations["SMV"][swap_variable_index] = {}
+    dic_container_evaluations["CMV"][swap_variable_index] = {}
+
+    available_regions = None
+
     # Different timing dict per class NOR/AD
     if images_used == "MRI":
         timing = {
@@ -171,6 +204,8 @@ for swap_variable_index in kernel_list:
 
     k_fold_dict = generate_k_folder_in_dict(
         n_samples, n_folds)
+
+    k_fold_container[swap_variable_index] = k_fold_dict
 
     for k_fold_index in range(0, n_folds, 1):
         vae_output = {}
@@ -305,9 +340,15 @@ for swap_variable_index in kernel_list:
 
         # COMPLEX MAJORITY VOTE
 
-        complex_output_dic_test, complex_output_dic_train, roc_dic = \
+        complex_output_dic_test, complex_output_dic_train, roc_dic, \
+        CMV_means_activation_dic = \
             evaluation_utils.complex_majority_vote_evaluation(
-                data, bool_test=bool_test)
+                data, bool_test=bool_test,
+                threshold_fixed=CMV_over_regions_threshold)
+
+        # Adding logs about means activation:
+        dic_container_evaluations["CMV"][swap_variable_index][k_fold_index] = \
+            CMV_means_activation_dic
 
         # Adding roc results to log file
         roc_test_string, roc_train_string = stringfy_auc_information(
@@ -333,10 +374,14 @@ for swap_variable_index in kernel_list:
 
         # SIMPLE MAJORITY VOTE
 
-        simple_output_dic_train, simple_output_dic_test, roc_dic = \
-            evaluation_utils.simple_majority_vote(
-                train_score_matriz, test_score_matriz, Y_train, Y_test,
-                bool_test=False)
+        simple_output_dic_train, simple_output_dic_test, roc_dic, \
+        SMV_means_activation_dic = \
+            evaluation_utils.simple_majority_vote(data,
+                bool_test=False, threshold_fixed=classification_threshold)
+
+        # Adding logs about means activation:
+        dic_container_evaluations["SMV"][swap_variable_index][k_fold_index] = \
+            SMV_means_activation_dic
 
         roc_test_string, roc_train_string = stringfy_auc_information(
             swap_over=swap_variable_index,
@@ -360,10 +405,17 @@ for swap_variable_index in kernel_list:
         # in the svm process
 
         weighted_output_dic_test, weighted_output_dic_train, \
-        aux_dic_regions_weight_coefs, roc_dic = \
+        aux_dic_regions_weight_coefs, roc_dic, \
+        evaluation_sample_scores = \
             evaluation_utils.weighted_svm_decision_evaluation(
-                data, available_regions, bool_test=bool_test)
+                data, available_regions, bool_test=bool_test,
+                threshold_fixed=SVM_over_regions_threshold)
 
+        # Evaluations Loggins
+        dic_container_evaluations["SVM"][swap_variable_index][k_fold_index] = \
+            evaluation_sample_scores
+
+        # Roc loggings
         roc_test_string, roc_train_string = stringfy_auc_information(
             swap_over=swap_variable_index,
             k_fold_index=k_fold_index,
@@ -377,7 +429,6 @@ for swap_variable_index in kernel_list:
         svm_weighted_regions_k_folds_results_test.append(
             weighted_output_dic_test)
         svm_weighted_regions_k_folds_coefs.append(aux_dic_regions_weight_coefs)
-
     # KFOLD LOOP ENDED
 
     # Extra field, swap over property
@@ -433,3 +484,10 @@ for file in list_paths_files_to_store:
 tar.close()
 
 roc_logs_file.close()
+
+evaluation_container_to_log_file(
+    path_to_file=evaluations_per_sample_log_file ,
+    evaluation_container=dic_container_evaluations,
+    k_fold_container = k_fold_container,
+    swap_variable_list=kernel_list,
+    n_samples=n_samples)

@@ -48,6 +48,12 @@ def generate_and_store_train_and_test_index(stack, cv_rate, path_to_cv):
 
 
 def generate_k_folder_in_dict(n_samples, n_folds):
+    """
+
+    :param n_samples:
+    :param n_folds:
+    :return: k_fold_dict[fold_index]["train"|"test"] -> label_index
+    """
     index = np.random.choice(range(n_samples),n_samples,
                              replace=False)
     n_over_samples = index.shape[0] % n_folds
