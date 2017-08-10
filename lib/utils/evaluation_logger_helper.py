@@ -64,7 +64,10 @@ def evaluation_container_to_log_file(path_to_file, evaluation_container,
             for k_fold_index in k_fold_dict.keys():
                 test_fold_index = k_fold_dict[k_fold_index]["test"]
                 samples_to_map = evaluation_container[method][swap_variable][k_fold_index]["test"]
-                temp_array[test_fold_index]  = samples_to_map
+                if isinstance(samples_to_map,list):
+                    samples_to_map = np.array(samples_to_map)
+                samples_to_map = np.reshape(samples_to_map, [samples_to_map.size, 1])
+                temp_array[test_fold_index] = samples_to_map
 
             simplified_container[method][swap_variable] = temp_array
 
