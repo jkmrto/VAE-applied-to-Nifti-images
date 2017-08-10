@@ -124,6 +124,7 @@ def simple_majority_vote(data, bool_test=False,  threshold_fixed=None):
     :param threshold_fixed:
     :return:
     """
+    print("SIMPLE MAJORITY VOTE PHASE")
 
     test_score_matriz = data["test"]["data"]
     Y_test = data["test"]["label"]
@@ -182,6 +183,8 @@ def get_average_over_metrics(list_dicts):
 
 
 def complex_majority_vote_evaluation(data, bool_test=False, threshold_fixed=None):
+    print("COMPLEX MAJORITY VOTE PHASE")
+
     test_score_matriz = data["test"]["data"]
     Y_test = data["test"]["label"]
     train_score_matriz = data["train"]["data"]
@@ -214,9 +217,9 @@ def complex_majority_vote_evaluation(data, bool_test=False, threshold_fixed=None
         "train": complex_means_train,
     }
 
-    if bool_test:
-        print("Complex Majority Vote Test: " + str(output_dic_test))
-        print("Complex Majority Vote Train: " + str(output_dic_train))
+
+    print("Complex Majority Vote Test: " + str(output_dic_test))
+    print("Complex Majority Vote Train: " + str(output_dic_train))
 
     return output_dic_test, output_dic_test, roc_dic, means_activation
 
@@ -230,6 +233,7 @@ def weighted_svm_decision_evaluation(data, list_regions, bool_test=False,
     :param bool_test:
     :return:
     """
+    print("WEIGHTED SVM CLASSIFICATION PHASE")
 
     test_score_matriz = data["test"]["data"]
     Y_test = data["test"]["label"]
@@ -260,7 +264,6 @@ def weighted_svm_decision_evaluation(data, list_regions, bool_test=False,
     [aux_dic_regions_weight_coefs.update({str(region): coef}) for region, coef
      in zip(list_regions, svm_coef)]
 
-
     evaluation_sample_scores = {
         "test": scores_test,
         "train": scores_train,
@@ -268,7 +271,9 @@ def weighted_svm_decision_evaluation(data, list_regions, bool_test=False,
 
     print("Weighted SVM Vote Test results: " + str(output_dic_test))
     print("Weighted SVM  Vote Train results: " + str(output_dic_train))
-    print("Weighted SVM  Coefs Gotten: " + str(aux_dic_regions_weight_coefs))
+
+    if bool_test:
+        print("Weighted SVM  Coefs Gotten: " + str(aux_dic_regions_weight_coefs))
 
     return output_dic_test, output_dic_train, \
            aux_dic_regions_weight_coefs, roc_dic, \
@@ -287,6 +292,7 @@ def evaluation_over_results_persample_hub(Y_obtained_train, Y_obtained_test,
 
     if threshold_fixed is not None:
         trained_threshold = threshold_fixed
+    print("Threshold used:{}".format(trained_threshold))
 
     _, output_dic_test, roc_dic_test = simple_evaluation_output(
         Y_obtained_test,

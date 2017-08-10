@@ -477,12 +477,6 @@ output_utils.print_dictionary_with_header(
     loop_output_file_timing,
     list_averages_timing)
 
-# Tarfile to group the results
-tar = tarfile.open(tar_file_main_output_path, "w:gz")
-for file in list_paths_files_to_store:
-    tar.add(file)
-tar.close()
-
 roc_logs_file.close()
 
 evaluation_container_to_log_file(
@@ -491,3 +485,12 @@ evaluation_container_to_log_file(
     k_fold_container = k_fold_container,
     swap_variable_list=kernel_list,
     n_samples=n_samples)
+
+
+
+# Tarfile to group the results
+tar = tarfile.open(tar_file_main_output_path, "w:gz")
+for file in list_paths_files_to_store:
+    tar.add(file)
+tar.close()
+
