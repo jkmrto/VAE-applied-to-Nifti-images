@@ -100,11 +100,11 @@ def evaluation_container_to_log_file(path_file_test_out, path_file_full_out,
 
             test_simplified_container[method][swap_variable] = test_temp_array
 
-    file = open(path_file_test_out, "w")
-    json.dump(test_simplified_container, file, cls=JSONEncoder)
-    file.close()
+    file_test = open(path_file_test_out, "w")
+    json.dump(test_simplified_container, file_test, cls=JSONEncoder)
+    file_test.close()
 
-    file = open(path_file_full_out, "w")
-    json.dump(test_simplified_container, file, cls=JSONEncoder)
-    file.close()
+    file_full = open(path_file_full_out, "w")
+    json.dump(full_container, file_full, cls=JSONEncoder)
+    file_full.close()
 
