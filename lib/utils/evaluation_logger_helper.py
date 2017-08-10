@@ -72,5 +72,5 @@ def evaluation_container_to_log_file(path_to_file, evaluation_container,
             simplified_container[method][swap_variable] = temp_array
 
     file = open(path_to_file, "w")
-    json.dump(simplified_container, path_to_file, cls=JSONEncoder)
+    json.dump(simplified_container, file, cls=JSONEncoder)
     file.close()

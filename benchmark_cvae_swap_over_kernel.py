@@ -46,7 +46,7 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 
 # Vae settings
 # Net Configuration
-kernel_list = [2, 3, 4, 5]
+kernel_list = [2, 5]
 
 SVM_over_regions_threshold = None
 # SVM_over_regions_threshold = 0 # Middle value
@@ -490,8 +490,6 @@ evaluation_container_to_log_file(
     k_fold_container = k_fold_container,
     swap_variable_list=kernel_list,
     n_samples=n_samples)
-
-
 
 # Tarfile to group the results
 tar = tarfile.open(tar_file_main_output_path, "w:gz")
