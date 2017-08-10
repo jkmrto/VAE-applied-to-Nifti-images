@@ -5,9 +5,9 @@ from lib.evaluation_utils import evaluation_output
 from lib.svm_utils import load_svm_output_score
 
 import settings as set
-from lib.aux_functionalities.os_aux import create_directories
 from lib.neural_net.leaky_relu_decision_net import DecisionNeuralNet
 from lib.utils.cv_utils import get_label_per_patient
+from lib.utils.os_aux import create_directories
 
 TYPE_SESSION_DECISION = "neural_net"
 TEST_OUTPUT_FOLDER = "test_out"

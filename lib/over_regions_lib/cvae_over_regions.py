@@ -4,16 +4,17 @@ from datetime import datetime
 
 import numpy as np
 import tensorflow as tf
-from lib.utils import output_utils
+
 import lib.neural_net.kfrans_ops as ops
 import settings
 from lib import session_helper
+from lib import session_helper as session
 from lib import utils
-from lib.aux_functionalities.os_aux import create_directories
 from lib.data_loader.pet_loader import load_pet_regions_segmented
 from lib.utils import cv_utils
+from lib.utils import output_utils
+from lib.utils.os_aux import create_directories
 from lib.vae import CVAE
-from lib import session_helper as session
 
 
 def execute_saving_meta_graph_without_any_cv(region_cubes_dict, hyperparams,

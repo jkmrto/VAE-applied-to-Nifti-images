@@ -1,8 +1,5 @@
-import numpy as np
-import os
 import matplotlib.pyplot as plt
-
-from lib.aux_functionalities.os_aux import create_directories
+import numpy as np
 
 
 def get_batch_from_samples(X, Y, batch_size):

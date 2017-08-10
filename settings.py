@@ -1,6 +1,7 @@
 import os
-from lib.aux_functionalities.os_aux import create_directories
+
 from lib.data_loader.atlas_settings import super_regions_atlas
+from lib.utils.os_aux import create_directories
 
 
 def get_list_of_regions_evaluated(list_supper_region):

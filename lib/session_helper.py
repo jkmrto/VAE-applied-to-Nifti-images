@@ -1,10 +1,11 @@
 import os
-import settings
+
 import numpy
-from lib.aux_functionalities import functions
-from lib.aux_functionalities.functions import print_dictionary
 import numpy as np
 
+import settings
+from lib.utils import functions
+from lib.utils.functions import print_dictionary
 
 # Encoding results file
 region_mean_file = "region_{}_mean.txt"

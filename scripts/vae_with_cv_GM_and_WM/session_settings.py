@@ -1,6 +1,7 @@
 import os
+
 import settings
-from lib.aux_functionalities.os_aux import create_directories
+from lib.utils.os_aux import create_directories
 
 CV_folder = "cv"
 GM_folder = "vae_GM"

@@ -1,12 +1,14 @@
-import os
-import settings
-import csv
-import numpy as np
-from matplotlib import pyplot as plt
-from matplotlib import cm
-from numpy import linspace
-from lib.aux_functionalities.os_aux import create_directories as create
 import copy
+import csv
+import os
+
+import numpy as np
+from matplotlib import cm
+from matplotlib import pyplot as plt
+from numpy import linspace
+
+import settings
+from lib.utils.os_aux import create_directories as create
 
 start = 0.0
 stop = 1.0

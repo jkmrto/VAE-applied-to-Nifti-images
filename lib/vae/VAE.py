@@ -6,11 +6,11 @@ import numpy as np
 import tensorflow as tf
 
 import lib.loss_function as loss
-from lib.aux_functionalities.functions import get_batch_from_samples_unsupervised
-from lib.aux_functionalities.os_aux import create_directories
 from lib.neural_net.layers import Dense
-from lib.utils.utils import compose_all
+from lib.utils.functions import get_batch_from_samples_unsupervised
 from lib.utils.math_utils import sample_gaussian
+from lib.utils.os_aux import create_directories
+from lib.utils.utils import compose_all
 
 
 class VAE():

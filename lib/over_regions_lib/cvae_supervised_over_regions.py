@@ -1,11 +1,13 @@
 import os
-from datetime import datetime
-from lib.aux_functionalities.os_aux import create_directories
-from lib.utils import output_utils
-import tensorflow as tf
-from lib.vae import CVAE_supervised
-from lib import session_helper
 import sys
+from datetime import datetime
+
+import tensorflow as tf
+
+from lib import session_helper
+from lib.utils import output_utils
+from lib.utils.os_aux import create_directories
+from lib.vae import CVAE_supervised
 
 
 def execute_saving_meta_graph_without_any_cv(region_cubes_dict,

@@ -1,21 +1,21 @@
 import os
-import settings
+
 import nibabel as nib
 import numpy as np
-from lib.aux_functionalities.functions import create_directories
+
+import settings
 from lib import session_helper as session
 from lib.data_loader import MRI_stack_NORAD
 from lib.data_loader import PET_stack_NORAD
 from lib.data_loader import mri_atlas
 from lib.data_loader import pet_atlas
-from lib.aux_functionalities.functions import create_directories
 from lib.data_loader.pet_loader import \
     load_pet_regions_segmented
 from lib.data_loader.utils_general import \
     load_parameters_and_atlas_by_images_used
-
 from lib.data_loader.utils_mask3d import \
     get_whole_region_mask_and_region_segmented_mask
+from lib.utils.functions import create_directories
 
 
 def test_over_mask_over_regions_segmented_and_whole_extractor(region, images_used):

@@ -5,11 +5,11 @@ import tensorflow as tf
 
 from lib import session_helper as session
 from lib import utils
-from lib.aux_functionalities.os_aux import create_directories
 from lib.data_loader import MRI_stack_NORAD
 from lib.data_loader import mri_atlas
 from lib.session_helper import generate_session_descriptor
 from lib.utils import cv_utils
+from lib.utils.os_aux import create_directories
 from lib.vae import VAE
 from scripts.vae_with_cv_GM_and_WM import session_settings
 

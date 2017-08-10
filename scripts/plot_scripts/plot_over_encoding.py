@@ -1,13 +1,12 @@
 import os
-import settings
-import tensorflow as tf
+
 import numpy
-from sklearn.decomposition import PCA
-from lib.data_loader import mri_atlas
-from lib.aux_functionalities.os_aux import create_directories
 from matplotlib import pyplot as plt
+from sklearn.decomposition import PCA
+
+import settings
 from lib.data_loader import MRI_stack_NORAD
-from lib import utils
+from lib.utils.os_aux import create_directories
 
 test_name = "Encoding session"
 regions_used = "all"

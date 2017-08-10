@@ -6,12 +6,12 @@ import tensorflow as tf
 import settings
 from lib import session_helper
 from lib import utils
-from lib.aux_functionalities.os_aux import create_directories
 from lib.data_loader import MRI_stack_NORAD
 from lib.data_loader import mri_atlas
 from lib.session_helper import generate_session_descriptor
 from lib.session_helper import plot_grad_desc_error_per_region
 from lib.utils.cv_utils import generate_and_store_train_and_test_index
+from lib.utils.os_aux import create_directories
 from lib.vae import VAE
 
 

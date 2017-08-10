@@ -1,14 +1,15 @@
 import os
-import settings
-import tensorflow as tf
-import numpy as np
-from lib.data_loader import pet_atlas
-from lib.aux_functionalities.os_aux import create_directories
-from lib.vae import VAE
-from lib import session_helper as session
-from lib import regenerate_utils
-from lib.data_loader import PET_stack_NORAD
 
+import numpy as np
+import tensorflow as tf
+
+import settings
+from lib import regenerate_utils
+from lib import session_helper as session
+from lib.data_loader import PET_stack_NORAD
+from lib.data_loader import pet_atlas
+from lib.utils.os_aux import create_directories
+from lib.vae import VAE
 
 iden_session = "PET_04_06_2017_21:34_arch:_1000_500_100"
 test_name = "Encoding session"

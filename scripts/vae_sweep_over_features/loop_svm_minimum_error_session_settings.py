@@ -1,6 +1,7 @@
 import os
+
 import settings
-from lib.aux_functionalities.os_aux import create_directories
+from lib.utils.os_aux import create_directories
 
 kfolds_folder = "kfolds"
 session_name = "Sesion Sweep over svm minimum training error"

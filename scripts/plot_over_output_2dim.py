@@ -1,10 +1,11 @@
 import os
+
 import numpy
-import settings
-from lib.data_loader import MRI_stack_NORAD
-from lib.aux_functionalities.os_aux import create_directories
 from matplotlib import pyplot as plt
 
+import settings
+from lib.data_loader import MRI_stack_NORAD
+from lib.utils.os_aux import create_directories
 
 iden_session = "02_05_2017_21:09 arch: 1000_800_500_100_2"
 test_name = "Encoding session"

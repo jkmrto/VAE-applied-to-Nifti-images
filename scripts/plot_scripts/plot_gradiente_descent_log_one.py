@@ -1,8 +1,5 @@
-from settings import LOG_DIR_GRADIENT_DESCEND_ERROR
-from lib.aux_functionalities import os_aux
 import settings
-from settings import list_regions_evaluated
-from math import ceil
+from lib.utils import os_aux
 
 # Grouping 4 plots per figure
 # Estimating the number of figures:

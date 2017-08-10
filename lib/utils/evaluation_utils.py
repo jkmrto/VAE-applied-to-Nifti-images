@@ -4,8 +4,8 @@ import numpy as np
 from matplotlib import pyplot as plt
 from sklearn import metrics
 
-from lib.aux_functionalities.functions import print_dictionary
 from lib.utils import svm_utils
+from lib.utils.functions import print_dictionary
 
 
 def evaluation_output(path_to_resume_file, path_to_roc_png,
@@ -151,7 +151,7 @@ def simple_majority_vote(data, bool_test=False,  threshold_fixed=None):
     trained_threshold, output_dic_train, roc_dic_train = simple_evaluation_output(
         means_activation_train, Y_train, threshold_fixed, bool_test=bool_test)
 
-    output_dic_train, output_dic_test, roc_dic = \
+    output_dic_train, output_dic_test, roc_dic, threshold = \
         evaluation_over_results_persample_hub(
                 Y_obtained_train=means_activation_train,
                 Y_obtained_test=means_activation_test,
@@ -163,6 +163,8 @@ def simple_majority_vote(data, bool_test=False,  threshold_fixed=None):
     means_activation = {
         "test": means_activation_test,
         "train": means_activation_train,
+        "threshold": threshold,
+
     }
 
     return output_dic_train, output_dic_test, roc_dic, means_activation
@@ -203,7 +205,7 @@ def complex_majority_vote_evaluation(data, bool_test=False, threshold_fixed=None
         print(test_train_score)
         print(test_test_score)
 
-    output_dic_train, output_dic_test, roc_dic = \
+    output_dic_train, output_dic_test, roc_dic, threshold = \
         evaluation_over_results_persample_hub(
                 Y_obtained_train=complex_means_train,
                 Y_obtained_test=complex_means_test,
@@ -215,6 +217,7 @@ def complex_majority_vote_evaluation(data, bool_test=False, threshold_fixed=None
     means_activation = {
         "test": complex_means_test,
         "train": complex_means_train,
+        "threshold": threshold,
     }
 
 
@@ -251,7 +254,7 @@ def weighted_svm_decision_evaluation(data, list_regions, bool_test=False,
             train_score_matriz, Y_train.flatten(),
             test_score_matriz)
 
-    output_dic_train, output_dic_test, roc_dic = \
+    output_dic_train, output_dic_test, roc_dic, threshold = \
         evaluation_over_results_persample_hub(
                 Y_obtained_train=scores_train,
                 Y_obtained_test=scores_test,
@@ -267,6 +270,7 @@ def weighted_svm_decision_evaluation(data, list_regions, bool_test=False,
     evaluation_sample_scores = {
         "test": scores_test,
         "train": scores_train,
+        "threshold": threshold,
     }
 
     if bool_test:
@@ -303,4 +307,19 @@ def evaluation_over_results_persample_hub(Y_obtained_train, Y_obtained_test,
             "test": roc_dic_test,
     }
 
-    return output_dic_train, output_dic_test, roc_dic
+    return output_dic_train, output_dic_test, roc_dic, trained_threshold
+
+
+def get_classification_masks_over_labels(true_labels, obtained_labels):
+
+    tp = (abs((true_labels - obtained_labels)) == 0) & (obtained_labels == 1)
+    fn = (abs((true_labels - obtained_labels)) == 1) & (obtained_labels == 0)
+    tn = (abs((true_labels - obtained_labels)) == 0) & (obtained_labels == 0)
+    fp = (abs((true_labels - obtained_labels)) == 1) & (obtained_labels == 1)
+
+    tp = tp[:,0]
+    fn = fn[:,0]
+    tn = tn[:,0]
+    fp = fp[:,0]
+
+    return tp, fn, tn, fp

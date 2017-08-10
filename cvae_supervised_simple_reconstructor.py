@@ -4,7 +4,6 @@
 import matplotlib
 matplotlib.use('Agg')
 import os
-import numpy as np
 import tensorflow as tf
 import settings
 from lib import session_helper as session
@@ -12,7 +11,7 @@ from lib import reconstruct_helpers as recons
 from lib.data_loader import utils_images3d
 from lib.utils import output_utils as output
 from lib.vae import CVAE_supervised
-from lib.aux_functionalities.os_aux import create_directories
+from lib.utils.os_aux import create_directories
 
 explicit_iter_per_region = {
     73: 300,

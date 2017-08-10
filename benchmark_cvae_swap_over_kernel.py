@@ -1,14 +1,15 @@
 import os
 import sys
 import tarfile
-from datetime import datetime
 import time
+from datetime import datetime
+
 import lib.neural_net.kfrans_ops as ops
 import settings
+import timing_helper
 from lib import session_helper as session
-from lib.aux_functionalities.os_aux import create_directories
-from lib.data_loader.pet_loader import load_pet_data_3d
 from lib.data_loader.mri_loader import load_mri_data_3d
+from lib.data_loader.pet_loader import load_pet_data_3d
 from lib.over_regions_lib import cvae_over_regions
 from lib.utils import cv_utils
 from lib.utils import evaluation_utils
@@ -17,11 +18,10 @@ from lib.utils import svm_utils
 from lib.utils.auc_output_handler import stringfy_auc_information
 from lib.utils.cv_utils import get_test_and_train_labels_from_kfold_dict_entry, \
     generate_k_folder_in_dict
-from lib.utils.evaluation_utils import get_average_over_metrics
 from lib.utils.evaluation_logger_helper  import evaluation_container_to_log_file
+from lib.utils.evaluation_utils import get_average_over_metrics
+from lib.utils.os_aux import create_directories
 from settings import explicit_iter_per_region
-import timing_helper
-
 
 session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
@@ -37,7 +37,7 @@ session_path = os.path.join(settings.path_to_general_out_folder, session_name)
 create_directories([session_path])
 
 # SWAAP SETTINGS
-n_folds = 10
+n_folds = 3
 bool_test = False
 swap_over = "kernel_size"
 regions_used = "most_important"
@@ -46,7 +46,7 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 
 # Vae settings
 # Net Configuration
-kernel_list = [2,3,4,5,6,7,8,9,10]
+kernel_list = [2,3,4,5]
 
 SVM_over_regions_threshold = None
 # SVM_over_regions_threshold = 0 # Middle value
@@ -332,6 +332,8 @@ for swap_variable_index in kernel_list:
         data["train"]["data"] = train_score_matriz
         data["train"]["label"] = Y_train
 
+        print("RESULTS: Output kfolds nº {}".format(k_fold_index))
+
         if bool_test:
             print("\nMatriz svm scores -> shapes, before complex majority vote")
             print("train matriz [patients x region]: " + str(
@@ -373,11 +375,8 @@ for swap_variable_index in kernel_list:
             print("test matriz scores [patients x regions]: " + str(
                 test_score_matriz.shape))
 
-
-        print("Output kfolds nº {}".format(k_fold_index))
-        print("Simple Majority Vote Test: " + str(complex_output_dic_test))
-        print("Simple Majority Vote Train: " + str(complex_output_dic_train))
-
+        print("Complex Majority Vote Test: " + str(complex_output_dic_test))
+        print("Complex Majority Vote Train: " + str(complex_output_dic_train))
 
         # SIMPLE MAJORITY VOTE
         simple_output_dic_train, simple_output_dic_test, roc_dic, \
@@ -397,7 +396,6 @@ for swap_variable_index in kernel_list:
         roc_logs_file.write("{}\n".format(roc_train_string))
         roc_logs_file.write("{}\n".format(roc_test_string))
 
-        print("Output kfolds nº {}".format(k_fold_index))
         print("Simple Majority Vote Test: " + str(simple_output_dic_test))
         print("Simple Majority Vote Train: " + str(simple_output_dic_train))
 
@@ -435,6 +433,10 @@ for swap_variable_index in kernel_list:
         svm_weighted_regions_k_folds_results_test.append(
             weighted_output_dic_test)
         svm_weighted_regions_k_folds_coefs.append(aux_dic_regions_weight_coefs)
+
+        print("SVM classification Test: " + str(weighted_output_dic_test))
+        print("SVM classification Train: " + str(weighted_output_dic_train))
+
     # KFOLD LOOP ENDED
 
     # Extra field, swap over property

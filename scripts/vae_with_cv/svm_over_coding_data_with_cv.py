@@ -4,10 +4,10 @@ import tensorflow as tf
 
 import settings
 from lib import utils
-from lib.aux_functionalities.os_aux import create_directories
 from lib.data_loader import MRI_stack_NORAD
 from lib.data_loader import mri_atlas
 from lib.utils import svm_utils
+from lib.utils.os_aux import create_directories
 from lib.vae import VAE
 
 # SVM CONFIGURATION

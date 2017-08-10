@@ -1,6 +1,7 @@
 import os
+
 import settings
-from lib.aux_functionalities.os_aux import create_directories
+from lib.utils.os_aux import create_directories
 
 Kfolds_folder = "Kfolds index"
 session_name = "Full_classification_session_with_k-folds"

@@ -6,11 +6,11 @@ from lib.evaluation_utils import evaluation_output
 from lib.svm_utils import load_svm_output_score
 
 import settings as set
-from lib.aux_functionalities import functions
-from lib.aux_functionalities.os_aux import create_directories
 from lib.neural_net.decision_neural_net import DecisionNeuralNet
 from lib.session_helper import generate_session_descriptor
+from lib.utils import functions
 from lib.utils.cv_utils import get_label_per_patient
+from lib.utils.os_aux import create_directories
 from scripts.vae_with_cv_GM_and_WM import session_settings as main_settings
 from scripts.vae_with_cv_GM_and_WM import svm_session_settings as svm_settings
 

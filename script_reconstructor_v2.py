@@ -1,17 +1,16 @@
 import os
-import settings
-import tensorflow as tf
+
 import numpy as np
-from lib.data_loader import mri_atlas
-from lib.aux_functionalities.os_aux import create_directories
-from lib import utils
-from lib.vae import VAE
-from lib import session_helper as session
+import tensorflow as tf
+
+import settings
 from lib import regenerate_utils
+from lib import session_helper as session
+from lib import utils
 from lib.data_loader import MRI_stack_NORAD
-
-
-
+from lib.data_loader import mri_atlas
+from lib.utils.os_aux import create_directories
+from lib.vae import VAE
 
 # SESSION SETTINGS
 iden_session = "bueno_05_05_2017_08:19 arch: 1000_800_500_100"

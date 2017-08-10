@@ -9,11 +9,11 @@ import tensorflow as tf
 import lib.neural_net.kfrans_ops as ops
 import settings
 from lib import session_helper
-from lib.aux_functionalities.functions import \
-    get_batch_from_samples_unsupervised_3d
-from lib.aux_functionalities.os_aux import create_directories
 from lib.data_loader.pet_loader import load_pet_regions_segmented
 from lib.utils import  output_utils
+from lib.utils.functions import \
+    get_batch_from_samples_unsupervised_3d
+from lib.utils.os_aux import create_directories
 
 bool_save_meta = False
 

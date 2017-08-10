@@ -5,17 +5,17 @@ from shutil import copyfile
 
 import numpy as np
 import tensorflow as tf
+from lib.data_loader.nifti_regions_loader import \
+    load_mri_data_flat, load_pet_data_flat
 from lib.evaluation_utils import get_average_over_metrics
 
 import settings
 from lib import evaluation_utils
 from lib import output_utils
 from lib import svm_utils
-from lib.aux_functionalities.os_aux import create_directories
-from lib.data_loader.nifti_regions_loader import \
-    load_mri_data_flat, load_pet_data_flat
 from lib.neural_net import leaky_net_utils
 from lib.utils import cv_utils
+from lib.utils.os_aux import create_directories
 from scripts.vae_with_kfolds import session_settings
 from scripts.vae_with_kfolds import vae_over_regions_kfolds
 

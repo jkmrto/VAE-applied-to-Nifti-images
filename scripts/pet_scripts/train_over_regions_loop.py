@@ -1,14 +1,16 @@
-import tensorflow as tf
-from lib.aux_functionalities.os_aux import create_directories
+import os
 from datetime import datetime
-from lib.aux_functionalities import functions
+
+import tensorflow as tf
+
 import settings
 from lib import session_helper as session
-import os
-from lib.data_loader import pet_atlas
-from lib.vae import VAE
-from lib.data_loader import PET_stack_NORAD
 from lib import utils
+from lib.data_loader import PET_stack_NORAD
+from lib.data_loader import pet_atlas
+from lib.utils import functions
+from lib.utils.os_aux import create_directories
+from lib.vae import VAE
 
 
 def init_session_folders(architecture):

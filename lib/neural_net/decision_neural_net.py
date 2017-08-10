@@ -1,12 +1,13 @@
+import os
+import sys
+from datetime import datetime
+
 import tensorflow as tf
+
 from lib.neural_net.layers import Dense
 from lib.utils import compose_all
-import numpy as np
-from datetime import datetime
-from lib.aux_functionalities.functions import get_batch_from_samples
-from lib.aux_functionalities.os_aux import create_directories
-import sys
-import os
+from lib.utils.functions import get_batch_from_samples
+from lib.utils.os_aux import create_directories
 
 RESTORE_KEY = 'key'
 

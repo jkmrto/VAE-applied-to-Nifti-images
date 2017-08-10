@@ -5,10 +5,10 @@ import tensorflow as tf
 from lib.cv_hub import get_train_and_test_index_from_files
 
 import settings as set
-from lib.aux_functionalities import functions
-from lib.aux_functionalities.os_aux import create_directories
 from lib.data_loader.MRI_stack_NORAD import load_patients_labels
 from lib.neural_net.decision_neural_net import DecisionNeuralNet
+from lib.utils import functions
+from lib.utils.os_aux import create_directories
 from lib.utils.svm_utils import load_svm_output_score
 
 TYPE_SESSION_DECISION = "neural_net"

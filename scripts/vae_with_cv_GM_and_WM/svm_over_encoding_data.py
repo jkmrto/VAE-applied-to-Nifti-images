@@ -5,8 +5,8 @@ import numpy as np
 
 from lib import session_helper as session
 from lib import svm_utils
-from lib.aux_functionalities.os_aux import create_directories
 from lib.utils import cv_utils
+from lib.utils.os_aux import create_directories
 from scripts.vae_with_cv_GM_and_WM import session_settings
 from scripts.vae_with_cv_GM_and_WM import svm_session_settings as svm_session
 
