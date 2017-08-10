@@ -44,7 +44,17 @@ def array_to_str_csv_list(array):
     return out
 
 
-def evaluation_container_to_log_file(path_to_file, evaluation_container,
+def validate_samples_to_map(samples_to_map):
+
+    if isinstance(samples_to_map, list):
+        samples_to_map = np.array(samples_to_map)
+    samples_to_map = np.reshape(samples_to_map, [samples_to_map.size, 1])
+
+    return samples_to_map
+
+
+def evaluation_container_to_log_file(path_file_test_out, path_file_full_out,
+                                     evaluation_container,
                                      k_fold_container, swap_variable_list,
                                      n_samples):
     """
@@ -54,23 +64,47 @@ def evaluation_container_to_log_file(path_to_file, evaluation_container,
     :param k_fold_dict: dict[kfold_index] -> dict["train"|"test"] -> indexes_samples
     :return:
     """
-    simplified_container = {}
+    # path_file_test_out
+    # path_file_full_out
+
+    test_simplified_container = {}
+    full_container = {}
+
     for method in evaluation_methods:
-        simplified_container[method] = {}
+        test_simplified_container[method] = {}
+        full_container[method] = {}
         for swap_variable in swap_variable_list:
-            temp_array = np.zeros([n_samples, 1])
+            full_container[method][swap_variable] = {}
+            test_temp_array = np.zeros([n_samples, 1])
+            # getting fold_indexes from the container
             k_fold_dict = k_fold_container[swap_variable]
 
             for k_fold_index in k_fold_dict.keys():
-                test_fold_index = k_fold_dict[k_fold_index]["test"]
-                samples_to_map = evaluation_container[method][swap_variable][k_fold_index]["test"]
-                if isinstance(samples_to_map,list):
-                    samples_to_map = np.array(samples_to_map)
-                samples_to_map = np.reshape(samples_to_map, [samples_to_map.size, 1])
-                temp_array[test_fold_index] = samples_to_map
 
-            simplified_container[method][swap_variable] = temp_array
+                full_temp_array = np.zeros([n_samples, 1])
 
-    file = open(path_to_file, "w")
-    json.dump(simplified_container, file, cls=JSONEncoder)
+                test_indexes = k_fold_dict[k_fold_index]["test"]
+                train_indexes = k_fold_dict[k_fold_index]["train"]
+
+                test_samples_to_map = validate_samples_to_map(
+                    evaluation_container[method][swap_variable][k_fold_index]["test"])
+
+                train_samples_to_map = validate_samples_to_map(
+                    evaluation_container[method][swap_variable][k_fold_index]["train"])
+
+                test_temp_array[test_indexes] = test_samples_to_map
+                full_temp_array[test_indexes] = test_samples_to_map
+                full_temp_array[train_indexes] = train_samples_to_map
+
+                full_container[method][swap_variable][k_fold_index] = full_temp_array
+
+            test_simplified_container[method][swap_variable] = test_temp_array
+
+    file = open(path_file_test_out, "w")
+    json.dump(test_simplified_container, file, cls=JSONEncoder)
     file.close()
+
+    file = open(path_file_full_out, "w")
+    json.dump(test_simplified_container, file, cls=JSONEncoder)
+    file.close()
+

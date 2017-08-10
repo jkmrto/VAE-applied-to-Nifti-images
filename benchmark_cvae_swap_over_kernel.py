@@ -53,9 +53,7 @@ SVM_over_regions_threshold = None
 SMV_over_regions_threshold = None
 # SMV_over_regions_threshold = 0.5 # Middle value
 CMV_over_regions_threshold = None
-# CMV_over_regions_threshold = 0.5 # Middle value
-
-
+# CMV_over_regions_threshold = 0# Middle value
 
 
 hyperparams = {
@@ -92,7 +90,10 @@ loop_output_file_timing = os.path.join(
     session_path, "loop_output_timing.csv")
 
 evaluations_per_sample_log_file = os.path.join(
-    session_path, "score_evaluation_per_sample.log")
+    session_path, "test_scores_evaluation_per_sample.log")
+
+full_evaluations_per_sample_log_file = os.path.join(
+    session_path, "full_scores_evaluation_per_sample.log")
 
 loop_output_path_session_description = os.path.join(
     session_path, "session_description.csv")
@@ -485,7 +486,8 @@ output_utils.print_dictionary_with_header(
 roc_logs_file.close()
 
 evaluation_container_to_log_file(
-    path_to_file=evaluations_per_sample_log_file ,
+    path_file_test_out=evaluations_per_sample_log_file ,
+    path_file_full_out = full_evaluations_per_sample_log_file,
     evaluation_container=dic_container_evaluations,
     k_fold_container = k_fold_container,
     swap_variable_list=kernel_list,
