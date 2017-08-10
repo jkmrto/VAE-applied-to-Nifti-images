@@ -377,7 +377,7 @@ for swap_variable_index in kernel_list:
         simple_output_dic_train, simple_output_dic_test, roc_dic, \
         SMV_means_activation_dic = \
             evaluation_utils.simple_majority_vote(data,
-                bool_test=False, threshold_fixed=classification_threshold)
+                bool_test=False, threshold_fixed=SMV_over_regions_threshold)
 
         # Adding logs about means activation:
         dic_container_evaluations["SMV"][swap_variable_index][k_fold_index] = \
