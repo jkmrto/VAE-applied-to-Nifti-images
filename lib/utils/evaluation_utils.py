@@ -269,10 +269,9 @@ def weighted_svm_decision_evaluation(data, list_regions, bool_test=False,
         "train": scores_train,
     }
 
-    print("Weighted SVM Vote Test results: " + str(output_dic_test))
-    print("Weighted SVM  Vote Train results: " + str(output_dic_train))
-
     if bool_test:
+        print("Weighted SVM Vote Test results: " + str(output_dic_test))
+        print("Weighted SVM  Vote Train results: " + str(output_dic_train))
         print("Weighted SVM  Coefs Gotten: " + str(aux_dic_regions_weight_coefs))
 
     return output_dic_test, output_dic_train, \
@@ -292,7 +291,7 @@ def evaluation_over_results_persample_hub(Y_obtained_train, Y_obtained_test,
 
     if threshold_fixed is not None:
         trained_threshold = threshold_fixed
-    print("Threshold used:{}".format(trained_threshold))
+    print("Threshold used:  {}".format(trained_threshold))
 
     _, output_dic_test, roc_dic_test = simple_evaluation_output(
         Y_obtained_test,

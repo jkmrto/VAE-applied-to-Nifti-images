@@ -58,7 +58,7 @@ def evaluation_container_to_log_file(path_to_file, evaluation_container,
     for method in evaluation_methods:
         simplified_container[method] = {}
         for swap_variable in swap_variable_list:
-            temp_array = np.zeros(n_samples)
+            temp_array = np.zeros([n_samples, 1])
             k_fold_dict = k_fold_container[swap_variable]
 
             for k_fold_index in k_fold_dict.keys():

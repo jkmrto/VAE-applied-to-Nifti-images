@@ -11,7 +11,6 @@ def array_to_str_csv_list(array):
         array = array.tolist()
 
     out = ",".join([str(value) for value in array])
-    print(out)
     return out
 
 

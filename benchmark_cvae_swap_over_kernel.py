@@ -372,8 +372,13 @@ for swap_variable_index in kernel_list:
             print("test matriz scores [patients x regions]: " + str(
                 test_score_matriz.shape))
 
-        # SIMPLE MAJORITY VOTE
 
+        print("Output kfolds nº {}".format(k_fold_index))
+        print("Simple Majority Vote Test: " + str(complex_output_dic_test))
+        print("Simple Majority Vote Train: " + str(complex_output_dic_train))
+
+
+        # SIMPLE MAJORITY VOTE
         simple_output_dic_train, simple_output_dic_test, roc_dic, \
         SMV_means_activation_dic = \
             evaluation_utils.simple_majority_vote(data,
