@@ -1,7 +1,11 @@
 # PET test
 # Testing reconstruction over only one sample
-from sklearn.decomposition import PCA
+import os
+import sys
+sys.path.append(os.path.dirname(os.getcwd()))
+
 import matplotlib
+from sklearn.decomposition import PCA
 matplotlib.use('Agg')
 import os
 import numpy as np
@@ -12,7 +16,7 @@ from lib import session_helper as session
 from lib import reconstruct_helpers as recons
 from lib.vae import CVAE
 from lib import compare_helper as compare
-import scatter_plots_helper as scatter
+import lib.scatter_plots_helper as scatter
 
 explicit_iter_per_region = {
 }

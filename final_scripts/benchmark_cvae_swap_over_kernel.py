@@ -1,13 +1,12 @@
 import os
 import sys
+sys.path.append(os.path.dirname(os.getcwd()))
 import tarfile
 import time
 from datetime import datetime
-
 import lib.neural_net.kfrans_ops as ops
 import settings
-import timing_helper
-from lib import session_helper as session
+from lib import session_helper as session, timing_helper
 from lib.data_loader.mri_loader import load_mri_data_3d
 from lib.data_loader.pet_loader import load_pet_data_3d
 from lib.over_regions_lib import cvae_over_regions
@@ -31,10 +30,11 @@ images_used = "PET"
 #images_used = "MRI"
 
 # Session settings
-session_name = "CVAE_{0}_session_swap_kernel".format(images_used)
+session_name = "CVAE_session_swap_kernel".format(images_used)
 session_name = session_name + "_" + images_used
 session_path = os.path.join(settings.path_to_general_out_folder, session_name)
-create_directories([session_path])
+historial_path = os.path.join(session_path, "historical")
+create_directories([session_path, historial_path])
 
 # SWAAP SETTINGS
 n_folds = 3
@@ -99,7 +99,7 @@ loop_output_path_session_description = os.path.join(
     session_path, "session_description.csv")
 
 tar_file_main_output_path = os.path.join(
-    session_path, "{0}_{1}.tar.gz".format(session_name, session_datetime))
+    session_path, "{0}_{1}.tar.gz".format(historial_path, session_datetime))
 
 roc_logs_file_path = os.path.join(session_path, "roc.logs")
 

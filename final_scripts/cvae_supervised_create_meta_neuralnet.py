@@ -1,5 +1,6 @@
 import os
-
+import sys
+sys.path.append(os.path.dirname(os.getcwd()))
 from lib.data_loader import PET_stack_NORAD
 import lib.neural_net.kfrans_ops as ops
 import settings

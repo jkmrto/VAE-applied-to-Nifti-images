@@ -1,4 +1,6 @@
 import os
+import sys
+sys.path.append(os.path.dirname(os.getcwd()))
 
 import lib.neural_net.kfrans_ops as ops
 import settings
@@ -9,7 +11,6 @@ from lib.data_loader.PET_stack_NORAD import load_patients_labels
 from lib.delete_pre_final_meta_data import delete_simple_session
 from lib.over_regions_lib.cvae_over_regions import \
     execute_saving_meta_graph_without_any_cv
-
 
 
 # Filtering imates to use base on AD or NOR images

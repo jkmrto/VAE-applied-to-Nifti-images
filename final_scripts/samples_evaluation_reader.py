@@ -1,5 +1,8 @@
-import settings
 import os
+import sys
+sys.path.append(os.path.dirname(os.getcwd()))
+
+import settings
 import json
 from matplotlib import pyplot as plt
 from lib.utils. os_aux import create_directories
@@ -7,6 +10,7 @@ from lib.data_loader import PET_stack_NORAD
 import numpy as np
 from lib.utils import evaluation_utils as eval
 import copy
+
 
 def truncate_based_on_evaluation_method(values, method):
 
