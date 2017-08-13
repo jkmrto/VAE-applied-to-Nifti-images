@@ -11,6 +11,7 @@ from lib import reconstruct_helpers as recons
 from lib.data_loader import utils_images3d
 from lib.utils import output_utils as output
 from lib.vae import CVAE
+from lib.utils.os_aux import create_directories
 
 explicit_iter_per_region = {
     73: 200,
@@ -25,7 +26,12 @@ regions_used = "all"
 folder_name_to_store_images_created = "reconstructed_multiple_individuals"
 perclass_AD_session  = \
     "cvae_perclass_AD_create_meta_net_iter_500_latent_layer_100_13_08_2017_17:50"
-session_name = perclass_AD_session
+
+perclass_NOR_session = \
+    "cvae_perclass_NOR_create_meta_net_iter_500_latent_layer_100_13_08_2017_17:29"
+
+
+session_name = perclass_NOR_session
 max_iters = 500
 
 #images_used = "MRI_WM"
@@ -39,6 +45,7 @@ path_session = os.path.join(settings.path_to_general_out_folder, session_name)
 path_meta = os.path.join(path_session, "meta")
 path_images = os.path.join(path_session, "images")
 path_where_store_images_generated = os.path.join(path_images, folder_name_to_store_images_created)
+create_directories([path_images, path_where_store_images_generated])
 
 stack_region_to_3dimg, patient_labels, n_samples, cmap = \
     recons.load_desired_stacked_and_parameters(images_used, list_regions, )
