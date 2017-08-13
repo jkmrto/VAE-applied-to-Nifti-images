@@ -15,8 +15,8 @@ from lib.over_regions_lib.cvae_over_regions import \
 
 # Filtering imates to use base on AD or NOR images
 regions_used = "all"
-class_selected = "AD"
 #class_selected = "AD"
+class_selected = "NOR"
 list_regions = session_helper.select_regions_to_evaluate(regions_used)
 region_to_img_dict = load_pet_regions_segmented(list_regions, bool_logs=False)
 session_name = "cvae_perclass_{0}_create_meta_net_iter_{1}_latent_layer_{2}"
