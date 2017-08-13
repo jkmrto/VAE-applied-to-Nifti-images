@@ -96,6 +96,25 @@ def get_representatives_samples_over_region_per_patient_indexes(
     return region_to_class_to_3d_means_imgs
 
 
+def get_3dsamples_indcated_by_indexes(
+        region_to_3d_images_dict, indexes):
+
+    number_examples_to_extract = len(indexes)
+    region_to_class_to_3d_means_imgs = {}
+
+    for region, cube_images in region_to_3d_images_dict.items():
+        class_to_3d_means_imgs = np.zeros([number_examples_to_extract,
+                                          cube_images.shape[1],
+                                          cube_images.shape[2],
+                                          cube_images.shape[3]])
+
+        class_to_3d_means_imgs[:, :, :, :] = cube_images[indexes, :, :, :]
+
+        region_to_class_to_3d_means_imgs[region] = class_to_3d_means_imgs
+
+    return region_to_class_to_3d_means_imgs
+
+
 def get_mean_3d_images_over_samples_per_region(region_to_3dimg_dict_pet,
                                                patient_labels):
     """
@@ -220,3 +239,14 @@ def plot_section_indicated(img3d_1, img3d_2, p1, p2, p3, path_to_save_image,
 
 
 
+#recons.plot_most_discriminative_section(
+#    img3d_1=whole_reconstruction[0, :, :, :],
+#    img3d_2=whole_reconstruction[1, :, :, :],
+#    path_to_save_image=path_image,
+#    cmap=cmap)
+
+#if logs:
+#    evaluate_difference_full_image = whole_reconstruction[0, :, :, :].flatten() \
+#                                     - whole_reconstruction[1, :, :, :].flatten()
+#    total_difference = sum(abs(evaluate_difference_full_image))
+#    print("Total difference between images reconstructed {0}".format(total_difference))
