@@ -28,6 +28,7 @@ dic_class_to_label={
 
 explicit_iter_per_region = {
     73: 200,
+    74: 400,
 }
 
 filtered_stack = get_stack_3dimages_filtered_by_label(

@@ -2,7 +2,8 @@ import numpy as np
 from lib.data_loader import pet_loader
 from lib.data_loader import mri_loader
 from matplotlib import pyplot as plt
-
+import settings
+import os
 
 def load_desired_stacked_and_parameters(images_used, list_regions):
     """ Complete function for MRI"""
@@ -237,6 +238,69 @@ def plot_section_indicated(img3d_1, img3d_2, p1, p2, p3, path_to_save_image,
     plt.imshow(img3d_2[:, :, p3], cmap=cmap)
     plt.savefig(filename=path_to_save_image, format="png")
 
+
+def plot_individual_sample_by_planes_indicated(img3d, p1, p2, p3, path_to_save_image,
+                                                cmap, tittle=""):
+    fig = plt.figure()
+    fig.suptitle(tittle, fontsize=14)
+    plt.subplot(311)
+    plt.imshow(np.rot90(img3d[p1, :, :]), cmap=cmap)
+    plt.subplot(312)
+    plt.imshow(np.rot90(img3d[:, p2, :]), cmap=cmap)
+    plt.subplot(313)
+    plt.imshow(img3d[:, :, p3], cmap=cmap)
+    plt.savefig(filename=path_to_save_image, format="png")
+
+
+def plot_comparaision_images_ADvsNOR(original_NOR, original_AD, recons_NOR,
+                                     recons_AD, path_reconstruction_images, cmap):
+    # Original AD vs Original NOR
+    plot_section_indicated(
+        img3d_1=original_NOR,
+        img3d_2=original_AD,
+        p1=settings.planos_hipocampo["p1"],
+        p2=settings.planos_hipocampo["p2"],
+        p3=settings.planos_hipocampo["p3"],
+        path_to_save_image=os.path.join(path_reconstruction_images,
+                                        "Original_NORvsOriginal_AD.png"),
+        cmap=cmap,
+        tittle="Original NOR vs original AD")
+
+    # Reconstructed AD vs Reconstructred Nor
+    plot_section_indicated(
+        img3d_1=recons_NOR,
+        img3d_2=recons_AD,
+        p1=settings.planos_hipocampo["p1"],
+        p2=settings.planos_hipocampo["p2"],
+        p3=settings.planos_hipocampo["p3"],
+        path_to_save_image=os.path.join(path_reconstruction_images,
+                                        "Reconstructed_NORvsReconstructed_AD.png"),
+        cmap=cmap,
+        tittle="Reconstructed NOR vs Reconstructed AD")
+
+    # Reconstructed AD vs Original AD
+    plot_section_indicated(
+        img3d_1=recons_NOR,
+        img3d_2=original_NOR,
+        p1=settings.planos_hipocampo["p1"],
+        p2=settings.planos_hipocampo["p2"],
+        p3=settings.planos_hipocampo["p3"],
+        path_to_save_image=os.path.join(path_reconstruction_images,
+                                        "Reconstructed_NORvsOriginal_NOR.png"),
+        cmap=cmap,
+        tittle="Reconstructed NOR vs Original NOR")
+
+    # Reconstructed NOR vs Original NOR
+    plot_section_indicated(
+        img3d_1=recons_AD,
+        img3d_2=original_AD,
+        p1=settings.planos_hipocampo["p1"],
+        p2=settings.planos_hipocampo["p2"],
+        p3=settings.planos_hipocampo["p3"],
+        path_to_save_image=os.path.join(path_reconstruction_images,
+                                        "Reconstructed_ADvsOriginal_AD.png"),
+        cmap=cmap,
+        tittle="Reconstructed AD vs Original AD")
 
 
 #recons.plot_most_discriminative_section(

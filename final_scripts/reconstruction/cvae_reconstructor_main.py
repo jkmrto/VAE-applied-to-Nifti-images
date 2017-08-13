@@ -12,7 +12,6 @@ from lib.data_loader import utils_images3d
 from lib.utils import output_utils as output
 from lib.vae import CVAE
 
-path_image = "reconstruction_individual_images.png"
 #AD 123
 #NOR 22
 patients_selected_per_class = {"NOR": 22, "AD": 123}
