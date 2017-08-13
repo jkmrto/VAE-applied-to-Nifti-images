@@ -57,3 +57,11 @@ planos_hipocampo = {
     "p2": 51,
     "p3": 13,
 }
+
+perclass_AD_session  = "cvae_perclass_AD_create_meta_net_iter_500_latent_layer_100_13_08_2017_17:50"
+perclass_NOR_session = "cvae_perclass_NOR_create_meta_net_iter_500_latent_layer_100_13_08_2017_17:29"
+
+explicit_iter_per_region = {
+    73: 200,
+    74: 400,
+}

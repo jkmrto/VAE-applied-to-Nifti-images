@@ -20,10 +20,10 @@ from lib.utils import os_aux
 patients_selected_per_class = {"NOR": 22, "AD": 123}
 logs = True
 regions_used = "all"
-session_name = "test_saving_meta_PET_15_07_2017_21:34"
+session_name = settings.perclass_AD_session
 folder_name_to_store_images_created = "Pair_reconstruction_comparaison"
 
-iters = 100
+iters = 500
 # images_used = "MRI_WM"
 # images_used = "MRI_GM"
 images_used = "PET"

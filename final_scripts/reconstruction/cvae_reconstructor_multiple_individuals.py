@@ -13,10 +13,6 @@ from lib.utils import output_utils as output
 from lib.vae import CVAE
 from lib.utils.os_aux import create_directories
 
-explicit_iter_per_region = {
-    73: 200,
-    74: 400,
-}
 
 patients_selected = [22, 123, 23]
 number_samples_to_reconstruct = len(patients_selected)
@@ -24,14 +20,7 @@ number_samples_to_reconstruct = len(patients_selected)
 logs = True
 regions_used = "all"
 folder_name_to_store_images_created = "reconstructed_multiple_individuals"
-perclass_AD_session  = \
-    "cvae_perclass_AD_create_meta_net_iter_500_latent_layer_100_13_08_2017_17:50"
-
-perclass_NOR_session = \
-    "cvae_perclass_NOR_create_meta_net_iter_500_latent_layer_100_13_08_2017_17:29"
-
-
-session_name = perclass_NOR_session
+session_name = settings.perclass_AD_session
 max_iters = 500
 
 #images_used = "MRI_WM"
@@ -61,7 +50,7 @@ for region in list_regions:
 
     iters = session.get_adequate_number_iterations(
         region_selected=region,
-        explicit_iter_per_region = explicit_iter_per_region,
+        explicit_iter_per_region = settings.explicit_iter_per_region,
         predefined_iters = max_iters)
 
     print("region {} selected".format(region))
