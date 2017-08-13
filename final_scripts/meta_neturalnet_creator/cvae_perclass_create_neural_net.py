@@ -1,6 +1,6 @@
 import os
 import sys
-sys.path.append(os.path.dirname(os.getcwd()))
+sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
 
 import lib.neural_net.kfrans_ops as ops
 import settings
@@ -31,6 +31,7 @@ filtered_stack = get_stack_3dimages_filtered_by_label(
     stack_region_to_3dimg=region_to_img_dict,
     samples_label=load_patients_labels(),
     label_selected=dic_class_to_label["AD"])
+
 print("Dimensions stacked filtered: {}".format(
     filtered_stack[1].shape))
 
