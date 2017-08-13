@@ -12,29 +12,26 @@ from lib.data_loader import utils_images3d
 from lib.utils import output_utils as output
 from lib.vae import CVAE
 
-path_image = "reconstruction_individual_images.png"
-#AD 123
-#NOR 22
+
 patients_selected = [22, 123, 23]
 number_samples_to_reconstruct = len(patients_selected)
+
 logs = True
 regions_used = "all"
 session_name = "test_saving_meta_PET_15_07_2017_21:34"
+folder_name_to_store_images_created = "reconstructed_multiple_individuals"
+iters = 100
 
 #images_used = "MRI_WM"
 #images_used = "MRI_GM"
 images_used = "PET"
-
-#vae_used = "dense_vae"
-vae_used = "conv_vae"
-iters = 100
-
-
-
 list_regions = session.select_regions_to_evaluate(regions_used)
+
+# Paths configurations
 path_session = os.path.join(settings.path_to_general_out_folder, session_name)
 path_meta = os.path.join(path_session, "meta")
-print(path_meta)
+path_images = os.path.join(path_session, "images")
+path_where_store_images_generated = os.path.join(path_images, folder_name_to_store_images_created)
 
 stack_region_to_3dimg, patient_labels, n_samples, cmap = \
     recons.load_desired_stacked_and_parameters(images_used, list_regions, )
@@ -76,9 +73,7 @@ whole_reconstruction = \
 print("Mapping Reconstructing images ended")
 
 for index in range(0,number_samples_to_reconstruct,1):
-    output.from_3d_image_to_nifti_file(path_to_save="example_neg",
+
+    output.from_3d_image_to_nifti_file(path_to_save=os.path.join(
+        path_where_store_images_generated, "sample_{}".format(patients_selected[index])),
                                        image3d=whole_reconstruction[0, :, :, :])
-
-    output.from_3d_image_to_nifti_file(path_to_save="example_pos",
-                                       image3d=whole_reconstruction[1, :, :, :])
-

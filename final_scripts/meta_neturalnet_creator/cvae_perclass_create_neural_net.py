@@ -19,7 +19,7 @@ regions_used = "all"
 class_selected = "NOR"
 list_regions = session_helper.select_regions_to_evaluate(regions_used)
 region_to_img_dict = load_pet_regions_segmented(list_regions, bool_logs=False)
-session_name = "cvae_perclass_{0}_create_meta_net_iter_{1}_latent_layer_{2}"
+session_name = "cvae_perclass_{0}_create_meta_net_iter_{2}_latent_layer_{1}"
 
 dic_class_to_label={
     "NOR": 0,
@@ -68,3 +68,4 @@ path_to_session = execute_saving_meta_graph_without_any_cv(
 
 # deleting temporal meta data generated
 session_to_clean_meta_folder = os.path.join(path_to_session, "meta")
+delete_simple_session(session_to_clean_meta_folder=session_to_clean_meta_folder)
