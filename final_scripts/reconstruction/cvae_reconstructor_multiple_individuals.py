@@ -12,6 +12,10 @@ from lib.data_loader import utils_images3d
 from lib.utils import output_utils as output
 from lib.vae import CVAE
 
+explicit_iter_per_region = {
+    73: 200,
+    74: 400,
+}
 
 patients_selected = [22, 123, 23]
 number_samples_to_reconstruct = len(patients_selected)
@@ -22,7 +26,7 @@ folder_name_to_store_images_created = "reconstructed_multiple_individuals"
 perclass_AD_session  = \
     "cvae_perclass_AD_create_meta_net_iter_500_latent_layer_100_13_08_2017_17:50"
 session_name = perclass_AD_session
-
+max_iters = 500
 
 #images_used = "MRI_WM"
 #images_used = "MRI_GM"
@@ -47,6 +51,12 @@ data_to_encode_per_region = \
 
 reconstruction_per_region = {}
 for region in list_regions:
+
+    iters = session.get_adequate_number_iterations(
+        region_selected=region,
+        explicit_iter_per_region = explicit_iter_per_region,
+        predefined_iters = max_iters)
+
     print("region {} selected".format(region))
     meta_region_file = "region_{0}-{1}".format(region, iters)
     path_meta_region = os.path.join(path_meta, meta_region_file)
