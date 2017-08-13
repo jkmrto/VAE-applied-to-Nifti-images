@@ -18,12 +18,16 @@ number_samples_to_reconstruct = len(patients_selected)
 
 logs = True
 regions_used = "all"
-session_name = "test_saving_meta_PET_15_07_2017_21:34"
 folder_name_to_store_images_created = "reconstructed_multiple_individuals"
+perclass_AD_session  = \
+    "cvae_perclass_AD_create_meta_net_iter_500_latent_layer_100_13_08_2017_17:50"
+session_name = perclass_AD_session
+
 
 #images_used = "MRI_WM"
 #images_used = "MRI_GM"
 images_used = "PET"
+
 list_regions = session.select_regions_to_evaluate(regions_used)
 
 # Paths configurations
