@@ -25,7 +25,10 @@ dic_class_to_label={
     "NOR": 0,
     "AD": 1,
 }
-explicit_iter_per_region = {}
+
+explicit_iter_per_region = {
+    73: 300,
+}
 
 filtered_stack = get_stack_3dimages_filtered_by_label(
     stack_region_to_3dimg=region_to_img_dict,

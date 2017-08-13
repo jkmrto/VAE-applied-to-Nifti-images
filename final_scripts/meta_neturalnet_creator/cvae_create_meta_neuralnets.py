@@ -1,6 +1,6 @@
 import os
 import sys
-sys.path.append(os.path.dirname(os.getcwd()))
+sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
 import settings
 
 import lib.neural_net.kfrans_ops as ops

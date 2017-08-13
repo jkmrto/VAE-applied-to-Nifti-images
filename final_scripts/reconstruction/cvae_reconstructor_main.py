@@ -3,6 +3,7 @@ import sys
 sys.path.append(os.path.dirname(os.getcwd()))
 import matplotlib
 matplotlib.use('Agg')
+
 import tensorflow as tf
 import settings
 from lib import session_helper as session
