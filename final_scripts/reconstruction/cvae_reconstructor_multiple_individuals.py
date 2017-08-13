@@ -20,7 +20,6 @@ logs = True
 regions_used = "all"
 session_name = "test_saving_meta_PET_15_07_2017_21:34"
 folder_name_to_store_images_created = "reconstructed_multiple_individuals"
-iters = 100
 
 #images_used = "MRI_WM"
 #images_used = "MRI_GM"

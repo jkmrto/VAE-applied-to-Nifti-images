@@ -5,6 +5,7 @@ from matplotlib import pyplot as plt
 import settings
 import os
 
+
 def load_desired_stacked_and_parameters(images_used, list_regions):
     """ Complete function for MRI"""
     n_samples = 0
@@ -16,10 +17,10 @@ def load_desired_stacked_and_parameters(images_used, list_regions):
         print("Loading Pet images")
         stack_region_to_3dimg, patient_labels, n_samples = \
             pet_loader.load_pet_data_3d(list_regions)
-        cmap="jet"
+        cmap = "jet"
 
     elif images_used in ["MRI_GM", "MRI_WM"]:
-        region_to_3dimg_dict_mri_gm, region_to_3dimg_dict_mri_wm,\
+        region_to_3dimg_dict_mri_gm, region_to_3dimg_dict_mri_wm, \
         patient_labels, n_samples = mri_loader.load_mri_data_3d(list_regions)
         if images_used == "MRI_GM":
             stack_region_to_3dimg = region_to_3dimg_dict_mri_gm
@@ -47,8 +48,8 @@ def get_data_to_encode_per_region(region_to_3dimg_dict_pet,
     if where_to_mean_data == "before_encoding":
         data_to_encode_per_region = \
             get_mean_3d_images_over_samples_per_region(
-                region_to_3dimg_dict_pet = region_to_3dimg_dict_pet,
-                patient_labels = patient_labels)
+                region_to_3dimg_dict_pet=region_to_3dimg_dict_pet,
+                patient_labels=patient_labels)
     elif where_to_mean_data == "no_mean_individual_input":
         data_to_encode_per_region = \
             get_representatives_samples_over_region_per_patient_indexes(
@@ -68,7 +69,7 @@ def get_data_to_decode(where_to_mean_data, samples, patient_labels):
             data_samples=samples,
             patient_labels=patient_labels)
 
-    elif where_to_mean_data== "before_encoding":
+    elif where_to_mean_data == "before_encoding":
         data_to_decode = samples
 
     elif where_to_mean_data == "no_mean_individual_input":
@@ -79,17 +80,17 @@ def get_data_to_decode(where_to_mean_data, samples, patient_labels):
 
 def get_representatives_samples_over_region_per_patient_indexes(
         region_to_3d_images_dict, indexes_per_group):
-
     region_to_class_to_3d_means_imgs = {}
 
     for region, cube_images in region_to_3d_images_dict.items():
         class_to_3d_means_imgs = np.zeros([2, cube_images.shape[1],
-                                          cube_images.shape[2], cube_images.shape[3]])
+                                           cube_images.shape[2],
+                                           cube_images.shape[3]])
 
-        class_to_3d_means_imgs[0,:,:,:] = \
+        class_to_3d_means_imgs[0, :, :, :] = \
             cube_images[indexes_per_group["NOR"], :, :, :]
 
-        class_to_3d_means_imgs[1,:,:,:] = \
+        class_to_3d_means_imgs[1, :, :, :] = \
             cube_images[indexes_per_group["AD"], :, :, :]
 
         region_to_class_to_3d_means_imgs[region] = class_to_3d_means_imgs
@@ -99,15 +100,14 @@ def get_representatives_samples_over_region_per_patient_indexes(
 
 def get_3dsamples_indcated_by_indexes(
         region_to_3d_images_dict, indexes):
-
     number_examples_to_extract = len(indexes)
     region_to_class_to_3d_means_imgs = {}
 
     for region, cube_images in region_to_3d_images_dict.items():
         class_to_3d_means_imgs = np.zeros([number_examples_to_extract,
-                                          cube_images.shape[1],
-                                          cube_images.shape[2],
-                                          cube_images.shape[3]])
+                                           cube_images.shape[1],
+                                           cube_images.shape[2],
+                                           cube_images.shape[3]])
 
         class_to_3d_means_imgs[:, :, :, :] = cube_images[indexes, :, :, :]
 
@@ -128,7 +128,8 @@ def get_mean_3d_images_over_samples_per_region(region_to_3dimg_dict_pet,
 
     for region, cube_images in region_to_3dimg_dict_pet.items():
         class_to_3d_means_imgs = np.zeros([2, cube_images.shape[1],
-                                          cube_images.shape[2], cube_images.shape[3]])
+                                           cube_images.shape[2],
+                                           cube_images.shape[3]])
 
         index_to_selected_images = patient_labels == 0
         index_to_selected_images = index_to_selected_images.flatten()
@@ -160,8 +161,10 @@ def get_mean_over_flat_samples_per_region(dict_region_to_img, patient_labels):
 def get_means_by_label_over_flat_samples(data_samples, patient_labels):
     mean_images = np.zeros([2, data_samples.shape[1]])
 
-    mean_images[0, :] = get_mean_over_selected_samples(data_samples, 0, patient_labels)
-    mean_images[1, :] = get_mean_over_selected_samples(data_samples, 1, patient_labels)
+    mean_images[0, :] = get_mean_over_selected_samples(data_samples, 0,
+                                                       patient_labels)
+    mean_images[1, :] = get_mean_over_selected_samples(data_samples, 1,
+                                                       patient_labels)
 
     return mean_images
 
@@ -169,31 +172,31 @@ def get_means_by_label_over_flat_samples(data_samples, patient_labels):
 def get_mean_over_selected_samples(images, label_selected, patient_labels):
     index_to_selected_images = patient_labels == label_selected
     index_to_selected_images = index_to_selected_images.flatten()
-    mean_over_images_selected = images[index_to_selected_images.tolist(), :].mean(axis=0)
+    mean_over_images_selected = images[index_to_selected_images.tolist(),
+                                :].mean(axis=0)
     return mean_over_images_selected
 
 
 def evaluate_cubes_difference_by_planes(cube1, cube2, bool_test=False):
-   if bool_test:
+    if bool_test:
         print(cube1.shape)
         print(cube2.shape)
 
-   cube_dif = cube1 - cube2
-   cube_dif = cube_dif.__abs__()
+    cube_dif = cube1 - cube2
+    cube_dif = cube_dif.__abs__()
 
-   if bool_test:
-       print("Diferncia dentre los cubos: {}".format(cube_dif.sum()))
+    if bool_test:
+        print("Diferncia dentre los cubos: {}".format(cube_dif.sum()))
 
-   v1 = cube_dif.sum(axis=2).sum(axis=1)
-   v2 = cube_dif.sum(axis=2).sum(axis=0)
-   v3 = cube_dif.sum(axis=0).sum(axis=0)
+    v1 = cube_dif.sum(axis=2).sum(axis=1)
+    v2 = cube_dif.sum(axis=2).sum(axis=0)
+    v3 = cube_dif.sum(axis=0).sum(axis=0)
 
-   return np.argmax(v1), np.argmax(v2), np.argmax(v3)
+    return np.argmax(v1), np.argmax(v2), np.argmax(v3)
 
 
 def reconstruct_3d_image_from_flat_and_index(
         image_flatten, voxels_index, imgsize, reshape_kind):
-
     mri_image = np.zeros(imgsize)
     mri_image = mri_image.flatten()
 
@@ -210,7 +213,6 @@ def reconstruct_3d_image_from_flat_and_index(
 
 def plot_most_discriminative_section(img3d_1, img3d_2,
                                      path_to_save_image, cmap):
-
     dim1, dim2, dim3 = \
         evaluate_cubes_difference_by_planes(cube1=img3d_1,
                                             cube2=img3d_2,
@@ -239,8 +241,9 @@ def plot_section_indicated(img3d_1, img3d_2, p1, p2, p3, path_to_save_image,
     plt.savefig(filename=path_to_save_image, format="png")
 
 
-def plot_individual_sample_by_planes_indicated(img3d, p1, p2, p3, path_to_save_image,
-                                                cmap, tittle=""):
+def plot_individual_sample_by_planes_indicated(img3d, p1, p2, p3,
+                                               path_to_save_image,
+                                               cmap, tittle=""):
     fig = plt.figure()
     fig.suptitle(tittle, fontsize=14)
     plt.subplot(311)
@@ -252,8 +255,23 @@ def plot_individual_sample_by_planes_indicated(img3d, p1, p2, p3, path_to_save_i
     plt.savefig(filename=path_to_save_image, format="png")
 
 
-def plot_comparaision_images_ADvsNOR(original_NOR, original_AD, recons_NOR,
-                                     recons_AD, path_reconstruction_images, cmap):
+def plot_comparaision_images_ADvsNOR(whole_reconstruction, origin_image,
+                                     path_reconstruction_images, cmap):
+    """
+
+    :param whole_reconstruction:
+    :param origin_image:
+    :param path_reconstruction_images:
+    :param cmap:
+    :return:
+    """
+
+    recons_NOR = whole_reconstruction[0, :, :, :]
+    recons_AD = whole_reconstruction[1, :, :, :]
+
+    original_NOR = origin_image[0, :, :, :]
+    original_AD = origin_image[1, :, :, :]
+
     # Original AD vs Original NOR
     plot_section_indicated(
         img3d_1=original_NOR,
@@ -303,14 +321,14 @@ def plot_comparaision_images_ADvsNOR(original_NOR, original_AD, recons_NOR,
         tittle="Reconstructed AD vs Original AD")
 
 
-#recons.plot_most_discriminative_section(
-#    img3d_1=whole_reconstruction[0, :, :, :],
-#    img3d_2=whole_reconstruction[1, :, :, :],
-#    path_to_save_image=path_image,
-#    cmap=cmap)
+    # recons.plot_most_discriminative_section(
+    #    img3d_1=whole_reconstruction[0, :, :, :],
+    #    img3d_2=whole_reconstruction[1, :, :, :],
+    #    path_to_save_image=path_image,
+    #    cmap=cmap)
 
-#if logs:
-#    evaluate_difference_full_image = whole_reconstruction[0, :, :, :].flatten() \
-#                                     - whole_reconstruction[1, :, :, :].flatten()
-#    total_difference = sum(abs(evaluate_difference_full_image))
-#    print("Total difference between images reconstructed {0}".format(total_difference))
+    # if logs:
+    #    evaluate_difference_full_image = whole_reconstruction[0, :, :, :].flatten() \
+    #                                     - whole_reconstruction[1, :, :, :].flatten()
+    #    total_difference = sum(abs(evaluate_difference_full_image))
+    #    print("Total difference between images reconstructed {0}".format(total_difference))
