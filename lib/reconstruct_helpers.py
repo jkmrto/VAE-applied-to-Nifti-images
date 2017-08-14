@@ -323,7 +323,7 @@ def plot_comparaision_images_ADvsNOR(whole_reconstruction, origin_image,
 
 def plot_comparaison_images_ReconstructedvsOriginal(
         original_3dimg, reconstruction_3dimg, path_reconstruction_images,
-        cmap, tittle):
+        cmap, title):
 
     # Reconstructed NOR vs Original NOR
     plot_section_indicated(
