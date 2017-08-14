@@ -321,6 +321,22 @@ def plot_comparaision_images_ADvsNOR(whole_reconstruction, origin_image,
         tittle="Reconstructed AD vs Original AD")
 
 
+def plot_comparaison_images_ReconstructedvsOriginal(
+        original_3dimg, reconstruction_3dimg, path_reconstruction_images,
+        cmap, tittle):
+
+    # Reconstructed NOR vs Original NOR
+    plot_section_indicated(
+        img3d_1=original_3dimg,
+        img3d_2=reconstruction_3dimg,
+        p1=settings.planos_hipocampo["p1"],
+        p2=settings.planos_hipocampo["p2"],
+        p3=settings.planos_hipocampo["p3"],
+        path_to_save_image=os.path.join(path_reconstruction_images,
+                                        "Reconstructed_ADvsOriginal_AD.png"),
+        cmap=cmap,
+        tittle=title)
+
     # recons.plot_most_discriminative_section(
     #    img3d_1=whole_reconstruction[0, :, :, :],
     #    img3d_2=whole_reconstruction[1, :, :, :],

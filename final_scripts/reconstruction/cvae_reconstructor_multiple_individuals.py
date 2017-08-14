@@ -14,7 +14,7 @@ from lib.vae import CVAE
 from lib.utils.os_aux import create_directories
 
 
-patients_selected = [22, 123, 23]
+patients_selected = [100, 123, 111, 88, 99, 101, 102]
 number_samples_to_reconstruct = len(patients_selected)
 
 logs = True
@@ -81,21 +81,29 @@ whole_reconstruction = \
     utils_images3d.map_region_segmented_over_full_image(reconstruction_per_region, images_used)
 print("Mapping Reconstructing images ended")
 
+print("Mapping Original images")
+origin_image = \
+    utils_images3d.map_region_segmented_over_full_image(
+        data_to_encode_per_region, images_used)
+print("Mapping Original images ended")
+
 
 for index in range(0,number_samples_to_reconstruct,1):
 
-    image_idi = "sample_{}".format(patients_selected[index])
+    idi = "{}".format(patients_selected[index])
 
     output.from_3d_image_to_nifti_file(path_to_save=os.path.join(
-        path_where_store_images_generated, image_idi),
-                                       image3d=whole_reconstruction[index, :, :, :])
+        path_where_store_images_generated, "Reconstructed {}".format(idi)),
+        image3d=whole_reconstruction[index, :, :, :])
 
-    recons.plot_individual_sample_by_planes_indicated(
-        img3d=whole_reconstruction[index, :, :, :],
-        p1=settings.planos_hipocampo["p1"],
-        p2=settings.planos_hipocampo["p2"],
-        p3=settings.planos_hipocampo["p3"],
-        path_to_save_image=os.path.join(path_where_store_images_generated,
-                                    "{}.png".format(image_idi)),
+    output.from_3d_image_to_nifti_file(path_to_save=os.path.join(
+        path_where_store_images_generated, "Original {}".format(idi)),
+        image3d=origin_image[index, :, :, :])
+
+    recons.plot_comparaison_images_ReconstructedvsOriginal(
+        original_3dimg=origin_image[index,:,:,:],
+        reconstruction_3dimg=whole_reconstruction[index, :, :, :],
+        path_reconstruction_images=os.path.join(path_where_store_images_generated,
+                                    "{}.png".format(idi)),
         cmap=cmap,
-        tittle="Reconstructed AD vs Original AD")
+        tittle="Reconstructed AD vs Original AD. Sample {}".format(idi))
