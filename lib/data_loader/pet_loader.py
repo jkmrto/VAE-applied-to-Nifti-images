@@ -2,6 +2,7 @@ from lib.utils import output_utils
 from lib.data_loader import PET_stack_NORAD
 from lib.data_loader import pet_atlas
 from lib.data_loader.utils_images3d import recortar_region
+import os
 import numpy as np
 import nibabel as nib
 
