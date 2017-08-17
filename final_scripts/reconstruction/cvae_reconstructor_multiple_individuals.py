@@ -106,4 +106,4 @@ for index in range(0,number_samples_to_reconstruct,1):
         path_reconstruction_images=os.path.join(path_where_store_images_generated,
                                     "{}.png".format(idi)),
         cmap=cmap,
-        tittle="Reconstructed AD vs Original AD. Sample {}".format(idi))
+        title="Reconstructed AD vs Original AD. Sample {}".format(idi))
