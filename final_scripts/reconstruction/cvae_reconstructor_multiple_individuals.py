@@ -103,7 +103,7 @@ for index in range(0,number_samples_to_reconstruct,1):
     recons.plot_comparaison_images_ReconstructedvsOriginal(
         original_3dimg=origin_image[index,:,:,:],
         reconstruction_3dimg=whole_reconstruction[index, :, :, :],
-        path_reconstruction_images=os.path.join(path_where_store_images_generated,
+        end_image_path=os.path.join(path_where_store_images_generated,
                                     "{}.png".format(idi)),
         cmap=cmap,
         title="Reconstructed AD vs Original AD. Sample {}".format(idi))
