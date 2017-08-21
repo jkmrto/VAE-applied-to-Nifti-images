@@ -324,7 +324,15 @@ def plot_comparaision_images_ADvsNOR(whole_reconstruction, origin_image,
 def plot_comparaison_images_ReconstructedvsOriginal(
         original_3dimg, reconstruction_3dimg,
         end_image_path,  cmap, title):
+    """
 
+    :param original_3dimg:
+    :param reconstruction_3dimg:
+    :param end_image_path: ty[str] Complete image path
+    :param cmap:
+    :param title:
+    :return:
+    """
     # Reconstructed NOR vs Original NOR
     plot_section_indicated(
         img3d_1=original_3dimg,

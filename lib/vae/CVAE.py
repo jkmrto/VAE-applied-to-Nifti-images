@@ -10,7 +10,7 @@ import lib.neural_net.kfrans_ops as ops
 import settings
 from lib import session_helper
 from lib.data_loader.pet_loader import load_pet_regions_segmented
-from lib.utils import  output_utils
+from lib.utils import output_utils
 from lib.utils.functions import \
     get_batch_from_samples_unsupervised_3d
 from lib.utils.os_aux import create_directories
@@ -19,13 +19,12 @@ bool_save_meta = False
 
 
 class CVAE():
-
     RESTORE_KEY = "restore"
 
     def __init__(self, hyperparams, test_bool=False, meta_path=None,
                  path_to_session=None):
 
-        assert  "image_shape" in list(hyperparams), \
+        assert "image_shape" in list(hyperparams), \
             "image_shape should be specified in hyperparams"
         self.image_shape = hyperparams['image_shape']
         self.total_size = np.array(self.image_shape).prod()
@@ -70,7 +69,7 @@ class CVAE():
             # initializing attributes
             handles = self.session.graph.get_collection_ref(CVAE.RESTORE_KEY)
             self.in_flat_images, self.z_mean, self.z_stddev, \
-            self.z_in_, self.regenerated_3d_images_= handles[0:5]
+            self.z_in_, self.regenerated_3d_images_ = handles[0:5]
 
             # initialing variables
             self.n_z = self.z_in_.get_shape().as_list()[1]
@@ -85,7 +84,8 @@ class CVAE():
         self.decay_rate = tf.placeholder_with_default(
             self.decay_rate_value, shape=[], name="decay_rate")
 
-        self.in_flat_images = tf.placeholder(tf.float32, [None, self.total_size],
+        self.in_flat_images = tf.placeholder(tf.float32,
+                                             [None, self.total_size],
                                              "input_images")
 
         image_matrix = tf.reshape(self.in_flat_images,
@@ -120,13 +120,13 @@ class CVAE():
         # defaults to prior z ~ N(0, I)
 
         self.z_in_ = tf.placeholder(tf.float32,
-            shape=[None, self.n_z], name="latent_in")
+                                    shape=[None, self.n_z], name="latent_in")
         generated_images_ = self.__generation(self.z_in_, reuse_bool=True)
 
         self.regenerated_3d_images_ = \
             tf.reshape(generated_images_,
                        [-1, self.image_shape[0], self.image_shape[1],
-                                   self.image_shape[2]])
+                        self.image_shape[2]])
 
     def __init_session_folders(self):
         """
@@ -149,7 +149,8 @@ class CVAE():
     def __cost_calculation(self, images_reconstructed, z_mean, z_stddev):
         self.generation_loss = -tf.reduce_sum(
             self.in_flat_images * tf.log(1e-8 + images_reconstructed) + (
-                1 - self.in_flat_images) * tf.log(1e-8 + 1 - images_reconstructed), 1)
+                1 - self.in_flat_images) * tf.log(
+                1e-8 + 1 - images_reconstructed), 1)
 
         self.latent_loss = 0.5 * tf.reduce_sum(
             tf.square(z_mean) + tf.square(z_stddev) - tf.log(
@@ -212,7 +213,7 @@ class CVAE():
         """
         output_dic = {}
 
-        input_images_flat=\
+        input_images_flat = \
             self.__inspect_and_reshape_to_flat_input_images(input_images)
 
         feed_dict = {self.in_flat_images: input_images_flat}
@@ -296,14 +297,15 @@ class CVAE():
 
     def train(self, X, n_iters=1000, batchsize=10, tempSGD_3dimages=False,
               iter_show_error=10, save_bool=False, suffix_files_generated=" ",
-              iter_to_save=100, break_if_nan_error_value=True):
+              iter_to_save=100, break_if_nan_error_value=True,
+              full_samples_evaluation=False):
 
         saver = None
         if save_bool:
             saver = tf.train.Saver(tf.global_variables())
 
         try:
-            for iter in range(1, n_iters+1, 1):
+            for iter in range(1, n_iters + 1, 1):
 
                 batch_images = get_batch_from_samples_unsupervised_3d(
                     X, batch_size=batchsize)
@@ -325,10 +327,10 @@ class CVAE():
                             math.isnan(np.mean(lat_loss)) or \
                             math.isinf(np.mean(lat_loss)) or \
                             math.isinf(np.mean(gen_loss)):
-
-                        print("iter %d: genloss %f latloss %f learning_rate %f" % (
-                            iter, np.mean(gen_loss), np.mean(lat_loss),
-                            learning_rate))
+                        print(
+                            "iter %d: genloss %f latloss %f learning_rate %f" % (
+                                iter, np.mean(gen_loss), np.mean(lat_loss),
+                                learning_rate))
                         return -1
 
                 if iter % iter_show_error == 0:
@@ -336,11 +338,17 @@ class CVAE():
                         iter, np.mean(gen_loss), np.mean(lat_loss),
                         learning_rate))
 
+                    if full_samples_evaluation:
+                        all_images_flat = np.reshape(X, [X.shape[0], self.total_size])
+                        # Generate %similarity in reconstruction
+                        self.__full_reconstruction_error_evaluation(
+                            images_flat=all_images_flat)
+
                     if tempSGD_3dimages:
                         self.__generate_and_save_temp_3d_images(
                             regen_batch=batch_flat[0:2, :],
                             suffix="{1}_iter_{0}".format(iter,
-                                suffix_files_generated))
+                                                         suffix_files_generated))
 
                 if iter % iter_to_save == 0:
                     if save_bool:
@@ -365,6 +373,39 @@ class CVAE():
         image_3d = image_3d.astype(float)
         file_path = os.path.join(self.path_to_3dtemp_images, suffix)
         output_utils.from_3d_image_to_nifti_file(file_path, image_3d)
+
+    def __full_reconstruction_error_evaluation(self, images_flat):
+        feed_dict = {self.in_flat_images: images_flat}
+
+        reconstructed_images = self.session.run(
+            self.generated_images,
+            feed_dict=feed_dict)
+        images_3d_reconstructed = np.reshape(reconstructed_images,
+                                             [images_flat.shape[0],
+                                              self.image_shape[0],
+                                              self.image_shape[1]],
+                                             self.image_shape[2])
+
+        images_3d_original = np.reshape(reconstructed_images,
+                                        [images_flat.shape[0],
+                                         self.image_shape[0],
+                                         self.image_shape[1]],
+                                        self.image_shape[2])
+
+        images_3d_original = images_3d_original.astype(float)
+        images_3d_reconstructed = images_3d_reconstructed.astype(float)
+
+        print("Shape original images")
+        print(images_3d_original.shape)
+        print("Shape Modified images")
+        print(images_3d_reconstructed.shape)
+
+        diff_matrix = np.subtract(images_3d_original, images_3d_reconstructed)
+        total_diff = diff_matrix.sum()
+
+        mean_diff = total_diff / images_flat.shape[0]
+
+        print("Man diff {}%".format(mean_diff))
 
 
 def auto_execute_with_session_folders():
@@ -397,11 +438,15 @@ def auto_execute_with_session_folders():
                 batchsize=32,
                 suffix_files_generated="region_3",
                 tempSGD_3dimages=True,
-                iter_to_save=50)
+                iter_to_save=50,
+                full_samples_evaluation=True,
+                save_bool=False)
+
+
+auto_execute_with_session_folders()
 
 
 def auto_execute_encoding_over_trained_net():
-
     regions_used = "three"
     region_selected = 3
     list_regions = session_helper.select_regions_to_evaluate(regions_used)
@@ -423,11 +468,11 @@ def auto_execute_encoding_over_trained_net():
 
     return encoding
 
-#encoding = auto_execute_encoder_over_trained_net()
+
+# encoding = auto_execute_encoder_over_trained_net()
 
 
 def auto_execute_encoding_and_decoding_over_trained_net():
-
     regions_used = "three"
     region_selected = 3
     list_regions = session_helper.select_regions_to_evaluate(regions_used)
@@ -454,8 +499,8 @@ def auto_execute_encoding_and_decoding_over_trained_net():
                                          original_images=train_images)
 
     output_utils.from_3d_image_to_nifti_file(
-        path_to_save= os.path.join(path_to_images, "example")
-       ,mage3d = images_3d_regenerated[0,:,:,:])
+        path_to_save=os.path.join(path_to_images, "example")
+        , mage3d=images_3d_regenerated[0, :, :, :])
 
-#auto_execute_with_session_folders()
-#auto_execute_encoding_and_decoding_over_trained_net()
+    # auto_execute_with_session_folders()
+    # auto_execute_encoding_and_decoding_over_trained_net()

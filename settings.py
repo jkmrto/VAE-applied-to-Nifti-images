@@ -26,8 +26,11 @@ MRI_stack_path_GM = path_to_project + "/data/stack_NORAD_GM.mat"
 MRI_stack_path_WM = path_to_project + "/data/stack_NORAD_WM.mat"
 mri_atlas_path = path_to_project + "/data/" + "ratlas116_MRI.nii"
 
-PET_stack_path = path_to_project + "/data/PET_stack_NORAD.mat"
+#PET_stack_path = path_to_project + "/data/PET_stack_NORAD.mat"
 pet_atlas_path = path_to_project + "/data/" + "ratlas116_PET.nii"
+
+PET_stack_path = "/mnt/datos/home/compartido/Datos/generacion_stacks/genera_stack_PET2.m"
+
 
 # AUTOENCODER SESSION FOLDER AND FILES ASSOCIATED
 main_test_folder_autoencoder_session = "post_train"
