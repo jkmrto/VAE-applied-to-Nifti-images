@@ -409,9 +409,9 @@ class CVAE():
         diff_matrix = np.subtract(images_3d_original, images_3d_reconstructed)
         total_diff = diff_matrix.sum()
         print(total_diff)
-        mean_diff = total_diff / images_flat.shape[0]
+        mean_diff = abs(total_diff / images_flat.shape.prod()) * 2
 
-        print("Man diff {}%".format(mean_diff))
+        print("Similarity {}%".format(mean_diff))
 
 
 def auto_execute_with_session_folders():
@@ -440,7 +440,7 @@ def auto_execute_with_session_folders():
                  path_to_session=path_to_session)
 
     model.train(X=train_images,
-                n_iters=50,
+                n_iters=200,
                 batchsize=32,
                 suffix_files_generated="region_3",
                 tempSGD_3dimages=True,
