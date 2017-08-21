@@ -384,13 +384,14 @@ class CVAE():
         reconstructed_images = self.session.run(
             self.generated_images,
             feed_dict=feed_dict)
+
         images_3d_reconstructed = np.reshape(reconstructed_images,
                                              [images_flat.shape[0],
                                               self.image_shape[0],
                                               self.image_shape[1],
                                              self.image_shape[2]])
 
-        images_3d_original = np.reshape(reconstructed_images,
+        images_3d_original = np.reshape(images_flat,
                                         [images_flat.shape[0],
                                          self.image_shape[0],
                                          self.image_shape[1],
