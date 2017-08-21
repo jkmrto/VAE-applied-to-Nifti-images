@@ -29,7 +29,7 @@ mri_atlas_path = path_to_project + "/data/" + "ratlas116_MRI.nii"
 #PET_stack_path = path_to_project + "/data/PET_stack_NORAD.mat"
 pet_atlas_path = path_to_project + "/data/" + "ratlas116_PET.nii"
 
-PET_stack_path = "/mnt/datos/home/compartido/Datos/generacion_stacks/genera_stack_PET2.m"
+PET_stack_path = "/mnt/datos/home/compartido/Datos/DB_ADNI_MRI_PET_PREPROCESSED/PET/stacks/stack_NORAD.mat"
 
 
 # AUTOENCODER SESSION FOLDER AND FILES ASSOCIATED
