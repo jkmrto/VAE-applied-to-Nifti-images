@@ -1,5 +1,7 @@
-import math
+import sys
 import os
+sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
+import math
 import sys
 from datetime import datetime
 
