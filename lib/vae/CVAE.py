@@ -379,6 +379,8 @@ class CVAE():
     def __full_reconstruction_error_evaluation(self, images_flat):
         feed_dict = {self.in_flat_images: images_flat}
 
+        bool_logs = False
+
         reconstructed_images = self.session.run(
             self.generated_images,
             feed_dict=feed_dict)
@@ -397,14 +399,15 @@ class CVAE():
         images_3d_original = images_3d_original.astype(float)
         images_3d_reconstructed = images_3d_reconstructed.astype(float)
 
-        print("Shape original images")
-        print(images_3d_original.shape)
-        print("Shape Modified images")
-        print(images_3d_reconstructed.shape)
+        if bool_logs:
+            print("Shape original images")
+            print(images_3d_original.shape)
+            print("Shape Modified images")
+            print(images_3d_reconstructed.shape)
 
         diff_matrix = np.subtract(images_3d_original, images_3d_reconstructed)
         total_diff = diff_matrix.sum()
-
+        print(total_diff)
         mean_diff = total_diff / images_flat.shape[0]
 
         print("Man diff {}%".format(mean_diff))
