@@ -409,7 +409,7 @@ class CVAE():
         diff_matrix = np.subtract(images_3d_original, images_3d_reconstructed)
         total_diff = diff_matrix.sum()
         print(total_diff)
-        mean_diff = abs(total_diff / np.array(images_flat.shape).prod()) * 2
+        mean_diff = abs(total_diff / np.array(images_flat.shape).prod()) * 2 * 100
 
         print("Similarity {}%".format(mean_diff))
 
