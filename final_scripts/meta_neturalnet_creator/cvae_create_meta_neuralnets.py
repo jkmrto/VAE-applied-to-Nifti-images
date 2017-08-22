@@ -26,8 +26,8 @@ hyperparams = {'latent_layer_dim': 1000,
                'learning_rate': 0.001,
                'lambda_l2_regularization': 0.0001}
 
-session_conf = {'bool_normalized': True,
-                'n_iters': 1000,
+session_conf = {'bool_normalized': False,
+                'n_iters': 200,
                 "batch_size": 16,
                 "show_error_iter": 10}
 

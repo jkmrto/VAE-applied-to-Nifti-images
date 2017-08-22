@@ -4,18 +4,22 @@ sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
 import math
 import sys
 from datetime import datetime
-
+from lib import reconstruct_helpers as recons
 import numpy as np
 import tensorflow as tf
-
+from lib.data_loader import pet_atlas
 import lib.neural_net.kfrans_ops as ops
 import settings
 from lib import session_helper
 from lib.data_loader.pet_loader import load_pet_regions_segmented
 from lib.utils import output_utils
 from lib.utils.functions import \
-    get_batch_from_samples_unsupervised_3d
+    get_batch_from_samples_unsupervised
 from lib.utils.os_aux import create_directories
+from lib.utils.utils_3dsamples import reshape_from_flat_to_3d
+from lib.utils.utils_3dsamples import reshape_from_3d_to_flat
+import region_plane_selector
+from lib.data_loader import PET_stack_NORAD
 
 bool_save_meta = False
 
@@ -141,12 +145,17 @@ class CVAE():
         self.path_to_meta = os.path.join(self.path_session_folder, "meta")
         self.path_to_grad_desc_error = \
             os.path.join(self.path_to_logs, "DescGradError")
+
         self.path_to_3dtemp_images = \
             os.path.join(self.path_to_images, "temp_3d_images")
 
+        self.path_to_final_comparison_images = \
+            os.path.join(self.path_to_images, "final_comparison")
+
         create_directories([self.path_session_folder, self.path_to_images,
                             self.path_to_logs, self.path_to_meta,
-                            self.path_to_3dtemp_images])
+                            self.path_to_3dtemp_images,
+                            self.path_to_final_comparison_images])
 
     def __cost_calculation(self, images_reconstructed, z_mean, z_stddev):
         self.generation_loss = -tf.reduce_sum(
@@ -297,23 +306,147 @@ class CVAE():
         outfile = os.path.join(self.path_to_meta, suffix_file_saver_name)
         saver.save(self.session, outfile, global_step=self.global_step)
 
+    def __generate_and_save_temp_3d_images(self, regen_batch, suffix):
+        feed_dict = {self.in_flat_images: regen_batch}
+        generated_test = self.session.run(
+            self.generated_images[1, :],
+            feed_dict=feed_dict)
+
+        image_3d = np.reshape(generated_test, self.image_shape)
+        image_3d = image_3d.astype(float)
+        file_path = os.path.join(self.path_to_3dtemp_images, suffix)
+        output_utils.from_3d_image_to_nifti_file(file_path, image_3d)
+
+    def __full_reconstruction_error_evaluation(self, images_flat):
+
+        feed_dict = {self.in_flat_images: images_flat}
+        bool_logs = False
+
+        reconstructed_images = self.session.run(
+            self.generated_images,
+            feed_dict=feed_dict)
+
+        images_3d_reconstructed = \
+            reshape_from_flat_to_3d(reconstructed_images, self.image_shape)
+        images_3d_original = reshape_from_flat_to_3d(images_flat, self.image_shape)
+
+        images_3d_original = images_3d_original.astype(float)
+        images_3d_reconstructed = images_3d_reconstructed.astype(float)
+
+        if bool_logs:
+            print("Shape original images")
+            print(images_3d_original.shape)
+            print("Shape Modified images")
+            print(images_3d_reconstructed.shape)
+
+        diff_matrix = np.subtract(images_3d_original, images_3d_reconstructed)
+        total_diff = diff_matrix.sum()
+        mean_diff = abs(total_diff / np.array(images_flat.shape).prod()) * 2 * 100
+
+        print("Similarity {}%".format(mean_diff))
+
+    @staticmethod
+    def is_not_valid_lantent_and_reconstruction_loss(
+            gen_loss, lat_loss, learning_rate, iter):
+
+        is_not_valid = math.isnan(np.mean(gen_loss)) or \
+            math.isnan(np.mean(lat_loss)) or \
+            math.isinf(np.mean(lat_loss)) or \
+            math.isinf(np.mean(gen_loss))
+
+        if is_not_valid:
+            print("iter %d: genloss %f latloss %f learning_rate %f" % (
+                iter, np.mean(gen_loss), np.mean(lat_loss), learning_rate))
+            return True
+        else:
+            return False
+
+    def __evaluate_and_restrict_output_if_session_folder_is_not_defined(
+            self,tempSGD_3dimages,final_dump_comparison_images):
+
+        if self.path_session_folder:
+            if tempSGD_3dimages:
+                print("The session folder was not defined so 'tempSGD_3dimages'"
+                      "will be set to automatically to False because the output"
+                      "folder has not been defined")
+                tempSGD_3dimages=False
+
+            if final_dump_comparison_images:
+                print("The session folder was not defined so 'final_dump_comparison_images'"
+                      "will be set automatically to False because the output"
+                      "folder has not been defined")
+                final_dump_comparison_images=False
+
+        return tempSGD_3dimages, final_dump_comparison_images
+
+    def __compare_original_vs_reconstructed_samples(self, images_flat, suffix,
+        samples_to_compare, planes_per_axis_to_show_in_compare):
+
+        feed_dict = {self.in_flat_images: images_flat}
+        bool_logs = True
+
+        reconstructed_images = self.session.run(
+            self.generated_images,
+            feed_dict=feed_dict)
+
+        images_3d_reconstructed = \
+            reshape_from_flat_to_3d(reconstructed_images, self.image_shape)
+        images_3d_original = reshape_from_flat_to_3d(images_flat, self.image_shape)
+
+        images_3d_original = images_3d_original.astype(float)
+        images_3d_reconstructed = images_3d_reconstructed.astype(float)
+
+        if samples_to_compare is None:
+            samples_to_compare = list(range(0,images_flat.shape, 1))
+
+        if planes_per_axis_to_show_in_compare is None:
+            p1,p2,p3 = region_plane_selector.get_middle_planes(
+                images_3d_original[0, :, :, :])
+        else:
+            p1 = planes_per_axis_to_show_in_compare[0]
+            p2 = planes_per_axis_to_show_in_compare[1]
+            p3 = planes_per_axis_to_show_in_compare[2]
+
+        for sample_index in samples_to_compare:
+
+            img_path = os.path.join(
+                self.path_to_final_comparison_images,
+                "region{0}_sample{1}.png".format(suffix, sample_index))
+
+            recons.plot_section_indicated(
+                img3d_1=images_3d_original[sample_index, :, :, :],
+                img3d_2=images_3d_reconstructed[sample_index, :, :, :],
+                p1=p1, p2=p2, p3=p3,
+                path_to_save_image=img_path,
+                cmap="jet",
+                tittle="Original VS Reconstructres. {} . Sample {1}.".format(
+                    suffix, sample_index
+                ))
+
     def train(self, X, n_iters=1000, batchsize=10, tempSGD_3dimages=False,
               iter_show_error=10, save_bool=False, suffix_files_generated=" ",
               iter_to_save=100, break_if_nan_error_value=True,
-              full_samples_evaluation=False):
+              full_samples_evaluation=False,
+              final_dump_comparison=False,
+              final_dump_samples_to_compare=None,
+              final_dump_planes_per_axis_to_show_in_compare=None):
+
+        tempSGD_3dimages, final_dump_comparison_images = \
+            self.__evaluate_and_restrict_output_if_session_folder_is_not_defined(
+            tempSGD_3dimages, final_dump_comparison)
 
         saver = None
         if save_bool:
             saver = tf.train.Saver(tf.global_variables())
 
+        #reshape from 3d to flat:
+        X_flat = reshape_from_3d_to_flat(X, self.total_size)
+
         try:
             for iter in range(1, n_iters + 1, 1):
 
-                batch_images = get_batch_from_samples_unsupervised_3d(
-                    X, batch_size=batchsize)
-                batch_flat = np.reshape(batch_images,
-                                        [batch_images.shape[0],
-                                         self.total_size])
+                batch_flat = get_batch_from_samples_unsupervised(
+                    X_flat, batch_size=batchsize)
 
                 feed_dict = {self.in_flat_images: batch_flat}
                 _, gen_loss, lat_loss, global_step, learning_rate = \
@@ -325,15 +458,9 @@ class CVAE():
                 if break_if_nan_error_value:
                     # Evaluate if the net is not converging and the error
                     # is a nan value, breaking the SGD loop
-                    if math.isnan(np.mean(gen_loss)) or \
-                            math.isnan(np.mean(lat_loss)) or \
-                            math.isinf(np.mean(lat_loss)) or \
-                            math.isinf(np.mean(gen_loss)):
-                        print(
-                            "iter %d: genloss %f latloss %f learning_rate %f" % (
-                                iter, np.mean(gen_loss), np.mean(lat_loss),
-                                learning_rate))
-                        return -1
+                    if self.is_not_valid_lantent_and_reconstruction_loss(
+                            gen_loss, lat_loss, learning_rate, iter):
+                            return -1
 
                 if iter % iter_show_error == 0:
                     print("iter %d: genloss %f latloss %f learning_rate %f" % (
@@ -349,13 +476,23 @@ class CVAE():
                     if tempSGD_3dimages:
                         self.__generate_and_save_temp_3d_images(
                             regen_batch=batch_flat[0:2, :],
-                            suffix="{1}_iter_{0}".format(iter,
-                                                         suffix_files_generated))
+                            suffix="{1}_iter_{0}".format(
+                                iter, suffix_files_generated))
 
                 if iter % iter_to_save == 0:
                     if save_bool:
                         self.__save(saver, suffix_files_generated)
             # End loop, End SGD
+
+
+            #final dump data if the dump_comparaison option is activated
+            if final_dump_comparison:
+                self.__compare_original_vs_reconstructed_samples(
+                    final_dump_comparison,
+                    final_dump_samples_to_compare,
+                    final_dump_planes_per_axis_to_show_in_compare
+                )
+
             return 0
 
         except(KeyboardInterrupt):
@@ -365,60 +502,25 @@ class CVAE():
             print("------- Training end: {} -------\n".format(now))
             sys.exit(0)
 
-    def __generate_and_save_temp_3d_images(self, regen_batch, suffix):
-        feed_dict = {self.in_flat_images: regen_batch}
-        generated_test = self.session.run(
-            self.generated_images[1, :],
-            feed_dict=feed_dict)
-
-        image_3d = np.reshape(generated_test, self.image_shape)
-        image_3d = image_3d.astype(float)
-        file_path = os.path.join(self.path_to_3dtemp_images, suffix)
-        output_utils.from_3d_image_to_nifti_file(file_path, image_3d)
-
-    def __full_reconstruction_error_evaluation(self, images_flat):
-        feed_dict = {self.in_flat_images: images_flat}
-
-        bool_logs = False
-
-        reconstructed_images = self.session.run(
-            self.generated_images,
-            feed_dict=feed_dict)
-
-        images_3d_reconstructed = np.reshape(reconstructed_images,
-                                             [images_flat.shape[0],
-                                              self.image_shape[0],
-                                              self.image_shape[1],
-                                             self.image_shape[2]])
-
-        images_3d_original = np.reshape(images_flat,
-                                        [images_flat.shape[0],
-                                         self.image_shape[0],
-                                         self.image_shape[1],
-                                        self.image_shape[2]])
-
-        images_3d_original = images_3d_original.astype(float)
-        images_3d_reconstructed = images_3d_reconstructed.astype(float)
-
-        if bool_logs:
-            print("Shape original images")
-            print(images_3d_original.shape)
-            print("Shape Modified images")
-            print(images_3d_reconstructed.shape)
-
-        diff_matrix = np.subtract(images_3d_original, images_3d_reconstructed)
-        total_diff = diff_matrix.sum()
-        print(total_diff)
-        mean_diff = abs(total_diff / np.array(images_flat.shape).prod()) * 2 * 100
-
-        print("Similarity {}%".format(mean_diff))
-
 
 def auto_execute_with_session_folders():
     regions_used = "three"
     region_selected = 3
     list_regions = session_helper.select_regions_to_evaluate(regions_used)
     train_images = load_pet_regions_segmented(list_regions)[region_selected]
+
+    pet_dict_stack = PET_stack_NORAD.get_parameters()
+    atlas = pet_atlas.load_atlas()
+    voxels_desired = atlas[region_selected]
+    voxels_index = pet_dict_stack['voxel_index'] # no_bg_index to real position
+    final_voxels_selected_index = voxels_index[voxels_desired]
+    p1, p2, p3 = \
+        region_plane_selector.get_maximum_activation_planes(
+            voxels_index=final_voxels_selected_index,
+            total_size=pet_dict_stack['total_size'],
+            imgsize=pet_dict_stack['imgsize'],
+            reshape_kind="F")
+
 
     hyperparams = {}
     hyperparams['latent_layer_dim'] = 100
@@ -446,7 +548,10 @@ def auto_execute_with_session_folders():
                 tempSGD_3dimages=True,
                 iter_to_save=50,
                 full_samples_evaluation=True,
-                save_bool=False)
+                save_bool=False,
+                final_dump_comparison=True,
+                final_dump_samples_to_compare=None,
+                final_dump_planes_per_axis_to_show_in_compare=[p1,p2,p3])
 
 
 auto_execute_with_session_folders()

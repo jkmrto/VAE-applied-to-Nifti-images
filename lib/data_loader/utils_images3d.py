@@ -148,7 +148,8 @@ def get_stack_3dimages_filtered_by_label(stack_region_to_3dimg, samples_label,
                                                       h_region, d_region ]
     :param samples_label: ty[np.array] sh[n_samples] ct[0|1]
     :param label_selected: ty[Integer] 0|1
-    :return:
+    :return: stack[region] => All samples will belong to the samples_label
+                              indicated
     """
 
     stacker_filtered_region_to_3dimg = {}
