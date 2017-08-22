@@ -105,4 +105,4 @@ def auto_test():
         cmap="jet",
         tittle="NOR vs AD")
 
-auto_test()
+#auto_test()
