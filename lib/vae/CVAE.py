@@ -11,6 +11,7 @@ from lib.utils import output_utils
 from lib.utils.functions import \
     get_batch_from_samples_unsupervised
 from lib.utils.os_aux import create_directories
+import region_plane_selector
 from lib.utils.utils_3dsamples import reshape_from_flat_to_3d
 from lib.utils.utils_3dsamples import reshape_from_3d_to_flat
 
@@ -390,7 +391,7 @@ class CVAE():
         images_3d_reconstructed = images_3d_reconstructed.astype(float)
 
         if samples_to_compare is None:
-            samples_to_compare = list(range(0,images_flat.shape, 1))
+            samples_to_compare = list(range(0,images_flat.shape[0], 1))
 
         if planes_per_axis_to_show_in_compare is None:
             p1,p2,p3 = region_plane_selector.get_middle_planes(
