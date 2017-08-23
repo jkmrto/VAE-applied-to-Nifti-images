@@ -74,7 +74,6 @@ def execute_saving_meta_graph_without_any_cv(region_cubes_dict, hyperparams,
                           final_dump_planes_per_axis_to_show_in_compare=
                           session_conf["final_dump_planes_per_axis_to_show_in_compare"][region_selected])
 
-
         if out == -1:
             print("Region {} Training process failed!"
                   "SGD doesnt converge".format(region_selected))

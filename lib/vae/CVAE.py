@@ -384,7 +384,7 @@ class CVAE():
             feed_dict=feed_dict)
 
         images_3d_reconstructed = \
-            reshape_from_flat_to_3d(reconstructed_images, self.image_shape, reshape_kind="C")
+            reshape_from_flat_to_3d(reconstructed_images, self.image_shape)
         images_3d_original = reshape_from_flat_to_3d(images_flat, self.image_shape)
 
         images_3d_original = images_3d_original.astype(float)
@@ -475,10 +475,9 @@ class CVAE():
                 if iter % iter_to_save == 0:
                     if save_bool:
                         self.__save(saver, suffix_files_generated)
+
             # End loop, End SGD
-
-
-            #final dump data if the dump_comparaison option is activated
+            # final dump data if the dump_comparaison option is activated
             if final_dump_comparison:
                 self.__compare_original_vs_reconstructed_samples(
                     images_flat=X_flat,
