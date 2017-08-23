@@ -134,12 +134,11 @@ def auto_execute_saving_meta_graph_and_3dtemp_images_and_final_dump(
     pet_dict_parameters = PET_stack_NORAD.get_parameters()
     atlas = pet_atlas.load_atlas()
 
-    region_plane_selector.get_dict_region_to_maximum_activation_planes(
-        list_regions=list_regions,
-        atlas=atlas,
-        stack_parameters=pet_dict_parameters,
-    )
-
+    region_to_maximum_activation_planes = \
+        region_plane_selector.get_dict_region_to_maximum_activation_planes(
+            list_regions=list_regions,
+            atlas=atlas,
+            stack_parameters=pet_dict_parameters)
     final_dump_samples_to_compare = [10,20,30, 90, 100, 110]
     # Autoenconder configuration
     if hyperparams is None:
@@ -160,8 +159,8 @@ def auto_execute_saving_meta_graph_and_3dtemp_images_and_final_dump(
                         "final_dump_comparison":True,
                         "final_dump_samples_to_compare":
                             final_dump_samples_to_compare,
-                        "final_dump_planes_per_axis_to_show_in_compare"=
-    }
+                        "final_dump_planes_per_axis_to_show_in_compare":
+                            region_to_maximum_activation_planes}
 
     execute_saving_meta_graph_without_any_cv(
         region_cubes_dict=region_to_img_dict,

@@ -358,7 +358,7 @@ class CVAE():
     def __evaluate_and_restrict_output_if_session_folder_is_not_defined(
             self,tempSGD_3dimages,final_dump_comparison_images):
 
-        if self.path_session_folder is not None:
+        if self.path_session_folder is None:
             if tempSGD_3dimages:
                 print("The session folder was not defined so 'tempSGD_3dimages'"
                       "will be set to automatically to False because the output"

@@ -15,6 +15,7 @@ from lib.utils import output_utils
 
 
 def auto_execute_with_session_folders():
+    print("Executing CVAE test")
     regions_used = "three"
     region_selected = 3
     list_regions = session_helper.select_regions_to_evaluate(regions_used)

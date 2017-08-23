@@ -65,11 +65,14 @@ def execute_saving_meta_graph_without_any_cv(region_cubes_dict, hyperparams,
                           tempSGD_3dimages=True,
                           save_bool=True,
                           break_if_nan_error_value=True,
-                          suffix_files_generated="region_{}".format(
-                              region_selected),
-                          final_dump_comparison=True,
-                          final_dump_samples_to_compare=None,
-                          final_dump_planes_per_axis_to_show_in_compare=[p1, p2,p3])
+                          suffix_files_generated=
+                          "region_{}".format(region_selected),
+                          final_dump_comparison=
+                          session_conf["final_dump_comparison"],
+                          final_dump_samples_to_compare=
+                          session_conf["final_dump_samples_to_compare"],
+                          final_dump_planes_per_axis_to_show_in_compare=
+                          session_conf["final_dump_planes_per_axis_to_show_in_compare"][region_selected])
 
 
         if out == -1:
