@@ -38,7 +38,7 @@ def auto_execute_with_session_folders():
     hyperparams = {}
     hyperparams['latent_layer_dim'] = 100
     hyperparams['kernel_size'] = 5
-    hyperparams['features_depth'] = [1, 16, 32]
+    hyperparams['features_depth'] = [1, 32, 64]
     hyperparams['image_shape'] = train_images.shape[1:]
     hyperparams['activation_layer'] = ops.lrelu
     hyperparams['decay_rate'] = 0.002
