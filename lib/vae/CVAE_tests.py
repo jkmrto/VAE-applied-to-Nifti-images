@@ -33,7 +33,7 @@ def auto_execute_with_session_folders():
             voxels_index=final_voxels_selected_index,
             total_size=pet_dict_stack['total_size'],
             imgsize=pet_dict_stack['imgsize'],
-            reshape_kind="F")
+            reshape_kind="C")
 
     hyperparams = {}
     hyperparams['latent_layer_dim'] = 100
@@ -60,7 +60,8 @@ def auto_execute_with_session_folders():
                 suffix_files_generated="region_3",
                 tempSGD_3dimages=True,
                 iter_to_save=50,
-                full_samples_evaluation=True,
+                similarity_evaluation=True,
+                dump_losses_log=True,
                 save_bool=False,
                 final_dump_comparison=True,
                 final_dump_samples_to_compare=None,
