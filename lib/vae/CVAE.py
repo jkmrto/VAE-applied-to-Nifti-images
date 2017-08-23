@@ -1,6 +1,6 @@
 import sys
 import os
-#sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
+# sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
 import math
 from datetime import datetime
 from lib import reconstruct_helpers as recons
@@ -146,10 +146,14 @@ class CVAE():
         self.path_to_final_comparison_images = \
             os.path.join(self.path_to_images, "final_comparison")
 
+        self.path_to_losses_log = \
+            os.path.join(self.path_to_images, "losses_logs")
+
         create_directories([self.path_session_folder, self.path_to_images,
                             self.path_to_logs, self.path_to_meta,
                             self.path_to_3dtemp_images,
-                            self.path_to_final_comparison_images])
+                            self.path_to_final_comparison_images,
+                            self.path_to_losses_log])
 
     def __cost_calculation(self, images_reconstructed, z_mean, z_stddev):
         self.generation_loss = -tf.reduce_sum(
@@ -322,7 +326,8 @@ class CVAE():
 
         images_3d_reconstructed = \
             reshape_from_flat_to_3d(reconstructed_images, self.image_shape)
-        images_3d_original = reshape_from_flat_to_3d(images_flat, self.image_shape)
+        images_3d_original = reshape_from_flat_to_3d(images_flat,
+                                                     self.image_shape)
 
         images_3d_original = images_3d_original.astype(float)
         images_3d_reconstructed = images_3d_reconstructed.astype(float)
@@ -332,21 +337,23 @@ class CVAE():
             print(images_3d_original.shape)
             print("Shape Modified images")
             print(images_3d_reconstructed.shape)
+            print("Similarity {}%".format(mean_diff))
 
         diff_matrix = np.subtract(images_3d_original, images_3d_reconstructed)
         total_diff = diff_matrix.sum()
-        mean_diff = abs(total_diff / np.array(images_flat.shape).prod()) * 2 * 100
+        mean_diff = abs(
+            total_diff / np.array(images_flat.shape).prod()) * 2 * 100
 
-        print("Similarity {}%".format(mean_diff))
+        return mean_diff
 
     @staticmethod
     def is_not_valid_lantent_and_reconstruction_loss(
             gen_loss, lat_loss, learning_rate, iter):
 
         is_not_valid = math.isnan(np.mean(gen_loss)) or \
-            math.isnan(np.mean(lat_loss)) or \
-            math.isinf(np.mean(lat_loss)) or \
-            math.isinf(np.mean(gen_loss))
+                       math.isnan(np.mean(lat_loss)) or \
+                       math.isinf(np.mean(lat_loss)) or \
+                       math.isinf(np.mean(gen_loss))
 
         if is_not_valid:
             print("iter %d: genloss %f latloss %f learning_rate %f" % (
@@ -356,25 +363,44 @@ class CVAE():
             return False
 
     def __evaluate_and_restrict_output_if_session_folder_is_not_defined(
-            self,tempSGD_3dimages,final_dump_comparison_images):
+            self, tempSGD_3dimages, final_dump_comparison_images,
+            dump_losses_log, similarity_evaluation):
 
         if self.path_session_folder is None:
             if tempSGD_3dimages:
                 print("The session folder was not defined so 'tempSGD_3dimages'"
                       "will be set to automatically to False because the output"
                       "folder has not been defined")
-                tempSGD_3dimages=False
+                tempSGD_3dimages = False
 
             if final_dump_comparison_images:
-                print("The session folder was not defined so 'final_dump_comparison_images'"
+                print(
+                    "The session folder was not defined so 'final_dump_comparison_images'"
+                    "will be set automatically to False because the output"
+                    "folder has not been defined")
+                final_dump_comparison_images = False
+
+            if dump_losses_log:
+                print("The session folder was not defined so 'dump_losses_log'"
                       "will be set automatically to False because the output"
                       "folder has not been defined")
-                final_dump_comparison_images=False
+                dump_losses_log = False
 
-        return tempSGD_3dimages, final_dump_comparison_images
+        return tempSGD_3dimages, final_dump_comparison_images, \
+               dump_losses_log
+
+    def __generate_losses_log_file(self, suffix):
+
+        path_to_file = \
+            os.path.join(self.path_to_losses_log,
+                         "{0}.txt".format(suffix))
+        file = open(path_to_file, "w")
+
+        return file
 
     def __compare_original_vs_reconstructed_samples(self, images_flat, suffix,
-        samples_to_compare, planes_per_axis_to_show_in_compare):
+                                                    samples_to_compare,
+                                                    planes_per_axis_to_show_in_compare):
 
         feed_dict = {self.in_flat_images: images_flat}
         bool_logs = True
@@ -385,16 +411,17 @@ class CVAE():
 
         images_3d_reconstructed = \
             reshape_from_flat_to_3d(reconstructed_images, self.image_shape)
-        images_3d_original = reshape_from_flat_to_3d(images_flat, self.image_shape)
+        images_3d_original = reshape_from_flat_to_3d(images_flat,
+                                                     self.image_shape)
 
         images_3d_original = images_3d_original.astype(float)
         images_3d_reconstructed = images_3d_reconstructed.astype(float)
 
         if samples_to_compare is None:
-            samples_to_compare = list(range(0,images_flat.shape[0], 1))
+            samples_to_compare = list(range(0, images_flat.shape[0], 1))
 
         if planes_per_axis_to_show_in_compare is None:
-            p1,p2,p3 = region_plane_selector.get_middle_planes(
+            p1, p2, p3 = region_plane_selector.get_middle_planes(
                 images_3d_original[0, :, :, :])
         else:
             p1 = planes_per_axis_to_show_in_compare[0]
@@ -402,7 +429,6 @@ class CVAE():
             p3 = planes_per_axis_to_show_in_compare[2]
 
         for sample_index in samples_to_compare:
-
             img_path = os.path.join(
                 self.path_to_final_comparison_images,
                 "{0}_sample{1}.png".format(suffix, sample_index))
@@ -417,23 +443,59 @@ class CVAE():
                     suffix, sample_index
                 ))
 
+    def __log_loss_data(self, iter_index, gen_loss, lat_loss, learning_rate,
+                        images_flat, losses_log_file, similarity_evaluation):
+
+        if similarity_evaluation is not None:
+            # Generate %similarity in reconstruction
+            similarity_score = self.__full_reconstruction_error_evaluation(
+                images_flat=images_flat)
+
+            print("iter {0}: genloss {1}, latloss {2}, "
+                  "learning_rate {3}, Similarity Score: {4}".format(
+                iter_index, gen_loss, lat_loss,
+                learning_rate, similarity_score))
+
+            if losses_log_file is not None:
+                losses_log_file.write("{0},{1},{2},{3},{4}".format(
+                    iter_index, np.mean(gen_loss), np.mean(lat_loss),
+                    learning_rate, similarity_score))
+
+        else:
+            print("iter {0}: genloss {1}, latloss {2}, learning_rate {3}".format(
+                    iter_index, np.mean(gen_loss), np.mean(lat_loss),
+                    learning_rate))
+
+            if losses_log_file is not None:
+                losses_log_file.write("{0},{1},{2},{3}".format(
+                    iter_index, np.mean(gen_loss), np.mean(lat_loss),
+                    learning_rate))
+
     def train(self, X, n_iters=1000, batchsize=10, tempSGD_3dimages=False,
               iter_show_error=10, save_bool=False, suffix_files_generated=" ",
               iter_to_save=100, break_if_nan_error_value=True,
-              full_samples_evaluation=False,
+              similarity_evaluation=False,
+              dump_losses_log=False,
               final_dump_comparison=False,
               final_dump_samples_to_compare=None,
               final_dump_planes_per_axis_to_show_in_compare=None):
 
-        tempSGD_3dimages, final_dump_comparison_images = \
+        tempSGD_3dimages, final_dump_comparison_images, dump_losses_log = \
             self.__evaluate_and_restrict_output_if_session_folder_is_not_defined(
-            tempSGD_3dimages, final_dump_comparison)
+                tempSGD_3dimages, final_dump_comparison, dump_losses_log,
+                similarity_evaluation)
+
+        if dump_losses_log:
+            losses_log_file = self.__generate_losses_log_file(
+                suffix=suffix_files_generated)
+        else:
+            losses_log_file = None
 
         saver = None
         if save_bool:
             saver = tf.train.Saver(tf.global_variables())
 
-        #reshape from 3d to flat:
+        # reshape from 3d to flat:
         X_flat = reshape_from_3d_to_flat(X, self.total_size)
 
         try:
@@ -454,17 +516,17 @@ class CVAE():
                     # is a nan value, breaking the SGD loop
                     if self.is_not_valid_lantent_and_reconstruction_loss(
                             gen_loss, lat_loss, learning_rate, iter):
-                            return -1
+                        return -1
 
                 if iter % iter_show_error == 0:
-                    print("iter %d: genloss %f latloss %f learning_rate %f" % (
-                        iter, np.mean(gen_loss), np.mean(lat_loss),
-                        learning_rate))
-
-                    if full_samples_evaluation:
-                        # Generate %similarity in reconstruction
-                        self.__full_reconstruction_error_evaluation(
-                            images_flat=X_flat)
+                    self.__log_loss_data(
+                        iter_index=iter,
+                        gen_loss=np.mean(gen_loss),
+                        lat_loss=np.mean(lat_loss),
+                        learning_rate=learning_rate,
+                        images_flat=X_flat,
+                        losses_log_file=losses_log_file,
+                        similarity_evaluation=similarity_evaluation)
 
                     if tempSGD_3dimages:
                         self.__generate_and_save_temp_3d_images(
@@ -494,4 +556,3 @@ class CVAE():
             now = datetime.now().isoformat()[11:]
             print("------- Training end: {} -------\n".format(now))
             sys.exit(0)
-
