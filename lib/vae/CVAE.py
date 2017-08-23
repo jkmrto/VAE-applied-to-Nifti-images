@@ -413,7 +413,7 @@ class CVAE():
                 p1=p1, p2=p2, p3=p3,
                 path_to_save_image=img_path,
                 cmap="jet",
-                tittle="Original VS Reconstructres. {} . Sample {1}.".format(
+                tittle="Original VS Reconstructres. {0} . Sample {1}.".format(
                     suffix, sample_index
                 ))
 
