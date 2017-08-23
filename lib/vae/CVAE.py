@@ -147,7 +147,7 @@ class CVAE():
             os.path.join(self.path_to_images, "final_comparison")
 
         self.path_to_losses_log = \
-            os.path.join(self.path_to_images, "losses_logs")
+            os.path.join(self.path_to_logs , "losses_logs")
 
         create_directories([self.path_session_folder, self.path_to_images,
                             self.path_to_logs, self.path_to_meta,
@@ -389,12 +389,21 @@ class CVAE():
         return tempSGD_3dimages, final_dump_comparison_images, \
                dump_losses_log
 
-    def __generate_losses_log_file(self, suffix):
+    def __generate_losses_log_file(self, suffix, similarity_evaluation):
 
         path_to_file = \
             os.path.join(self.path_to_losses_log,
                          "{0}.txt".format(suffix))
         file = open(path_to_file, "w")
+
+        if similarity_evaluation:
+            file.write("{0},{1},{2},{3},{4}".format(
+                "iteration", "generative loss", "latent layer loss",
+                "learning rate", "similarity score"))
+        else:
+            file.write("{0},{1},{2},{3}".format(
+                "iteration", "generative loss", "latent layer loss",
+                "learning rate"))
 
         return file
 
@@ -457,18 +466,18 @@ class CVAE():
                 learning_rate, similarity_score))
 
             if losses_log_file is not None:
-                losses_log_file.write("{0},{1},{2},{3},{4}".format(
-                    iter_index, np.mean(gen_loss), np.mean(lat_loss),
+                losses_log_file.write("{0},{1},{2},{3},{4}\n".format(
+                    iter_index, gen_loss, lat_loss,
                     learning_rate, similarity_score))
 
         else:
             print("iter {0}: genloss {1}, latloss {2}, learning_rate {3}".format(
-                    iter_index, np.mean(gen_loss), np.mean(lat_loss),
+                    iter_index, gen_loss, lat_loss),
                     learning_rate))
 
             if losses_log_file is not None:
-                losses_log_file.write("{0},{1},{2},{3}".format(
-                    iter_index, np.mean(gen_loss), np.mean(lat_loss),
+                losses_log_file.write("{0},{1},{2},{3}\n".format(
+                    iter_index, gen_loss, lat_loss,
                     learning_rate))
 
     def train(self, X, n_iters=1000, batchsize=10, tempSGD_3dimages=False,
@@ -487,7 +496,7 @@ class CVAE():
 
         if dump_losses_log:
             losses_log_file = self.__generate_losses_log_file(
-                suffix=suffix_files_generated)
+                suffix=suffix_files_generated, similarity_evaluation)
         else:
             losses_log_file = None
 
