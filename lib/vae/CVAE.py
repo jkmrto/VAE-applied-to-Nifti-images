@@ -337,12 +337,13 @@ class CVAE():
             print(images_3d_original.shape)
             print("Shape Modified images")
             print(images_3d_reconstructed.shape)
-            print("Similarity {}%".format(mean_diff))
 
         diff_matrix = np.subtract(images_3d_original, images_3d_reconstructed)
         total_diff = diff_matrix.sum()
         mean_diff = abs(
             total_diff / np.array(images_flat.shape).prod()) * 2 * 100
+        if bool_logs
+            print("Similarity {}%".format(mean_diff))
 
         return mean_diff
 
@@ -399,17 +400,19 @@ class CVAE():
         if similarity_evaluation:
             file.write("{0},{1},{2},{3},{4}".format(
                 "iteration", "generative loss", "latent layer loss",
-                "learning rate", "similarity score"))
+                "learning rate", "similarity score\n"))
         else:
             file.write("{0},{1},{2},{3}".format(
                 "iteration", "generative loss", "latent layer loss",
-                "learning rate"))
+                "learning rate\n"))
 
         return file
 
     def __compare_original_vs_reconstructed_samples(self, images_flat, suffix,
                                                     samples_to_compare,
                                                     planes_per_axis_to_show_in_compare):
+
+        print("Final comparision between original and reconstructed images")
 
         feed_dict = {self.in_flat_images: images_flat}
         bool_logs = True
