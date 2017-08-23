@@ -64,7 +64,7 @@ def auto_execute_with_session_folders():
                 dump_losses_log=True,
                 save_bool=False,
                 final_dump_comparison=True,
-                final_dump_samples_to_compare=[0, 20, 40, 60, 80, 100, 120],
+                final_dump_samples_to_compare=[0, 20, 40, 60, 80, 100, 120, 110],
                 final_dump_planes_per_axis_to_show_in_compare=[p1, p2, p3])
 
 
