@@ -484,7 +484,7 @@ class CVAE():
                     suffix=suffix_files_generated,
                     samples_to_compare=final_dump_samples_to_compare,
                     planes_per_axis_to_show_in_compare=
-                        final_dump_planes_per_axis_to_show_in_compare)
+                    final_dump_planes_per_axis_to_show_in_compare)
 
             return 0
 
