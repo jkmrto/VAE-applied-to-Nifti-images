@@ -404,7 +404,7 @@ class CVAE():
 
             img_path = os.path.join(
                 self.path_to_final_comparison_images,
-                "region{0}_sample{1}.png".format(suffix, sample_index))
+                "{0}_sample{1}.png".format(suffix, sample_index))
 
             recons.plot_section_indicated(
                 img3d_1=images_3d_original[sample_index, :, :, :],
@@ -481,10 +481,11 @@ class CVAE():
             #final dump data if the dump_comparaison option is activated
             if final_dump_comparison:
                 self.__compare_original_vs_reconstructed_samples(
-                    final_dump_comparison,
-                    final_dump_samples_to_compare,
-                    final_dump_planes_per_axis_to_show_in_compare
-                )
+                    images_flat=X_flat,
+                    suffix=suffix_files_generated,
+                    samples_to_compare=final_dump_samples_to_compare,
+                    planes_per_axis_to_show_in_compare=
+                        final_dump_planes_per_axis_to_show_in_compare)
 
             return 0
 

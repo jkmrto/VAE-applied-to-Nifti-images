@@ -86,7 +86,6 @@ def auto_test():
         imgsize=pet_dict_stack['imgsize'],
         reshape_kind="F")
 
-
     recons.plot_section_indicated(
         img3d_1=region_stack3d[sample_NOR,:,:,:],
         img3d_2=region_stack3d[sample_AD,:,:,:],

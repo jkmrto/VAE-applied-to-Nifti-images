@@ -25,6 +25,7 @@ def auto_execute_with_session_folders():
     voxels_desired = atlas[region_selected]
     voxels_index = pet_dict_stack['voxel_index'] # no_bg_index to real position
     final_voxels_selected_index = voxels_index[voxels_desired]
+
     p1, p2, p3 = \
         region_plane_selector.get_maximum_activation_planes(
             voxels_index=final_voxels_selected_index,
