@@ -42,7 +42,7 @@ def auto_execute_with_session_folders():
     hyperparams['image_shape'] = train_images.shape[1:]
     hyperparams['activation_layer'] = ops.lrelu
     hyperparams['decay_rate'] = 0.002
-    hyperparams['learning_rate'] = 0.0001
+    hyperparams['learning_rate'] = 0.0005
     hyperparams['lambda_l2_regularization'] = 0.0001
 
     session_name = "test_over_cvae"
@@ -56,7 +56,7 @@ def auto_execute_with_session_folders():
 
     model.train(X=train_images,
                 n_iters=500,
-                batchsize=32,
+                batchsize=100,
                 suffix_files_generated="region_3",
                 tempSGD_3dimages=True,
                 iter_to_save=50,
@@ -64,7 +64,7 @@ def auto_execute_with_session_folders():
                 dump_losses_log=True,
                 save_bool=False,
                 final_dump_comparison=True,
-                final_dump_samples_to_compare=None,
+                final_dump_samples_to_compare=[0, 20, 40, 60, 80, 100, 120],
                 final_dump_planes_per_axis_to_show_in_compare=[p1, p2, p3])
 
 
