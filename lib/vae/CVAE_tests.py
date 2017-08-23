@@ -33,7 +33,7 @@ def auto_execute_with_session_folders():
             voxels_index=final_voxels_selected_index,
             total_size=pet_dict_stack['total_size'],
             imgsize=pet_dict_stack['imgsize'],
-            reshape_kind="C")
+            reshape_kind="F")
 
     hyperparams = {}
     hyperparams['latent_layer_dim'] = 100
