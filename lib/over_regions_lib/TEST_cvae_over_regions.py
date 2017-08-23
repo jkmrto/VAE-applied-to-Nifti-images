@@ -7,6 +7,9 @@ from lib.data_loader.pet_loader import load_pet_regions_segmented
 from lib.utils import cv_utils
 import lib.neural_net.kfrans_ops as ops
 from lib import session_helper as session
+from lib.data_loader import pet_atlas
+import region_plane_selector
+from lib.data_loader import PET_stack_NORAD
 from lib.over_regions_lib.cvae_over_regions import \
     execute_saving_meta_graph_without_any_cv, execute_without_any_logs
 import settings
@@ -87,3 +90,83 @@ def auto_execute_without_logs_over_one_region():
     return results
 
 # out = auto_execute_without_logs_over_one_region()
+
+def auto_execute_saving_meta_graph_without_any_cv(hyperparams=None,
+                                                  session_conf=None):
+    regions_used = "all"
+    list_regions = session.select_regions_to_evaluate(regions_used)
+    region_to_img_dict = load_pet_regions_segmented(list_regions,
+                                                    bool_logs=False)
+
+    # Autoenconder configuration
+    if hyperparams is None:
+        hyperparams = {'latent_layer_dim': 100,
+                       'kernel_size': 5,
+                       'activation_layer': ops.lrelu,
+                       'features_depth': [1, 16, 32],
+                        'decay_rate': 0.0002,
+                        'learning_rate': 0.001,
+                        'lambda_l2_regularization': 0.0001}
+
+    if session_conf is None:
+    # SESSION CONFIGURATION
+        session_conf = {'bool_normalized': False,
+                       'n_iters': 100,
+                        "batch_size": 16,
+                        "show_error_iter": 10}
+
+    execute_saving_meta_graph_without_any_cv(
+        region_cubes_dict=region_to_img_dict,
+        hyperparams=hyperparams,
+        session_conf=session_conf,
+        list_regions=list_regions,
+        path_to_root=settings.path_to_general_out_folder,
+        session_prefix_name="test_saving_meta_PET")
+
+
+def auto_execute_saving_meta_graph_and_3dtemp_images_and_final_dump(
+        hyperparams=None, session_conf=None):
+
+    regions_used = "all"
+    list_regions = session.select_regions_to_evaluate(regions_used)
+    region_to_img_dict = load_pet_regions_segmented(list_regions,
+                                                    bool_logs=False)
+    pet_dict_parameters = PET_stack_NORAD.get_parameters()
+    atlas = pet_atlas.load_atlas()
+
+    region_plane_selector.get_dict_region_to_maximum_activation_planes(
+        list_regions=list_regions,
+        atlas=atlas,
+        stack_parameters=pet_dict_parameters,
+    )
+
+    final_dump_samples_to_compare = [10,20,30, 90, 100, 110]
+    # Autoenconder configuration
+    if hyperparams is None:
+        hyperparams = {'latent_layer_dim': 100,
+                       'kernel_size': 5,
+                       'activation_layer': ops.lrelu,
+                       'features_depth': [1, 16, 32],
+                        'decay_rate': 0.0002,
+                        'learning_rate': 0.001,
+                        'lambda_l2_regularization': 0.0001}
+
+    if session_conf is None:
+    # SESSION CONFIGURATION
+        session_conf = {'bool_normalized': False,
+                        'n_iters': 100,
+                        "batch_size": 16,
+                        "show_error_iter": 10,
+                        "final_dump_comparison":True,
+                        "final_dump_samples_to_compare":
+                            final_dump_samples_to_compare,
+                        "final_dump_planes_per_axis_to_show_in_compare"=
+    }
+
+    execute_saving_meta_graph_without_any_cv(
+        region_cubes_dict=region_to_img_dict,
+        hyperparams=hyperparams,
+        session_conf=session_conf,
+        list_regions=list_regions,
+        path_to_root=settings.path_to_general_out_folder,
+        session_prefix_name="test_saving_meta_PET")

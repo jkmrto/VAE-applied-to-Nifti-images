@@ -104,4 +104,23 @@ def auto_test():
         cmap="jet",
         tittle="NOR vs AD")
 
+
+def get_dict_region_to_maximum_activation_planes(
+        list_regions, atlas, stack_parameters):
+
+    region_to_maximum_activation_planes = {}
+    voxels_index = stack_parameters['voxel_index'] # no_bg_index to real position
+
+    for region in list_regions:
+        voxels_desired = atlas[region]
+        final_voxels_selected_index = voxels_index[voxels_desired]
+
+        p1, p2, p3 = get_maximum_activation_planes(
+            voxels_index=final_voxels_selected_index,
+            total_size=stack_parameters['total_size'],
+            imgsize=stack_parameters['imgsize'],
+            reshape_kind="F")
+
+        region_to_maximum_activation_planes[region] = [p1, p2, p3]
 #auto_test()
+

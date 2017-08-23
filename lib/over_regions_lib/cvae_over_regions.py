@@ -52,7 +52,7 @@ def execute_saving_meta_graph_without_any_cv(region_cubes_dict, hyperparams,
         tf.reset_default_graph()
         model = CVAE.CVAE(hyperparams, path_to_session=path_to_session)
 
-        max_train_iter = session_helper.get_adequate_number_iterations(
+        max_train_iter = session.get_adequate_number_iterations(
                                                         region_selected,
                                                         explicit_iter_per_region,
                                                         predefined_iters=
