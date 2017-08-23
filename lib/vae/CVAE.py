@@ -342,7 +342,7 @@ class CVAE():
         total_diff = diff_matrix.sum()
         mean_diff = abs(
             total_diff / np.array(images_flat.shape).prod()) * 2 * 100
-        if bool_logs
+        if bool_logs:
             print("Similarity {}%".format(mean_diff))
 
         return mean_diff
