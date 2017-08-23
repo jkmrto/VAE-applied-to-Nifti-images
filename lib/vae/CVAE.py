@@ -384,7 +384,7 @@ class CVAE():
             feed_dict=feed_dict)
 
         images_3d_reconstructed = \
-            reshape_from_flat_to_3d(reconstructed_images, self.image_shape)
+            reshape_from_flat_to_3d(reconstructed_images, self.image_shape, reshape_kind="C")
         images_3d_original = reshape_from_flat_to_3d(images_flat, self.image_shape)
 
         images_3d_original = images_3d_original.astype(float)
@@ -462,10 +462,9 @@ class CVAE():
                         learning_rate))
 
                     if full_samples_evaluation:
-                        all_images_flat = np.reshape(X, [X.shape[0], self.total_size])
                         # Generate %similarity in reconstruction
                         self.__full_reconstruction_error_evaluation(
-                            images_flat=all_images_flat)
+                            images_flat=X_flat)
 
                     if tempSGD_3dimages:
                         self.__generate_and_save_temp_3d_images(
