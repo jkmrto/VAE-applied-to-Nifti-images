@@ -472,13 +472,11 @@ class CVAE():
 
         else:
             print("iter {0}: genloss {1}, latloss {2}, learning_rate {3}".format(
-                    iter_index, gen_loss, lat_loss),
-                    learning_rate))
+                    iter_index, gen_loss, lat_loss,learning_rate))
 
             if losses_log_file is not None:
                 losses_log_file.write("{0},{1},{2},{3}\n".format(
-                    iter_index, gen_loss, lat_loss,
-                    learning_rate))
+                    iter_index, gen_loss, lat_loss, learning_rate))
 
     def train(self, X, n_iters=1000, batchsize=10, tempSGD_3dimages=False,
               iter_show_error=10, save_bool=False, suffix_files_generated=" ",
@@ -496,7 +494,8 @@ class CVAE():
 
         if dump_losses_log:
             losses_log_file = self.__generate_losses_log_file(
-                suffix=suffix_files_generated, similarity_evaluation)
+                suffix=suffix_files_generated,
+                similarity_evaluation=similarity_evaluation)
         else:
             losses_log_file = None
 
