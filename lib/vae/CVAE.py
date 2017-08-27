@@ -156,6 +156,8 @@ class CVAE():
                             self.path_to_losses_log])
 
     def __cost_calculation(self, images_reconstructed, z_mean, z_stddev):
+        bool_logs = True
+
         self.generation_loss = -tf.reduce_sum(
             self.in_flat_images * tf.log(1e-8 + images_reconstructed) + (
                 1 - self.in_flat_images) * tf.log(
@@ -164,8 +166,17 @@ class CVAE():
         self.latent_loss = 0.5 * tf.reduce_sum(
             tf.square(z_mean) + tf.square(z_stddev) - tf.log(
                 tf.square(z_stddev)) - 1, 1)
-        cost = tf.reduce_mean(self.generation_loss + self.latent_loss)
+
+      #  cost = tf.reduce_mean(self.generation_loss + self.latent_loss)
+        cost = self.generation_loss + self.latent_loss
         # self
+
+        if bool_logs:
+            print("shape generation_loss :{} ".format(
+                str(self.generation_loss.get_shape().as_list())))
+
+            print(str("type latent_loss :{} ".format(
+                str(type(self.latent_loss)))))
 
         if self.lambda_l2_reg != 0:
             with tf.name_scope("l2_regularization"):
