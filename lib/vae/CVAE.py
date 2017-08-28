@@ -194,8 +194,8 @@ class CVAE():
         return cost
 
     # encoder
-    def __recognition(self, input_images):
-        pass
+#    def __recognition(self, input_images):
+#        pass
     #    with tf.variable_scope("recognition"):
     #        h1 = self.activation_layer(ops.conv3d(
     #            x=input_images,

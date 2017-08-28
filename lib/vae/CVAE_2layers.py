@@ -12,7 +12,7 @@ class CVAE_2layers(CVAE):
                  path_to_session=None)
 
     def __recognition(self, input_images):
-        # print("Son recognition module")
+        print("Son recognition module")
 
         with tf.variable_scope("recognition"):
             h1 = self.activation_layer(ops.conv3d(
