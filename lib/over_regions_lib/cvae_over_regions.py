@@ -5,7 +5,6 @@ import numpy as np
 import tensorflow as tf
 from lib import session_helper as session
 from lib import utils
-from lib.utils import output_utils
 from lib.utils.os_aux import create_directories
 from lib.vae import CVAE
 
@@ -22,17 +21,11 @@ def execute_saving_meta_graph_without_any_cv(region_cubes_dict, hyperparams,
     path_to_session = os.path.join(path_to_root, session_name)
     create_directories([path_to_session])
 
-    #Session description issues
-    session_descriptor = {}
-    session_descriptor['VAE hyperparameters'] = hyperparams
-    session_descriptor['VAE session configuration'] = session_conf
-    path_session_description_file = os.path.join(path_to_session,
-                                                 "session_description.txt")
-
-    file_session_descriptor = open(path_session_description_file, "w")
-    output_utils.print_recursive_dict(session_descriptor,
-                                      file=file_session_descriptor)
-    file_session_descriptor.close()
+    session.generate_predefined_session_descriptor(
+        path_session_folder= path_to_session,
+        vae_hyperparameters= hyperparams,
+        configuration=session_conf
+    )
 
     #LOOP OVER REGIONS
     for region_selected in list_regions:

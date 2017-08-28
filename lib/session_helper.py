@@ -1,5 +1,5 @@
 import os
-
+from lib.utils import output_utils
 import numpy
 import numpy as np
 
@@ -23,6 +23,22 @@ def generate_session_descriptor(path_session_folder, session_descriptor_data):
     path_to_file_session_descriptor = \
         os.path.join(path_session_folder, "session_descriptor.txt")
     print_dictionary(path_to_file_session_descriptor, session_descriptor_data)
+
+
+def generate_predefined_session_descriptor(path_session_folder,
+                                           vae_hyperparameters,
+                                           configuration):
+    #Session description issues
+    session_descriptor = {}
+    session_descriptor['VAE hyperparameters'] = vae_hyperparameters
+    session_descriptor['VAE session configuration'] = configuration
+    path_session_description_file = os.path.join(path_session_folder,
+                                                 "session_description.txt")
+
+    file_session_descriptor = open(path_session_description_file, "w")
+    output_utils.print_recursive_dict(session_descriptor,
+                                      file=file_session_descriptor)
+    file_session_descriptor.close()
 
 
 def select_regions_to_evaluate(regions_used):

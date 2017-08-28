@@ -47,8 +47,25 @@ def auto_execute_with_session_folders():
     hyperparams['learning_rate'] = 0.0010
     hyperparams['lambda_l2_regularization'] = 0.001
 
+    session_conf = {}
+    session_conf["n_iters"] = 4000
+    session_conf["batch_size"] = 100
+    session_conf["iter_to_save"] = 50
+    session_conf["suffix_files_generated"] = "region_3"
+    session_conf["final_dump_comparison"] = True
+    session_conf["final_dump_samples_to_compare"] = \
+        [0, 20, 40, 60, 80, 100, 120, 110]
+    session_conf["final_dump_planes_per_axis_to_show_in_compare"] = \
+        [p1, p2, p3]
+
     path_to_session = \
         os.path.join(settings.path_to_general_out_folder, session_name)
+
+    session_helper.generate_predefined_session_descriptor(
+        path_session_folder = path_to_session,
+        vae_hyperparameters = hyperparams,
+        configuration=session_conf
+    )
 
     model = CVAE.CVAE(hyperparams=hyperparams,
                       test_bool=True,
@@ -56,17 +73,19 @@ def auto_execute_with_session_folders():
                       path_to_session=path_to_session)
 
     model.train(X=train_images,
-                n_iters=4000,
-                batchsize=100,
-                suffix_files_generated="region_3",
+                n_iters=session_conf["n_iters"],
+                batchsize=session_conf["batch_size"],
+                suffix_files_generated=session_conf["suffix_files_generated"],
                 tempSGD_3dimages=True,
-                iter_to_save=50,
+                iter_to_save=session_conf["iter_to_save"],
                 similarity_evaluation=True,
                 dump_losses_log=True,
                 save_bool=False,
-                final_dump_comparison=True,
-                final_dump_samples_to_compare=[0, 20, 40, 60, 80, 100, 120, 110],
-                final_dump_planes_per_axis_to_show_in_compare=[p1, p2, p3])
+                final_dump_comparison= session_conf["final_dump_comparison"],
+                final_dump_samples_to_compare=
+                session_conf["final_dump_samples_to_compare"],
+                final_dump_planes_per_axis_to_show_in_compare=
+                session_conf["final_dump_planes_per_axis_to_show_in_compare"])
 
 
 auto_execute_with_session_folders()
