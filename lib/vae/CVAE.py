@@ -96,7 +96,7 @@ class CVAE():
                                    self.image_shape[2], 1])
         self.dim_in_first_layer = tf.shape(image_matrix)
 
-        self.z_mean, self.z_stddev = self.__recognition(image_matrix)
+        self.z_mean, self.z_stddev = self.recognition(image_matrix)
         samples = tf.random_normal(tf.shape(self.z_mean), 0, 1, dtype=tf.float32)
         guessed_z = self.z_mean + (self.z_stddev * samples)
 
