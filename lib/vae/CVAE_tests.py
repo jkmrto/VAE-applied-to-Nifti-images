@@ -13,7 +13,7 @@ import region_plane_selector
 from lib.data_loader import PET_stack_NORAD
 from lib.utils import output_utils
 
-session_name = "test_over_cvae 2"
+session_name = "test_over_cvae 4"
 
 
 def auto_execute_with_session_folders():
@@ -45,7 +45,7 @@ def auto_execute_with_session_folders():
     hyperparams['activation_layer'] = ops.lrelu
     hyperparams['decay_rate'] = 0.0005
     hyperparams['learning_rate'] = 0.0005
-    hyperparams['lambda_l2_regularization'] = 0.01
+    hyperparams['lambda_l2_regularization'] = 0.001
 
     path_to_session = \
         os.path.join(settings.path_to_general_out_folder, session_name)
