@@ -12,7 +12,6 @@ class CVAE_2layers(CVAE):
         super(CVAE_2layers, self).__init__(hyperparams, test_bool=test_bool,
                  path_to_session=path_to_session)
 
-
     def __recognition(self, input_images):
         print("Son recognition module")
 
