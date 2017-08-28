@@ -21,7 +21,7 @@ bool_save_meta = False
 class CVAE():
     RESTORE_KEY = "restore"
 
-    def __init__(self, hyperparams, test_bool=False, meta_path=None,
+    def __init__(self, hyperparams, test_bool=False,
                  path_to_session=None):
 
         assert "image_shape" in list(hyperparams), \
@@ -30,6 +30,8 @@ class CVAE():
         self.total_size = np.array(self.image_shape).prod()
 
         self.session = tf.Session()
+        self.hyperparams = hyperparams
+        self.init_path_to_session = path_to_session
 
         self.dim_in_first_layer = None
         self.dim_out_first_layer = None
@@ -39,40 +41,41 @@ class CVAE():
         if test_bool:
             print(hyperparams)
 
-        if meta_path is None:
+    def generate_meta_net(self):
 
-            # Initizalizing graph values
-            self.n_z = hyperparams['latent_layer_dim']
-            self.lambda_l2_reg = hyperparams['lambda_l2_regularization']
-            self.learning_rate = hyperparams['learning_rate']
-            self.features_depth = hyperparams['features_depth']
-            self.kernel_size = hyperparams['kernel_size']
-            self.activation_layer = hyperparams['activation_layer']
-            self.decay_rate_value = float(hyperparams['decay_rate'])
-            self.path_session_folder = path_to_session
+        # Initizalizing graph values
+        self.n_z = self.hyperparams['latent_layer_dim']
+        self.lambda_l2_reg = self.hyperparams['lambda_l2_regularization']
+        self.learning_rate = self.hyperparams['learning_rate']
+        self.features_depth = self.hyperparams['features_depth']
+        self.kernel_size = self.hyperparams['kernel_size']
+        self.activation_layer = self.hyperparams['activation_layer']
+        self.decay_rate_value = float(self.hyperparams['decay_rate'])
+        self.path_session_folder = self.init_path_to_session
 
-            self.__build_graph()
+        self.__build_graph()
 
-            if self.path_session_folder is not None:
-                self.__init_session_folders()
+        if self.path_session_folder is not None:
+            self.__init_session_folders()
 
-            handles = [self.in_flat_images, self.z_mean, self.z_stddev,
+        handles = [self.in_flat_images, self.z_mean, self.z_stddev,
                        self.z_in_, self.regenerated_3d_images_]
-            for handle in handles:
-                tf.add_to_collection(CVAE.RESTORE_KEY, handle)
+        for handle in handles:
+            tf.add_to_collection(CVAE.RESTORE_KEY, handle)
 
-            self.session.run(tf.initialize_all_variables())
-        else:
-            new_saver = tf.train.import_meta_graph(meta_path + ".meta")
-            new_saver.restore(self.session, meta_path)
+        self.session.run(tf.initialize_all_variables())
 
-            # initializing attributes
-            handles = self.session.graph.get_collection_ref(CVAE.RESTORE_KEY)
-            self.in_flat_images, self.z_mean, self.z_stddev, \
-            self.z_in_, self.regenerated_3d_images_ = handles[0:5]
+    def load_meta_net(self, meta_path):
+        new_saver = tf.train.import_meta_graph(meta_path + ".meta")
+        new_saver.restore(self.session, meta_path)
 
-            # initialing variables
-            self.n_z = self.z_in_.get_shape().as_list()[1]
+        # initializing attributes
+        handles = self.session.graph.get_collection_ref(CVAE.RESTORE_KEY)
+        self.in_flat_images, self.z_mean, self.z_stddev, \
+        self.z_in_, self.regenerated_3d_images_ = handles[0:5]
+
+        # initialing variables
+        self.n_z = self.z_in_.get_shape().as_list()[1]
 
     def __build_graph(self):
         """

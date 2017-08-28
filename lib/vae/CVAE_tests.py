@@ -63,8 +63,9 @@ def auto_execute_with_session_folders():
 
     model = CVAE_2layers.CVAE_2layers(hyperparams=hyperparams,
                         test_bool=True,
-                        meta_path=None,
                         path_to_session=path_to_session)
+
+    model.generate_meta_net()
 
     model.train(X=train_images,
                 n_iters=session_conf["n_iters"],
