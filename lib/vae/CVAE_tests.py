@@ -50,7 +50,7 @@ def auto_execute_with_session_folders():
     hyperparams['lambda_l2_regularization'] = 0.001
 
     session_conf = {}
-    session_conf["n_iters"] = 100
+    session_conf["n_iters"] = 4000
     session_conf["batch_size"] = 100
     session_conf["iter_to_save"] = 50
     session_conf["suffix_files_generated"] = "region_3"
