@@ -93,9 +93,8 @@ class CVAE():
                                    self.image_shape[2], 1])
         self.dim_in_first_layer = tf.shape(image_matrix)
 
-        self.z_mean, self.z_stddev = self.recognition(image_matrix)
-        samples = tf.random_normal(tf.shape(self.z_mean), 0, 1,
-                                   dtype=tf.float32)
+        self.z_mean, self.z_stddev = self.__recognition(image_matrix)
+        samples = tf.random_normal(tf.shape(self.z_mean), 0, 1, dtype=tf.float32)
         guessed_z = self.z_mean + (self.z_stddev * samples)
 
         self.generated_images = self.__generation(guessed_z, reuse_bool=False)
@@ -192,38 +191,39 @@ class CVAE():
         return cost
 
     # encoder
-    def recognition(self, input_images):
-        with tf.variable_scope("recognition"):
-            h1 = self.activation_layer(ops.conv3d(
-                x=input_images,
-                input_features=self.features_depth[0],
-                output_features=self.features_depth[1],
-                stride=2,
-                kernel=self.kernel_size,
-                name="first_layer"))  # 28x28x1 -> 14x14x16
+    def __recognition(self, input_images):
+        raise Exception('Recognition not defined in autoencoder')
+    #    with tf.variable_scope("recognition"):
+    #        h1 = self.activation_layer(ops.conv3d(
+    #            x=input_images,
+    #            input_features=self.features_depth[0],
+    #             output_features=self.features_depth[1],
+    #            stride=2,
+    #            kernel=self.kernel_size,
+    #            name="first_layer"))  # 28x28x1 -> 14x14x16
 
-            self.dim_out_first_layer = tf.shape(h1)
-            h2 = self.activation_layer(ops.conv3d(
-                x=h1,
-                input_features=self.features_depth[1],
-                output_features=self.features_depth[2],
-                stride=2,
-                kernel=self.kernel_size,
-                name="second_layers"))  # 14x14x16 -> 7x7x32
+#            self.dim_out_first_layer = tf.shape(h1)
+#            h2 = self.activation_layer(ops.conv3d(
+#                x=h1,
+#                input_features=self.features_depth[1],
+#                output_features=self.features_depth[2],
+#                stride=2,
+#                kernel=self.kernel_size,
+#                name="second_layers"))  # 14x14x16 -> 7x7x32
 
-            self.dim_out_second_layer = tf.shape(h2)
+#            self.dim_out_second_layer = tf.shape(h2)
 
-            self.input_dense_layer_dim = [
-                -1, np.array(h2.get_shape().as_list()[1:]).prod()]
-            h2_flat = tf.reshape(h2, self.input_dense_layer_dim)
+#            self.input_dense_layer_dim = [
+#                -1, np.array(h2.get_shape().as_list()[1:]).prod()]
+#            h2_flat = tf.reshape(h2, self.input_dense_layer_dim)
 
-            w_mean = ops.dense(h2_flat, self.input_dense_layer_dim[1], self.n_z,
-                               "w_mean")
-            w_stddev = ops.dense(h2_flat, self.input_dense_layer_dim[1],
-                                 self.n_z,
-                                 "w_stddev")
-
-        return w_mean, w_stddev
+#            w_mean = ops.dense(h2_flat, self.input_dense_layer_dim[1], self.n_z,
+#                               "w_mean")
+#            w_stddev = ops.dense(h2_flat, self.input_dense_layer_dim[1],
+#                                 self.n_z,
+#                                 "w_stddev")
+#
+#        return w_mean, w_stddev
 
     def encode(self, input_images):
         """
@@ -246,32 +246,8 @@ class CVAE():
 
     # decoder
     def __generation(self, z, reuse_bool):
-        with tf.variable_scope("generation", reuse=reuse_bool):
-            z_develop = ops.dense(z, self.n_z, self.input_dense_layer_dim[1],
-                                  scope='z_matrix')
-
-            z_matrix = self.activation_layer(
-                tf.reshape(z_develop, self.dim_out_second_layer))
-
-            h1 = self.activation_layer(ops.conv3d_transpose(
-                x=z_matrix,
-                output_shape=self.dim_out_first_layer,
-                output_features=self.features_depth[1],
-                input_features=self.features_depth[2],
-                stride=2,
-                kernel=self.kernel_size,
-                name="g_h1"))
-
-            h2 = ops.conv3d_transpose(x=h1,
-                                      output_shape=self.dim_in_first_layer,
-                                      output_features=self.features_depth[0],
-                                      input_features=self.features_depth[1],
-                                      stride=2,
-                                      kernel=self.kernel_size,
-                                      name="g_h2")
-            h2 = tf.nn.sigmoid(h2)
-
-        return h2
+        print("This functions needs to be created in the son class")
+        raise Exception('Generation not defined in autoencoder')
 
     def __inspect_and_reshape_to_flat_input_images(self, input_images):
         """
