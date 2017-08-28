@@ -47,7 +47,7 @@ def auto_execute_with_session_folders():
     hyperparams['activation_layer'] = ops.lrelu
     hyperparams['decay_rate'] = 0.001
     hyperparams['learning_rate'] = 0.0001
-    hyperparams['lambda_l2_regularization'] = 0.01
+    hyperparams['lambda_l2_regularization'] = 0.0001
 
     session_conf = {}
     session_conf["n_iters"] = 4000
