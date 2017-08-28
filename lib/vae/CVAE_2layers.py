@@ -8,7 +8,7 @@ class CVAE_2layers(CVAE):
 
     def __init__(self, hyperparams, test_bool=False, meta_path=None,
                  path_to_session=None):
-        super().__init__(hyperparams, test_bool=False, meta_path=None,
+        super().__init__(hyperparams, test_bool=False,
                  path_to_session=None)
 
     def __recognition(self, input_images):
