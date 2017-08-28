@@ -47,7 +47,6 @@ def auto_execute_with_session_folders():
     hyperparams['learning_rate'] = 0.0005
     hyperparams['lambda_l2_regularization'] = 0.01
 
-    session_name = "test_over_cvae"
     path_to_session = \
         os.path.join(settings.path_to_general_out_folder, session_name)
 
@@ -57,7 +56,7 @@ def auto_execute_with_session_folders():
                       path_to_session=path_to_session)
 
     model.train(X=train_images,
-                n_iters=1000,
+                n_iters=2000,
                 batchsize=100,
                 suffix_files_generated="region_3",
                 tempSGD_3dimages=True,
