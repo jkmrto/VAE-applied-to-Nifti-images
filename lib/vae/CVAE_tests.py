@@ -51,7 +51,7 @@ def auto_execute_with_session_folders():
 
     session_conf = {}
     session_conf["n_iters"] = 4000
-    session_conf["batch_size"] = 16
+    session_conf["batch_size"] = 64
     session_conf["iter_to_save"] = 50
     session_conf["suffix_files_generated"] = "region_3"
     session_conf["final_dump_comparison"] = True

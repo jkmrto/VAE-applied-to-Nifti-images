@@ -170,8 +170,8 @@ class CVAE():
             tf.square(z_mean) + tf.square(z_stddev) - tf.log(
                 tf.square(z_stddev)) - 1, 1)
 
-      #  cost = tf.reduce_mean(self.generation_loss + self.latent_loss)
-        cost = self.generation_loss + self.latent_loss
+        cost = tf.reduce_mean(self.generation_loss + self.latent_loss)
+        #cost = self.generation_loss + self.latent_loss
         # self
 
         if bool_logs:
