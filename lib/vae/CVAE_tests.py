@@ -3,7 +3,7 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
 import matplotlib
 matplotlib.use('Agg')
-from lib.vae import CVAE
+from lib.vae import CVAE_2layers
 import settings
 import lib.neural_net.kfrans_ops as ops
 from lib import session_helper
@@ -67,10 +67,10 @@ def auto_execute_with_session_folders():
         configuration=session_conf
     )
 
-    model = CVAE.CVAE(hyperparams=hyperparams,
-                      test_bool=True,
-                      meta_path=None,
-                      path_to_session=path_to_session)
+    model = CVAE_2layers.CVAE_2layers(hyperparams=hyperparams,
+                        test_bool=True,
+                        meta_path=None,
+                        path_to_session=path_to_session)
 
     model.train(X=train_images,
                 n_iters=session_conf["n_iters"],
