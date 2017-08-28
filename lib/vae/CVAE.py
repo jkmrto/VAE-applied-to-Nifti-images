@@ -123,7 +123,7 @@ class CVAE():
 
         self.z_in_ = tf.placeholder(tf.float32,
                                     shape=[None, self.n_z], name="latent_in")
-        generated_images_ = self.__generation(self.z_in_, reuse_bool=True)
+        generated_images_ = self.generation(self.z_in_, reuse_bool=True)
 
         self.regenerated_3d_images_ = \
             tf.reshape(generated_images_,
