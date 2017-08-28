@@ -9,7 +9,7 @@ class CVAE_2layers(CVAE):
     def __init__(self, hyperparams, test_bool=False, meta_path=None,
                  path_to_session=None):
 
-        super(CVAE, self).__init__(hyperparams, test_bool=test_bool,
+        super(CVAE_2layers, self).__init__(hyperparams, test_bool=test_bool,
                  path_to_session=path_to_session)
 
 
