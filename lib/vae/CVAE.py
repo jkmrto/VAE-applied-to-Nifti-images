@@ -195,7 +195,7 @@ class CVAE():
 
     # encoder
     def __recognition(self, input_images):
-        raise Exception('Recognition not defined in autoencoder')
+        pass
     #    with tf.variable_scope("recognition"):
     #        h1 = self.activation_layer(ops.conv3d(
     #            x=input_images,
