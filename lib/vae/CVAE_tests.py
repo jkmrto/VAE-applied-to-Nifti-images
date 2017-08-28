@@ -61,12 +61,6 @@ def auto_execute_with_session_folders():
     path_to_session = \
         os.path.join(settings.path_to_general_out_folder, session_name)
 
-    session_helper.generate_predefined_session_descriptor(
-        path_session_folder = path_to_session,
-        vae_hyperparameters = hyperparams,
-        configuration=session_conf
-    )
-
     model = CVAE_2layers.CVAE_2layers(hyperparams=hyperparams,
                         test_bool=True,
                         meta_path=None,
@@ -87,6 +81,11 @@ def auto_execute_with_session_folders():
                 final_dump_planes_per_axis_to_show_in_compare=
                 session_conf["final_dump_planes_per_axis_to_show_in_compare"])
 
+    session_helper.generate_predefined_session_descriptor(
+        path_session_folder = path_to_session,
+        vae_hyperparameters = hyperparams,
+        configuration=session_conf
+    )
 
 auto_execute_with_session_folders()
 
