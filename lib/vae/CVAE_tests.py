@@ -45,13 +45,13 @@ def auto_execute_with_session_folders():
     hyperparams['features_depth'] = [1, 16, 32, 64]
     hyperparams['image_shape'] = train_images.shape[1:]
     hyperparams['activation_layer'] = ops.lrelu
-    hyperparams['decay_rate'] = 0.0005
+    hyperparams['decay_rate'] = 0.001
     hyperparams['learning_rate'] = 0.0001
     hyperparams['lambda_l2_regularization'] = 0.01
 
     session_conf = {}
     session_conf["n_iters"] = 4000
-    session_conf["batch_size"] = 100
+    session_conf["batch_size"] = 16
     session_conf["iter_to_save"] = 50
     session_conf["suffix_files_generated"] = "region_3"
     session_conf["final_dump_comparison"] = True
