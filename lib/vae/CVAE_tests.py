@@ -13,6 +13,8 @@ import region_plane_selector
 from lib.data_loader import PET_stack_NORAD
 from lib.utils import output_utils
 
+session_name = "test_over_cvae 2"
+
 
 def auto_execute_with_session_folders():
     print("Executing CVAE test")
@@ -55,7 +57,7 @@ def auto_execute_with_session_folders():
                       path_to_session=path_to_session)
 
     model.train(X=train_images,
-                n_iters=500,
+                n_iters=1000,
                 batchsize=100,
                 suffix_files_generated="region_3",
                 tempSGD_3dimages=True,
@@ -106,7 +108,6 @@ def auto_execute_encoding_and_decoding_over_trained_net():
     hyperparams = {}
     hyperparams['image_shape'] = train_images.shape[1:]
 
-    session_name = "test_over_cvae"
     path_to_session = \
         os.path.join(settings.path_to_general_out_folder, session_name)
     path_to_meta_files = os.path.join(path_to_session, "meta", "region_3-50")
