@@ -44,7 +44,7 @@ class CVAE_3layers(CVAE):
                 kernel=self.kernel_size,
                 name="third_layer"))  # 14x14x16 -> 7x7x32
 
-            self.dim_out_third_layer = tf.shape(h2)
+            self.dim_out_third_layer = tf.shape(h3)
 
             self.input_dense_layer_dim = [-1, np.array(h3.get_shape().as_list()[1:]).prod()]
 
