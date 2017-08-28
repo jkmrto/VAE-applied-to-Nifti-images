@@ -360,7 +360,7 @@ class CVAE():
         # MSE
 
         square_diff_matrix = np.power(diff_matrix, 2)
-        mse_over_samples = square_diff_matrix / n_samples
+        mse_over_samples = square_diff_matrix.sum() / n_samples
 
         if bool_logs:
             print("Similarity {}%".format(similarity_evaluation))
