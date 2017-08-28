@@ -100,7 +100,7 @@ class CVAE():
         samples = tf.random_normal(tf.shape(self.z_mean), 0, 1, dtype=tf.float32)
         guessed_z = self.z_mean + (self.z_stddev * samples)
 
-        self.generated_images = self.__generation(guessed_z, reuse_bool=False)
+        self.generated_images = self.generation(guessed_z, reuse_bool=False)
         generated_flat = tf.reshape(self.generated_images,
                                     tf.shape(self.in_flat_images))
 
@@ -194,7 +194,7 @@ class CVAE():
         return cost
 
     # encoder
-    def __recognition(self, input_images):
+    def recognition(self, input_images):
        pass
     #    with tf.variable_scope("recognition"):
     #        h1 = self.activation_layer(ops.conv3d(
