@@ -578,3 +578,6 @@ class CVAE():
             now = datetime.now().isoformat()[11:]
             print("------- Training end: {} -------\n".format(now))
             sys.exit(0)
+
+
+# little modification
