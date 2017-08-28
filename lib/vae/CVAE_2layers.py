@@ -46,7 +46,7 @@ class CVAE_2layers(CVAE):
 
         return w_mean, w_stddev
 
-    def __generation(self, z, reuse_bool):
+    def generation(self, z, reuse_bool):
         with tf.variable_scope("generation", reuse=reuse_bool):
             z_develop = ops.dense(z, self.n_z, self.input_dense_layer_dim[1],
                                   scope='z_matrix')

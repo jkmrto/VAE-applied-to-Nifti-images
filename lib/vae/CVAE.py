@@ -248,7 +248,7 @@ class CVAE():
         return output_dic
 
     # decoder
-    def __generation(self, z, reuse_bool):
+    def generation(self, z, reuse_bool):
         print("This functions needs to be created in the son class")
         raise Exception('Generation not defined in autoencoder')
 
