@@ -328,6 +328,7 @@ class CVAE():
 
     def __full_reconstruction_error_evaluation(self, images_flat):
 
+        n_samples = images_flat.shape[0]
         feed_dict = {self.in_flat_images: images_flat}
         bool_logs = False
 
@@ -350,13 +351,21 @@ class CVAE():
             print(images_3d_reconstructed.shape)
 
         diff_matrix = np.subtract(images_3d_original, images_3d_reconstructed)
-        total_diff = diff_matrix.sum()
-        mean_diff = abs(
-            total_diff / np.array(images_flat.shape).prod()) * 2 * 100
-        if bool_logs:
-            print("Similarity {}%".format(mean_diff))
 
-        return mean_diff
+        # similarity_evaluation
+        total_diff = diff_matrix.sum()
+        similarity_evaluation = abs(
+            total_diff / np.array(images_flat.shape).prod())
+
+        # MSE
+
+        square_diff_matrix = np.power(diff_matrix, 2)
+        mse_over_samples = square_diff_matrix / n_samples
+
+        if bool_logs:
+            print("Similarity {}%".format(similarity_evaluation))
+
+        return similarity_evaluation, mse_over_samples
 
     @staticmethod
     def is_not_valid_lantent_and_reconstruction_loss(
@@ -409,9 +418,9 @@ class CVAE():
         file = open(path_to_file, "w")
 
         if similarity_evaluation:
-            file.write("{0},{1},{2},{3},{4}".format(
+            file.write("{0},{1},{2},{3},{4}, {5}".format(
                 "iteration", "generative loss", "latent layer loss",
-                "learning rate", "similarity score\n"))
+                "learning rate", "similarity score", "MSE error over samples\n"))
         else:
             file.write("{0},{1},{2},{3}".format(
                 "iteration", "generative loss", "latent layer loss",
@@ -471,18 +480,19 @@ class CVAE():
 
         if similarity_evaluation is not None:
             # Generate %similarity in reconstruction
-            similarity_score = self.__full_reconstruction_error_evaluation(
-                images_flat=images_flat)
+            similarity_score, mse_score = \
+                self.__full_reconstruction_error_evaluation(images_flat=images_flat)
 
             print("iter {0}: genloss {1}, latloss {2}, "
-                  "learning_rate {3}, Similarity Score: {4}".format(
+                  "learning_rate {3}, Similarity Score: {4},"
+                  "MSE {5}".format(
                 iter_index, gen_loss, lat_loss,
-                learning_rate, similarity_score))
+                learning_rate, similarity_score, mse_score))
 
             if losses_log_file is not None:
-                losses_log_file.write("{0},{1},{2},{3},{4}\n".format(
+                losses_log_file.write("{0},{1},{2},{3},{4}, {5}\n".format(
                     iter_index, gen_loss, lat_loss,
-                    learning_rate, similarity_score))
+                    learning_rate, similarity_score, mse_score))
 
         else:
             print("iter {0}: genloss {1}, latloss {2}, learning_rate {3}".format(
