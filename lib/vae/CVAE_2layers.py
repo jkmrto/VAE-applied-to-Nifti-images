@@ -8,8 +8,10 @@ class CVAE_2layers(CVAE):
 
     def __init__(self, hyperparams, test_bool=False, meta_path=None,
                  path_to_session=None):
-        super().__init__(hyperparams, test_bool=False,
-                 path_to_session=None)
+
+        super(CVAE, self).__init__(hyperparams, test_bool=test_bool,
+                 path_to_session=path_to_session)
+
 
     def __recognition(self, input_images):
         print("Son recognition module")
