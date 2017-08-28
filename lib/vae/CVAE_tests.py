@@ -74,8 +74,8 @@ auto_execute_with_session_folders()
 
 
 def auto_execute_encoding_over_trained_net():
-    regions_used = "all"
-    region_selected = 39
+    regions_used = "three"
+    region_selected = 3
     list_regions = session_helper.select_regions_to_evaluate(regions_used)
     train_images = load_pet_regions_segmented(list_regions)[region_selected]
 
