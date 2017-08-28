@@ -4,6 +4,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
 import matplotlib
 matplotlib.use('Agg')
 from lib.vae import CVAE_2layers
+from lib.vae import CVAE_3layers
 import settings
 import lib.neural_net.kfrans_ops as ops
 from lib import session_helper
@@ -40,7 +41,8 @@ def auto_execute_with_session_folders():
     hyperparams = {}
     hyperparams['latent_layer_dim'] = 100
     hyperparams['kernel_size'] = 5
-    hyperparams['features_depth'] = [1, 16, 32]
+   # hyperparams['features_depth'] = [1, 16, 32]
+    hyperparams['features_depth'] = [1, 8, 16, 32]
     hyperparams['image_shape'] = train_images.shape[1:]
     hyperparams['activation_layer'] = ops.lrelu
     hyperparams['decay_rate'] = 0.002
@@ -48,7 +50,7 @@ def auto_execute_with_session_folders():
     hyperparams['lambda_l2_regularization'] = 0.001
 
     session_conf = {}
-    session_conf["n_iters"] = 4000
+    session_conf["n_iters"] = 100
     session_conf["batch_size"] = 100
     session_conf["iter_to_save"] = 50
     session_conf["suffix_files_generated"] = "region_3"
@@ -61,7 +63,7 @@ def auto_execute_with_session_folders():
     path_to_session = \
         os.path.join(settings.path_to_general_out_folder, session_name)
 
-    model = CVAE_2layers.CVAE_2layers(hyperparams=hyperparams,
+    model = CVAE_3layers.CVAE_3layers(hyperparams=hyperparams,
                         test_bool=True,
                         path_to_session=path_to_session)
 

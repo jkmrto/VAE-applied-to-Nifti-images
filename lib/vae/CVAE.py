@@ -37,6 +37,7 @@ class CVAE():
         self.dim_out_first_layer = None
         self.dim_out_second_layer = None
         self.input_dense_layer_dim = None
+        self.dim_out_third_layer = None
 
         if test_bool:
             print(hyperparams)
