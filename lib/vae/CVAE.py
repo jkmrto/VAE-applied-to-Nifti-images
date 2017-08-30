@@ -162,9 +162,8 @@ class CVAE():
         bool_logs = True
 
         self.generation_loss = -tf.reduce_sum(
-            self.in_flat_images * tf.log(1e-8 + images_reconstructed) + (
-                1 - self.in_flat_images) * tf.log(
-                1e-8 + 1 - images_reconstructed), 1)
+            self.in_flat_images * tf.log(1e-8 + images_reconstructed) +
+            (1 - self.in_flat_images) * tf.log(1e-8 + 1 - images_reconstructed), 1)
 
         self.latent_loss = 0.5 * tf.reduce_sum(
             tf.square(z_mean) + tf.square(z_stddev) - tf.log(
@@ -197,37 +196,6 @@ class CVAE():
     # encoder
     def recognition(self, input_images):
        pass
-    #    with tf.variable_scope("recognition"):
-    #        h1 = self.activation_layer(ops.conv3d(
-    #            x=input_images,
-    #            input_features=self.features_depth[0],
-    #             output_features=self.features_depth[1],
-    #            stride=2,
-    #            kernel=self.kernel_size,
-    #            name="first_layer"))  # 28x28x1 -> 14x14x16
-
-#            self.dim_out_first_layer = tf.shape(h1)
-#            h2 = self.activation_layer(ops.conv3d(
-#                x=h1,
-#                input_features=self.features_depth[1],
-#                output_features=self.features_depth[2],
-#                stride=2,
-#                kernel=self.kernel_size,
-#                name="second_layers"))  # 14x14x16 -> 7x7x32
-
-#            self.dim_out_second_layer = tf.shape(h2)
-
-#            self.input_dense_layer_dim = [
-#                -1, np.array(h2.get_shape().as_list()[1:]).prod()]
-#            h2_flat = tf.reshape(h2, self.input_dense_layer_dim)
-
-#            w_mean = ops.dense(h2_flat, self.input_dense_layer_dim[1], self.n_z,
-#                               "w_mean")
-#            w_stddev = ops.dense(h2_flat, self.input_dense_layer_dim[1],
-#                                 self.n_z,
-#                                 "w_stddev")
-#
-#        return w_mean, w_stddev
 
     def encode(self, input_images):
         """
