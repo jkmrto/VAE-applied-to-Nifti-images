@@ -14,7 +14,7 @@ import region_plane_selector
 from lib.data_loader import PET_stack_NORAD
 from lib.utils import output_utils
 
-session_name = "test_over_cvae 6"
+session_name = "test_over_cvae 7"
 
 
 def auto_execute_with_session_folders():
@@ -42,7 +42,7 @@ def auto_execute_with_session_folders():
     hyperparams['latent_layer_dim'] = 100
     hyperparams['kernel_size'] = 5
    # hyperparams['features_depth'] = [1, 16, 32]
-    hyperparams['features_depth'] = [1, 8, 16, 32]
+    hyperparams['features_depth'] = [1, 16, 32, 64]
     hyperparams['image_shape'] = train_images.shape[1:]
     hyperparams['activation_layer'] = ops.lrelu
     hyperparams['decay_rate'] = 0.0005
@@ -51,7 +51,7 @@ def auto_execute_with_session_folders():
 
     session_conf = {}
     session_conf["n_iters"] = 4000
-    session_conf["batch_size"] = 64
+    session_conf["batch_size"] = 120
     session_conf["iter_to_save"] = 50
     session_conf["suffix_files_generated"] = "region_3"
     session_conf["final_dump_comparison"] = True
