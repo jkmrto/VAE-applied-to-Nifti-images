@@ -14,7 +14,7 @@ import region_plane_selector
 from lib.data_loader import PET_stack_NORAD
 from lib.utils import output_utils
 
-session_name = "test_over_cvae 7"
+session_name = "test_over_cvae 8"
 
 
 def auto_execute_with_session_folders():
@@ -48,7 +48,7 @@ def auto_execute_with_session_folders():
     hyperparams['decay_rate'] = 0.0005
     hyperparams['learning_rate'] = 0.0001
     hyperparams['lambda_l2_regularization'] = 0.0001
-    hyperparams['stride'] = 2
+    hyperparams['stride'] = 1
 
     session_conf = {}
     session_conf["n_iters"] = 4000
