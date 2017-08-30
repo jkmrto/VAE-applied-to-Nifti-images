@@ -42,7 +42,7 @@ def auto_execute_with_session_folders():
     hyperparams['latent_layer_dim'] = 100
     hyperparams['kernel_size'] = 5
    # hyperparams['features_depth'] = [1, 16, 32]
-    hyperparams['features_depth'] = [1, 4, 8, 16]
+    hyperparams['features_depth'] = [1, 16, 32]
     hyperparams['image_shape'] = train_images.shape[1:]
     hyperparams['activation_layer'] = ops.lrelu
     hyperparams['decay_rate'] = 0.0005
@@ -64,7 +64,7 @@ def auto_execute_with_session_folders():
     path_to_session = \
         os.path.join(settings.path_to_general_out_folder, session_name)
 
-    model = CVAE_3layers.CVAE_3layers(hyperparams=hyperparams,
+    model = CVAE_2layers.CVAE_2layers(hyperparams=hyperparams,
                         test_bool=True,
                         path_to_session=path_to_session)
 

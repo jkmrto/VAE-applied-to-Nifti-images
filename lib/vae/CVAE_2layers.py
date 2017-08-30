@@ -20,7 +20,7 @@ class CVAE_2layers(CVAE):
                 x=input_images,
                 input_features=self.features_depth[0],
                 output_features=self.features_depth[1],
-                stride=2,
+                stride=self.stride,
                 kernel=self.kernel_size,
                 name="first_layer"))  # 28x28x1 -> 14x14x16
 
@@ -29,7 +29,7 @@ class CVAE_2layers(CVAE):
                 x=h1,
                 input_features=self.features_depth[1],
                 output_features=self.features_depth[2],
-                stride=2,
+                stride=self.stride,
                 kernel=self.kernel_size,
                 name="second_layers"))  # 14x14x16 -> 7x7x32
 
@@ -59,7 +59,7 @@ class CVAE_2layers(CVAE):
                 output_shape=self.dim_out_first_layer,
                 output_features=self.features_depth[1],
                 input_features=self.features_depth[2],
-                stride=2,
+                stride=self.stride,
                 kernel=self.kernel_size,
                 name="g_h1"))
 
@@ -67,7 +67,7 @@ class CVAE_2layers(CVAE):
                                       output_shape=self.dim_in_first_layer,
                                       output_features=self.features_depth[0],
                                       input_features=self.features_depth[1],
-                                      stride=2,
+                                      stride=self.stride,
                                       kernel=self.kernel_size,
                                       name="g_h2")
             h2 = tf.nn.sigmoid(h2)
