@@ -42,13 +42,13 @@ def auto_execute_with_session_folders():
     hyperparams['latent_layer_dim'] = 100
     hyperparams['kernel_size'] = 5
    # hyperparams['features_depth'] = [1, 16, 32]
-    hyperparams['features_depth'] = [1, 8, 16, 32]
+    hyperparams['features_depth'] = [1, 4, 8, 16]
     hyperparams['image_shape'] = train_images.shape[1:]
     hyperparams['activation_layer'] = ops.lrelu
     hyperparams['decay_rate'] = 0.0005
     hyperparams['learning_rate'] = 0.0001
     hyperparams['lambda_l2_regularization'] = 0.0001
-    hyperparams['stride'] = 1
+    hyperparams['stride'] = 2
 
     session_conf = {}
     session_conf["n_iters"] = 4000
