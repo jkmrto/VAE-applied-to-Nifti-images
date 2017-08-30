@@ -52,6 +52,7 @@ class CVAE():
         self.kernel_size = self.hyperparams['kernel_size']
         self.activation_layer = self.hyperparams['activation_layer']
         self.decay_rate_value = float(self.hyperparams['decay_rate'])
+        self.stride = self.hyperparams['stride']
         self.path_session_folder = self.init_path_to_session
 
         self.__build_graph()
