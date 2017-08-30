@@ -16,7 +16,6 @@ from lib.utils import output_utils
 
 session_name = "test_over_cvae 9"
 
-
 def auto_execute_with_session_folders():
     print("Executing CVAE test")
 
@@ -42,13 +41,15 @@ def auto_execute_with_session_folders():
     hyperparams['latent_layer_dim'] = 100
     hyperparams['kernel_size'] = 5
    # hyperparams['features_depth'] = [1, 16, 32]
-    hyperparams['features_depth'] = [1, 16, 32]
+    hyperparams['features_depth'] = [1, 8, 16]
     hyperparams['image_shape'] = train_images.shape[1:]
     hyperparams['activation_layer'] = ops.lrelu
     hyperparams['decay_rate'] = 0.0005
     hyperparams['learning_rate'] = 0.0001
     hyperparams['lambda_l2_regularization'] = 0.0001
     hyperparams['stride'] = 2
+
+    session_name = "test_over_cvae 10"
 
     session_conf = {}
     session_conf["n_iters"] = 4000
