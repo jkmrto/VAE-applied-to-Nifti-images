@@ -43,7 +43,7 @@ def auto_execute_with_session_folders():
 
     hyperparams = {}
     hyperparams['latent_layer_dim'] = 100
-    hyperparams['kernel_size'] = 10
+    hyperparams['kernel_size'] = 8
     # hyperparams['features_depth'] = [1, 16, 32]
     hyperparams['features_depth'] = [1, 16, 32]
     hyperparams['image_shape'] = train_images.shape[1:]
