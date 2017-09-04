@@ -8,9 +8,9 @@ class CVAE_2layers_DenseLayer(CVAE):
 
     def __init__(self, hyperparams, test_bool=False, meta_path=None,
                  path_to_session=None):
-
-        super(CVAE_2layers, self).__init__(hyperparams, test_bool=test_bool,
-                 path_to_session=path_to_session)
+        super(CVAE_2layers_DenseLayer, self).__init__(
+            hyperparams, test_bool=test_bool,
+            path_to_session=path_to_session)
 
     def recognition(self, input_images):
         print("Son recognition module")
@@ -43,9 +43,9 @@ class CVAE_2layers_DenseLayer(CVAE):
             h2_flat_layer = tf.reshape(h2, self.input_dense_layer_dim)
 
             dense_layer = self.activation_layer(ops.dense(
-                x = h2_flat_layer,
-                input_len = self.input_dense_layer_dim[1],
-                output_len = self.middle_dense_layer_dim,
+                x=h2_flat_layer,
+                input_len=self.input_dense_layer_dim[1],
+                output_len=self.middle_dense_layer_dim,
                 scope="Dense Layer",
                 with_w=False,
                 reuse=False))
@@ -59,7 +59,6 @@ class CVAE_2layers_DenseLayer(CVAE):
 
     def generation(self, z, reuse_bool):
         with tf.variable_scope("generation", reuse=reuse_bool):
-
             dense_first_layer = self.activation_layer(
                 ops.dense(x=z, input_len=self.n_z,
                           output_len=self.middle_dense_layer_dim,
@@ -69,7 +68,7 @@ class CVAE_2layers_DenseLayer(CVAE):
                 ops.dense(x=dense_first_layer,
                           input_len=self.middle_dense_layer_dim,
                           output_len=self.input_dense_layer_dim[1],
-                                  scope='z_second_dense_layer'))
+                          scope='z_second_dense_layer'))
 
             z_matrix = self.activation_layer(
                 tf.reshape(dense_second_layer, self.dim_out_second_layer))
