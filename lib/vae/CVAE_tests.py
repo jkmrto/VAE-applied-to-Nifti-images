@@ -1,10 +1,13 @@
 import os
 import sys
+
 sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
 import matplotlib
+
 matplotlib.use('Agg')
 from lib.vae import CVAE_2layers
 from lib.vae import CVAE_3layers
+from lib.vae import CVAE_2layers_2DenseLayers
 import settings
 import lib.neural_net.kfrans_ops as ops
 from lib import session_helper
@@ -14,7 +17,8 @@ import region_plane_selector
 from lib.data_loader import PET_stack_NORAD
 from lib.utils import output_utils
 
-session_name = "test_over_cvae 9"
+session_name = "test_over_cvae 10"
+
 
 def auto_execute_with_session_folders():
     print("Executing CVAE test")
@@ -27,7 +31,7 @@ def auto_execute_with_session_folders():
     pet_dict_stack = PET_stack_NORAD.get_parameters()
     atlas = pet_atlas.load_atlas()
     voxels_desired = atlas[region_selected]
-    voxels_index = pet_dict_stack['voxel_index'] # no_bg_index to real position
+    voxels_index = pet_dict_stack['voxel_index']  # no_bg_index to real position
     final_voxels_selected_index = voxels_index[voxels_desired]
 
     p1, p2, p3 = \
@@ -40,7 +44,7 @@ def auto_execute_with_session_folders():
     hyperparams = {}
     hyperparams['latent_layer_dim'] = 100
     hyperparams['kernel_size'] = 5
-   # hyperparams['features_depth'] = [1, 16, 32]
+    # hyperparams['features_depth'] = [1, 16, 32]
     hyperparams['features_depth'] = [1, 16, 32]
     hyperparams['image_shape'] = train_images.shape[1:]
     hyperparams['activation_layer'] = ops.lrelu
@@ -65,9 +69,10 @@ def auto_execute_with_session_folders():
     path_to_session = \
         os.path.join(settings.path_to_general_out_folder, session_name)
 
-    model = CVAE_2layers.CVAE_2layers(hyperparams=hyperparams,
-                        test_bool=True,
-                        path_to_session=path_to_session)
+    model = CVAE_2layers_2DenseLayers.CVAE_2layers_DenseLayer(
+        hyperparams=hyperparams,
+        test_bool=True,
+        path_to_session=path_to_session)
 
     model.generate_meta_net()
 
@@ -80,17 +85,18 @@ def auto_execute_with_session_folders():
                 similarity_evaluation=True,
                 dump_losses_log=True,
                 save_bool=False,
-                final_dump_comparison= session_conf["final_dump_comparison"],
+                final_dump_comparison=session_conf["final_dump_comparison"],
                 final_dump_samples_to_compare=
                 session_conf["final_dump_samples_to_compare"],
                 final_dump_planes_per_axis_to_show_in_compare=
                 session_conf["final_dump_planes_per_axis_to_show_in_compare"])
 
     session_helper.generate_predefined_session_descriptor(
-        path_session_folder = path_to_session,
-        vae_hyperparameters = hyperparams,
+        path_session_folder=path_to_session,
+        vae_hyperparameters=hyperparams,
         configuration=session_conf
     )
+
 
 auto_execute_with_session_folders()
 
@@ -136,7 +142,7 @@ def auto_execute_encoding_and_decoding_over_trained_net():
     path_to_images = os.path.join(path_to_session, "images")
 
     cvae = CVAE.CVAE(hyperparams=hyperparams,
-                meta_path=path_to_meta_files)
+                     meta_path=path_to_meta_files)
 
     print("encoding")
     encoding_out = cvae.encode(train_images)  # [mean, stdev]
