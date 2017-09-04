@@ -46,7 +46,7 @@ class CVAE_2layers_DenseLayer(CVAE):
                 x=h2_flat_layer,
                 input_len=self.input_dense_layer_dim[1],
                 output_len=self.middle_dense_layer_dim,
-                scope="Dense Layer",
+                scope="Middle_Dense_Layer",
                 with_w=False,
                 reuse=False))
 
