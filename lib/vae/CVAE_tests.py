@@ -51,7 +51,7 @@ def auto_execute_with_session_folders():
     hyperparams['decay_rate'] = 0.0005
     hyperparams['learning_rate'] = 0.0001
     hyperparams['lambda_l2_regularization'] = 0.0001
-    hyperparams['stride'] = 1
+    hyperparams['stride'] = 2
 
     session_name = "test_over_cvae 10"
 
