@@ -84,7 +84,7 @@ class CVAE_4layers(CVAE):
 
             g4 = self.activation_layer(ops.conv3d_transpose(
                 x=g_dense_reshape_1,
-                output_shape=self.dim_out_second_layer,
+                output_shape=self.dim_out_third_layer,
                 output_features=self.features_depth[3],
                 input_features=self.features_depth[4],
                 stride=self.stride,
@@ -93,7 +93,7 @@ class CVAE_4layers(CVAE):
 
             g3 = self.activation_layer(ops.conv3d_transpose(
                 x=g4,
-                output_shape=self.dim_out_first_layer,
+                output_shape=self.dim_out_second_layer,
                 output_features=self.features_depth[2],
                 input_features=self.features_depth[3],
                 stride=self.stride,
