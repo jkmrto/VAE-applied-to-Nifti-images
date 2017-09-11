@@ -80,7 +80,7 @@ class CVAE_4layers(CVAE):
                                        scope='z_matrix'))
 
             g_dense_reshape_1 = \
-                tf.reshape(g_dense_flat_1, self.dim_out_third_layer)
+                tf.reshape(g_dense_flat_1, self.dim_out_forth_layer)
 
             g4 = self.activation_layer(ops.conv3d_transpose(
                 x=g_dense_reshape_1,
