@@ -18,7 +18,7 @@ import region_plane_selector
 from lib.data_loader import PET_stack_NORAD
 from lib.utils import output_utils
 
-session_name = "test_over_cvae 10"
+session_name = "test_over_cvae 14"
 
 
 def auto_execute_with_session_folders():
