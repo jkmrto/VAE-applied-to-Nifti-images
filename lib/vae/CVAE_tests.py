@@ -54,9 +54,9 @@ def auto_execute_with_session_folders():
     hyperparams['lambda_l2_regularization'] = 0.0001
     hyperparams['stride'] = 2
 
-   # CVAE_model = CVAE_2layers_2DenseLayers.CVAE_2layers_DenseLayer
-    CVAE_model = CVAE_4layers.CVAE_4layers
-
+    #CVAE_model = CVAE_2layers_2DenseLayers.CVAE_2layers_DenseLayer
+    #CVAE_model = CVAE_4layers.CVAE_4layers
+    CVAE_model = CVAE_2layers.CVAE_2layers
     session_conf = {}
     session_conf["n_iters"] = 4000
     session_conf["batch_size"] = 120
