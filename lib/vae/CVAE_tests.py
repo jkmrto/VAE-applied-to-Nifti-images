@@ -43,7 +43,7 @@ def auto_execute_with_session_folders():
             reshape_kind="F")
 
     hyperparams = {}
-    hyperparams['latent_layer_dim'] = 1000
+    hyperparams['latent_layer_dim'] = 100
     hyperparams['kernel_size'] = 5
     hyperparams['features_depth'] = [1, 16, 32] # 2 convolutionals layers
  #   hyperparams['features_depth'] = [1, 8, 16, 32, 64] # 4 conv layers
