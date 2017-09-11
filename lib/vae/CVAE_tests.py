@@ -54,6 +54,8 @@ def auto_execute_with_session_folders():
     hyperparams['lambda_l2_regularization'] = 0.0001
     hyperparams['stride'] = 2
 
+   # CVAE_model = CVAE_2layers_2DenseLayers.CVAE_2layers_DenseLayer
+    CVAE_model = CVAE_4layers.CVAE_4layers
 
     session_conf = {}
     session_conf["n_iters"] = 4000
@@ -69,7 +71,7 @@ def auto_execute_with_session_folders():
     path_to_session = \
         os.path.join(settings.path_to_general_out_folder, session_name)
 
-    model = CVAE_2layers_2DenseLayers.CVAE_2layers_DenseLayer(
+    model = CVAE_model(
         hyperparams=hyperparams,
         test_bool=True,
         path_to_session=path_to_session)
