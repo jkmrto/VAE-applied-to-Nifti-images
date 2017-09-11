@@ -49,7 +49,7 @@ def auto_execute_with_session_folders():
  #   hyperparams['features_depth'] = [1, 8, 16, 32, 64] # 4 conv layers
     hyperparams['image_shape'] = train_images.shape[1:]
     hyperparams['activation_layer'] = ops.lrelu
-    hyperparams['decay_rate'] = 0.0005
+    hyperparams['decay_rate'] = 0
     hyperparams['learning_rate'] = 0.0001
     hyperparams['lambda_l2_regularization'] = 0.0001
     hyperparams['stride'] = 2
