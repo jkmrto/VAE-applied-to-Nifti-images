@@ -21,7 +21,7 @@ class CVAE_2layers(CVAE):
                 input_features=self.features_depth[0],
                 output_features=self.features_depth[1],
                 stride=self.stride,
-                kernel=self.kernel_size,
+                kernel=self.kernel_size[0],
                 name="first_layer"))  # 28x28x1 -> 14x14x16
 
             self.dim_out_first_layer = tf.shape(h1)
@@ -30,7 +30,7 @@ class CVAE_2layers(CVAE):
                 input_features=self.features_depth[1],
                 output_features=self.features_depth[2],
                 stride=self.stride,
-                kernel=self.kernel_size,
+                kernel=self.kernel_size[1],
                 name="second_layers"))  # 14x14x16 -> 7x7x32
 
             self.dim_out_second_layer = tf.shape(h2)
@@ -60,7 +60,7 @@ class CVAE_2layers(CVAE):
                 output_features=self.features_depth[1],
                 input_features=self.features_depth[2],
                 stride=self.stride,
-                kernel=self.kernel_size,
+                kernel=self.kernel_size[1],
                 name="g_h1"))
 
             h2 = ops.conv3d_transpose(x=h1,
@@ -68,7 +68,7 @@ class CVAE_2layers(CVAE):
                                       output_features=self.features_depth[0],
                                       input_features=self.features_depth[1],
                                       stride=self.stride,
-                                      kernel=self.kernel_size,
+                                      kernel=self.kernel_size[0],
                                       name="g_h2")
             h2 = tf.nn.sigmoid(h2)
 
