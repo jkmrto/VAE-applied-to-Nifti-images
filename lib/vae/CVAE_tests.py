@@ -5,13 +5,13 @@ sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
 import matplotlib
 
 matplotlib.use('Agg')
+from matplotlib import pyplot as plt
+plt.rcParams["figure.figsize"] = [16, 9]
 
 from lib.vae import CVAE_2layers
 from lib.vae import CVAE_3layers
 from lib.vae import CVAE_4layers
 from lib.vae import CVAE_2layers_2DenseLayers
-import csv
-import matplotlib.ticker as mtick
 
 import settings
 import lib.neural_net.kfrans_ops as ops
@@ -21,132 +21,7 @@ from lib.data_loader import pet_atlas
 import region_plane_selector
 from lib.data_loader import PET_stack_NORAD
 from lib.utils import output_utils
-from lib import file_reader
-from matplotlib import pyplot as plt
-plt.rcParams["figure.figsize"] = [16, 9]
-from lib.utils.os_aux import create_directories
-
-
-
-
-def plot_mse_error_evolution(session_name, list_region):
-    path_logs = os.path.join(settings.path_to_general_out_folder,
-                 session_name, "logs", "losses_logs")
-    path_images = os.path.join(settings.path_to_general_out_folder,
-                 session_name, "images", "training_SGD_stats")
-
-    create_directories([path_logs, path_images])
-
-    for region in list_region:
-        path_to_file = \
-            os.path.join(settings.path_to_general_out_folder,
-                     session_name, "logs","losses_logs",
-                     "region_{}.txt".format(region))
-        list_dicts = \
-            file_reader.read_csv_as_list_of_dictionaries(path_to_file)
-
-        region_prefix = "region_{0}".format(region)
-
-        iters = []
-        latent_layer_loss = []
-        learning_rate = []
-        generative_loss = []
-        similarity_score = []
-        MSE_error_over_samples = []
-
-        for row in list_dicts:
-            iters.append(int(row["iteration"]))
-            latent_layer_loss.append(float(row["latent layer loss"]))
-            learning_rate.append(float(row["learning rate"]))
-            generative_loss.append(float(row["generative loss"]))
-            similarity_score.append(float(row["similarity score"]))
-            MSE_error_over_samples.append(float(row[" MSE error over samples"]))
-
-        wrap_default_generate_image(
-            idi= "generative_loss" ,
-            tittle= "Generative Error",
-            iters = iters,
-            values= generative_loss,
-            region_prefix=region_prefix,
-            path_images=path_images
-        )
-
-        wrap_default_generate_image(
-            idi= "latent_layer_loss" ,
-            tittle= "Latent Layer Loss",
-            iters = iters,
-            values = latent_layer_loss,
-            region_prefix=region_prefix,
-            path_images=path_images)
-
-        wrap_default_generate_image(
-            idi= "similarity_score" ,
-            tittle= "Similarity Score",
-            iters = iters,
-            values= similarity_score,
-            region_prefix = region_prefix,
-            path_images=path_images)
-
-        wrap_default_generate_image(
-            idi= "mse_error" ,
-            tittle= "MSE error",
-            iters = iters,
-            values= MSE_error_over_samples,
-            region_prefix=region_prefix,
-            path_images=path_images
-        )
-
-
-        wrap_default_generate_image(
-            idi= "learning_rate" ,
-            tittle= "Learning Rate",
-            iters = iters,
-            values= learning_rate,
-            region_prefix = region_prefix,
-            path_images=path_images
-            )
-
-def generate_and_save_2xy_graphs_zoomed(title, xlabel, y_label,
-        path_to_save, x_values, y_values):
-    # Figure Header
-    fig = plt.figure()
-    fig.suptitle(title, fontsize=14)
-    # First subplot
-
-    plt.subplot(221)
-    plt.plot(x_values, y_values)
-    plt.gca().yaxis.set_major_formatter(mtick.FormatStrFormatter('%5.1e'))
-
-    # Second subplot
-    plt.subplot(222)
-    post_iter_to_zoom = x_values.index(1000)
-    plt.plot(x_values[post_iter_to_zoom:], y_values[post_iter_to_zoom:])
-    plt.xlabel(xlabel, fontsize=14)
-
-    plt.subplot(223)
-    post_iter_to_zoom = x_values.index(2000)
-    plt.plot(x_values[post_iter_to_zoom:], y_values[post_iter_to_zoom:])
-    plt.xlabel(xlabel, fontsize=14)
-
-    plt.subplot(224)
-    post_iter_to_zoom = x_values.index(3000)
-    plt.plot(x_values[post_iter_to_zoom:], y_values[post_iter_to_zoom:])
-    plt.xlabel(xlabel, fontsize=14)
-    plt.savefig(path_to_save)
-
-
-def wrap_default_generate_image(idi, tittle, iters, values,
-                                region_prefix, path_images):
-    path_to_save = os.path.join(
-        path_images, "{0}_{1}.png".format(region_prefix, idi))
-    generate_and_save_2xy_graphs_zoomed(
-        title="{} Over Iters".format(tittle),
-        xlabel="Iters",
-        y_label=tittle,
-        path_to_save=path_to_save,
-        x_values=iters,
-        y_values=values)
-
+from lib.vae import test_graphs_helpers as helpers
 
 def auto_execute_with_session_folders():
     print("Executing CVAE test")
@@ -173,7 +48,7 @@ def auto_execute_with_session_folders():
 
     hyperparams = {}
     hyperparams['latent_layer_dim'] = 50
-    hyperparams['kernel_size'] = [5, 5]
+    hyperparams['kernel_size'] = [5, 3]
   #  hyperparams['features_depth'] = [1, 8, 16, 32] # 3 convolutionals layers
     hyperparams['features_depth'] = [1, 16, 32] # 2 convolutionals layers
  #   hyperparams['features_depth'] = [1, 8, 16, 32, 64] # 4 conv layers
@@ -231,7 +106,7 @@ def auto_execute_with_session_folders():
         configuration=session_conf
     )
 
-    plot_mse_error_evolution(
+    helpers.plot_mse_error_evolution(
         session_name = session_name,
         list_region = [region_selected])
 
