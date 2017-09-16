@@ -21,7 +21,7 @@ class CVAE_3layers(CVAE):
                 input_features=self.features_depth[0],
                 output_features=self.features_depth[1],
                 stride=self.stride,
-                kernel=self.kernel_size,
+                kernel=self.kernel_size[0],
                 name="first_layer"))  # 28x28x1 -> 14x14x16
 
             self.dim_out_first_layer = tf.shape(h1)
@@ -31,7 +31,7 @@ class CVAE_3layers(CVAE):
                 input_features=self.features_depth[1],
                 output_features=self.features_depth[2],
                 stride=self.stride,
-                kernel=self.kernel_size,
+                kernel=self.kernel_size[1],
                 name="second_layer"))  # 14x14x16 -> 7x7x32
 
             self.dim_out_second_layer = tf.shape(h2)
@@ -41,7 +41,7 @@ class CVAE_3layers(CVAE):
                 input_features=self.features_depth[2],
                 output_features=self.features_depth[3],
                 stride=self.stride,
-                kernel=self.kernel_size,
+                kernel=self.kernel_size[2],
                 name="third_layer"))  # 14x14x16 -> 7x7x32
 
             self.dim_out_third_layer = tf.shape(h3)
@@ -71,7 +71,7 @@ class CVAE_3layers(CVAE):
                 output_features=self.features_depth[2],
                 input_features=self.features_depth[3],
                 stride=self.stride,
-                kernel=self.kernel_size,
+                kernel=self.kernel_size[2],
                 name="g_h1"))
 
             h2 = self.activation_layer(ops.conv3d_transpose(
@@ -80,7 +80,7 @@ class CVAE_3layers(CVAE):
                 output_features=self.features_depth[1],
                 input_features=self.features_depth[2],
                 stride=self.stride,
-                kernel=self.kernel_size,
+                kernel=self.kernel_size[1],
                 name="g_h2"))
 
             h3 = ops.conv3d_transpose(x=h2,
@@ -88,7 +88,7 @@ class CVAE_3layers(CVAE):
                                       output_features=self.features_depth[0],
                                       input_features=self.features_depth[1],
                                       stride=self.stride,
-                                      kernel=self.kernel_size,
+                                      kernel=self.kernel_size[0],
                                       name="g_h3")
             h3 = tf.nn.sigmoid(h3)
 

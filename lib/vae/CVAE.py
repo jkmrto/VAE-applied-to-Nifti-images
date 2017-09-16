@@ -440,7 +440,7 @@ class CVAE():
                 learning_rate, similarity_score, mse_score))
 
             if losses_log_file is not None:
-                losses_log_file.write("{0},{1},{2},{3},{4}, {5}\n".format(
+                losses_log_file.write("{0},{1},{2},{3},{4},{5}\n".format(
                     iter_index, gen_loss, lat_loss,
                     learning_rate, similarity_score, mse_score))
 

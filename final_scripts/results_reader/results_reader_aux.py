@@ -1,10 +1,10 @@
-import csv
 import os
 import numpy as np
 from matplotlib import cm
 from matplotlib import pyplot as plt
 from numpy import linspace
 from lib.utils import os_aux
+from lib import file_reader
 import settings
 
 
@@ -33,16 +33,6 @@ def plot_evaluation_parameters(list_parameters_dict, evaluation_method):
     plt.savefig(os.path.join(path_evaluation_images_folder, "{}.png".format(string_ref)))
 
 
-def get_list_dict_evaluation_parameters_from_file(path_file):
-
-    output_weighted_svm_file = open(path_file)
-
-    reader = csv.DictReader(output_weighted_svm_file)
-    list_rows = []
-    for row in reader:
-        list_rows.append(row)
-
-    return list_rows
 
 
 
@@ -76,9 +66,12 @@ path_output_complex_majority_vote = os.path.join(path_to_folder, output_complex_
 os_aux.create_directories([path_evaluation_images_folder])
 
 
-list_SVM = get_list_dict_evaluation_parameters_from_file(path_output_weighted_svm)
-list_SMV = get_list_dict_evaluation_parameters_from_file(path_output_simple_majority_vote)
-list_CMV = get_list_dict_evaluation_parameters_from_file(path_output_complex_majority_vote)
+list_SVM = file_reader.read_csv_as_list_of_dictionaries(
+    path_output_weighted_svm)
+list_SMV = file_reader.read_csv_as_list_of_dictionaries(
+    path_output_simple_majority_vote)
+list_CMV = file_reader.read_csv_as_list_of_dictionaries(
+    path_output_complex_majority_vote)
 
 
 plot_evaluation_parameters(list_parameters_dict=list_SVM,

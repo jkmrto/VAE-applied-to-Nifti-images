@@ -3,9 +3,6 @@ import nibabel as nib
 from matplotlib import pyplot as plt
 
 
-
-
-
 def plot_and_save_mri_section(image_mri_3d, index_section, png_name):
     plt.figure()
     plt.imshow(image_mri_3d[:,index_section,:], cmap="Greys")
