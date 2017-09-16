@@ -99,7 +99,7 @@ def generate_and_save_2xy_graphs_zoomed(title, xlabel, y_label,
 
     zoomed_index = []
     for i in range(0,4,1):
-        zoomed_index.append(i * interval_xvalues_to_zoom)
+        zoomed_index.append(round(i * interval_xvalues_to_zoom))
 
     # Figure Header
     fig = plt.figure()
