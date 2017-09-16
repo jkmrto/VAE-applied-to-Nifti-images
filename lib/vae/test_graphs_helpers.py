@@ -95,11 +95,11 @@ def plot_mse_error_evolution(session_name, list_region):
 def generate_and_save_2xy_graphs_zoomed(title, xlabel, y_label,
         path_to_save, x_values, y_values):
 
-    interval_xvalues_to_zoom = x_values[-1]/4
+    interval_xvalues_to_zoom = x_values[-1]/40
 
     zoomed_index = []
     for i in range(0,4,1):
-        zoomed_index.append(round(i * interval_xvalues_to_zoom))
+        zoomed_index.append(10 * round(i * interval_xvalues_to_zoom))
 
     # Figure Header
     fig = plt.figure()
