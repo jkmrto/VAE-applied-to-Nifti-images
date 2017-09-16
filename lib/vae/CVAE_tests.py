@@ -28,124 +28,6 @@ from lib.utils.os_aux import create_directories
 
 
 
-def auto_execute_with_session_folders():
-    print("Executing CVAE test")
-
-    regions_used = "three"
-    region_selected = 3
-    list_regions = session_helper.select_regions_to_evaluate(regions_used)
-    train_images = load_pet_regions_segmented(list_regions)[region_selected]
-
-    pet_dict_stack = PET_stack_NORAD.get_parameters()
-    atlas = pet_atlas.load_atlas()
-    voxels_desired = atlas[region_selected]
-    voxels_index = pet_dict_stack['voxel_index']  # no_bg_index to real position
-    final_voxels_selected_index = voxels_index[voxels_desired]
-
-    p1, p2, p3 = \
-        region_plane_selector.get_maximum_activation_planes(
-            voxels_index=final_voxels_selected_index,
-            total_size=pet_dict_stack['total_size'],
-            imgsize=pet_dict_stack['imgsize'],
-            reshape_kind="F")
-
-    session_name = "test_over_cvae 17"
-
-    hyperparams = {}
-    hyperparams['latent_layer_dim'] = 50
-    hyperparams['kernel_size'] = [5, 5]
-  #  hyperparams['features_depth'] = [1, 8, 16, 32] # 3 convolutionals layers
-    hyperparams['features_depth'] = [1, 16, 32] # 2 convolutionals layers
- #   hyperparams['features_depth'] = [1, 8, 16, 32, 64] # 4 conv layers
-    hyperparams['image_shape'] = train_images.shape[1:]
-    hyperparams['activation_layer'] = ops.lrelu
-    hyperparams['decay_rate'] = 0
-    hyperparams['learning_rate'] = 0.0001
-    hyperparams['lambda_l2_regularization'] = 0.0001
-    hyperparams['stride'] = 2
-
-    #CVAE_model = CVAE_2layers_2DenseLayers.CVAE_2layers_DenseLayer
-    #CVAE_model = CVAE_4layers.CVAE_4layers
-    CVAE_model = CVAE_2layers.CVAE_2layers
-  #  CVAE_model = CVAE_3layers.CVAE_3layers
-
-    session_conf = {}
-    session_conf["n_iters"] = 10000
-    session_conf["batch_size"] = 120
-    session_conf["iter_to_save"] = 50
-    session_conf["suffix_files_generated"] = "region_3"
-    session_conf["final_dump_comparison"] = True
-    session_conf["final_dump_samples_to_compare"] = \
-        [0, 20, 40, 60, 80, 100, 120, 110]
-    session_conf["final_dump_planes_per_axis_to_show_in_compare"] = \
-        [p1, p2, p3]
-
-    path_to_session = \
-        os.path.join(settings.path_to_general_out_folder, session_name)
-
-    model = CVAE_model(
-        hyperparams=hyperparams,
-        test_bool=True,
-        path_to_session=path_to_session)
-
-    model.generate_meta_net()
-
-    model.train(X=train_images,
-                n_iters=session_conf["n_iters"],
-                batchsize=session_conf["batch_size"],
-                suffix_files_generated=session_conf["suffix_files_generated"],
-                tempSGD_3dimages=True,
-                iter_to_save=session_conf["iter_to_save"],
-                similarity_evaluation=True,
-                dump_losses_log=True,
-                save_bool=False,
-                final_dump_comparison=session_conf["final_dump_comparison"],
-                final_dump_samples_to_compare=
-                session_conf["final_dump_samples_to_compare"],
-                final_dump_planes_per_axis_to_show_in_compare=
-                session_conf["final_dump_planes_per_axis_to_show_in_compare"])
-
-    session_helper.generate_predefined_session_descriptor(
-        path_session_folder=path_to_session,
-        vae_hyperparameters=hyperparams,
-        configuration=session_conf
-    )
-
-    plot_mse_error_evolution(
-        session_name = session_name,
-        list_region = [region_selected])
-
-auto_execute_with_session_folders()
-
-
-def generate_and_save_2xy_graphs_zoomed(title, xlabel, y_label,
-        path_to_save, x_values, y_values):
-    # Figure Header
-    fig = plt.figure()
-    fig.suptitle(title, fontsize=14)
-    # First subplot
-
-    plt.subplot(221)
-    plt.plot(x_values, y_values)
-    plt.gca().yaxis.set_major_formatter(mtick.FormatStrFormatter('%5.1e'))
-
-    # Second subplot
-    plt.subplot(222)
-    post_iter_to_zoom = x_values.index(1000)
-    plt.plot(x_values[post_iter_to_zoom:], y_values[post_iter_to_zoom:])
-    plt.xlabel(xlabel, fontsize=14)
-
-    plt.subplot(223)
-    post_iter_to_zoom = x_values.index(2000)
-    plt.plot(x_values[post_iter_to_zoom:], y_values[post_iter_to_zoom:])
-    plt.xlabel(xlabel, fontsize=14)
-
-    plt.subplot(224)
-    post_iter_to_zoom = x_values.index(3000)
-    plt.plot(x_values[post_iter_to_zoom:], y_values[post_iter_to_zoom:])
-    plt.xlabel(xlabel, fontsize=14)
-    plt.savefig(path_to_save)
-
 
 def plot_mse_error_evolution(session_name, list_region):
     path_logs = os.path.join(settings.path_to_general_out_folder,
@@ -224,6 +106,33 @@ def plot_mse_error_evolution(session_name, list_region):
             path_images=path_images
             )
 
+def generate_and_save_2xy_graphs_zoomed(title, xlabel, y_label,
+        path_to_save, x_values, y_values):
+    # Figure Header
+    fig = plt.figure()
+    fig.suptitle(title, fontsize=14)
+    # First subplot
+
+    plt.subplot(221)
+    plt.plot(x_values, y_values)
+    plt.gca().yaxis.set_major_formatter(mtick.FormatStrFormatter('%5.1e'))
+
+    # Second subplot
+    plt.subplot(222)
+    post_iter_to_zoom = x_values.index(1000)
+    plt.plot(x_values[post_iter_to_zoom:], y_values[post_iter_to_zoom:])
+    plt.xlabel(xlabel, fontsize=14)
+
+    plt.subplot(223)
+    post_iter_to_zoom = x_values.index(2000)
+    plt.plot(x_values[post_iter_to_zoom:], y_values[post_iter_to_zoom:])
+    plt.xlabel(xlabel, fontsize=14)
+
+    plt.subplot(224)
+    post_iter_to_zoom = x_values.index(3000)
+    plt.plot(x_values[post_iter_to_zoom:], y_values[post_iter_to_zoom:])
+    plt.xlabel(xlabel, fontsize=14)
+    plt.savefig(path_to_save)
 
 
 def wrap_default_generate_image(idi, tittle, iters, values,
@@ -239,10 +148,101 @@ def wrap_default_generate_image(idi, tittle, iters, values,
         y_values=values)
 
 
-plot_mse_error_evolution(
-    session_name="example",
-    list_region=[3]
-)
+def auto_execute_with_session_folders():
+    print("Executing CVAE test")
+
+    regions_used = "three"
+    region_selected = 3
+    list_regions = session_helper.select_regions_to_evaluate(regions_used)
+    train_images = load_pet_regions_segmented(list_regions)[region_selected]
+
+    pet_dict_stack = PET_stack_NORAD.get_parameters()
+    atlas = pet_atlas.load_atlas()
+    voxels_desired = atlas[region_selected]
+    voxels_index = pet_dict_stack['voxel_index']  # no_bg_index to real position
+    final_voxels_selected_index = voxels_index[voxels_desired]
+
+    p1, p2, p3 = \
+        region_plane_selector.get_maximum_activation_planes(
+            voxels_index=final_voxels_selected_index,
+            total_size=pet_dict_stack['total_size'],
+            imgsize=pet_dict_stack['imgsize'],
+            reshape_kind="F")
+
+    session_name = "test_over_cvae 18"
+
+    hyperparams = {}
+    hyperparams['latent_layer_dim'] = 50
+    hyperparams['kernel_size'] = [5, 5]
+  #  hyperparams['features_depth'] = [1, 8, 16, 32] # 3 convolutionals layers
+    hyperparams['features_depth'] = [1, 16, 32] # 2 convolutionals layers
+ #   hyperparams['features_depth'] = [1, 8, 16, 32, 64] # 4 conv layers
+    hyperparams['image_shape'] = train_images.shape[1:]
+    hyperparams['activation_layer'] = ops.lrelu
+    hyperparams['decay_rate'] = 0
+    hyperparams['learning_rate'] = 0.0001
+    hyperparams['lambda_l2_regularization'] = 0.0001
+    hyperparams['stride'] = 2
+
+    #CVAE_model = CVAE_2layers_2DenseLayers.CVAE_2layers_DenseLayer
+    #CVAE_model = CVAE_4layers.CVAE_4layers
+    CVAE_model = CVAE_2layers.CVAE_2layers
+  #  CVAE_model = CVAE_3layers.CVAE_3layers
+
+    session_conf = {}
+    session_conf["n_iters"] = 20000
+    session_conf["batch_size"] = 120
+    session_conf["iter_to_save"] = 50
+    session_conf["suffix_files_generated"] = "region_3"
+    session_conf["final_dump_comparison"] = True
+    session_conf["final_dump_samples_to_compare"] = \
+        [0, 20, 40, 60, 80, 100, 120, 110]
+    session_conf["final_dump_planes_per_axis_to_show_in_compare"] = \
+        [p1, p2, p3]
+
+    path_to_session = \
+        os.path.join(settings.path_to_general_out_folder, session_name)
+
+    model = CVAE_model(
+        hyperparams=hyperparams,
+        test_bool=True,
+        path_to_session=path_to_session)
+
+    model.generate_meta_net()
+
+    model.train(X=train_images,
+                n_iters=session_conf["n_iters"],
+                batchsize=session_conf["batch_size"],
+                suffix_files_generated=session_conf["suffix_files_generated"],
+                tempSGD_3dimages=True,
+                iter_to_save=session_conf["iter_to_save"],
+                similarity_evaluation=True,
+                dump_losses_log=True,
+                save_bool=False,
+                final_dump_comparison=session_conf["final_dump_comparison"],
+                final_dump_samples_to_compare=
+                session_conf["final_dump_samples_to_compare"],
+                final_dump_planes_per_axis_to_show_in_compare=
+                session_conf["final_dump_planes_per_axis_to_show_in_compare"])
+
+    session_helper.generate_predefined_session_descriptor(
+        path_session_folder=path_to_session,
+        vae_hyperparameters=hyperparams,
+        configuration=session_conf
+    )
+
+    plot_mse_error_evolution(
+        session_name = session_name,
+        list_region = [region_selected])
+
+auto_execute_with_session_folders()
+
+
+
+#plot_mse_error_evolution(
+#    session_name="example",
+#    list_region=[3]
+#)
 
 
 def auto_execute_encoding_over_trained_net():
