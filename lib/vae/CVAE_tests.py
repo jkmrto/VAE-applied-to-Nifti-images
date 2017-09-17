@@ -44,7 +44,7 @@ def auto_execute_with_session_folders():
             imgsize=pet_dict_stack['imgsize'],
             reshape_kind="F")
 
-    session_name = "test_over_cvae 19"
+    session_name = "test_over_cvae 22"
 
     hyperparams = {}
     hyperparams['latent_layer_dim'] = 50
@@ -55,7 +55,7 @@ def auto_execute_with_session_folders():
     hyperparams['image_shape'] = train_images.shape[1:]
     hyperparams['activation_layer'] = ops.lrelu
     hyperparams['decay_rate'] = 0
-    hyperparams['learning_rate'] = 0.0001
+    hyperparams['learning_rate'] = 0.00005
     hyperparams['lambda_l2_regularization'] = 0.0001
     hyperparams['stride'] = 2
 
