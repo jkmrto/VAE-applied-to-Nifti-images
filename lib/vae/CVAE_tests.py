@@ -44,17 +44,17 @@ def auto_execute_with_session_folders():
             imgsize=pet_dict_stack['imgsize'],
             reshape_kind="F")
 
-    session_name = "test_over_cvae 21"
+    session_name = "test_over_cvae 19"
 
     hyperparams = {}
     hyperparams['latent_layer_dim'] = 50
-    hyperparams['kernel_size'] = [5, 5, 3]
+    hyperparams['kernel_size'] = [5, 5, 5]
   #  hyperparams['features_depth'] = [1, 8, 16, 32] # 3 convolutionals layers
     hyperparams['features_depth'] = [1, 16, 32, 64] # 2 convolutionals layers
  #   hyperparams['features_depth'] = [1, 8, 16, 32, 64] # 4 conv layers
     hyperparams['image_shape'] = train_images.shape[1:]
     hyperparams['activation_layer'] = ops.lrelu
-    hyperparams['decay_rate'] = 0.001
+    hyperparams['decay_rate'] = 0
     hyperparams['learning_rate'] = 0.0001
     hyperparams['lambda_l2_regularization'] = 0.0001
     hyperparams['stride'] = 2
