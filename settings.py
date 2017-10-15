@@ -27,12 +27,12 @@ MRI_stack_path_WM = path_to_project + "/data/stack_NORAD_WM.mat"
 mri_atlas_path = path_to_project + "/data/" + "ratlas116_MRI.nii"
 
 # Own folder data location
-#PET_stack_path = path_to_project + "/data/PET_stack_NORAD.mat"
-#pet_atlas_path = path_to_project + "/data/" + "ratlas116_PET.nii"
+PET_stack_path = path_to_project + "/data/PET_stack_NORAD.mat"
+pet_atlas_path = path_to_project + "/data/" + "ratlas116_PET.nii"
 
 # Server Pet Data Location
-pet_atlas_path = "/mnt/datos/home/compartido/Datos/DB_ADNI_MRI_PET_PREPROCESSED/atlas_comp_clas/atlas_PET/ratlas116.nii"
-PET_stack_path = "/mnt/datos/home/compartido/Datos/DB_ADNI_MRI_PET_PREPROCESSED/PET/stacks/stack_NORAD.mat"
+#pet_atlas_path = "/mnt/datos/home/compartido/Datos/DB_ADNI_MRI_PET_PREPROCESSED/atlas_comp_clas/atlas_PET/ratlas116.nii"
+#PET_stack_path = "/mnt/datos/home/compartido/Datos/DB_ADNI_MRI_PET_PREPROCESSED/PET/stacks/stack_NORAD.mat"
 
 
 # AUTOENCODER SESSION FOLDER AND FILES ASSOCIATED
