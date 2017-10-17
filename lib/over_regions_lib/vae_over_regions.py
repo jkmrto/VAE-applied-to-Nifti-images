@@ -4,7 +4,7 @@ from datetime import datetime
 import tensorflow as tf
 
 from lib import session_helper as session
-from lib import utils
+from lib.utils import utils
 from lib.data_loader import MRI_stack_NORAD
 from lib.data_loader import mri_atlas
 from lib.utils.os_aux import create_directories
