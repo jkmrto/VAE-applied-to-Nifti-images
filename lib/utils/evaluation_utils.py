@@ -236,7 +236,8 @@ def weighted_svm_decision_evaluation(data, list_regions, bool_test=False,
     :param bool_test:
     :return:
     """
-    print("WEIGHTED SVM CLASSIFICATION PHASE")
+    if bool_test:
+        print("WEIGHTED SVM CLASSIFICATION PHASE")
 
     test_score_matriz = data["test"]["data"]
     Y_test = data["test"]["label"]
