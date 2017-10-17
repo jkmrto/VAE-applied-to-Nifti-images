@@ -283,7 +283,6 @@ for k_fold_index in range(0, n_folds, 1):
         evaluation_utils.simple_majority_vote(
             data, bool_test=False)
 
-    print("Output kfolds nº {}".format(k_fold_index))
     print("Simple Majority Vote Test: " + str(simple_output_dic_test))
     print("Simple Majority Vote Train: " + str(simple_output_dic_train))
 
@@ -296,7 +295,7 @@ for k_fold_index in range(0, n_folds, 1):
     # in the svm process
 
     weighted_output_dic_test, weighted_output_dic_train, \
-    aux_dic_regions_weight_coefs, _, _ = \
+        aux_dic_regions_weight_coefs, _, _ = \
         evaluation_utils.weighted_svm_decision_evaluation(
             data, list_regions,bool_test=bool_test)
 
@@ -304,6 +303,8 @@ for k_fold_index in range(0, n_folds, 1):
     svm_weighted_regions_k_folds_results_test.append(weighted_output_dic_test)
     svm_weighted_regions_k_folds_coefs.append(aux_dic_regions_weight_coefs)
 
+    print("SVM Weigthed Vote Test: " + str(weighted_output_dic_test))
+    print("SVM Weigthed Vote Train: " + str(weighted_output_dic_train))
 # Outputs files
 output_utils.print_dictionary_with_header(
     k_fold_output_file_simple_majority_vote,
