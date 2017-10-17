@@ -5,17 +5,15 @@ sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
 import tarfile
 from datetime import datetime
 from shutil import copyfile
-
 import numpy as np
 import tensorflow as tf
-from lib.data_loader.nifti_regions_loader import \
-    load_mri_data_flat, load_pet_data_flat
-from lib.evaluation_utils import get_average_over_metrics
-
 import settings
-from lib import evaluation_utils
-from lib import output_utils
-from lib import svm_utils
+from lib.data_loader.pet_loader import load_pet_data_flat
+from lib.data_loader.mri_loader import load_mri_data_flat
+from lib.utils import evaluation_utils
+from lib.utils import evaluation_utils
+from lib.utils import output_utils
+from lib.utils import svm_utils
 from lib.neural_net import leaky_net_utils
 from lib.utils import cv_utils
 from lib.utils.os_aux import create_directories
@@ -37,7 +35,7 @@ bool_log_svm_output = True
 regions_used = "three"
 #regions_used = "three"
 #list_regions = session.select_regions_to_evaluate(regions_used)
-list_regions = [1, 2]
+list_regions = [1, 2,3,4]
 # VAE SETTINGS
 # Net Configuration
 hyperparams_vae = {
@@ -374,15 +372,16 @@ output_utils.print_dictionary_with_header(
 )
 
 resume_list_dicts = []
-simple_majority_vote = get_average_over_metrics(
+simple_majority_vote = evaluation_utils.get_average_over_metrics(
     simple_majority_vote_k_folds_results_test)
-complex_majority_vote = get_average_over_metrics(
+complex_majority_vote = evaluation_utils.get_average_over_metrics(
     complex_majority_vote_k_folds_results_test)
 
-svm_weighted = get_average_over_metrics(
+svm_weighted = evaluation_utils.get_average_over_metrics(
     svm_weighted_regions_k_folds_results_test)
 
-decision_net = get_average_over_metrics(decision_net_vote_k_folds_results_test)
+decision_net = evaluation_utils.get_average_over_metrics(
+    decision_net_vote_k_folds_results_test)
 
 # Add kind of decission session
 temp_simple_majority_vote = {"decision step": "Simple majority vote"}
