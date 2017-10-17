@@ -11,12 +11,14 @@ import settings
 from lib.data_loader.pet_loader import load_pet_data_flat
 from lib.data_loader.mri_loader import load_mri_data_flat
 from lib.utils import evaluation_utils
+from lib.utils import evaluation_utils
 from lib.utils import output_utils
 from lib.utils import svm_utils
 from lib.neural_net import leaky_net_utils
 from lib.utils import cv_utils
 from lib.utils.os_aux import create_directories
-from lib.over_regions_lib import vae_over_regions
+from scripts.vae_with_kfolds import session_settings
+from scripts.vae_with_kfolds import vae_over_regions_kfolds
 
 """
 Still need to test MRI with this script,
@@ -216,7 +218,7 @@ for k_fold_index in range(0, n_folds, 1):
     if images_used == "MRI":
 
         print("Training MRI GM regions")
-        vae_output['gm'] = vae_over_regions.execute_without_any_logs(
+        vae_output['gm'] = vae_over_regions_kfolds.execute_without_any_logs(
             region_to_flat_voxels_train_dict=reg_to_group_to_images_dict_mri_gm["train"],
             hyperparams=hyperparams_vae,
             session_conf=vae_session_conf,
@@ -227,7 +229,7 @@ for k_fold_index in range(0, n_folds, 1):
         )
 
         print("Training MRI WM regions")
-        vae_output['wm'] = vae_over_regions.execute_without_any_logs(
+        vae_output['wm'] = vae_over_regions_kfolds.execute_without_any_logs(
             region_to_flat_voxels_train_dict=reg_to_group_to_images_dict_mri_wm["train"],
             hyperparams=hyperparams_vae,
             session_conf=vae_session_conf,
@@ -244,7 +246,7 @@ for k_fold_index in range(0, n_folds, 1):
     if images_used == "PET":
 
         print("Training PET regions")
-        vae_output = vae_over_regions.execute_without_any_logs(
+        vae_output = vae_over_regions_kfolds.execute_without_any_logs(
             region_to_flat_voxels_train_dict=reg_to_group_to_images_dict_pet["train"],
             hyperparams=hyperparams_vae,
             session_conf=vae_session_conf,
