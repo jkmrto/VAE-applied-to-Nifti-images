@@ -114,6 +114,9 @@ tar_file_main_output_path_replica = os.path.join(
     path_session_folder,
     "last_session_main_out.tar.gz".format(session_datetime))
 
+roc_logs_file_path = os.path.join(path_session_folder, "roc.logs")
+
+
 list_paths_files_to_store = [k_fold_output_file_simple_majority_vote,
                              k_fold_output_file_complex_majority_vote,
                              k_fold_output_resume_path,
@@ -259,9 +262,10 @@ for k_fold_index in range(0, n_folds, 1):
 
     # COMPLEX MAJORITY VOTE
 
-    complex_output_dic_test, complex_output_dic_train = \
-        evaluation_utils.complex_majority_vote_evaluation(data,
-                                                          bool_test=bool_test)
+    complex_output_dic_test, complex_output_dic_train, \
+    _, _ = \
+        evaluation_utils.complex_majority_vote_evaluation(
+            data, bool_test=bool_test)
 
     # Adding results to kfolds output
     complex_majority_vote_k_folds_results_train.append(complex_output_dic_train)
@@ -275,10 +279,9 @@ for k_fold_index in range(0, n_folds, 1):
 
     # SIMPLE MAJORITY VOTE
 
-    simple_output_dic_train, simple_output_dic_test = \
+    simple_output_dic_train, simple_output_dic_test, _, _ = \
         evaluation_utils.simple_majority_vote(
-            train_score_matriz, test_score_matriz, Y_train, Y_test,
-            bool_test=False)
+            data, bool_test=False)
 
     print("Output kfolds nº {}".format(k_fold_index))
     print("Simple Majority Vote Test: " + str(simple_output_dic_test))
@@ -293,9 +296,9 @@ for k_fold_index in range(0, n_folds, 1):
     # in the svm process
 
     weighted_output_dic_test, weighted_output_dic_train, \
-    aux_dic_regions_weight_coefs = \
-        evaluation_utils.weighted_svm_decision_evaluation(data, list_regions,
-                                                          bool_test=bool_test)
+    aux_dic_regions_weight_coefs, _, _ = \
+        evaluation_utils.weighted_svm_decision_evaluation(
+            data, list_regions,bool_test=bool_test)
 
     svm_weighted_regions_k_folds_results_train.append(weighted_output_dic_train)
     svm_weighted_regions_k_folds_results_test.append(weighted_output_dic_test)
