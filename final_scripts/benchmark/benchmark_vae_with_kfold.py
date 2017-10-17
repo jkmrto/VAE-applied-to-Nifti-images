@@ -25,8 +25,8 @@ Still need to test MRI with this script,
 and completely use in a long run server
 """
 
-images_used = "MRI"
-#images_used = "PET"
+#images_used = "MRI"
+images_used = "PET"
 
 # Meta settings.
 n_folds = 3
