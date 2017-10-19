@@ -164,7 +164,7 @@ def restructure_dictionary_based_on_cv_index_3dimages(
     return restructure_output
 
 
-def restructure_dictionary_based_on_cv_index_flat_images(
+def restructure_dictionary_based_on_cv(
         dict_train_test_index, region_to_img_dict):
     """
 

@@ -220,10 +220,6 @@ def complex_majority_vote_evaluation(data, bool_test=False, threshold_fixed=None
         "threshold": threshold,
     }
 
-
-    print("Complex Majority Vote Test: " + str(output_dic_test))
-    print("Complex Majority Vote Train: " + str(output_dic_train))
-
     return output_dic_test, output_dic_test, roc_dic, means_activation
 
 

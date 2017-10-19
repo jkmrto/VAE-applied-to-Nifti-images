@@ -13,27 +13,30 @@ from lib.data_loader.mri_loader import load_mri_data_flat
 from lib.utils import evaluation_utils
 from lib.utils import output_utils
 from lib.utils import svm_utils
-from lib.neural_net import leaky_net_utils
 from lib.utils import cv_utils
 from lib.utils.os_aux import create_directories
 from lib.over_regions_lib import vae_over_regions
+from final_scripts.benchmark import benchmark_helper as helper
+
 
 """
 Still need to test MRI with this script,
 and completely use in a long run server
 """
 
-#images_used = "MRI"
-images_used = "PET"
+images_used = "MRI"
+#images_used = "PET"
 
 # Meta settings.
 n_folds = 3
 bool_test = False
 bool_log_svm_output = True
+
+# SELECT REGIONS TO LOOP OVER
 regions_used = "three"
 #regions_used = "three"
 #list_regions = session.select_regions_to_evaluate(regions_used)
-list_regions = [1, 2,3,4]
+list_regions = [1, 2, 3, 4]
 # VAE SETTINGS
 # Net Configuration
 hyperparams_vae = {
@@ -103,8 +106,7 @@ k_fold_output_path_session_description = os.path.join(
     "session_description.csv")
 
 k_fold_output_resume_path = os.path.join(
-    path_session_folder,
-    "resume.csv")
+    path_session_folder, "resume.csv")
 
 tar_file_main_output_path = os.path.join(
     path_session_folder,
@@ -143,12 +145,20 @@ output_utils.print_recursive_dict(session_descriptor,
                                   file=file_session_descriptor)
 file_session_descriptor.close()
 
+# LOADING DATA
+# // Initialize
 n_samples = 0
+patient_labels = None
+dic_regions_to_flatten_voxels_pet = None
+dic_regions_to_flatten_voxels_mri_gm = None
+dic_regions_to_flatten_voxels_mri_wm = None
+
 if images_used == "PET":
     dic_regions_to_flatten_voxels_pet, patient_labels, n_samples = \
         load_pet_data = load_pet_data_flat(list_regions)
 elif images_used == "MRI":
     dic_regions_to_flatten_voxels_mri_gm, dic_regions_to_flatten_voxels_mri_wm, \
+        patient_labels, n_samples = load_mri_data_flat(list_regions)
         patient_labels, n_samples = load_mri_data_flat(list_regions)
 
 # Load regions index and create kfolds folder
@@ -157,36 +167,38 @@ k_fold_dict = cv_utils.generate_k_folder_in_dict(n_samples, n_folds)
 
 # Main Loop
 for k_fold_index in range(0, n_folds, 1):
+    print("Kfold {} Selected".format(k_fold_index))
     vae_output = {}
 
+    # Structure the data Dic["test|"train"] -> Samples (Known the kfold)
     if images_used == "MRI":
         reg_to_group_to_images_dict_mri_gm = \
-            cv_utils.restructure_dictionary_based_on_cv_index_flat_images(
+            cv_utils.restructure_dictionary_based_on_cv(
                 dict_train_test_index=k_fold_dict[k_fold_index],
                 region_to_img_dict=dic_regions_to_flatten_voxels_mri_gm)
 
         reg_to_group_to_images_dict_mri_wm = \
-            cv_utils.restructure_dictionary_based_on_cv_index_flat_images(
+            cv_utils.restructure_dictionary_based_on_cv(
                 dict_train_test_index=k_fold_dict[k_fold_index],
                 region_to_img_dict=dic_regions_to_flatten_voxels_mri_wm)
 
     if images_used == "PET":
         reg_to_group_to_images_dict_pet = \
-            cv_utils.restructure_dictionary_based_on_cv_index_flat_images(
+            cv_utils.restructure_dictionary_based_on_cv(
                 dict_train_test_index=k_fold_dict[k_fold_index],
                 region_to_img_dict=dic_regions_to_flatten_voxels_pet)
 
-    Y_train = patient_labels[k_fold_dict[k_fold_index]["train"]]
-    Y_test = patient_labels[k_fold_dict[k_fold_index]["test"]]
-    Y_train = np.row_stack(Y_train)
-    Y_test = np.row_stack(Y_test)
+    Y_train, Y_test = cv_utils.get_test_and_train_labels_from_kfold_dict_entry(
+        k_fold_entry=k_fold_dict[k_fold_index],
+        patient_labels=patient_labels)
 
-    print("Kfold {} Selected".format(k_fold_index))
-    print("Number test samples {}".format(len(k_fold_dict[k_fold_index]["test"])))
-    print("Number train samples {}".format(len(k_fold_dict[k_fold_index]["train"])))
+    if bool_test:
+        print("Kfold {} Selected".format(k_fold_index))
+        print("Number test samples {}".format(len(k_fold_dict[k_fold_index]["test"])))
+        print("Number train samples {}".format(len(k_fold_dict[k_fold_index]["train"])))
 
+    # MRI Auto-encoder Extract of features
     if images_used == "MRI":
-
         print("Training MRI GM regions")
         vae_output['gm'] = vae_over_regions.execute_without_any_logs(
             region_to_flat_voxels_train_dict=reg_to_group_to_images_dict_mri_gm["train"],
@@ -245,13 +257,8 @@ for k_fold_index in range(0, n_folds, 1):
         np.savetxt(path_to_log_svm_output + "test.csv", X=log_svm_out_test_matrix,
                    fmt="%.2f", delimiter=",")
 
-    data = {}
-    data["test"] = {}
-    data["train"] = {}
-    data["test"]["data"] = test_score_matriz
-    data["test"]["label"] = Y_test
-    data["train"]["data"] = train_score_matriz
-    data["train"]["label"] = Y_train
+    data = helper.organize_data(
+        test_score_matriz, Y_test, train_score_matriz, Y_train)
 
     if bool_test:
         print("\nMatriz svm scores -> shapes, After svm before qualifying")

@@ -16,7 +16,8 @@ import numpy as np
 #dic_container_evaluations["CMV"][swap_variable_index] = {}
 #["SVM"|"CMV"|""][kernel_value][fold]
 
-evaluation_methods = ["SVM","CMV","SMV"]
+evaluation_methods = ["SVM", "CMV", "SMV"]
+
 
 class JSONEncoder(json.JSONEncoder):
     """
