@@ -52,8 +52,8 @@ CMV_over_regions_threshold = None
 # CMV_over_regions_threshold = 0# Middle value
 
 # SELECT REGIONS TO LOOP OVER
-regions_used = "three"
-##regions_used = "three"
+#regions_used = "three"
+regions_used = "most_important"
 list_regions = session.select_regions_to_evaluate(regions_used)
 #list_regions = [1, 2, 3, 4]
 
