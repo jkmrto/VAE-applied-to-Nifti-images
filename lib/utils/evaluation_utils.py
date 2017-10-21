@@ -220,7 +220,7 @@ def complex_majority_vote_evaluation(data, bool_test=False, threshold_fixed=None
         "threshold": threshold,
     }
 
-    return output_dic_test, output_dic_test, roc_dic, means_activation
+    return output_dic_test, output_dic_train, roc_dic, means_activation
 
 
 def weighted_svm_decision_evaluation(data, list_regions, bool_test=False,

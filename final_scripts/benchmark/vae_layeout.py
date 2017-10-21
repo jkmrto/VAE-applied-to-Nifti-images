@@ -45,12 +45,12 @@ swap_list = [100]
 swap_over = "latent layer"
 
 # Evaluation thresholds
-SVM_over_regions_threshold = None
-# SVM_over_regions_threshold = 0 # Middle value
-SMV_over_regions_threshold = None
-# SMV_over_regions_threshold = 0.5 # Middle value
-CMV_over_regions_threshold = None
-# CMV_over_regions_threshold = 0# Middle value
+#SVM_over_regions_threshold = None
+SVM_over_regions_threshold = 0 # Middle value
+#SMV_over_regions_threshold = None
+SMV_over_regions_threshold = 0.5 # Middle value
+#CMV_over_regions_threshold = None
+CMV_over_regions_threshold = 0# Middle value
 
 # SELECT REGIONS TO LOOP OVER
 #regions_used = "three"
