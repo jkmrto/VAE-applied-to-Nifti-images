@@ -40,7 +40,7 @@ images_used = "MRI"
 n_folds = 3
 bool_test = False
 bool_log_svm_output = True
-swap_list = [2, 10, 20, 50]
+swap_list = [2, 10, 20, 50, 80, 100, 150, 200, 250, 300]
 swap_over = "latent layer"
 
 # Evaluation thresholds
@@ -53,9 +53,9 @@ CMV_over_regions_threshold = None
 
 # SELECT REGIONS TO LOOP OVER
 regions_used = "three"
-#regions_used = "three"
-#list_regions = session.select_regions_to_evaluate(regions_used)
-list_regions = [1, 2, 3, 4]
+##regions_used = "three"
+list_regions = session.select_regions_to_evaluate(regions_used)
+#list_regions = [1, 2, 3, 4]
 
 # VAE SETTINGS
 # Net Configuration
@@ -71,7 +71,7 @@ hyperparams = {
 # Vae session cofiguration
 session_conf = {
     "bool_normalized": True,
-    "max_iter": 20,
+    "max_iter": 100,
     "save_meta_bool": False,
     "show_error_iter": 10,
     "after_input_architecture": [1000, 500], # no include hidden layer
