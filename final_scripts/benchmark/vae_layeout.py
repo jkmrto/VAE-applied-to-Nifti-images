@@ -61,7 +61,7 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 # VAE SETTINGS
 # Net Configuration
 hyperparams = {
-    "batch_size": 128,
+    "batch_size": 64,
     "learning_rate": 1E-5,
     "dropout": 0.9,
     "lambda_l2_reg": 1E-5,
