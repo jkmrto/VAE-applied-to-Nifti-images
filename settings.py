@@ -1,5 +1,4 @@
 import os
-
 from lib.data_loader.atlas_settings import super_regions_atlas
 from lib.utils.os_aux import create_directories
 
@@ -24,23 +23,19 @@ create_directories([path_to_general_out_folder])
 
 
 # PATH TO DATA
-# MRI PATHS
-#MRI_stack_path_GM = path_to_project + "/data/stack_NORAD_GM.mat"
-#MRI_stack_path_WM = path_to_project + "/data/stack_NORAD_WM.mat"
-#mri_atlas_path = path_to_project + "/data/" + "ratlas116_MRI.nii"
 
-MRI_stack_path_GM = "/mnt/datos/home/compartido/Datos/ADNI/ADNI1Screening_1.5T_normalized_segmented_non_smoothed/stacks/stack_NORAD_GM.mat"
-MRI_stack_path_WM = "/mnt/datos/home/compartido/Datos/ADNI/ADNI1Screening_1.5T_normalized_segmented_non_smoothed/stacks/stack_NORAD_WM.mat"
-mri_atlas_path = "/mnt/datos/home/compartido/Datos/DB_ADNI_MRI_PET_PREPROCESSED/atlas_comp_clas/atlas_RM/ratlas116.nii"
+parent_path = os.path.dirname(os.path.dirname(os.getcwd()))
+data_path = os.path.join(parent_path, "data")
+
+# MRI PATHS
+MRI_stack_path_GM = os.path.join(data_path, "stack_NORAD_GM.mat")
+MRI_stack_path_WM = os.path.join(data_path, "stack_NORAD_WM.mat")
+mri_atlas_path = os.path.join(data_path, "ratlas116_MRI.nii")
 
 # PET PATHS
 # Own folder data location
-#PET_stack_path = path_to_project + "/data/PET_stack_NORAD.mat"
-#pet_atlas_path = path_to_project + "/data/" + "ratlas116_PET.nii"
-
-# Server Pet Data Location
-pet_atlas_path = "/mnt/datos/home/compartido/Datos/DB_ADNI_MRI_PET_PREPROCESSED/atlas_comp_clas/atlas_PET/ratlas116.nii"
-PET_stack_path = "/mnt/datos/home/compartido/Datos/DB_ADNI_MRI_PET_PREPROCESSED/PET/stacks/stack_NORAD.mat"
+PET_stack_path = os.path.join(data_path, "PET_stack_NORAD.mat")
+pet_atlas_path = os.path.join(data_path, "ratlas116_PET.nii")
 
 
 # AUTOENCODER SESSION FOLDER AND FILES ASSOCIATED
