@@ -186,7 +186,8 @@ def execute_without_any_logs(region_to_flat_voxels_train_dict,
                 max_iter=session_conf["max_iter"],
                 suffix_files_generated=region_suffix,
                 iter_to_save=500,
-                iters_to_show_error=session_conf['show_error_iter'])
+                iters_to_show_error=session_conf['show_error_iter'],
+                save_bool=session_conf["save_meta_bool"])
 
         # Script para pintar
         print("Region {} Trained!".format(region_selected))

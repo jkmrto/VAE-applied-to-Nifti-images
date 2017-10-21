@@ -198,7 +198,7 @@ class VAE():
         now = datetime.now().isoformat()[11:]
         print("------- Training end: {} -------\n".format(now))
 
-    def train(self, X, max_iter=np.inf, save_bool=True, suffix_files_generated=" ",
+    def train(self, X, max_iter=np.inf, save_bool=False, suffix_files_generated=" ",
               iter_to_save=1000, iters_to_show_error=100,
               bool_log_grad_desc_error=False):
 
