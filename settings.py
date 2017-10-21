@@ -29,8 +29,8 @@ create_directories([path_to_general_out_folder])
 #MRI_stack_path_WM = path_to_project + "/data/stack_NORAD_WM.mat"
 #mri_atlas_path = path_to_project + "/data/" + "ratlas116_MRI.nii"
 
-MRI_stack_path_GM = "/mnt/datos/home/compartido/Datos/DB_ADNI_MRI_PET_PREPROCESSED/MRI/stacks/stack_NORAD_GM.mat"
-MRI_stack_path_WM = "/mnt/datos/home/compartido/Datos/DB_ADNI_MRI_PET_PREPROCESSED/MRI/stacks/stack_NORAD_WM.mat"
+MRI_stack_path_GM = "/mnt/datos/home/compartido/Datos/ADNI/ADNI1Screening_1.5T_normalized_segmented_non_smoothed/stacks/stack_NORAD_GM.mat"
+MRI_stack_path_WM = "/mnt/datos/home/compartido/Datos/ADNI/ADNI1Screening_1.5T_normalized_segmented_non_smoothed/stacks/stack_NORAD_WM.mat"
 mri_atlas_path = "/mnt/datos/home/compartido/Datos/DB_ADNI_MRI_PET_PREPROCESSED/atlas_comp_clas/atlas_RM/ratlas116.nii"
 
 # PET PATHS
