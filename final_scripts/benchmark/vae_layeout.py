@@ -61,7 +61,7 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 # VAE SETTINGS
 # Net Configuration
 hyperparams = {
-    "batch_size": 64,
+    "batch_size": 128,
     "learning_rate": 1E-5,
     "dropout": 0.9,
     "lambda_l2_reg": 1E-5,
@@ -72,7 +72,7 @@ hyperparams = {
 # Vae session cofiguration
 session_conf = {
     "bool_normalized": True,
-    "max_iter": 100,
+    "max_iter": 500,
     "save_meta_bool": False,
     "show_error_iter": 10,
     "after_input_architecture": [1000, 500], # no include hidden layer
