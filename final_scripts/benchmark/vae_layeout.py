@@ -40,7 +40,7 @@ images_used = "MRI"
 n_folds = 3
 bool_test = False
 bool_log_svm_output = True
-latent_layer_list = [2, 10, 20, 50]
+swap_list = [2, 10, 20, 50]
 swap_over = "latent layer"
 
 # Evaluation thresholds
@@ -59,7 +59,7 @@ list_regions = [1, 2, 3, 4]
 
 # VAE SETTINGS
 # Net Configuration
-hyperparams_vae = {
+hyperparams = {
     "batch_size": 16,
     "learning_rate": 1E-5,
     "dropout": 0.9,
@@ -69,7 +69,7 @@ hyperparams_vae = {
 }
 
 # Vae session cofiguration
-vae_session_conf = {
+session_conf = {
     "bool_normalized": True,
     "max_iter": 20,
     "save_meta_bool": False,
@@ -79,7 +79,7 @@ vae_session_conf = {
 
 
 # PATH Settings
-session_name = "VAE_session_swap_kernel_{0}".format(images_used)
+session_name = "VAE_session_{0}_{1}".format(swap_over, images_used)
 session_path = os.path.join(settings.path_to_general_out_folder, session_name)
 historical_path = os.path.join(session_path, "historical")
 create_directories([session_path, historical_path])
@@ -118,6 +118,28 @@ list_paths_files_to_store = [loop_output_file_simple_majority_vote,
                              loop_output_path_session_description,
                              loop_output_file_timing,
                              evaluations_per_sample_log_file]
+
+# SESSION DESCRIPTOR ELABORATION
+session_descriptor = {}
+session_descriptor['meta settings'] = {
+    "n_folds": n_folds,
+    "bool_test": bool_test,
+    "regions_used": regions_used,
+    "loop_over_kernel": str(swap_list),
+    "Support_Vector_Machine over regions threshold": SVM_over_regions_threshold,
+    "Simple_Majority_Vote over regions threshold": SMV_over_regions_threshold,
+    "Complex_Majority_Vote over regions threshold": CMV_over_regions_threshold
+}
+
+session_descriptor['VAE'] = {}
+session_descriptor['VAE']["net configuration"] = hyperparams
+session_descriptor['VAE']["session configuration"] = session_conf
+
+file_session_descriptor = open(loop_output_path_session_description, "w")
+output_utils.print_recursive_dict(session_descriptor,
+                                  file=file_session_descriptor)
+file_session_descriptor.close()
+
 
 # Loading data // Initialize
 n_samples = 0
@@ -160,12 +182,12 @@ dic_container_evaluations = {
 # Structure to store the kfold sample distribution in each swap value
 k_fold_container = {}
 
-for swap_variable_index in latent_layer_list:
+for swap_variable_index in swap_list:
 
     print("Evaluating the system with a {0} of {1} ".format(
         swap_over, swap_variable_index))
 
-    vae_session_conf["after_input_architecture"].append(swap_variable_index)
+    session_conf["after_input_architecture"].append(swap_variable_index)
 
     # OUTPUT SETTINGS
     # OUTPUT: List of dictionaries
@@ -243,8 +265,8 @@ for swap_variable_index in latent_layer_list:
             vae_output['gm'] = vae_over_regions.execute_without_any_logs(
                 region_to_flat_voxels_train_dict=
                 reg_to_group_to_images_dict_mri_gm["train"],
-                hyperparams=hyperparams_vae,
-                session_conf=vae_session_conf,
+                hyperparams=hyperparams,
+                session_conf=session_conf,
                 list_regions=list_regions,
                 path_to_root=None,
                 region_to_flat_voxels_test_dict=
@@ -261,8 +283,8 @@ for swap_variable_index in latent_layer_list:
             vae_output['wm'] = vae_over_regions.execute_without_any_logs(
                 region_to_flat_voxels_train_dict=
                 reg_to_group_to_images_dict_mri_wm["train"],
-                hyperparams=hyperparams_vae,
-                session_conf=vae_session_conf,
+                hyperparams=hyperparams,
+                session_conf=session_conf,
                 list_regions=list_regions,
                 path_to_root=None,
                 region_to_flat_voxels_test_dict=
@@ -304,8 +326,8 @@ for swap_variable_index in latent_layer_list:
             vae_output = vae_over_regions.execute_without_any_logs(
                 region_to_flat_voxels_train_dict=
                 reg_to_group_to_images_dict_pet["train"],
-                hyperparams=hyperparams_vae,
-                session_conf=vae_session_conf,
+                hyperparams=hyperparams,
+                session_conf=session_conf,
                 list_regions=list_regions,
                 path_to_root=None,
                 region_to_flat_voxels_test_dict=reg_to_group_to_images_dict_pet[
@@ -496,7 +518,7 @@ evaluation_container_to_log_file(
     path_file_full_out = full_evaluations_per_sample_log_file,
     evaluation_container=dic_container_evaluations,
     k_fold_container = k_fold_container,
-    swap_variable_list=latent_layer_list,
+    swap_variable_list=swap_list,
     n_samples=n_samples)
 
 # Tarfile to group the results

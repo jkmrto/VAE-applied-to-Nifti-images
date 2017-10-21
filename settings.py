@@ -21,9 +21,7 @@ path_to_project = os.path.dirname(os.path.abspath(__file__))
 path_to_general_out_folder = os.path.join(path_to_project, "out")
 create_directories([path_to_general_out_folder])
 
-
 # PATH TO DATA
-
 parent_path = os.path.dirname(path_to_project)
 data_path = os.path.join(parent_path, "data")
 
@@ -33,7 +31,6 @@ MRI_stack_path_WM = os.path.join(data_path, "stack_NORAD_WM.mat")
 mri_atlas_path = os.path.join(data_path, "ratlas116_MRI.nii")
 
 # PET PATHS
-# Own folder data location
 PET_stack_path = os.path.join(data_path, "PET_stack_NORAD.mat")
 pet_atlas_path = os.path.join(data_path, "ratlas116_PET.nii")
 

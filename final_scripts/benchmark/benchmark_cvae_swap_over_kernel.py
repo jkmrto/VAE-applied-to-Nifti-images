@@ -124,6 +124,8 @@ session_descriptor['meta settings'] = {
     "Complex_Majority_Vote over regions threshold": CMV_over_regions_threshold
 }
 
+
+# Session Description Handling
 session_descriptor['VAE'] = {}
 session_descriptor['VAE']["net configuration"] = hyperparams
 session_descriptor['VAE']["session configuration"] = cvae_session_conf
