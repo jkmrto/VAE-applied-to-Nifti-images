@@ -33,11 +33,11 @@ and completely use in a long run server
 session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
 
-images_used = "MRI"
+images_used = "PET"
 #images_used = "PET"
 
 # SWAAP SETTINGS
-n_folds = 3
+n_folds = 10
 bool_test = False
 bool_log_svm_output = True
 #swap_list = [2, 10, 20, 50, 80, 100, 150, 200, 250, 300]
@@ -72,7 +72,7 @@ hyperparams = {
 # Vae session cofiguration
 session_conf = {
     "bool_normalized": True,
-    "max_iter": 500,
+    "max_iter": 100,
     "save_meta_bool": False,
     "show_error_iter": 10,
     "after_input_architecture": [1000, 500], # no include hidden layer
