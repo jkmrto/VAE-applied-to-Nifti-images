@@ -87,6 +87,10 @@ def evaluation_container_to_log_file(path_file_test_out, path_file_full_out,
                 full_temp_dict = {
                     "threshold": evaluation_container[method][swap_variable][k_fold_index]["threshold"],
                     "values": full_temp_array,
+                    "values_train": train_samples_to_map,
+                    "values_test":  test_samples_to_map,
+                    "indexes_train": train_indexes,
+                    "indexes_test": test_indexes,
                 }
                 full_container[method][swap_variable][k_fold_index] = \
                     full_temp_dict

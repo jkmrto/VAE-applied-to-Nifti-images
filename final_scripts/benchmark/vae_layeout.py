@@ -33,7 +33,7 @@ and completely use in a long run server
 session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
 
-images_used = "PET"
+images_used = "MRI"
 #images_used = "PET"
 
 # SWAAP SETTINGS
@@ -41,7 +41,7 @@ n_folds = 10
 bool_test = False
 bool_log_svm_output = True
 #swap_list = [2, 10, 20, 50, 80, 100, 150, 200, 250, 300]
-swap_list = [100]
+swap_list = [2, 5, 8, 10, 20, 50, 80, 100, 150, 200, 225, 250]
 swap_over = "latent layer"
 
 # Evaluation thresholds
@@ -61,7 +61,7 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 # VAE SETTINGS
 # Net Configuration
 hyperparams = {
-    "batch_size": 64,
+    "batch_size": 128,
     "learning_rate": 1E-5,
     "dropout": 0.9,
     "lambda_l2_reg": 1E-5,
