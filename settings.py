@@ -24,7 +24,7 @@ create_directories([path_to_general_out_folder])
 
 # PATH TO DATA
 
-parent_path = os.path.dirname(os.path.dirname(os.getcwd()))
+parent_path = os.path.dirname(path_to_project)
 data_path = os.path.join(parent_path, "data")
 
 # MRI PATHS
