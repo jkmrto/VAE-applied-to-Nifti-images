@@ -42,7 +42,7 @@ bool_test = False
 bool_log_svm_output = True
 #swap_list = [2, 10, 20, 50, 80, 100, 150, 200, 250, 300]
 swap_list = [2, 5, 8, 10, 20, 50, 80, 100, 150, 200, 225, 250]
-swap_over = "latent layer"
+swap_over = "latent_layer"
 
 # Evaluation thresholds
 SVM_over_regions_threshold = None
@@ -61,7 +61,7 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 # VAE SETTINGS
 # Net Configuration
 hyperparams = {
-    "batch_size": 128,
+    "batch_size": 256,
     "learning_rate": 1E-5,
     "dropout": 0.9,
     "lambda_l2_reg": 1E-5,
@@ -72,10 +72,10 @@ hyperparams = {
 # Vae session cofiguration
 session_conf = {
     "bool_normalized": True,
-    "max_iter": 100,
+    "max_iter": 200,
     "save_meta_bool": False,
     "show_error_iter": 10,
-    "after_input_architecture": [1000, 500], # no include hidden layer
+    "after_input_architecture": [1000, 800, 500], # no include hidden layer
 }
 
 
