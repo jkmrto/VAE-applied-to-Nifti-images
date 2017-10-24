@@ -63,7 +63,7 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 hyperparams = {
     "batch_size": 256,
     "learning_rate": 1E-5,
-    "dropout": 0.9,
+    "dropout": 0.8,
     "lambda_l2_reg": 1E-5,
     "nonlinearity": tf.nn.elu,
     "squashing": tf.nn.sigmoid,
@@ -75,7 +75,7 @@ session_conf = {
     "max_iter": 200,
     "save_meta_bool": False,
     "show_error_iter": 10,
-    "after_input_architecture": [1000, 800, 500], # no include hidden layer
+    "after_input_architecture": [1000, 500], # no include hidden layer
 }
 
 
@@ -126,7 +126,7 @@ session_descriptor['meta settings'] = {
     "n_folds": n_folds,
     "bool_test": bool_test,
     "regions_used": regions_used,
-    "loop_over_kernel": str(swap_list),
+    "loop_over_{}".format(swap_over): str(swap_list),
     "Support_Vector_Machine over regions threshold": SVM_over_regions_threshold,
     "Simple_Majority_Vote over regions threshold": SMV_over_regions_threshold,
     "Complex_Majority_Vote over regions threshold": CMV_over_regions_threshold
