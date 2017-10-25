@@ -25,7 +25,6 @@ def plot_evaluation_parameters(list_parameters_dict, string_ref,
     auc_score_array = np.array([float(row['area under the curve']) for row in list_rows])
     precision = np.array([float(row['precision']) for row in list_rows])
 
-
     plt.figure()
     plt.title(string_ref)
     plt.plot(kernel_size_array, f1_score_array, label="f1_score")
