@@ -24,7 +24,6 @@ from lib.utils.evaluation_utils import get_average_over_metrics
 from lib.utils.evaluation_logger_helper  import evaluation_container_to_log_file
 
 
-
 """
 Still need to test MRI with this script,
 and completely use in a long run server
@@ -33,8 +32,8 @@ and completely use in a long run server
 session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
 
-images_used = "MRI"
-#images_used = "PET"
+# images_used = "MRI"
+images_used = "PET"
 
 # SWAAP SETTINGS
 n_folds = 10
@@ -61,7 +60,7 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 # VAE SETTINGS
 # Net Configuration
 hyperparams = {
-    "batch_size": 256,
+    "batch_size": 64,
     "learning_rate": 1E-5,
     "dropout": 0.8,
     "lambda_l2_reg": 1E-5,
