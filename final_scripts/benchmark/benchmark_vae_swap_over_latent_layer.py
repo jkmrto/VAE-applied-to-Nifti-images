@@ -40,7 +40,7 @@ n_folds = 10
 bool_test = False
 bool_log_svm_output = True
 #swap_list = [2, 10, 20, 50, 80, 100, 150, 200, 250, 300]
-swap_list = [2, 5, 8, 10, 20, 50, 80, 100, 150, 200, 225, 250]
+swap_list = [2, 5, 10, 25, 50, 75, 100, 125, 150, 175, 200, 225, 250]
 swap_over = "latent_layer"
 
 # Evaluation thresholds

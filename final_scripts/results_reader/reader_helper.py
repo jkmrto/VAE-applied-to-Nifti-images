@@ -4,6 +4,13 @@ import numpy as np
 from matplotlib import cm
 from numpy import linspace
 
+mapa_etiquetas = {
+    "kernel": "Kernel",
+    "latent_layer": "Neuronas de la capa latente"
+}
+
+string_ref = "{0}. Variación {1}. Método {2}"
+
 
 def generate_color_palette():
     start = 0.0
@@ -27,12 +34,13 @@ def plot_evaluation_parameters(list_parameters_dict, string_ref,
 
     plt.figure()
     plt.title(string_ref)
-    plt.plot(kernel_size_array, f1_score_array, label="f1_score")
-    plt.plot(kernel_size_array, recall_score_array, label="recall_score")
-    plt.plot(kernel_size_array, accuracy_score_array, label="accuracy")
-    plt.plot(kernel_size_array, auc_score_array, label="area under curve")
-    plt.plot(kernel_size_array, precision, label="precision")
-    plt.ylabel("% results")
-    plt.xlabel(xlabel)
-    plt.legend()
-    plt.savefig(os.path.join(path_evaluation_images_folder, "{}.png".format(string_ref)))
+    plt.plot(kernel_size_array, f1_score_array, label="Valor-F1")
+    plt.plot(kernel_size_array, recall_score_array, label="Sensibilidad")
+    plt.plot(kernel_size_array, accuracy_score_array, label="Precisión")
+    plt.plot(kernel_size_array, auc_score_array, label="Area Bajo Curva")
+    plt.plot(kernel_size_array, precision, label="Especificidad")
+    plt.ylabel("Tasa")
+    plt.xlabel(mapa_etiquetas[swap_type])
+    plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+    plt.savefig(os.path.join(path_evaluation_images_folder, "{}.png".format(string_ref)),
+                bbox_inches="tight")
