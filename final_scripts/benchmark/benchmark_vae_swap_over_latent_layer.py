@@ -60,9 +60,9 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 # VAE SETTINGS
 # Net Configuration
 hyperparams = {
-    "batch_size": 64,
+    "batch_size": 128,
     "learning_rate": 1E-5,
-    "dropout": 0.8,
+    "dropout": 0.95,
     "lambda_l2_reg": 1E-5,
     "nonlinearity": tf.nn.elu,
     "squashing": tf.nn.sigmoid,
