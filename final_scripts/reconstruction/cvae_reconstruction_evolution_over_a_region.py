@@ -28,7 +28,7 @@ explicit_iter_per_region = {
 # CURRENTLY THIS SCRIP ONLY WORKS WITH PET IMAGES
 # Settings
 
-region_selected = 40
+region_selected = 3
 
 # Selecting the CVAE architecture
 # CVAE_model = CVAE_2layers_2DenseLayers.CVAE_2layers_DenseLayer
@@ -47,7 +47,7 @@ hyperparams = {'latent_layer_dim': 100,
 }
 
 session_conf = {'bool_normalized': False,
-                'n_iters': 1500,
+                'n_iters': 5000,
                 "batch_size": 16,
                 "show_error_iter": 100}
 
