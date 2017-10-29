@@ -23,6 +23,7 @@ from lib.data_loader import PET_stack_NORAD
 from lib.utils import output_utils
 from lib.vae import test_graphs_helpers as helpers
 
+
 def auto_execute_with_session_folders():
     print("Executing CVAE test")
 

@@ -477,8 +477,17 @@ class CVAE():
         if save_bool:
             saver = tf.train.Saver(tf.global_variables())
 
+
+        if tempSGD_3dimages:
+            sample_image = X[0:2, :,:,:]
+            sample_image_flat = reshape_from_3d_to_flat(sample_image, self.total_size)
+            image_3d = sample_image.astype(float)
+            file_path = os.path.join(self.path_to_3dtemp_images, "original")
+            output_utils.from_3d_image_to_nifti_file(file_path, image_3d)
+
         # reshape from 3d to flat:
         X_flat = reshape_from_3d_to_flat(X, self.total_size)
+
 
         try:
             for iter in range(1, n_iters + 1, 1):
@@ -512,7 +521,7 @@ class CVAE():
 
                     if tempSGD_3dimages:
                         self.__generate_and_save_temp_3d_images(
-                            regen_batch=batch_flat[0:2, :],
+                            regen_batch=sample_image_flat,
                             suffix="{1}_iter_{0}".format(
                                 iter, suffix_files_generated))
 
