@@ -62,7 +62,7 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 hyperparams = {
     "batch_size": 64,
     "learning_rate": 1E-5,
-    "dropout": 0.95,
+    "dropout": 0.90,
     "lambda_l2_reg": 1E-5,
     "nonlinearity": tf.nn.elu,
     "squashing": tf.nn.sigmoid,
@@ -74,7 +74,7 @@ session_conf = {
     "max_iter": 100,
     "save_meta_bool": False,
     "show_error_iter": 10,
-    "after_input_architecture": [1000, 800, 500], # no include hidden layer
+    "after_input_architecture": [1000, 500], # no include hidden layer
 }
 
 # PATH Settings
