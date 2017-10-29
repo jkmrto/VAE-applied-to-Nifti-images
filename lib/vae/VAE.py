@@ -36,7 +36,7 @@ class VAE():
         self.session = tf.Session()
         self.hyper_params = hyperparams
         self.path_session_folder = path_to_session
-
+        print("architecture: {}".format(architecture))
         if not meta_graph:  # new model
             self.architecture = architecture
             self.hyper_params.update(hyperparams)
