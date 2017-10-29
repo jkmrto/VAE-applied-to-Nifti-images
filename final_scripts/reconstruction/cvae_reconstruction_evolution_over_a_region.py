@@ -51,6 +51,8 @@ list_regions = [region_selected]
 region_to_img_dict = load_pet_regions_segmented(list_regions,
                                                 bool_logs=False)
 train_cube_images = region_to_img_dict[region_selected]
+hyperparams['image_shape'] = train_cube_images.shape[1:]
+
 
 model = CVAE.CVAE(hyperparams, path_to_session=path_to_session)
 out = model.train(X=train_cube_images,
