@@ -181,11 +181,13 @@ dic_container_evaluations = {
 # Structure to store the kfold sample distribution in each swap value
 k_fold_container = {}
 
+after_input_architecture_template = session_conf["after_input_architecture"][:]
 for swap_variable_index in swap_list:
 
     print("Evaluating the system with a {0} of {1} ".format(
         swap_over, swap_variable_index))
 
+    session_conf["after_input_architecture"] = after_input_architecture_template[:]
     session_conf["after_input_architecture"].append(swap_variable_index)
 
     # OUTPUT SETTINGS
