@@ -78,7 +78,8 @@ for region in list_regions:
 
 print("Mapping Reconstructing images")
 whole_reconstruction = \
-    utils_images3d.map_region_segmented_over_full_image(reconstruction_per_region, images_used)
+    utils_images3d.map_region_segmented_over_full_image(
+        reconstruction_per_region, images_used)
 print("Mapping Reconstructing images ended")
 
 output.from_3d_image_to_nifti_file(path_to_save="example_neg",

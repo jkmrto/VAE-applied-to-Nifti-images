@@ -14,6 +14,7 @@ from lib.vae import CVAE
 from lib.utils.os_aux import create_directories
 
 
+# patients to reconstruct
 patients_selected = [100, 123, 111, 88, 99, 101, 102]
 number_samples_to_reconstruct = len(patients_selected)
 

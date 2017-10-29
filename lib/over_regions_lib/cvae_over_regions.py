@@ -50,6 +50,7 @@ def execute_saving_meta_graph_without_any_cv(region_cubes_dict, hyperparams,
                                                         explicit_iter_per_region,
                                                         predefined_iters=
                                                         session_conf["n_iters"])
+
         print("Numbers Iters requered {}".format(max_train_iter))
         out = model.train(X=train_cube_images,
                           n_iters=max_train_iter,

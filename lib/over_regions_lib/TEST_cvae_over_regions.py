@@ -49,8 +49,6 @@ def auto_execute_saving_meta_graph_without_any_cv(hyperparams=None,
 
 #auto_execute_saving_meta_graph_without_any_cv()
 
-
-
 def auto_execute_without_logs_over_one_region():
     regions_used = "three"
     list_regions = session.select_regions_to_evaluate(regions_used)
@@ -90,6 +88,7 @@ def auto_execute_without_logs_over_one_region():
     return results
 
 # out = auto_execute_without_logs_over_one_region()
+
 
 def auto_execute_saving_meta_graph_without_any_cv(hyperparams=None,
                                                   session_conf=None):
