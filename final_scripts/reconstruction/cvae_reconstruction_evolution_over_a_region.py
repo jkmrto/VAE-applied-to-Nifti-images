@@ -3,6 +3,8 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
 import settings
 from lib.vae import CVAE
+from lib.vae import CVAE_3layers
+
 import lib.neural_net.kfrans_ops as ops
 import numpy as np
 from datetime import datetime
@@ -54,7 +56,8 @@ train_cube_images = region_to_img_dict[region_selected]
 hyperparams['image_shape'] = train_cube_images.shape[1:]
 
 
-model = CVAE.CVAE(hyperparams, path_to_session=path_to_session)
+model = CVAE_3layers.CVAE_3layers(
+    hyperparams, path_to_session=path_to_session)
 out = model.train(X=train_cube_images,
     n_iters=session_conf["n_iters"],
     batchsize=session_conf["batch_size"],
