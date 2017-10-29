@@ -2,8 +2,11 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
 import settings
-from lib.vae import CVAE
+
+from lib.vae import CVAE_2layers
 from lib.vae import CVAE_3layers
+from lib.vae import CVAE_4layers
+from lib.vae import CVAE_2layers_2DenseLayers
 
 import lib.neural_net.kfrans_ops as ops
 import numpy as np
@@ -27,18 +30,29 @@ explicit_iter_per_region = {
 
 region_selected = 40
 
+# Selecting the CVAE architecture
+# CVAE_model = CVAE_2layers_2DenseLayers.CVAE_2layers_DenseLayer
+# CVAE_model = CVAE_4layers.CVAE_4layers
+CVAE_model = CVAE_2layers.CVAE_2layers
+# CVAE_model = CVAE_3layers.CVAE_3layers
+
 hyperparams = {'latent_layer_dim': 100,
-               'kernel_size': 5,
+               'kernel_size': [5,5,5],
                'activation_layer': ops.lrelu,
                'features_depth': [1, 64, 128],
                'decay_rate': 0.0025,
                'learning_rate': 0.001,
-               'lambda_l2_regularization': 0.0001}
+               'lambda_l2_regularization': 0.0001,
+               'stride' : 2
+}
 
 session_conf = {'bool_normalized': False,
                 'n_iters': 1500,
                 "batch_size": 16,
                 "show_error_iter": 100}
+
+
+
 
 # Path settings
 own_datetime = datetime.now().strftime(r"%d_%m_%_Y_%H:%M")
@@ -55,9 +69,8 @@ region_to_img_dict = load_pet_regions_segmented(list_regions,
 train_cube_images = region_to_img_dict[region_selected]
 hyperparams['image_shape'] = train_cube_images.shape[1:]
 
-
-model = CVAE_3layers.CVAE_3layers(
-    hyperparams, path_to_session=path_to_session)
+model = CVAE_model(hyperparams, path_to_session=path_to_session)
+model.generate_meta_net()
 out = model.train(X=train_cube_images,
     n_iters=session_conf["n_iters"],
     batchsize=session_conf["batch_size"],
