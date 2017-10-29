@@ -40,7 +40,7 @@ session_conf = {'bool_normalized': False,
 
 # Path settings
 own_datetime = datetime.now().strftime(r"%d_%m_%_Y_%H:%M")
-session_prefix_name = "reconstruction_evolution_region_{}".format()
+session_prefix_name = "reconstruction_evolution_region_{}".format(region_selected)
 session_name = session_prefix_name + "_" + own_datetime
 
 path_to_session = os.path.join(settings.path_to_general_out_folder, session_name)
