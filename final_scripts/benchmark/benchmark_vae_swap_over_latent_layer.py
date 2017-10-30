@@ -32,8 +32,8 @@ and completely use in a long run server
 session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
 
-# images_used = "MRI"
-images_used = "PET"
+images_used = "MRI"
+# images_used = "PET"
 
 # SWAAP SETTINGS
 n_folds = 10
