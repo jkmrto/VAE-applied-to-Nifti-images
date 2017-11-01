@@ -8,18 +8,15 @@ import settings
 # CONFIGURATION
 swap_type = "latent_layer"
 #swap_type = "kernel"
-
 images_used = "PET"
-
 historical_folder_name = None
-#historical_folder_name = "VAE_session_latent_layer_PET_with_defined_threshold"
 
-out_folder = """/home/jkmrto/RemoteDisks/BiosipServer/
-temp_folder_3/VAN-applied-to-Nifti-images/out/
-VAE_session_{0}_{1}""".format(swap_type, images_used).strip("\n").replace("\n", '')
 
-if historical_folder_name is not None:
-    out_folder = os.path.join(out_folder, "historical", historical_folder_name)
+MRI_VAE_latent_layer_predefined_threshold = "/home/jkmrto/RemoteDisks/BiosipServer/new_folder/VAN-applied-to-Nifti-images/out/VAE_session_latent_layer_MRI/historical/threshold_predefined"
+PET_VAE_latent_layer_predefined_threshold =  "/home/jkmrto/RemoteDisks/BiosipServer/temp_folder_3/VAN-applied-to-Nifti-images/out/VAE_session_{0}_{1}/historical/VAE_session_latent_layer_PET_with_defined_threshold"
+
+out_folder = MRI_VAE_latent_layer_predefined_threshold
+#out_folder = PET_VAE_latent_layer_predefined_threshold
 
 output_weighted_svm = "loop_output_weighted_svm.csv"
 output_simple_majority_vote = "loop_output_simple_majority_vote.csv"
