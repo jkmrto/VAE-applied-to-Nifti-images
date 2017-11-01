@@ -45,7 +45,7 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 
 # Vae settings
 # Net Configuration
-kernel_list = [2,3,4,5]
+kernel_list = [2,3]
 
 SVM_over_regions_threshold = None
 # SVM_over_regions_threshold = 0 # Middle value
