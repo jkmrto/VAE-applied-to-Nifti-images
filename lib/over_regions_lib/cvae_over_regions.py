@@ -119,13 +119,11 @@ def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
                 utils.normalize_array(region_voxels_values_train)
             region_voxels_values_test = region_voxels_values_test / max_denormalize
 
+        max_train_iter = session.get_adequate_number_iterations(
+            region_selected, explicit_iter_per_region, session_conf["n_iters"])
+
         tf.reset_default_graph()
         model = CVAE.CVAE(hyperparams)
-
-        max_train_iter = session.get_adequate_number_iterations(region_selected,
-                                                        explicit_iter_per_region,
-                                                        predefined_iters=
-                                                            session_conf["n_iters"])
 
         out = model.train(X=train_cube_images,
                           n_iters=max_train_iter,
