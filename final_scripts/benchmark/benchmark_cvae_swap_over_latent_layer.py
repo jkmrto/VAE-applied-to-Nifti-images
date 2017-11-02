@@ -2,6 +2,7 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
 
+
 import tarfile
 import time
 from datetime import datetime
@@ -22,6 +23,12 @@ from lib.utils.os_aux import create_directories
 from settings import explicit_iter_per_region
 from final_scripts.benchmark import benchmark_helper as helper
 
+from lib.vae import CVAE_2layers
+from lib.vae import CVAE_3layers
+from lib.vae import CVAE_4layers
+from lib.vae import CVAE_2layers_2DenseLayers
+
+
 session_datetime = datetime.now().isoformat()
 print("Time session init: {}".format(session_datetime))
 
@@ -36,6 +43,14 @@ n_folds = 3
 bool_test = False
 regions_used = "most_important"
 list_regions = session.select_regions_to_evaluate(regions_used)
+
+# MODEL SELECTIONS
+# Selecting the CVAE architecture
+# CVAE_model = CVAE_2layers_2DenseLayers.CVAE_2layers_DenseLayer
+# CVAE_model = CVAE_4layers.CVAE_4layers
+CVAE_model = CVAE_2layers.CVAE_2layers
+# CVAE_model = CVAE_3layers.CVAE_3layers
+
 
 # Session settings
 session_name = "CVAE_session_{0}_{1}".format(swap_over, images_used)
@@ -55,8 +70,10 @@ hyperparams = {
     'features_depth': [1, 16, 32],
     'decay_rate': 0.002,
     'learning_rate': 0.001,
-    'kernel_size': 5,
-    'lambda_l2_regularization': 0.0001}
+    'lambda_l2_regularization': 0.0001,
+    'kernel_size': [5, 5, 5],
+    'stride': 2
+}
 
 # Vae session cofiguration
 cvae_session_conf = {

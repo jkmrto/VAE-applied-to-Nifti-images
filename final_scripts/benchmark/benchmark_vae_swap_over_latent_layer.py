@@ -23,11 +23,6 @@ from lib import session_helper as session, timing_helper
 from lib.utils.evaluation_utils import get_average_over_metrics
 from lib.utils.evaluation_logger_helper  import evaluation_container_to_log_file
 
-from lib.vae import CVAE_2layers
-from lib.vae import CVAE_3layers
-from lib.vae import CVAE_4layers
-from lib.vae import CVAE_2layers_2DenseLayers
-
 
 """
 Still need to test MRI with this script,
@@ -56,12 +51,6 @@ SMV_over_regions_threshold = 0.5 # Middle value
 #CMV_over_regions_threshold = None
 CMV_over_regions_threshold = 0# Middle value
 
-# Selecting the CVAE architecture
-# CVAE_model = CVAE_2layers_2DenseLayers.CVAE_2layers_DenseLayer
-# CVAE_model = CVAE_4layers.CVAE_4layers
-# CVAE_model = CVAE_2layers.CVAE_2layers
-CVAE_model = CVAE_3layers.CVAE_3layers
-
 # SELECT REGIONS TO LOOP OVER
 #regions_used = "three"
 regions_used = "most_important"
@@ -72,13 +61,11 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 # Net Configuration
 hyperparams = {
     "batch_size": 64,
-    'kernel_size': [5, 5, 5],
     "learning_rate": 1E-5,
     "dropout": 0.90,
     "lambda_l2_reg": 1E-5,
     "nonlinearity": tf.nn.elu,
     "squashing": tf.nn.sigmoid,
-    'stride': 2
 }
 
 # Vae session cofiguration

@@ -43,7 +43,7 @@ hyperparams = {'latent_layer_dim': 100,
                'decay_rate': 0.0025,
                'learning_rate': 0.001,
                'lambda_l2_regularization': 0.0001,
-               'stride' : 2
+               'stride': 2
 }
 
 session_conf = {'bool_normalized': False,
