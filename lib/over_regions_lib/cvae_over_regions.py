@@ -7,6 +7,7 @@ from lib import session_helper as session
 from lib import utils
 from lib.utils.os_aux import create_directories
 from lib.vae import CVAE
+from lib.vae import CVAE_helper
 
 
 def execute_saving_meta_graph_without_any_cv(region_cubes_dict, hyperparams,
@@ -124,7 +125,8 @@ def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
 
         tf.reset_default_graph()
 
-        model = CVAE.CVAE(hyperparams)
+        CVAE_model = CVAE_helper.select_model(hyperparams["cvae_model"])
+        model = CVAE_model.cvae_net(hyperparams)
         model.generate_meta_net()
         out = model.train(X=train_cube_images,
                           n_iters=max_train_iter,

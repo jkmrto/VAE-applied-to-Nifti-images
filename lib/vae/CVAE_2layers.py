@@ -4,12 +4,12 @@ import numpy as np
 import lib.neural_net.kfrans_ops as ops
 
 
-class CVAE_2layers(CVAE):
+class cvae_net(CVAE):
 
     def __init__(self, hyperparams, test_bool=False, meta_path=None,
                  path_to_session=None):
 
-        super(CVAE_2layers, self).__init__(hyperparams, test_bool=test_bool,
+        super(cvae_net, self).__init__(hyperparams, test_bool=test_bool,
                  path_to_session=path_to_session)
 
     def recognition(self, input_images):
