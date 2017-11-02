@@ -51,9 +51,6 @@ session_conf = {'bool_normalized': False,
                 "batch_size": 16,
                 "show_error_iter": 100}
 
-
-
-
 # Path settings
 own_datetime = datetime.now().strftime(r"%d_%m_%_Y_%H:%M")
 session_prefix_name = "reconstruction_evolution_region_{}".format(region_selected)
