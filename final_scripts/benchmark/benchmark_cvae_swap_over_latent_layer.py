@@ -20,7 +20,6 @@ from lib.utils.auc_output_handler import stringfy_auc_information
 from lib.utils.evaluation_logger_helper import evaluation_container_to_log_file
 from lib.utils.evaluation_utils import get_average_over_metrics
 from lib.utils.os_aux import create_directories
-from settings import explicit_iter_per_region
 from final_scripts.benchmark import benchmark_helper as helper
 
 from lib.vae import CVAE_2layers
@@ -271,7 +270,6 @@ for swap_variable_index in swap_list:
                     list_regions=list_regions,
                     path_to_root=None,
                     region_test_cubes_dict=reg_to_group_to_images_dict_mri_gm["test"],
-                    explicit_iter_per_region=explicit_iter_per_region
                 )
             timing["MRI_GM_neuralnet"].append(time.time() - time_reference)
             print("Not converging regions GM {}".format(str(regions_whose_net_not_converge_gm)))
@@ -288,7 +286,6 @@ for swap_variable_index in swap_list:
                 path_to_root=None,
                 region_test_cubes_dict=reg_to_group_to_images_dict_mri_wm[
                     "test"],
-                explicit_iter_per_region=explicit_iter_per_region
             )
             timing["MRI_WM_neuralnet"].append(time.time() - time_reference)
 
@@ -329,7 +326,6 @@ for swap_variable_index in swap_list:
                     path_to_root=None,
                     region_test_cubes_dict=reg_to_group_to_images_dict_pet[
                         "test"],
-                    explicit_iter_per_region=explicit_iter_per_region
                 )
             timing["PET"].append(time.time() - time_reference)
             print("Not converging total regions {}".format(
