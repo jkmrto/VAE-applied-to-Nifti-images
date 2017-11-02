@@ -125,8 +125,8 @@ def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
 
         tf.reset_default_graph()
 
-        CVAE_model = CVAE_helper.select_model(hyperparams["cvae_model"])
-        model = CVAE_model.cvae_net(hyperparams)
+        cvae_model = CVAE_helper.select_model(hyperparams["cvae_model"])
+        model = cvae_model(hyperparams)
         model.generate_meta_net()
         out = model.train(X=train_cube_images,
                           n_iters=max_train_iter,

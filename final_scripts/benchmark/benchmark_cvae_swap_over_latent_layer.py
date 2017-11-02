@@ -47,7 +47,7 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 # Selecting the CVAE architecture
 # CVAE_model = CVAE_2layers_2DenseLayers.CVAE_2layers_DenseLayer
 # CVAE_model = CVAE_4layers.CVAE_4layers
-CVAE_model = CVAE_2layers.CVAE_2layers
+#CVAE_model = CVAE_2layers.CVAE_2layers
 # CVAE_model = CVAE_3layers.CVAE_3layers
 
 
