@@ -37,19 +37,11 @@ images_used = "PET"
 
 # SWAAP SESSION SETTINGS
 swap_over = "latent_layer"
-swap_list = [2, 5, 8, 10, 20, 50, 80, 100, 150, 200, 225, 250]
-n_folds = 3
+swap_list = [2, 5, 8, 10, 20, 50, 80, 100, 125, 150, 175, 200, 225, 250]
+n_folds = 10
 bool_test = False
 regions_used = "most_important"
 list_regions = session.select_regions_to_evaluate(regions_used)
-
-# MODEL SELECTIONS
-# Selecting the CVAE architecture
-# CVAE_model = CVAE_2layers_2DenseLayers.CVAE_2layers_DenseLayer
-# CVAE_model = CVAE_4layers.CVAE_4layers
-#CVAE_model = CVAE_2layers.CVAE_2layers
-# CVAE_model = CVAE_3layers.CVAE_3layers
-
 
 # Session settings
 session_name = "CVAE_session_{0}_{1}".format(swap_over, images_used)
@@ -77,16 +69,14 @@ hyperparams = {
 
 # Vae session cofiguration
 cvae_session_conf = {
-    "batch_size": 32,
+    "batch_size": 64,
     "bool_normalized": False,
-    "n_iters": 100,
+    "n_iters": 250,
     "save_meta_bool": False,
     "show_error_iter": 10,
 }
 
 # It could be None or a value content between 0 or 1
-
-
 # OUTPUT: Files initialization
 loop_output_file_simple_majority_vote = os.path.join(
     session_path, "loop_output_simple_majority_vote.csv")
