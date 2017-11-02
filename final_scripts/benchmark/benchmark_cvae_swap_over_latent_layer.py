@@ -71,7 +71,7 @@ hyperparams = {
     'learning_rate': 0.001,
     'lambda_l2_regularization': 0.0001,
     'kernel_size': [5, 5, 5],
-    "cvae_model" "3layers"
+    "cvae_model": "3layers",
     'stride': 2
 }
 
