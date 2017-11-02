@@ -84,7 +84,7 @@ def execute_saving_meta_graph_without_any_cv(region_cubes_dict, hyperparams,
 def execute_without_any_logs(region_train_cubes_dict, hyperparams, session_conf,
                              list_regions, path_to_root=None,
                              region_test_cubes_dict=None,
-                             explicit_iter_per_region=[]):
+                             explicit_iter_per_region={}):
     """
     :param region_train_cubes_dict:
     :param hyperparams:
