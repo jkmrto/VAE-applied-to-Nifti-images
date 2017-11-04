@@ -5,7 +5,7 @@ from lib.vae import CVAE_2layers_2DenseLayers
 
 
 model_map = {
-    "2layers": CVAE_2layers.CVAE_2layer,
+    "2layers": CVAE_2layers.CVAE_2layers,
     "3layers": CVAE_3layers.CVAE_3layers,
     "4layers": CVAE_4layers.CVAE_4layers,
     "2layers_2dense": CVAE_2layers_2DenseLayers.CVAE_2layers_DenseLayer

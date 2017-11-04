@@ -4,7 +4,7 @@ import numpy as np
 import lib.neural_net.kfrans_ops as ops
 
 
-class CVAE_2layer(CVAE):
+class CVAE_2layers(CVAE):
 
     def __init__(self, hyperparams, test_bool=False, meta_path=None,
                  path_to_session=None):
