@@ -63,7 +63,7 @@ hyperparams = {
     'learning_rate': 0.001,
     'lambda_l2_regularization': 0.0001,
     'kernel_size': [5, 5, 5],
-    "cvae_model": "3layers",
+    "cvae_model": "2layers",
     'stride': 2
 }
 
@@ -71,7 +71,7 @@ hyperparams = {
 cvae_session_conf = {
     "batch_size": 64,
     "bool_normalized": False,
-    "n_iters": 250,
+    "n_iters": 100,
     "save_meta_bool": False,
     "show_error_iter": 10,
 }
