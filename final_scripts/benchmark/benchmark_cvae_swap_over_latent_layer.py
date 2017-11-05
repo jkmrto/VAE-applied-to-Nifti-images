@@ -49,12 +49,12 @@ session_path = os.path.join(settings.path_to_general_out_folder, session_name)
 historial_path = os.path.join(session_path, "historical")
 create_directories([session_path, historial_path])
 
-SVM_over_regions_threshold = None
-# SVM_over_regions_threshold = 0 # Middle value
-SMV_over_regions_threshold = None
-# SMV_over_regions_threshold = 0.5 # Middle value
-CMV_over_regions_threshold = None
-# CMV_over_regions_threshold = 0# Middle value
+# SVM_over_regions_threshold = None
+SVM_over_regions_threshold = 0 # Middle value
+#SMV_over_regions_threshold = None
+SMV_over_regions_threshold = 0.5 # Middle value
+#CMV_over_regions_threshold = None
+CMV_over_regions_threshold = 0# Middle value
 
 hyperparams = {
     'activation_layer': ops.lrelu,
