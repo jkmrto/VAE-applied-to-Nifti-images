@@ -14,9 +14,11 @@ historical_folder_name = None
 
 MRI_VAE_latent_layer_predefined_threshold = "/home/jkmrto/RemoteDisks/BiosipServer/new_folder/VAN-applied-to-Nifti-images/out/VAE_session_latent_layer_MRI/historical/threshold_predefined"
 PET_VAE_latent_layer_predefined_threshold =  "/home/jkmrto/RemoteDisks/BiosipServer/temp_folder_3/VAN-applied-to-Nifti-images/out/VAE_session_{0}_{1}/historical/VAE_session_latent_layer_PET_with_defined_threshold"
+PET_CVAE_latent_layer_non_predefined_threshold = "/media/jkmrto/Multimedia/TFM/resultados/CVAE_session_latent_layer_PET/NON_FIXED_THRESHOLD"
 
-out_folder = MRI_VAE_latent_layer_predefined_threshold
 #out_folder = PET_VAE_latent_layer_predefined_threshold
+#out_folder = MRI_VAE_latent_layer_predefined_threshold
+out_folder = PET_CVAE_latent_layer_non_predefined_threshold
 
 output_weighted_svm = "loop_output_weighted_svm.csv"
 output_simple_majority_vote = "loop_output_simple_majority_vote.csv"
