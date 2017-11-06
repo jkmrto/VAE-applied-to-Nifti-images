@@ -60,7 +60,9 @@ hyperparams = {
     'activation_layer': ops.lrelu,
     'features_depth': [1, 16, 32],
     'decay_rate': 0.002,
-    'learning_rate': 0.001,
+    'learning_rate': 0.0001,
+    "cvae_model": "2layers",
+    'stride': 2,
     'lambda_l2_regularization': 0.0001}
 
 # Vae session cofiguration
