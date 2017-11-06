@@ -180,8 +180,8 @@ for swap_variable_index in kernel_list:
     print("Evaluating the system with a kernel size of {} ".format(
         swap_variable_index))
 
-    hyperparams["kernel_size"] = swap_variable_index
-
+    # Doesnt mind the number of kernel elements
+    hyperparams["kernel_size"] = [swap_variable_index] * 2
     # OUTPUT SETTINGS
     # OUTPUT: List of dictionaries
     complex_majority_vote_k_folds_results_train = []
