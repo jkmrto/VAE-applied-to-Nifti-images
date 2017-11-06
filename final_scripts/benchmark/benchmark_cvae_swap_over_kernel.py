@@ -36,7 +36,7 @@ historial_path = os.path.join(session_path, "historical")
 create_directories([session_path, historial_path])
 
 # SWAAP SETTINGS
-n_folds = 3
+n_folds = 10
 bool_test = False
 swap_over = "kernel_size"
 regions_used = "most_important"
@@ -45,20 +45,20 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 
 # Vae settings
 # Net Configuration
-kernel_list = [2,3]
+kernel_list = [2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-SVM_over_regions_threshold = None
-# SVM_over_regions_threshold = 0 # Middle value
-SMV_over_regions_threshold = None
-# SMV_over_regions_threshold = 0.5 # Middle value
-CMV_over_regions_threshold = None
-# CMV_over_regions_threshold = 0# Middle value
+# SVM_over_regions_threshold = None
+SVM_over_regions_threshold = 0 # Middle value
+# SMV_over_regions_threshold = None
+SMV_over_regions_threshold = 0.5 # Middle value
+#CMV_over_regions_threshold = None
+CMV_over_regions_threshold = 0# Middle value
 
 
 hyperparams = {
     "latent_layer_dim": 100,
     'activation_layer': ops.lrelu,
-    'features_depth': [1, 16, 32],
+    'features_depth': [1, 32, 64],
     'decay_rate': 0.002,
     'learning_rate': 0.0001,
     "cvae_model": "2layers",
