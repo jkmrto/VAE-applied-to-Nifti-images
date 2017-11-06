@@ -142,8 +142,6 @@ class CVAE():
         self.path_to_images = os.path.join(self.path_session_folder, "images")
         self.path_to_logs = os.path.join(self.path_session_folder, "logs")
         self.path_to_meta = os.path.join(self.path_session_folder, "meta")
-        self.path_to_grad_desc_error = \
-            os.path.join(self.path_to_logs, "DescGradError")
 
         self.path_to_3dtemp_images = \
             os.path.join(self.path_to_images, "temp_3d_images")

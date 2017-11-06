@@ -24,14 +24,6 @@ class VAE():
 
     def __init__(self, architecture=None, hyperparams=None, meta_graph=None,
                  path_to_session=None, test_bool=False):
-        """(Re)build a symmetric VAE model with given:
-
-            * architecture (list of nodes per encoder layer); e.g.
-               [1000, 500, 250, 10] specifies a VAE with 1000-D inputs, 10-D latents,
-               & end-to-end architecture [1000, 500, 250, 10, 250, 500, 1000]
-
-            * hyperparameters (optional dictionary of updates to `DEFAULTS`)
-        """
 
         self.session = tf.Session()
         self.hyper_params = hyperparams
@@ -80,7 +72,8 @@ class VAE():
         self.path_to_grad_desc_error = os.path.join(self.path_to_logs, "DescGradError")
 
         create_directories([self.path_session_folder, self.path_to_images,
-                            self.path_to_logs, self.path_to_meta])
+                            self.path_to_logs, self.path_to_meta,
+                            self.path_to_grad_desc_error])
 
     @property
     def step(self):
