@@ -61,7 +61,7 @@ hyperparams = {
     'features_depth': [1, 16, 32],
     'decay_rate': 0.002,
     'learning_rate': 0.0001,
-    "cvae_model": "2layers",
+    "cvae_model": "3layers",
     'stride': 2,
     'lambda_l2_regularization': 0.0001}
 
@@ -181,7 +181,7 @@ for swap_variable_index in kernel_list:
         swap_variable_index))
 
     # Doesnt mind the number of kernel elements
-    hyperparams["kernel_size"] = [swap_variable_index] * 2
+    hyperparams["kernel_size"] = [swap_variable_index] * 3
     # OUTPUT SETTINGS
     # OUTPUT: List of dictionaries
     complex_majority_vote_k_folds_results_train = []
