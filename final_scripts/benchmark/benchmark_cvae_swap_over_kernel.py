@@ -36,7 +36,7 @@ historial_path = os.path.join(session_path, "historical")
 create_directories([session_path, historial_path])
 
 # SWAAP SETTINGS
-n_folds = 10
+n_folds = 3
 bool_test = False
 swap_over = "kernel_size"
 regions_used = "most_important"
@@ -58,7 +58,7 @@ CMV_over_regions_threshold = 0# Middle value
 hyperparams = {
     "latent_layer_dim": 100,
     'activation_layer': ops.lrelu,
-    'features_depth': [1, 32, 64],
+    'features_depth': [1, 16, 32],
     'decay_rate': 0.002,
     'learning_rate': 0.0001,
     "cvae_model": "2layers",
