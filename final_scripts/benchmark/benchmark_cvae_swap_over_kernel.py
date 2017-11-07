@@ -36,7 +36,7 @@ historial_path = os.path.join(session_path, "historical")
 create_directories([session_path, historial_path])
 
 # SWAAP SETTINGS
-n_folds = 3
+n_folds = 10
 bool_test = False
 swap_over = "kernel_size"
 regions_used = "most_important"
@@ -45,7 +45,7 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 
 # Vae settings
 # Net Configuration
-kernel_list = [9, 10]
+kernel_list = [10, 9, 8, 7, 6, 5, 4, 3, 2]
 
 # SVM_over_regions_threshold = None
 SVM_over_regions_threshold = 0 # Middle value
@@ -69,7 +69,7 @@ hyperparams = {
 cvae_session_conf = {
     "batch_size": 32,
     "bool_normalized": False,
-    "n_iters": 100,
+    "n_iters": 200,
     "save_meta_bool": False,
     "show_error_iter": 10,
 }
