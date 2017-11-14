@@ -13,9 +13,8 @@ images = "PET"
 print("Loading stack {}".format(images))
 
 stack = None
-colour_kind = "Greys"
-reshape_kind = "C"
-
+reshape_kind = None
+colour_kind = None
 if images == "WM":
     stack = MRI_stack_NORAD. get_wm_stack()
     reshape_kind = "C"
@@ -30,17 +29,15 @@ elif images == "PET":
     colour_kind = "jet"
 
 imgsize = stack['imgsize']
-mri_image = np.zeros(imgsize[0]*imgsize[1]*imgsize[2])
+image_flat = np.zeros(imgsize[0]*imgsize[1]*imgsize[2])
 images_index = stack['voxel_index'] # indices de cada pixel
-
-
 image_select = stack["stack"][1, :]
 image_select = np.reshape(image_select, [image_select.shape[0]])
 image_select[image_select > 1] = 1
 
-mri_image[images_index] = image_select  # Selecting one image
+image_flat[images_index] = image_select  # Selecting one image
 
-mri_image_3d = mri_image.reshape(imgsize, order=reshape_kind)
+mri_image_3d = image_flat.reshape(imgsize, order=reshape_kind)
 
 plt.imshow(np.rot90(mri_image_3d[:, 50, :]), cmap=colour_kind)
 plt.colorbar()

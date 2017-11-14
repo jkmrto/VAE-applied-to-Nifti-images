@@ -1,5 +1,6 @@
 import tensorflow as tf
 
+
 def l1_loss(obs, actual):
     """L1 loss (a.k.a. LAD), per training example"""
     # (tf.Tensor, tf.Tensor, float) -> tf.Tensor

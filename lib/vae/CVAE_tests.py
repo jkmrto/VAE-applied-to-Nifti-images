@@ -8,17 +8,14 @@ matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 plt.rcParams["figure.figsize"] = [16, 9]
 
-from lib.vae import CVAE_2layers
 from lib.vae import CVAE_3layers
-from lib.vae import CVAE_4layers
-from lib.vae import CVAE_2layers_2DenseLayers
 
 import settings
 import lib.neural_net.kfrans_ops as ops
 from lib import session_helper
 from lib.data_loader.pet_loader import load_pet_regions_segmented
 from lib.data_loader import pet_atlas
-import region_plane_selector
+from final_scripts import region_plane_selector
 from lib.data_loader import PET_stack_NORAD
 from lib.utils import output_utils
 from lib.vae import test_graphs_helpers as helpers

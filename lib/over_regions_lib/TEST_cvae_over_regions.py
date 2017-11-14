@@ -8,7 +8,7 @@ from lib.utils import cv_utils
 import lib.neural_net.kfrans_ops as ops
 from lib import session_helper as session
 from lib.data_loader import pet_atlas
-import region_plane_selector
+from final_scripts import region_plane_selector
 from lib.data_loader import PET_stack_NORAD
 from lib.over_regions_lib.cvae_over_regions import \
     execute_saving_meta_graph_without_any_cv, execute_without_any_logs

@@ -1,19 +1,19 @@
-import sys
-import os
-# sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
 import math
+import os
+import sys
 from datetime import datetime
-from lib import reconstruct_helpers as recons
+
 import numpy as np
 import tensorflow as tf
-import lib.neural_net.kfrans_ops as ops
+
+from final_scripts import region_plane_selector
+from lib import reconstruct_helpers as recons
 from lib.utils import output_utils
 from lib.utils.functions import \
     get_batch_from_samples_unsupervised
 from lib.utils.os_aux import create_directories
-import region_plane_selector
-from lib.utils.utils_3dsamples import reshape_from_flat_to_3d
 from lib.utils.utils_3dsamples import reshape_from_3d_to_flat
+from lib.utils.utils_3dsamples import reshape_from_flat_to_3d
 
 bool_save_meta = False
 
