@@ -58,10 +58,11 @@ CMV_over_regions_threshold = 0# Middle value
 hyperparams = {
     "latent_layer_dim": 100,
     'activation_layer': ops.lrelu,
-    'features_depth': [1, 8, 16, 32],
+    'features_depth': [1, 16, 32],
     'decay_rate': 0.002,
     'learning_rate': 0.0001,
-    "cvae_model": "3layers",
+   # "cvae_model": "3layers",
+    "cvae_model": "2layers",
     'stride': 2,
     'lambda_l2_regularization': 0.0001}
 
