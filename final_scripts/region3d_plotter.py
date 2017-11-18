@@ -21,7 +21,7 @@ path_folder_region3d = os.path.join(path_folder3D, "region3D")
 path_folder_images = os.path.join(path_folder_region3d,
     "brain3D_img:{0}_sample:{1}".format(images, sample_selected))
 
-create_directories([path_folder_region3d])
+create_directories([path_folder3D, path_folder_region3d, path_folder_images])
 
 pet_regions_segmented = None
 mri_gm_regions_segmented = None
