@@ -15,8 +15,10 @@ images = "MRI"
 list_regions = select_regions_to_evaluate("all")
 sample_selected = 50
 
-path_folder_region3d = os.path.join(
-    settings.path_to_project, "folder3D", "region3d",
+
+path_folder3D =  os.path.join(settings.path_to_project, "folder3D")
+path_folder_region3d = os.path.join(path_folder3D, "region3D")
+path_folder_images = os.path.join(path_folder_region3d,
     "brain3D_img:{0}_sample:{1}".format(images, sample_selected))
 
 create_directories([path_folder_region3d])
@@ -34,7 +36,7 @@ if images == "PET":
 
     for region in list_regions:
         region_img_path = os.path.join(
-            path_folder_region3d,"region:{}".format(region))
+            path_folder_images,"region:{}".format(region))
         output_utils.from_3d_image_to_nifti_file(
             path_to_save=region_img_path,
             image3d=pet_regions_segmented[region][sample_selected,:,:,:])
@@ -50,7 +52,7 @@ if images == "MRI":
 
     for region in list_regions:
         region_img_path = os.path.join(
-            path_folder_region3d, "region:{}".format(region))
+            path_folder_images, "region:{}".format(region))
 
         output_utils.from_3d_image_to_nifti_file(
             path_to_save=region_img_path + "_wm",
