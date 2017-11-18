@@ -13,7 +13,7 @@ def load_mri_regions_segmented3d(list_regions, folder_to_store_3d_images=None,
     :param list_regions:
     :param folder_to_store_3d_images:
     :param bool_logs:
-    :return:
+    :return: 2 x [dic[region] -> ty[np.array] sh[n_samples, w, h, d]]
     """
     if folder_to_store_3d_images is not None:
         patient_to_output = 10
