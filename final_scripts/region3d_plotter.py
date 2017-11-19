@@ -12,9 +12,10 @@ import settings
 
 #images = "PET"
 images = "MRI"
-list_regions = select_regions_to_evaluate("all")
-sample_selected = 50
 
+list_regions = select_regions_to_evaluate("all")
+list_regions = [40]
+sample_selected = 40
 
 path_folder3D =  os.path.join(settings.path_to_project, "folder3D")
 path_folder_region3d = os.path.join(path_folder3D, "region3D")
