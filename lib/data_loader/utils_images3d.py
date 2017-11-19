@@ -10,7 +10,7 @@ def recortar_region(stack_dict, region, atlas, thval=0, reshape_kind="F"):
     :param region:
     :param atlas:
     :param thval:
-    :param reshape_kind:
+    :param reshape_kind: "C"|"F"  ("F" => MRI, "C" => PET)
     :return:
     """
     total_size = stack_dict['total_size']

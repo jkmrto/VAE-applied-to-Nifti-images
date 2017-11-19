@@ -21,7 +21,7 @@ class CVAE_2layers(CVAE):
                 input_features=self.features_depth[0],
                 output_features=self.features_depth[1],
                 stride=self.stride,
-                kernel=self.º[0],
+                kernel=self.kernel_size[0],
                 name="first_layer"))  # 28x28x1 -> 14x14x16
 
             self.dim_out_first_layer = tf.shape(h1)
