@@ -10,8 +10,8 @@ from lib.utils.os_aux import create_directories
 import settings
 
 
-images = "PET"
-#images = "MRI"
+#images = "PET"
+images = "MRI"
 list_regions = select_regions_to_evaluate("all")
 sample_selected = 50
 
