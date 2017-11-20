@@ -37,6 +37,7 @@ def load_pet_regions_segmented(list_regions, folder_to_store_3d_images=None,
             print("Segmenting Region {}".format(region))
         region_segmented = recortar_region(stack_dict=dict_norad_pet,
                                            region=region,
+                                           reshape_kind="F",
                                            atlas=atlas)
         dic_regions_segmented[region] = region_segmented
 

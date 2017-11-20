@@ -27,7 +27,7 @@ path_folder_brain3d = os.path.join(
     "brain3D_img:{0}_sample:{1}".format(images, sample_selected))
 
 if images == "WM":
-    stack = MRI_stack_NORAD. get_wm_stack()
+    stack = MRI_stack_NORAD.get_wm_stack()
     reshape_kind = "C"
     colour_kind = "Greys"
 elif images == "GM":

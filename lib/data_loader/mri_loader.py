@@ -44,8 +44,7 @@ def load_mri_regions_segmented3d(list_regions, folder_to_store_3d_images=None,
         region_segmented_mri_gm = recortar_region(stack_dict=dict_norad_gm,
                                                   region=region,
                                                   atlas=atlas,
-                                                  reshape_kind="C"
-                                                  )
+                                                  reshape_kind="C")
         if bool_logs:
             print("Segmenting MRI WM".format(region))
 
@@ -104,8 +103,6 @@ def load_mri_regions_flatten(list_regions):
 
 
 # out_gm, out_wm = load_mri_regions_flatten([2, 3, 4, 5, 6])
-
-
 
 
 def load_mri_data_flat(list_regions):

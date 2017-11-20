@@ -38,8 +38,8 @@ def recortar_region(stack_dict, region, atlas, thval=0, reshape_kind="F"):
         voxels_patient_region_selected = stack[patient, map_region_voxels]
 
         try:
-            image[
-                no_bg_region_voxels_index.tolist()] = voxels_patient_region_selected
+            image[no_bg_region_voxels_index.tolist()] = \
+                voxels_patient_region_selected
         except:
             voxels_patient_region_selected = voxels_patient_region_selected.reshape(
                 voxels_patient_region_selected.size, 1)

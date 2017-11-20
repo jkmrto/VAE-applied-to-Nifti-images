@@ -12,13 +12,13 @@ def generate_region_3dmaskatlas(
     :param totalsize:
     :return:
     """
+    print("hola")
     mask_atlas = np.zeros(imgsize)
-    mask_atlas = np.reshape(mask_atlas, [totalsize], reshape_kind)
+    mask_atlas = mask_atlas.flatten()
     mask_atlas[no_bg_region_voxels_index] = 1
     mask_atlas = np.reshape(mask_atlas, imgsize, reshape_kind)
 
     return mask_atlas
-
 
 def delim_3dmask(mask_atlas, thval=0.5):
     """

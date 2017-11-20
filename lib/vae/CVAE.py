@@ -22,7 +22,7 @@ class CVAE():
     RESTORE_KEY = "restore"
 
     def __init__(self, hyperparams, test_bool=False,
-                 path_to_session=None):
+                 path_to_session=None, generate_tensorboard=False):
 
         assert "image_shape" in list(hyperparams), \
             "image_shape should be specified in hyperparams"
@@ -32,6 +32,7 @@ class CVAE():
         self.session = tf.Session()
         self.hyperparams = hyperparams
         self.init_path_to_session = path_to_session
+        self.generate_tensorboard = generate_tensorboard
 
         self.dim_in_first_layer = None
         self.dim_out_first_layer = None
@@ -61,6 +62,8 @@ class CVAE():
         if self.path_session_folder is not None:
             self.__init_session_folders()
 
+        self.__generate_tensorboard_files()
+
         handles = [self.in_flat_images, self.z_mean, self.z_stddev,
                        self.z_in_, self.regenerated_3d_images_]
         for handle in handles:
@@ -80,30 +83,47 @@ class CVAE():
         # initialing variables
         self.n_z = self.z_in_.get_shape().as_list()[1]
 
+    def __generate_tensorboard_files(self):
+        print("Generating Tensorboard {}".format(self.generate_tensorboard))
+
+        if self.generate_tensorboard:
+            if self.path_session_folder is None:
+                print("It is not possible to generate Tensorflow graph without a"
+                      "path session specified")
+            else:
+                print("Generating Tensorboard")
+                tb_path = os.path.join(self.path_session_folder, "tb")
+                writer = tf.summary.FileWriter(
+                    tb_path,graph=tf.get_default_graph())
+
     def __build_graph(self):
         """
         self.in_flat_images tensor--sh[n_samples x total_size]
         :return:
         """
 
-        # Placeholder location
-        self.decay_rate = tf.placeholder_with_default(
-            self.decay_rate_value, shape=[], name="decay_rate")
+        with tf.variable_scope("input"):
+            # Placeholder location
+            self.decay_rate = tf.placeholder_with_default(
+                self.decay_rate_value, shape=[], name="decay_rate")
 
-        self.in_flat_images = tf.placeholder(tf.float32,
-                                             [None, self.total_size],
-                                             "input_images")
+            self.in_flat_images = tf.placeholder(tf.float32,
+                                                 [None, self.total_size],
+                                                 "input_images")
 
-        image_matrix = tf.reshape(self.in_flat_images,
-                                  [-1, self.image_shape[0], self.image_shape[1],
-                                   self.image_shape[2], 1])
-        self.dim_in_first_layer = tf.shape(image_matrix)
+            image_matrix = tf.reshape(self.in_flat_images,
+                                      [-1, self.image_shape[0], self.image_shape[1],
+                                       self.image_shape[2], 1])
+            self.dim_in_first_layer = tf.shape(image_matrix)
 
         self.z_mean, self.z_stddev = self.recognition(image_matrix)
-        samples = tf.random_normal(tf.shape(self.z_mean), 0, 1, dtype=tf.float32)
-        guessed_z = self.z_mean + (self.z_stddev * samples)
+
+        with tf.variable_scope("reparametrization_trick"):
+            samples = tf.random_normal(tf.shape(self.z_mean), 0, 1, dtype=tf.float32)
+            guessed_z = self.z_mean + (self.z_stddev * samples)
 
         self.generated_images = self.generation(guessed_z, reuse_bool=False)
+
         generated_flat = tf.reshape(self.generated_images,
                                     tf.shape(self.in_flat_images))
 
@@ -161,35 +181,38 @@ class CVAE():
     def __cost_calculation(self, images_reconstructed, z_mean, z_stddev):
         bool_logs = True
 
-        self.generation_loss = -tf.reduce_sum(
-            self.in_flat_images * tf.log(1e-8 + images_reconstructed) +
-            (1 - self.in_flat_images) * tf.log(1e-8 + 1 - images_reconstructed), 1)
+        with tf.variable_scope("error_estimation"):
+            with tf.variable_scope("generation_loss"):
+                self.generation_loss = -tf.reduce_sum(
+                    self.in_flat_images * tf.log(1e-8 + images_reconstructed) +
+                    (1 - self.in_flat_images) * tf.log(1e-8 + 1 - images_reconstructed), 1)
 
-        self.latent_loss = 0.5 * tf.reduce_sum(
-            tf.square(z_mean) + tf.square(z_stddev) - tf.log(
-                tf.square(z_stddev)) - 1, 1)
+            with tf.variable_scope("latent_layer_loss"):
+                self.latent_loss = 0.5 * tf.reduce_sum(
+                    tf.square(z_mean) + tf.square(z_stddev) - tf.log(
+                        tf.square(z_stddev)) - 1, 1)
 
-        cost = tf.reduce_mean(self.generation_loss + self.latent_loss)
-        #cost = self.generation_loss + self.latent_loss
-        # self
+            cost = tf.reduce_mean(self.generation_loss + self.latent_loss)
+            #cost = self.generation_loss + self.latent_loss
+            # self
 
-        if bool_logs:
-            print("shape generation_loss :{} ".format(
-                str(self.generation_loss.get_shape().as_list())))
+            if bool_logs:
+                print("shape generation_loss :{} ".format(
+                    str(self.generation_loss.get_shape().as_list())))
 
-            print(str("type latent_loss :{} ".format(
-                str(type(self.latent_loss)))))
+                print(str("type latent_loss :{} ".format(
+                    str(type(self.latent_loss)))))
 
-        if self.lambda_l2_reg != 0:
-            with tf.name_scope("l2_regularization"):
-                regularizers = [tf.nn.l2_loss(var) for var in
-                                self.session.graph.get_collection(
-                                    "trainable_variables") if
-                                "weights" in var.name]
+            if self.lambda_l2_reg != 0:
+                with tf.name_scope("l2_regularization"):
+                    regularizers = [tf.nn.l2_loss(var) for var in
+                                    self.session.graph.get_collection(
+                                        "trainable_variables") if
+                                    "weights" in var.name]
 
-                l2_reg = self.lambda_l2_reg * tf.add_n(regularizers)
+                    l2_reg = self.lambda_l2_reg * tf.add_n(regularizers)
 
-                cost += l2_reg
+                    cost += l2_reg
 
         return cost
 

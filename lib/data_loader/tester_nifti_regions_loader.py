@@ -15,7 +15,7 @@ from lib.data_loader.utils_general import \
     load_parameters_and_atlas_by_images_used
 from lib.data_loader.utils_mask3d import \
     get_whole_region_mask_and_region_segmented_mask
-from lib.utils.functions import create_directories
+from lib.utils.os_aux import create_directories
 
 
 def test_over_mask_over_regions_segmented_and_whole_extractor(region, images_used):
@@ -54,7 +54,7 @@ def test_over_mask_over_regions_segmented_and_whole_extractor(region, images_use
         sum(whole_mask_flatten), len(whole_mask_flatten),
         sum(mask_segmented_flatten), len(mask_segmented_flatten)))
 
-#test_over_mask_over_regions_segmented_and_whole_extractor(region=1, images_used="PET")
+test_over_mask_over_regions_segmented_and_whole_extractor(region=3, images_used="MRI")
 
 def test(nifti_region_to_save, path_where_store_out="pet_regions_segmented"):
     """
