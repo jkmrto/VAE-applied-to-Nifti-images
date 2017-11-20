@@ -9,6 +9,7 @@ from lib.vae import CVAE_4layers
 from lib.vae import CVAE_2layers_2DenseLayers
 
 import lib.neural_net.kfrans_ops as ops
+import tensorflow as tf
 import numpy as np
 from datetime import datetime
 from lib.data_loader.pet_loader import load_pet_regions_segmented
@@ -33,13 +34,13 @@ region_selected = 3
 # Selecting the CVAE architecture
 # CVAE_model = CVAE_2layers_2DenseLayers.CVAE_2layers_DenseLayer
 # CVAE_model = CVAE_4layers.CVAE_4layers
-CVAE_model = CVAE_2layers.CVAE_2layers
-# CVAE_model = CVAE_3layers.CVAE_3layers
+#CVAE_model = CVAE_2layers.CVAE_2layers
+CVAE_model = CVAE_3layers.CVAE_3layers
 
 hyperparams = {'latent_layer_dim': 100,
                'kernel_size': [5, 5, 5],
                'activation_layer': ops.lrelu,
-               'features_depth': [1, 64, 128],
+               'features_depth': [1, 8, 16, 32],
                'decay_rate': 0.0025,
                'learning_rate': 0.001,
                'lambda_l2_regularization': 0.0001,
