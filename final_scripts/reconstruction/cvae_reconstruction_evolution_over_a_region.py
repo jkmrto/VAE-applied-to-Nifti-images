@@ -37,19 +37,19 @@ region_selected = 3
 #CVAE_model = CVAE_2layers.CVAE_2layers
 CVAE_model = CVAE_3layers.CVAE_3layers
 
-hyperparams = {'latent_layer_dim': 100,
+hyperparams = {'latent_layer_dim': 50,
                'kernel_size': [5, 5, 5],
                'activation_layer': tf.nn.elu,
-               'features_depth': [1, 8, 16, 32],
+               'features_depth': [1, 16, 32, 64],
                'decay_rate': 0.0025,
-               'learning_rate': 0.001,
+               'learning_rate': 0.0001,
                'lambda_l2_regularization': 0.0001,
                'stride': 2
 }
 
 session_conf = {'bool_normalized': False,
                 'n_iters': 5000,
-                "batch_size": 64,
+                "batch_size": 120,
                 "show_error_iter": 500}
 
 # Path settings
