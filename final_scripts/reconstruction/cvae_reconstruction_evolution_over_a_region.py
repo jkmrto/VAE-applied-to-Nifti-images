@@ -37,7 +37,7 @@ CVAE_model = CVAE_2layers.CVAE_2layers
 # CVAE_model = CVAE_3layers.CVAE_3layers
 
 hyperparams = {'latent_layer_dim': 100,
-               'kernel_size': [5,5,5],
+               'kernel_size': [5, 5, 5],
                'activation_layer': ops.lrelu,
                'features_depth': [1, 64, 128],
                'decay_rate': 0.0025,
