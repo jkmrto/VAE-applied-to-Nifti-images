@@ -7,7 +7,7 @@ class Dense():
                  nonlinearity=tf.identity):
         # (str, int, (float | tf.Tensor), tf.op)
         assert size, "Must specify layer size (num nodes)"
-        self.scope = scope
+        self.scope = scope + "_" + str(size)
         self.size = size
         self.dropout = dropout # keep_prob
         self.nonlinearity = nonlinearity

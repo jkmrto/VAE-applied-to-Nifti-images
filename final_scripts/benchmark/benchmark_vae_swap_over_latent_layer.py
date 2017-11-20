@@ -4,8 +4,6 @@ sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
 
 import tarfile
 from datetime import datetime
-from shutil import copyfile
-import numpy as np
 import tensorflow as tf
 import time
 import settings

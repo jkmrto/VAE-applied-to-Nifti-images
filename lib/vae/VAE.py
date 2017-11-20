@@ -23,11 +23,13 @@ class VAE():
     RESTORE_KEY = "restore"
 
     def __init__(self, architecture=None, hyperparams=None, meta_graph=None,
-                 path_to_session=None, test_bool=False):
+                 path_to_session=None, test_bool=False,
+                 generate_tensorboard=False):
 
         self.session = tf.Session()
         self.hyper_params = hyperparams
         self.path_session_folder = path_to_session
+        self.generate_tensorboard = generate_tensorboard
         print("architecture: {}".format(architecture))
 
         if not meta_graph:  # new model
@@ -60,6 +62,21 @@ class VAE():
          self.x_reconstructed, self.z_, self.x_reconstructed_,
          self.cost, self.global_step, self.train_op) = handles[0:10]
 
+        self.__generate_tensorboard_files()
+
+    def __generate_tensorboard_files(self):
+        print("Generating Tensorboard {}".format(self.generate_tensorboard))
+
+        if self.generate_tensorboard:
+            if self.path_session_folder is None:
+                print("It is not possible to generate Tensorflow graph without a"
+                      "path session specified")
+            else:
+                print("Generating Tensorboard")
+                tb_path = os.path.join(self.path_session_folder, "tb")
+                writer = tf.summary.FileWriter(
+                    tb_path,graph=tf.get_default_graph())
+
     def init_session_folders(self):
         """
         This method will create inside the "out" folder a folder with the datetime
@@ -84,42 +101,46 @@ class VAE():
 
         # reconstruction loss: mismatch b/w x & x_reconstructed
         # binary cross-entropy -- assumes x & p(x|z) are iid Bernoullis
-        rec_loss = loss.crossEntropy(x_reconstructed, x_in)
+        with tf.variable_scope("Reconstruction_Cost"):
+            rec_loss = loss.crossEntropy(x_reconstructed, x_in)
 
+        with tf.variable_scope("Latent_Layer_Cost"):
         # Kullback-Leibler divergence: mismatch b/w approximate vs. imposed/true posterior
-        kl_loss = loss.kullbackLeibler(z_mean, z_log_sigma)
+            kl_loss = loss.kullbackLeibler(z_mean, z_log_sigma)
 
-        with tf.name_scope("l2_regularization"):
+        with tf.variable_scope("l2_regularization"):
             regularizers = [tf.nn.l2_loss(var) for var in self.session.graph.get_collection(
                 "trainable_variables") if "weights" in var.name]
             l2_reg = self.hyper_params['lambda_l2_reg'] * tf.add_n(regularizers)
 
-        with tf.name_scope("cost"):
-            # average over minibatch
-            cost = tf.reduce_mean(rec_loss + kl_loss, name="vae_cost")
-            cost += l2_reg
+        # average over minibatch
+        cost = tf.reduce_mean(rec_loss + kl_loss, name="vae_cost")
+        cost += l2_reg
 
         return cost
 
     def _build_graph(self):
-        x_in = tf.placeholder(tf.float32, shape=[None, self.architecture[0]], name="x")
-        dropout = tf.placeholder_with_default(1., shape=[], name="dropout")
+        with tf.name_scope("input"):
+            x_in = tf.placeholder(tf.float32, shape=[None, self.architecture[0]], name="x")
+            dropout = tf.placeholder_with_default(1., shape=[], name="dropout")
 
         # encoding / "recognition": q(z|x) ->  outer -> inner
-        encoding = [Dense("encoding", hidden_size, dropout, self.hyper_params['nonlinearity'])
+        encoding = [Dense("coding", hidden_size, dropout, self.hyper_params['nonlinearity'])
                     for hidden_size in reversed(self.architecture[1:-1])]
         h_encoded = compose_all(encoding)(x_in)
 
         # latent distribution parametetrized by hidden encoding
         # z ~ N(z_mean, np.exp(z_log_sigma)**2)
-        z_mean = Dense("z_mean", self.architecture[-1], dropout)(h_encoded)
-        z_log_sigma = Dense("z_log_sigma", self.architecture[-1], dropout)(h_encoded)
+        with tf.name_scope("Latent_layer"):
+            z_mean = Dense("z_mean", self.architecture[-1], dropout)(h_encoded)
+            z_log_sigma = Dense("z_log_sigma", self.architecture[-1], dropout)(h_encoded)
 
-        # kingma & welling: only 1 draw necessary as long as minibatch large enough (>100)
-        z = sample_gaussian(z_mean, z_log_sigma)
+        with tf.name_scope("param_trick"):
+            # kingma & welling: only 1 draw necessary as long as minibatch large enough (>100)
+            z = sample_gaussian(z_mean, z_log_sigma)
 
         # decoding / "generative": p(x|z)
-        decoding = [Dense("decoding", hidden_size, dropout, self.hyper_params['nonlinearity'])
+        decoding = [Dense("decod_", hidden_size, dropout, self.hyper_params['nonlinearity'])
                     for hidden_size in self.architecture[1:-1]]  # assumes symmetry
 
         # final reconstruction: restore original dims, squash outputs [0, 1]
@@ -127,11 +148,12 @@ class VAE():
             "x_decoding", self.architecture[0], dropout, self.hyper_params['squashing']))
         x_reconstructed = tf.identity(compose_all(decoding)(z), name="x_reconstructed")
 
-        cost = self.__build_cost_estimate(x_reconstructed, x_in, z_mean, z_log_sigma)
+        with tf.variable_scope("Cost_estimation"):
+            cost = self.__build_cost_estimate(x_reconstructed, x_in, z_mean, z_log_sigma)
 
         # optimization
         global_step = tf.Variable(0, trainable=False)
-        with tf.name_scope("Adam_optimizer"):
+        with tf.variable_scope("Adam_optimizer"):
             optimizer = tf.train.AdamOptimizer(self.hyper_params['learning_rate'])
             tvars = tf.trainable_variables()
             grads_and_vars = optimizer.compute_gradients(cost, tvars)
