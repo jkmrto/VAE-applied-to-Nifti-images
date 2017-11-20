@@ -39,7 +39,7 @@ CVAE_model = CVAE_3layers.CVAE_3layers
 
 hyperparams = {'latent_layer_dim': 100,
                'kernel_size': [5, 5, 5],
-               'activation_layer': ops.lrelu,
+               'activation_layer': tf.nn.elu,
                'features_depth': [1, 8, 16, 32],
                'decay_rate': 0.0025,
                'learning_rate': 0.001,
@@ -49,8 +49,8 @@ hyperparams = {'latent_layer_dim': 100,
 
 session_conf = {'bool_normalized': False,
                 'n_iters': 5000,
-                "batch_size": 16,
-                "show_error_iter": 100}
+                "batch_size": 64,
+                "show_error_iter": 500}
 
 # Path settings
 own_datetime = datetime.now().strftime(r"%d_%m_%_Y_%H:%M")
