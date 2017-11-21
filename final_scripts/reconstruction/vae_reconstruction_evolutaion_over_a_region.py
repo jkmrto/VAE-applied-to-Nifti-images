@@ -65,7 +65,7 @@ session_conf = {
 }
 
 region = 3
-after_input_architecture = [1000, 500, 100]  # no include hidden layer
+after_input_architecture = [1500, 1000, 500, 100]  # no include hidden layer
 
 # Path settings
 own_datetime = datetime.now().strftime(r"%d_%m_%_Y_%H:%M")
