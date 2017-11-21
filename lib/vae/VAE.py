@@ -13,7 +13,8 @@ from lib.utils.os_aux import create_directories
 from lib.utils.utils import compose_all
 from lib.reconstruct_helpers import reconstruct_3d_image_from_flat_and_index
 from lib.utils.output_utils import from_3d_image_to_nifti_file
-
+from lib.utils.utils3d import reshape_from_3d_to_flat
+from lib.utils.utils3d import reshape_from_flat_to_3d
 
 class VAE():
     """Variational Autoencoder
@@ -62,7 +63,8 @@ class VAE():
 
         (self.x_in, self.dropout_, self.z_mean, self.z_log_sigma,
          self.x_reconstructed, self.z_, self.x_reconstructed_,
-         self.cost, self.global_step, self.train_op) = handles[0:10]
+         self.cost, self.lat_loss, self.gen_loss,
+         self.global_step, self.train_op) = handles[0:12]
 
         self.__generate_tensorboard_files()
 
@@ -89,10 +91,13 @@ class VAE():
         self.path_to_logs = os.path.join(self.path_session_folder, "logs")
         self.path_to_meta = os.path.join(self.path_session_folder, "meta")
         self.path_to_grad_desc_error = os.path.join(self.path_to_logs, "DescGradError")
+        self.path_to_losses_log = os.path.join(self.path_to_logs , "losses_logs")
+
 
         create_directories([self.path_session_folder, self.path_to_images,
                             self.path_to_logs, self.path_to_meta,
-                            self.path_to_grad_desc_error])
+                            self.path_to_grad_desc_error,
+                            self.path_to_losses_log])
 
     @property
     def step(self):
@@ -119,7 +124,7 @@ class VAE():
         cost = tf.reduce_mean(rec_loss + kl_loss, name="vae_cost")
         cost += l2_reg
 
-        return cost
+        return cost, kl_loss, rec_loss
 
     def _build_graph(self):
         with tf.name_scope("input"):
@@ -151,7 +156,7 @@ class VAE():
         x_reconstructed = tf.identity(compose_all(decoding)(z), name="x_reconstructed")
 
         with tf.variable_scope("Cost_estimation"):
-            cost = self.__build_cost_estimate(x_reconstructed, x_in, z_mean, z_log_sigma)
+            cost, kl_loss, rec_loss = self.__build_cost_estimate(x_reconstructed, x_in, z_mean, z_log_sigma)
 
         # optimization
         global_step = tf.Variable(0, trainable=False)
@@ -166,14 +171,14 @@ class VAE():
 
         # ops to directly explore latent space
         # defaults to prior z ~ N(0, I)
+        with tf.variable_scope("Regenerator"):
+            z_ = tf.placeholder(tf.float32, shape=[None, self.architecture[-1]], name="latent_in")
 
-        z_ = tf.placeholder(tf.float32, shape=[None, self.architecture[-1]], name="latent_in")
-
-        x_reconstructed_ = tf.identity(compose_all(decoding)(z_),
-                                      name="x_reconstructed")
+            x_reconstructed_ = tf.identity(compose_all(decoding)(z_),
+                                          name="x_reconstructed")
 
         return (x_in, dropout, z_mean, z_log_sigma, x_reconstructed,
-                z_, x_reconstructed_, cost, global_step, train_op)
+                z_, x_reconstructed_, cost, kl_loss, rec_loss, global_step, train_op)
 
     def encode(self, x):
         """Probabilistic encoder from inputs to latent distribution parameters;
@@ -218,7 +223,8 @@ class VAE():
 
     def train(self, X, max_iter=np.inf, save_bool=False, suffix_files_generated=" ",
               iter_to_save=1000, iters_to_show_error=100,
-              bool_log_grad_desc_error=False, sgd_3dimages=None):
+              bool_log_grad_desc_error=False, sgd_3dimages=None,
+              similarity_evaluation=False, dump_losses_log=False):
         """
 
         :param X: sh[n_samples, n_voxeles]
@@ -236,6 +242,13 @@ class VAE():
 
         # Temporal Evolution of Region Initialization
         sgd_3dimages = self.__initialize_sgd_3d_images_folder(sgd_3dimages, X)
+
+        if dump_losses_log:
+            losses_log_file = self.__generate_losses_log_file(
+                suffix=suffix_files_generated,
+                similarity_evaluation=similarity_evaluation)
+        else:
+            losses_log_file = None
 
         # Gradient Descent log
         gradient_descent_log = None
@@ -256,9 +269,12 @@ class VAE():
                 x = get_batch_from_samples_unsupervised(
                     X, self.hyper_params['batch_size'])
 
+                # Autoencoder Session
                 feed_dict = {self.x_in: x, self.dropout_: self.hyper_params['dropout']}
-                fetches = [self.x_reconstructed, self.cost, self.global_step, self.train_op]
-                x_reconstructed, cost, i, _ = self.session.run(fetches, feed_dict)
+                fetches = [self.x_reconstructed, self.cost, self.lat_loss,
+                           self.gen_loss, self.global_step, self.train_op]
+                x_reconstructed, cost, lat_loss, gen_loss, i, _ = \
+                    self.session.run(fetches, feed_dict)
 
                 err_train += cost
 
@@ -266,13 +282,20 @@ class VAE():
                     gradient_descent_log.write("{0},{1}\n".format(i, cost))
 
                 if i % iters_to_show_error == 0:
-                    last_avg_cost = err_train / iters_to_show_error
-                    print("round {} --> avg cost: ".format(i), last_avg_cost)
-                    err_train = 0  # Reset the counting error
+                    self.__log_loss_data(
+                        iter_index=i,
+                        gen_loss=np.mean(gen_loss),
+                        lat_loss=np.mean(lat_loss),
+                        learning_rate=self.hyper_params['learning_rate'],
+                        images_flat=X,
+                        losses_log_file=losses_log_file,
+                        similarity_evaluation=similarity_evaluation)
+
 
                     if sgd_3dimages is not None:
                         self.__generate_and_save_temp_3d_images(
                             sgd_3dimages, suffix="iter_{}".format(i))
+
                 if i % iter_to_save == 0:
                     if save_bool:
                         self.save(saver, suffix_files_generated)
@@ -341,9 +364,11 @@ class VAE():
                                  'because it was not specified a folder for the session')
 
     def __generate_and_save_temp_3d_images(self, sgd_3dimages,suffix):
+        # Init Parameters
         path = sgd_3dimages["path"]
         stack_sample_to_dump = sgd_3dimages["sample_stack"]
-        #print(stack_sample_to_dump.shape)
+
+        # Autoencoder session
         feed_dict = {self.x_in: stack_sample_to_dump}
         generated_test = self.session.run(
             self.x_reconstructed[1, :],
@@ -358,3 +383,75 @@ class VAE():
 
         file_path = os.path.join(path, suffix + "_{}".format(sgd_3dimages["region"]))
         output_utils.from_3d_image_to_nifti_file(file_path, img3d_segmented)
+
+    def __log_loss_data(self, iter_index, gen_loss, lat_loss, learning_rate,
+                        images_flat, losses_log_file, similarity_evaluation):
+
+        if similarity_evaluation is not None:
+            # Generate %similarity in reconstruction
+            similarity_score, mse_score = \
+                self.__full_reconstruction_error_evaluation(images_flat=images_flat)
+
+            print("iter {0}: genloss {1}, latloss {2}, "
+                  "learning_rate {3}, Similarity Score: {4},"
+                  "MSE {5}".format(
+                iter_index, gen_loss, lat_loss,
+                learning_rate, similarity_score, mse_score))
+
+            if losses_log_file is not None:
+                losses_log_file.write("{0},{1},{2},{3},{4},{5}\n".format(
+                    iter_index, gen_loss, lat_loss,
+                    learning_rate, similarity_score, mse_score))
+
+        else:
+            print("iter {0}: genloss {1}, latloss {2}, learning_rate {3}".format(
+                    iter_index, gen_loss, lat_loss,learning_rate))
+
+            if losses_log_file is not None:
+                losses_log_file.write("{0},{1},{2},{3}\n".format(
+                    iter_index, gen_loss, lat_loss, learning_rate))
+
+    def __full_reconstruction_error_evaluation(self, images_flat):
+
+        n_samples = images_flat.shape[0]
+        feed_dict = {self.x_in: images_flat}
+        bool_logs = False
+
+        reconstructed_images = self.session.run(
+            self.x_reconstructed,
+            feed_dict=feed_dict)
+
+        diff_matrix = np.subtract(images_flat, reconstructed_images)
+
+        # similarity_evaluation
+        total_diff = diff_matrix.sum()
+        similarity_evaluation = abs(
+            total_diff / np.array(images_flat.shape).prod())
+
+        # MSE
+
+        square_diff_matrix = np.power(diff_matrix, 2)
+        mse_over_samples = square_diff_matrix.sum() / n_samples
+
+        if bool_logs:
+            print("Similarity {}%".format(similarity_evaluation))
+
+        return similarity_evaluation, mse_over_samples
+
+    def __generate_losses_log_file(self, suffix, similarity_evaluation):
+
+        path_to_file = \
+            os.path.join(self.path_to_losses_log,
+                         "{0}.txt".format(suffix))
+        file = open(path_to_file, "w")
+
+        if similarity_evaluation:
+            file.write("{0},{1},{2},{3},{4}, {5}".format(
+                "iteration", "generative loss", "latent layer loss",
+                "learning rate", "similarity score", "MSE error over samples\n"))
+        else:
+            file.write("{0},{1},{2},{3}".format(
+                "iteration", "generative loss", "latent layer loss",
+                "learning rate\n"))
+
+        return file

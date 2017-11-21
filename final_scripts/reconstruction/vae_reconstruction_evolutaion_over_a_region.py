@@ -104,4 +104,6 @@ v.train(dic_regions_to_flatten_voxels_pet[region],
         iter_to_save=500,
         iters_to_show_error=session_conf['show_error_iter'],
         save_bool=session_conf["save_meta_bool"],
-        sgd_3dimages=sgd_3Dimages)
+        sgd_3dimages=sgd_3Dimages,
+        similarity_evaluation=True,
+        dump_losses_log=True)
