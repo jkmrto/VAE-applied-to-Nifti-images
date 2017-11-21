@@ -254,7 +254,7 @@ class VAE():
 
                 # batch selector
                 x = get_batch_from_samples_unsupervised(
-                    X,self.hyper_params['batch_size'])
+                    X, self.hyper_params['batch_size'])
 
                 feed_dict = {self.x_in: x, self.dropout_: self.hyper_params['dropout']}
                 fetches = [self.x_reconstructed, self.cost, self.global_step, self.train_op]
@@ -344,7 +344,7 @@ class VAE():
         path = sgd_3dimages["path"]
         stack_sample_to_dump = sgd_3dimages["sample_stack"]
 
-        feed_dict = {self.z_: stack_sample_to_dump}
+        feed_dict = {self.x_in: stack_sample_to_dump}
         generated_test = self.session.run(
             self.x_reconstructed_[1, :],
             feed_dict=feed_dict)
