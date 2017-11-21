@@ -11,6 +11,7 @@ from datetime import datetime
 from lib.vae import VAE
 import tensorflow as tf
 import settings
+import lib.neural_net.kfrans_ops as ops
 
 
 def get_pet_region_required_data(region):
@@ -52,7 +53,7 @@ hyperparams = {
     "learning_rate": 1E-5,
     "dropout": 0.90,
     "lambda_l2_reg": 1E-5,
-    "nonlinearity": tf.nn.elu,
+    "nonlinearity": ops.lrelu,
     "squashing": tf.nn.sigmoid,
 }
 
