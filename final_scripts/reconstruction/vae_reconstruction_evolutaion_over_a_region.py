@@ -50,10 +50,10 @@ def get_pet_region_required_data(region):
 # Net Configuration
 hyperparams = {
     "batch_size": 64,
-    "learning_rate": 2E-6,
+    "learning_rate": 5E-6,
     "dropout": 0.90,
     "lambda_l2_reg": 1E-5,
-    "nonlinearity": ops.lrelu,
+    "nonlinearity": tf.nn.elu,
     "squashing": tf.nn.sigmoid,
 }
 
