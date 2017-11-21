@@ -12,8 +12,8 @@ from lib.utils import output_utils
 from lib.utils.functions import \
     get_batch_from_samples_unsupervised
 from lib.utils.os_aux import create_directories
-from lib.utils.utils_3dsamples import reshape_from_3d_to_flat
-from lib.utils.utils_3dsamples import reshape_from_flat_to_3d
+from lib.utils.utils3d import reshape_from_3d_to_flat
+from lib.utils.utils3d import reshape_from_flat_to_3d
 
 bool_save_meta = False
 

@@ -11,6 +11,8 @@ from lib.utils.functions import get_batch_from_samples_unsupervised
 from lib.utils.math_utils import sample_gaussian
 from lib.utils.os_aux import create_directories
 from lib.utils.utils import compose_all
+from lib.reconstruct_helpers import reconstruct_3d_image_from_flat_and_index
+from lib.utils.output_utils import from_3d_image_to_nifti_file
 
 
 class VAE():
@@ -216,8 +218,19 @@ class VAE():
 
     def train(self, X, max_iter=np.inf, save_bool=False, suffix_files_generated=" ",
               iter_to_save=1000, iters_to_show_error=100,
-              bool_log_grad_desc_error=False):
+              bool_log_grad_desc_error=False, sgd_3dimages=None):
+        """
 
+        :param X: sh[n_samples, n_voxeles]
+        :param max_iter:
+        :param save_bool:
+        :param suffix_files_generated:
+        :param iter_to_save:
+        :param iters_to_show_error:
+        :param bool_log_grad_desc_error:
+        :param sgd_3dimages:
+        :return:
+        """
         saver = tf.train.Saver(tf.global_variables()) if save_bool else None
         err_train = 0
 
@@ -227,6 +240,10 @@ class VAE():
             path_to_file = os.path.join(self.path_to_grad_desc_error,
                                     suffix_files_generated + ".log")
             gradient_descent_log = open(path_to_file, "w")
+
+
+        path_sgd3d_images, sample_stack_sgd = \
+            self.__initialize_sgd_3d_images_folder(sgd_3dimages, X)
 
         try:
             now = datetime.now().isoformat()[11:]
@@ -258,7 +275,7 @@ class VAE():
                         self.save(saver, suffix_files_generated)
 
                 if i >= max_iter:
-                    self.training_end_output( last_avg_cost)
+                    self.training_end_output(last_avg_cost)
 
                     if bool_log_grad_desc_error:
                         if self.path_session_folder is not None:
@@ -278,3 +295,41 @@ class VAE():
             now = datetime.now().isoformat()[11:]
             print("------- Training end: {} -------\n".format(now))
             sys.exit(0)
+
+    def __initialize_sgd_3d_images_folder(self, sgd_3dimages, X, logs=True):
+        if sgd_3dimages is not None:
+            if self.path_session_folder is not None:
+
+                path_sgd3d_images = os.path.join(self.path_to_images, "sgd_3dimages")
+                path_original_3dimg = os.path.join(path_sgd3d_images, "original")
+                create_directories([path_sgd3d_images])
+
+                sample_voxels = X[sgd_3dimages["sample"], :]
+                sample_stack = np.vstack((sample_voxels, sample_voxels))
+
+                img3d = reconstruct_3d_image_from_flat_and_index(
+                    image_flatten=sample_voxels,
+                    voxels_index=sgd_3dimages["voxels_location"],
+                    imgsize=sgd_3dimages["full_brain_size"],
+                    reshape_kind=sgd_3dimages["reshape_kind"])
+
+                from_3d_image_to_nifti_file(
+                    path_to_save=path_original_3dimg,
+                    image3d=img3d)
+
+                if logs:
+                    print("INITIALIZATION LOGS SGD TEMP 3D IMAGES")
+                    print("path sgd 3d iamges: {}".format(path_sgd3d_images))
+                    print("sample stack sgd images: {}".format(sample_stack.shape))
+                    print("sample selected: {}".format(sgd_3dimages["sample"]))
+                    print("full_brain_size: {}".format(sgd_3dimages["full_brain_size"]))
+                    print("region_size: {}".format(sgd_3dimages["region_size"]))
+                    print("shape voxels_location: {}".format(sgd_3dimages["voxels_location"].shape))
+                    print("reshape_kind: {}".format(sgd_3dimages["reshape_kind"]))
+
+                return path_sgd3d_images, sample_stack
+
+            else:
+                raise ValueError('It is not possible to store the temp 3d images'
+                                 'because it was not specified a folder for the session')
+

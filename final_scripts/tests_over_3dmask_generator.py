@@ -37,7 +37,6 @@ elif images == "PET":
     stack_dict = PET_stack_NORAD.get_full_stack()
     reshape_kind = "F"
     colour_kind = "jet"
-    atlas = pet_atlas.load_atlas()
 
 total_size = stack_dict['total_size']
 imgsize = stack_dict['imgsize']

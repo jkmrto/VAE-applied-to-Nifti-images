@@ -12,7 +12,6 @@ def generate_region_3dmaskatlas(
     :param totalsize:
     :return:
     """
-    print("hola")
     mask_atlas = np.zeros(imgsize)
     mask_atlas = mask_atlas.flatten()
     mask_atlas[no_bg_region_voxels_index] = 1
