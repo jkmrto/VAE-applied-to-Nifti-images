@@ -40,7 +40,7 @@ def from_3d_image_to_nifti_file(path_to_save, image3d):
     img_flat = np.reshape(image3d, [total_size])
 
     max = img_flat.max()
-    print("Maximum value: {}".format(max))
+    #print("Maximum value: {}".format(max))
     if max > 1:
         img_flat = img_flat / max
     else:

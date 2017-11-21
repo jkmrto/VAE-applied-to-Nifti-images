@@ -343,7 +343,7 @@ class VAE():
     def __generate_and_save_temp_3d_images(self, sgd_3dimages,suffix):
         path = sgd_3dimages["path"]
         stack_sample_to_dump = sgd_3dimages["sample_stack"]
-        print(stack_sample_to_dump.shape)
+        #print(stack_sample_to_dump.shape)
         feed_dict = {self.x_in: stack_sample_to_dump}
         generated_test = self.session.run(
             self.x_reconstructed[1, :],
