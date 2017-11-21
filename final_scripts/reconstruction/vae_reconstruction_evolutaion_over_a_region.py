@@ -91,6 +91,7 @@ sgd_3Dimages = {
     "region_size": region_size,
     "voxels_location": region_voxels_location,
     "reshape_kind": "F",
+    "region": 3,
 }
 
 tf.reset_default_graph()

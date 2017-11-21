@@ -1,10 +1,10 @@
 import os
 import sys
 from datetime import datetime
-
+from lib.utils import output_utils
 import numpy as np
 import tensorflow as tf
-
+from lib.utils import utils3d
 import lib.loss_function as loss
 from lib.neural_net.layers import Dense
 from lib.utils.functions import get_batch_from_samples_unsupervised
@@ -234,6 +234,9 @@ class VAE():
         saver = tf.train.Saver(tf.global_variables()) if save_bool else None
         err_train = 0
 
+        # Temporal Evolution of Region Initialization
+        sgd_3dimages = self.__initialize_sgd_3d_images_folder(sgd_3dimages, X)
+
         # Gradient Descent log
         gradient_descent_log = None
         if bool_log_grad_desc_error:
@@ -241,9 +244,6 @@ class VAE():
                                     suffix_files_generated + ".log")
             gradient_descent_log = open(path_to_file, "w")
 
-
-        path_sgd3d_images, sample_stack_sgd = \
-            self.__initialize_sgd_3d_images_folder(sgd_3dimages, X)
 
         try:
             now = datetime.now().isoformat()[11:]
@@ -270,6 +270,9 @@ class VAE():
                     print("round {} --> avg cost: ".format(i), last_avg_cost)
                     err_train = 0  # Reset the counting error
 
+                    if sgd_3dimages is not None:
+                        self.__generate_and_save_temp_3d_images(
+                            sgd_3dimages, suffix="iter_{}".format(i))
                 if i % iter_to_save == 0:
                     if save_bool:
                         self.save(saver, suffix_files_generated)
@@ -313,9 +316,11 @@ class VAE():
                     imgsize=sgd_3dimages["full_brain_size"],
                     reshape_kind=sgd_3dimages["reshape_kind"])
 
+                img3d_segmented = utils3d.get_3dimage_segmented(img3d)
+
                 from_3d_image_to_nifti_file(
                     path_to_save=path_original_3dimg,
-                    image3d=img3d)
+                    image3d=img3d_segmented)
 
                 if logs:
                     print("INITIALIZATION LOGS SGD TEMP 3D IMAGES")
@@ -327,9 +332,29 @@ class VAE():
                     print("shape voxels_location: {}".format(sgd_3dimages["voxels_location"].shape))
                     print("reshape_kind: {}".format(sgd_3dimages["reshape_kind"]))
 
-                return path_sgd3d_images, sample_stack
+                sgd_3dimages["path"] = path_sgd3d_images
+                sgd_3dimages["sample_stack"] = sample_stack
+                return sgd_3dimages
 
             else:
                 raise ValueError('It is not possible to store the temp 3d images'
                                  'because it was not specified a folder for the session')
 
+    def __generate_and_save_temp_3d_images(self, sgd_3dimages,suffix):
+        path = sgd_3dimages["path"]
+        stack_sample_to_dump = sgd_3dimages["sample_stack"]
+
+        feed_dict = {self.z_: stack_sample_to_dump}
+        generated_test = self.session.run(
+            self.x_reconstructed_[1, :],
+            feed_dict=feed_dict)
+
+        img3d = reconstruct_3d_image_from_flat_and_index(
+            image_flatten=generated_test,
+            voxels_index=sgd_3dimages["voxels_location"],
+            imgsize=sgd_3dimages["full_brain_size"],
+            reshape_kind=sgd_3dimages["reshape_kind"])
+        img3d_segmented = utils3d.get_3dimage_segmented(img3d)
+
+        file_path = os.path.join(path, suffix + "_{}".format(sgd_3dimages["region"]))
+        output_utils.from_3d_image_to_nifti_file(file_path, img3d_segmented)
