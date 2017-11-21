@@ -60,7 +60,7 @@ hyperparams = {
 # Vae session cofiguration
 session_conf = {
     "bool_normalized": True,
-    "max_iter": 10000,
+    "max_iter": 50000,
     "save_meta_bool": False,
     "show_error_iter": 100,
 }
