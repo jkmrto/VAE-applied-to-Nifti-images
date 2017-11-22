@@ -17,6 +17,12 @@ from lib.utils import os_aux
 
 # AD 123
 # NOR 22
+
+explicit_iter_per_region = {
+    73: 300,
+    44: 900,
+}
+
 patients_selected_per_class = {"NOR": 22, "AD": 123}
 logs = True
 regions_used = "all"
@@ -24,7 +30,7 @@ regions_used = "all"
 session_name = "main_cvae_net"
 folder_name_to_store_images_created = "Pair_reconstruction_comparaison"
 
-iters = 2000
+max_iters = 2000
 # images_used = "MRI_WM"
 # images_used = "MRI_GM"
 images_used = "PET"
@@ -50,9 +56,15 @@ origin_images_to_encode = \
 reconstruction_per_region = {}
 for region in list_regions:
     print("region {} selected".format(region))
+
+    iters = session.get_adequate_number_iterations(
+        region, explicit_iter_per_region, max_iters)
+
     meta_region_file = "region_{0}-{1}".format(region, iters)
     path_meta_region = os.path.join(path_meta, meta_region_file)
     tf.reset_default_graph()
+
+
 
     # CVAE encoding
     hyperparams = {}
