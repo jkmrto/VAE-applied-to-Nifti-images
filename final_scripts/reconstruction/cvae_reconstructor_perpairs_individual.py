@@ -70,6 +70,7 @@ for region in list_regions:
     hyperparams = {}
     hyperparams['image_shape'] = origin_images_to_encode[region].shape[1:]
     cvae = CVAE.CVAE(hyperparams=hyperparams, path_meta_graph=path_meta_region)
+    cvae.generate_meta_net()
 
     # encoding_images
     print("Encoding")
