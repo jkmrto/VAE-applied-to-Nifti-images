@@ -82,6 +82,7 @@ class CVAE():
 
         # initializing attributes
         handles = self.session.graph.get_collection_ref(CVAE.RESTORE_KEY)
+        print("laoding meta net")
         self.in_flat_images, self.z_mean, self.z_stddev, \
         self.z_in_, self.regenerated_3d_images_ = handles[0:5]
 
