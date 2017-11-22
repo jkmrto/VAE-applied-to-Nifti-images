@@ -27,7 +27,7 @@ hyperparams = {'latent_layer_dim': 100,
                'stride': 2,
                'features_depth': [1, 16, 32, 64],
                'decay_rate': 0.0025,
-               'learning_rate': 0.0001,
+               'learning_rate': 0.001,
                'lambda_l2_regularization': 0.0001,
                'cvae_model': "3layers"}
 
