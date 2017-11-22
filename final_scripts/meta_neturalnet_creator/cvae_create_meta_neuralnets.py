@@ -25,11 +25,11 @@ hyperparams = {'latent_layer_dim': 100,
                'kernel_size': [5, 5, 5],
                'activation_layer': ops.lrelu,
                'stride': 2,
-               'features_depth': [1, 16, 32],
+               'features_depth': [1, 16, 32, 64],
                'decay_rate': 0.0025,
                'learning_rate': 0.0001,
                'lambda_l2_regularization': 0.0001,
-               'cvae_model': "2layers"}
+               'cvae_model': "3layers"}
 
 session_conf = {'bool_normalized': False,
                 'n_iters': max_iters,
