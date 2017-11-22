@@ -94,15 +94,15 @@ for i in range(0, n_samples):
     path_section_compare = os.path.join(path_section_compare, "sample:{}".format(i))
 
     output.from_3d_image_to_nifti_file(
-        path_3D_original, whole_reconstruction[i, :, :, :])
+        path_3D_reconstruction, whole_reconstruction[i, :, :, :])
     output.from_3d_image_to_nifti_file(
-        path_3D_reconstruction, origin_image[i, :, :, :])
+        path_3D_original, origin_image[i, :, :, :])
 
     recons.plot_section_indicated(
         img3d_1=whole_reconstruction[i, :, :, :],
         img3d_2=origin_image[i, :, :, :],
-        p1=settings.planos_hipocampo.p1,
-        p2=settings.planos_hipocampo.p2,
-        p3=settings.planos_hipocampo.p3,
+        p1=settings.planos_hipocampo["p1"],
+        p2=settings.planos_hipocampo["p2"],
+        p3=settings.planos_hipocampo["p3"],
         path_to_save_image=path_section_compare,
         cmap=cmap)
