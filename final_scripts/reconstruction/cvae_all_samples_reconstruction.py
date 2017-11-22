@@ -11,6 +11,7 @@ from lib import reconstruct_helpers as recons
 from lib.data_loader import utils_images3d
 from lib.utils import output_utils as output
 from lib.vae import CVAE
+from lib.utils.os_aux import create_directories
 
 
 explicit_iter_per_region = {
@@ -19,15 +20,23 @@ explicit_iter_per_region = {
 }
 
 logs = True
-regions_used = "all"
-session_name = "main_cvae_net"
 max_iters = 2000
 images_used = "PET"
 
+# Region to use
+regions_used = "all"
 list_regions = session.select_regions_to_evaluate(regions_used)
+
+# Directories Initialization
+session_name = "main_cvae_net"
 path_session = os.path.join(settings.path_to_general_out_folder, session_name)
 path_meta = os.path.join(path_session, "meta")
+path_images = os.path.join(path_session, "images")
+path_3dsamples = os.path.join(path_images, "3d_samples_reconstruction_and_original")
+path_section_compare = os.path.join(path_images,"section_samples_reconstructionVSoriginal")
+create_directories([path_images, path_3dsamples, path_section_compare])
 
+# Loadin Data
 stack_region_to_3dimg, patient_labels, n_samples, cmap = \
     recons.load_desired_stacked_and_parameters(images_used, list_regions)
 
@@ -45,7 +54,8 @@ for region in list_regions:
     # CVAE encoding
     hyperparams = {}
     hyperparams['image_shape'] = stack_region_to_3dimg[region].shape[1:]
-    cvae = CVAE.CVAE(hyperparams=hyperparams, meta_path=path_meta_region)
+    cvae = CVAE.CVAE(hyperparams=hyperparams, path_meta_graph=path_meta_region)
+    cvae.generate_meta_net()
 
     # encoding_images
     print("Encoding")
@@ -57,36 +67,42 @@ for region in list_regions:
         print("Shape enconding_out mean {}".format(data_to_decode.shape))
 
     print("Decoding")
-    images_3d_regenerated = cvae.decoder(latent_layer_input=data_to_decode,
-            original_images=stack_region_to_3dimg[region])
+    images_3d_regenerated = cvae.decoder(
+        latent_layer_input=data_to_decode,
+        original_images=stack_region_to_3dimg[region])
 
     reconstruction_per_region[region] = images_3d_regenerated
     if logs:
         print("images regenerated shape {}".format(images_3d_regenerated.shape))
 
 
-
 print("Mapping Reconstructing images")
 whole_reconstruction =\
-    utils_images3d.map_region_segmented_over_full_image(reconstruction_per_region, images_used)
+        utils_images3d.map_region_segmented_over_full_image(
+            reconstruction_per_region, images_used)
 print("Mapping Reconstructing images ended")
 
-
-print("Mapping Reconstructing images")
+print("Mapping Original images")
 origin_image = \
-    utils_images3d.map_region_segmented_over_full_image(origin_images_to_encode, images_used)
+        utils_images3d.map_region_segmented_over_full_image(
+            stack_region_to_3dimg, images_used)
+print("Mapping Original images ended")
 
-output.from_3d_image_to_nifti_file(path_to_save="example_neg",
-                                   image3d=whole_reconstruction[0, :, :, :])
+for i in range(0, n_samples):
+    path_3D_original = os.path.join(path_3dsamples, "sample:{}_original".format(i))
+    path_3D_reconstruction = os.path.join(path_3dsamples, "sample:{}_reconstruction".format(i))
+    path_section_compare = os.path.join(path_section_compare, "sample:{}".format(i))
 
-output.from_3d_image_to_nifti_file(path_to_save="example_pos",
-                                   image3d=origin_image[0, :, :, :])
+    output.from_3d_image_to_nifti_file(
+        path_3D_original, whole_reconstruction[i, :, :, :])
+    output.from_3d_image_to_nifti_file(
+        path_3D_reconstruction, origin_image[i, :, :, :])
 
-recons.plot_section_indicated(
-    img3d_1=whole_reconstruction[0, :, :, :],
-    img3d_2=origin_image[0, :, :, :],
-    p1=settings.planos_hipocampo.p1,
-    p2=settings.planos_hipocampo.p2,
-    p3=settings.planos_hipocampo.p3,
-    path_to_save_image=path_image,
-    cmap=cmap)
+    recons.plot_section_indicated(
+        img3d_1=whole_reconstruction[i, :, :, :],
+        img3d_2=origin_image[i, :, :, :],
+        p1=settings.planos_hipocampo.p1,
+        p2=settings.planos_hipocampo.p2,
+        p3=settings.planos_hipocampo.p3,
+        path_to_save_image=path_section_compare,
+        cmap=cmap)
