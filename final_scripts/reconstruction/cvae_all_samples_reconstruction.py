@@ -35,9 +35,7 @@ reconstruction_per_region = {}
 for region in list_regions:
 
     iters = session.get_adequate_number_iterations(
-        region_selected=region,
-        explicit_iter_per_region = explicit_iter_per_region,
-        predefined_iters = max_iters)
+        region, explicit_iter_per_region, max_iters)
 
     print("region {} selected".format(region))
     meta_region_file = "region_{0}-{1}".format(region, iters)
@@ -46,12 +44,12 @@ for region in list_regions:
 
     # CVAE encoding
     hyperparams = {}
-    hyperparams['image_shape'] = origin_images_to_encode[region].shape[1:]
+    hyperparams['image_shape'] = stack_region_to_3dimg[region].shape[1:]
     cvae = CVAE.CVAE(hyperparams=hyperparams, meta_path=path_meta_region)
 
     # encoding_images
     print("Encoding")
-    encoding_out = cvae.encode(origin_images_to_encode[region])
+    encoding_out = cvae.encode(stack_region_to_3dimg[region])
 
     data_to_decode = encoding_out["mean"]
 
@@ -60,8 +58,35 @@ for region in list_regions:
 
     print("Decoding")
     images_3d_regenerated = cvae.decoder(latent_layer_input=data_to_decode,
-            original_images=origin_images_to_encode[region])
+            original_images=stack_region_to_3dimg[region])
 
     reconstruction_per_region[region] = images_3d_regenerated
     if logs:
         print("images regenerated shape {}".format(images_3d_regenerated.shape))
+
+
+
+print("Mapping Reconstructing images")
+whole_reconstruction =\
+    utils_images3d.map_region_segmented_over_full_image(reconstruction_per_region, images_used)
+print("Mapping Reconstructing images ended")
+
+
+print("Mapping Reconstructing images")
+origin_image = \
+    utils_images3d.map_region_segmented_over_full_image(origin_images_to_encode, images_used)
+
+output.from_3d_image_to_nifti_file(path_to_save="example_neg",
+                                   image3d=whole_reconstruction[0, :, :, :])
+
+output.from_3d_image_to_nifti_file(path_to_save="example_pos",
+                                   image3d=origin_image[0, :, :, :])
+
+recons.plot_section_indicated(
+    img3d_1=whole_reconstruction[0, :, :, :],
+    img3d_2=origin_image[0, :, :, :],
+    p1=settings.planos_hipocampo.p1,
+    p2=settings.planos_hipocampo.p2,
+    p3=settings.planos_hipocampo.p3,
+    path_to_save_image=path_image,
+    cmap=cmap)
