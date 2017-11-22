@@ -63,7 +63,10 @@ def execute_saving_meta_graph_without_any_cv(region_cubes_dict, hyperparams,
                           save_bool=True,
                           break_if_nan_error_value=True,
                           suffix_files_generated=
-                          "region_{}".format(region_selected))
+                          "region_{}".format(region_selected),
+                          similarity_evaluation=True,
+                          dump_losses_log=True,
+                          iter_to_save=200)
         if out == -1:
             print("Region {} Training process failed!"
                   "SGD doesnt converge".format(region_selected))

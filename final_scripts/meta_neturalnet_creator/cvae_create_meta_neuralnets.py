@@ -16,12 +16,13 @@ region_to_img_dict = load_pet_regions_segmented(list_regions,
                                                 bool_logs=False)
 explicit_iter_per_region = {
     73: 300,
+    44: 900,
 }
 
-max_iters = 1000
+max_iters = 2000
 
-hyperparams = {'latent_layer_dim': 1000,
-               'kernel_size': [5,5,5],
+hyperparams = {'latent_layer_dim': 100,
+               'kernel_size': [5, 5, 5],
                'activation_layer': ops.lrelu,
                'stride': 2,
                'features_depth': [1, 16, 32],
