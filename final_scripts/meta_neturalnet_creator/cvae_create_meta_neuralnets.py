@@ -11,7 +11,7 @@ from lib.over_regions_lib.cvae_over_regions import \
     execute_saving_meta_graph_without_any_cv
 
 regions_used = "all"
-last_valid_region_with_meta_generated = 30
+last_valid_region_with_meta_generated = 42
 
 list_regions = range(last_valid_region_with_meta_generated + 1, 117, 1)
 region_to_img_dict = load_pet_regions_segmented(list_regions,
