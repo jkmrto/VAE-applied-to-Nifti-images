@@ -89,14 +89,14 @@ origin_image = \
 print("Mapping Original images ended")
 
 for i in range(0, n_samples):
-    path_3D_original = os.path.join(path_3dsamples, "sample:{}_original".format(i))
-    path_3D_reconstruction = os.path.join(path_3dsamples, "sample:{}_reconstruction".format(i))
-    path_section_compare = os.path.join(path_section_compare, "sample:{}".format(i))
+    path_3D_original_image = os.path.join(path_3dsamples, "sample:{}_original".format(i))
+    path_3D_reconstruction_image = os.path.join(path_3dsamples, "sample:{}_reconstruction".format(i))
+    path_section_compare_image = os.path.join(path_section_compare, "sample:{}".format(i))
 
     output.from_3d_image_to_nifti_file(
-        path_3D_reconstruction, whole_reconstruction[i, :, :, :])
+        path_3D_reconstruction_image, whole_reconstruction[i, :, :, :])
     output.from_3d_image_to_nifti_file(
-        path_3D_original, origin_image[i, :, :, :])
+        path_3D_original_image, origin_image[i, :, :, :])
 
     recons.plot_section_indicated(
         img3d_1=whole_reconstruction[i, :, :, :],
@@ -104,5 +104,5 @@ for i in range(0, n_samples):
         p1=settings.planos_hipocampo["p1"],
         p2=settings.planos_hipocampo["p2"],
         p3=settings.planos_hipocampo["p3"],
-        path_to_save_image=path_section_compare,
+        path_to_save_image=path_section_compare_image,
         cmap=cmap)
