@@ -89,6 +89,7 @@ def delete_simple_session(session_to_clean_meta_folder=None):
     # clear_meta_folder(WM_session_to_clean)
     clear_meta_folder(session_to_clean_meta_folder)
 
+path_to_session = "/home/jkmrto/RemoteDisks/BiosipServer/new_folder_3/VAN-applied-to-Nifti-images/out/cvae_create_meta_nets_iter_1000-layer_22_11_2017_18:40/meta"
 
 #delete_cv_gm_wm_premetada_session()
-#delete_simple_session()
+delete_simple_session(path_to_session)
