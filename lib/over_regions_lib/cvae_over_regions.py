@@ -43,14 +43,16 @@ def execute_saving_meta_graph_without_any_cv(region_cubes_dict, hyperparams,
             train_cube_images[train_cube_images < 0] = 0
             train_cube_images[train_cube_images > 1] = 1
 
-        tf.reset_default_graph()
-        model = CVAE.CVAE(hyperparams, path_to_session=path_to_session)
 
         max_train_iter = session.get_adequate_number_iterations(
-                                                        region_selected,
-                                                        explicit_iter_per_region,
-                                                        predefined_iters=
-                                                        session_conf["n_iters"])
+            region_selected, explicit_iter_per_region,session_conf["n_iters"])
+
+        cvae_model = CVAE_helper.select_model(hyperparams["cvae_model"])
+
+        tf.reset_default_graph()
+        model = cvae_model(hyperparams, path_to_session=path_to_session)
+        model.generate_meta_net()
+
 
         print("Numbers Iters requered {}".format(max_train_iter))
         out = model.train(X=train_cube_images,
@@ -61,14 +63,7 @@ def execute_saving_meta_graph_without_any_cv(region_cubes_dict, hyperparams,
                           save_bool=True,
                           break_if_nan_error_value=True,
                           suffix_files_generated=
-                          "region_{}".format(region_selected),
-                          final_dump_comparison=
-                          session_conf["final_dump_comparison"],
-                          final_dump_samples_to_compare=
-                          session_conf["final_dump_samples_to_compare"],
-                          final_dump_planes_per_axis_to_show_in_compare=
-                          session_conf["final_dump_planes_per_axis_to_show_in_compare"][region_selected])
-
+                          "region_{}".format(region_selected))
         if out == -1:
             print("Region {} Training process failed!"
                   "SGD doesnt converge".format(region_selected))

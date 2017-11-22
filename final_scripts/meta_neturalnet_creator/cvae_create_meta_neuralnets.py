@@ -26,7 +26,8 @@ hyperparams = {'latent_layer_dim': 1000,
                'features_depth': [1, 16, 32],
                'decay_rate': 0.0025,
                'learning_rate': 0.001,
-               'lambda_l2_regularization': 0.0001}
+               'lambda_l2_regularization': 0.0001,
+               'cvae_model': "2layers"}
 
 session_conf = {'bool_normalized': False,
                 'n_iters': 1000,
