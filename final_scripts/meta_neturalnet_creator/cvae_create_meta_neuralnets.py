@@ -21,16 +21,17 @@ explicit_iter_per_region = {
 max_iters = 1000
 
 hyperparams = {'latent_layer_dim': 1000,
-               'kernel_size': 5,
+               'kernel_size': [5,5,5],
                'activation_layer': ops.lrelu,
+               'stride': 2,
                'features_depth': [1, 16, 32],
                'decay_rate': 0.0025,
-               'learning_rate': 0.001,
+               'learning_rate': 0.0001,
                'lambda_l2_regularization': 0.0001,
                'cvae_model': "2layers"}
 
 session_conf = {'bool_normalized': False,
-                'n_iters': 1000,
+                'n_iters': max_iters,
                 "batch_size": 64,
                 "show_error_iter": 100}
 
