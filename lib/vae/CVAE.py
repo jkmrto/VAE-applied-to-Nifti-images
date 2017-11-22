@@ -48,18 +48,20 @@ class CVAE():
 
     def generate_meta_net(self):
 
-        # Initizalizing graph values
-        self.n_z = self.hyperparams['latent_layer_dim']
-        self.lambda_l2_reg = self.hyperparams['lambda_l2_regularization']
-        self.learning_rate = self.hyperparams['learning_rate']
-        self.features_depth = self.hyperparams['features_depth']
-        self.kernel_size = self.hyperparams['kernel_size']
-        self.activation_layer = self.hyperparams['activation_layer']
-        self.decay_rate_value = float(self.hyperparams['decay_rate'])
-        self.stride = self.hyperparams['stride']
-        self.path_session_folder = self.init_path_to_session
 
         if self.path_meta_graph is None:
+
+            # Initizalizing graph values
+            self.n_z = self.hyperparams['latent_layer_dim']
+            self.lambda_l2_reg = self.hyperparams['lambda_l2_regularization']
+            self.learning_rate = self.hyperparams['learning_rate']
+            self.features_depth = self.hyperparams['features_depth']
+            self.kernel_size = self.hyperparams['kernel_size']
+            self.activation_layer = self.hyperparams['activation_layer']
+            self.decay_rate_value = float(self.hyperparams['decay_rate'])
+            self.stride = self.hyperparams['stride']
+            self.path_session_folder = self.init_path_to_session
+
             self.__build_graph()
 
             if self.path_session_folder is not None:
