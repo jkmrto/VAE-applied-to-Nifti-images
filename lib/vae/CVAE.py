@@ -22,7 +22,8 @@ class CVAE():
     RESTORE_KEY = "restore"
 
     def __init__(self, hyperparams, test_bool=False,
-                 path_to_session=None, generate_tensorboard=False):
+                 path_to_session=None, generate_tensorboard=False,
+                 path_meta_graph=None):
 
         assert "image_shape" in list(hyperparams), \
             "image_shape should be specified in hyperparams"
@@ -33,6 +34,7 @@ class CVAE():
         self.hyperparams = hyperparams
         self.init_path_to_session = path_to_session
         self.generate_tensorboard = generate_tensorboard
+        self.path_meta_graph = path_meta_graph
 
         self.dim_in_first_layer = None
         self.dim_out_first_layer = None
@@ -57,23 +59,26 @@ class CVAE():
         self.stride = self.hyperparams['stride']
         self.path_session_folder = self.init_path_to_session
 
-        self.__build_graph()
+        if self.path_meta_graph is None:
+            self.__build_graph()
 
-        if self.path_session_folder is not None:
-            self.__init_session_folders()
+            if self.path_session_folder is not None:
+                self.__init_session_folders()
 
-        self.__generate_tensorboard_files()
+            self.__generate_tensorboard_files()
 
-        handles = [self.in_flat_images, self.z_mean, self.z_stddev,
+            handles = [self.in_flat_images, self.z_mean, self.z_stddev,
                        self.z_in_, self.regenerated_3d_images_]
-        for handle in handles:
-            tf.add_to_collection(CVAE.RESTORE_KEY, handle)
+            for handle in handles:
+                tf.add_to_collection(CVAE.RESTORE_KEY, handle)
 
-        self.session.run(tf.initialize_all_variables())
+            self.session.run(tf.initialize_all_variables())
+        else:
+            self.load_meta_net()
 
-    def load_meta_net(self, meta_path):
-        new_saver = tf.train.import_meta_graph(meta_path + ".meta")
-        new_saver.restore(self.session, meta_path)
+    def load_meta_net(self):
+        new_saver = tf.train.import_meta_graph(self.path_meta_graph + ".meta")
+        new_saver.restore(self.session, self.path_meta_graph)
 
         # initializing attributes
         handles = self.session.graph.get_collection_ref(CVAE.RESTORE_KEY)

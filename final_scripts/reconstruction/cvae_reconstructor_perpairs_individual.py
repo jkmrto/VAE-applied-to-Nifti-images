@@ -19,8 +19,8 @@ from lib.utils import os_aux
 # NOR 22
 
 explicit_iter_per_region = {
-    73: 300,
-    44: 900,
+    73: 200,
+    44: 800,
 }
 
 patients_selected_per_class = {"NOR": 22, "AD": 123}
@@ -69,7 +69,7 @@ for region in list_regions:
     # CVAE encoding
     hyperparams = {}
     hyperparams['image_shape'] = origin_images_to_encode[region].shape[1:]
-    cvae = CVAE.CVAE(hyperparams=hyperparams, meta_path=path_meta_region)
+    cvae = CVAE.CVAE(hyperparams=hyperparams, path_meta_graph=path_meta_region)
 
     # encoding_images
     print("Encoding")
