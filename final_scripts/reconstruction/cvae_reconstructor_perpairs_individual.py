@@ -20,10 +20,11 @@ from lib.utils import os_aux
 patients_selected_per_class = {"NOR": 22, "AD": 123}
 logs = True
 regions_used = "all"
-session_name = settings.perclass_AD_session
+#session_name = settings.perclass_AD_session
+session_name = "main_cvae_net"
 folder_name_to_store_images_created = "Pair_reconstruction_comparaison"
 
-iters = 500
+iters = 2000
 # images_used = "MRI_WM"
 # images_used = "MRI_GM"
 images_used = "PET"
