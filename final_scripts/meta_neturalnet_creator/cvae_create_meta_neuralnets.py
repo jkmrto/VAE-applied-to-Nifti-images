@@ -21,7 +21,6 @@ explicit_iter_per_region = {
     44: 900,
 }
 
-max_iters = 2000
 
 hyperparams = {'latent_layer_dim': 100,
                'kernel_size': [5, 5, 5],

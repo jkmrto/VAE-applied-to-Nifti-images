@@ -91,7 +91,7 @@ def load_pet_regions_flatten(list_regions):
 
 # out = load_pet_regions_flatten([2, 3, 4, 5, 6])
 
-def load_pet_data_flat(list_regions):
+def load_pet_data_flat(list_regions, bool_logs=False):
     dic_regions_to_flatten_voxels_pet = load_pet_regions_flatten(list_regions)
     patient_labels = PET_stack_NORAD.load_patients_labels()
     n_samples = dic_regions_to_flatten_voxels_pet[list_regions[0]].shape[0]

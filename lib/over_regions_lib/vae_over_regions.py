@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-
+import sys
 import tensorflow as tf
 
 from lib import session_helper as session
@@ -204,4 +204,55 @@ def execute_without_any_logs(region_to_flat_voxels_train_dict,
 
     return per_region_results
 
+
+def execute_saving_meta_without_cv(
+    dic_region_to_flat_voxels, hyperparams, session_conf, after_input_architecture,
+    list_regions, path_to_root, explicit_iter_per_region, session_prefix_name):
+
+    own_datetime = datetime.now().strftime(r"%d_%m_%_Y_%H:%M")
+    session_name = session_prefix_name + "_" + own_datetime
+
+    path_to_session = os.path.join(path_to_root, session_name)
+    create_directories([path_to_session])
+
+    session.generate_predefined_session_descriptor(
+        path_session_folder= path_to_session,
+        vae_hyperparameters= hyperparams,
+        configuration=session_conf
+    )
+
+    for region_selected in list_regions:
+        matrix_voxels = dic_region_to_flat_voxels[region_selected]
+
+        architecture = [matrix_voxels.shape[1]]
+        architecture.extend(after_input_architecture)
+
+        tf.reset_default_graph()
+        v = VAE.VAE(architecture, hyperparams,
+                path_to_session=path_to_session)
+
+        max_train_iter = session.get_adequate_number_iterations(
+            region_selected, explicit_iter_per_region, session_conf["n_iters"])
+
+        print("Numbers Iters requered {}".format(max_train_iter))
+        out = v.train(X=matrix_voxels,
+                      max_iter=max_train_iter,
+                      iters_to_show_error=session_conf["show_error_iter"],
+                      save_bool=True,
+                      suffix_files_generated=
+                      "region_{}".format(region_selected),
+                      similarity_evaluation=True,
+                      dump_losses_log=True,
+                      iter_to_save=100)
+        if out == -1:
+            print("Region {} Training process failed!"
+              "SGD doesnt converge".format(region_selected))
+            print("Exiting, readjust parameter for that region")
+            sys.exit(0)
+
+        elif out == 0:
+            print("Region {} Correctly Trained and Saved!".format(
+                region_selected))
+
+    return path_to_session
 #auto_execute()
