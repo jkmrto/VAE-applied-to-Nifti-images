@@ -3,8 +3,6 @@ import sys
 import tensorflow as tf
 sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
 import settings
-
-import lib.neural_net.kfrans_ops as ops
 from lib import session_helper
 from lib.data_loader.pet_loader import load_pet_data_flat
 from lib.delete_pre_final_meta_data import delete_simple_session
@@ -37,7 +35,7 @@ hyperparams = {
 # Vae session cofiguration
 session_conf = {
     "bool_normalized": True,
-    "max_iter": max_iters,
+    "n_iters": max_iters,
     "save_meta_bool": True,
     "show_error_iter": 100,
     "after_input_architecture": [1500, 1000, 500], # no include hidden layer
