@@ -83,19 +83,20 @@ whole_reconstruction = reconstruct_from_flat_regions_to_full_3d_brain(
 origin_image = reconstruct_from_flat_regions_to_full_3d_brain(
     stack_region_to_voxels, images_used)
 
-for i in range(0, n_samples):
+for sample in range(0, n_samples):
     path_3D_original_image = os.path.join(path_3dsamples, "sample:{}_original".format(i))
     path_3D_reconstruction_image = os.path.join(path_3dsamples, "sample:{}_reconstruction".format(i))
     path_section_compare_image = os.path.join(path_section_compare, "sample:{}".format(i))
 
     output.from_3d_image_to_nifti_file(
-        path_3D_reconstruction_image, whole_reconstruction[i, :, :, :])
+        path_3D_reconstruction_image, whole_reconstruction[sample, :, :, :])
     output.from_3d_image_to_nifti_file(
-        path_3D_original_image, origin_image[i, :, :, :])
+        path_3D_original_image, origin_image[sample, :, :, :])
 
     recons.plot_section_indicated(
-        img3d_1=whole_reconstruction[i, :, :, :],
-        img3d_2=origin_image[i, :, :, :],
+        tittle="Original vs Reconstructed. Sample {}".format(sample),
+        img3d_1=origin_image[sample, :, :, :],
+        img3d_2=whole_reconstruction[sample, :, :, :],
         p1=settings.planos_hipocampo["p1"],
         p2=settings.planos_hipocampo["p2"],
         p3=settings.planos_hipocampo["p3"],
