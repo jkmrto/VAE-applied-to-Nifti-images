@@ -71,7 +71,7 @@ for region_selected in list_regions:
 
     data_to_decode = encoding_out["mean"]
 
-    decode_out = vae.encode(data_to_decode)
+    decode_out = vae.decode(data_to_decode)
 
     reconstruction_per_region[region_selected] = decode_out
 
