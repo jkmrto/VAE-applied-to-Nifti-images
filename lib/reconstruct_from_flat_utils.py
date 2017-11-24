@@ -88,4 +88,4 @@ def test_reconstruct_from_flat_regions_to_full_3d_brain():
             path_to_save_image=path_section_sample,
             cmap="jet")
 
-test_reconstruct_from_flat_regions_to_full_3d_brain()
+#test_reconstruct_from_flat_regions_to_full_3d_brain()
