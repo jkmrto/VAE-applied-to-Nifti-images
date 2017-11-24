@@ -85,7 +85,7 @@ origin_image = reconstruct_from_flat_regions_to_full_3d_brain(
 
 for sample in range(0, n_samples):
     path_3D_original_image = os.path.join(path_3dsamples, "sample:{}_original".format(sample))
-    path_3D_reconstruction_image = os.path.join(path_3dsamples, "sample:{}_reconstruction".format(i))
+    path_3D_reconstruction_image = os.path.join(path_3dsamples, "sample:{}_reconstruction".format(sample))
     path_section_compare_image = os.path.join(path_section_compare, "sample:{}".format(sample))
 
     output.from_3d_image_to_nifti_file(
