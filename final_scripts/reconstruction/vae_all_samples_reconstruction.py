@@ -1,6 +1,8 @@
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.getcwd())))
+import matplotlib
+matplotlib.use('Agg')
 from lib import session_helper as session
 from lib.utils.os_aux import create_directories
 from lib.data_loader import pet_loader
