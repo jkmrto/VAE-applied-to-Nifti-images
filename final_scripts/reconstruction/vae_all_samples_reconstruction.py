@@ -36,7 +36,7 @@ path_section_compare = os.path.join(path_images,"section_samples_reconstructionV
 create_directories([path_images, path_3dsamples, path_section_compare])
 
 # Loading Data
-stack_region_to_voxels, patient_labels, n_samples, cmap = \
+stack_region_to_voxels, patient_labels, n_samples = \
     pet_loader.load_pet_data_flat(list_regions)
 
 dic_params = PET_stack_NORAD.get_parameters()
