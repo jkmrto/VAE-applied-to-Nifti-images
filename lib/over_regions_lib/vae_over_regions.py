@@ -222,6 +222,7 @@ def execute_saving_meta_without_cv(
     )
 
     for region_selected in list_regions:
+        print("Region Evaluated {}".format(region_selected))
         matrix_voxels = dic_region_to_flat_voxels[region_selected]
 
         architecture = [matrix_voxels.shape[1]]
