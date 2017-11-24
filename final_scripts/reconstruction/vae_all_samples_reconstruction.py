@@ -98,6 +98,6 @@ for i in range(0, n_samples):
         p2=settings.planos_hipocampo["p2"],
         p3=settings.planos_hipocampo["p3"],
         path_to_save_image=path_section_compare_image,
-        cmap=cmap)
+        cmap="jet")
 
 
