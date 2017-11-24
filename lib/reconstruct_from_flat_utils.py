@@ -15,7 +15,7 @@ import numpy as np
 def reconstruct_from_flat_regions_to_full_3d_brain(
         dic_region_to_flat_voxels, images_used):
 
-    if images_used == "Pet":
+    if images_used == "PET":
         atlas = pet_atlas.load_atlas()
         dic_params = PET_stack_NORAD.get_parameters()
         reshape_kind = "F"
@@ -50,7 +50,7 @@ def test_reconstruct_from_flat_regions_to_full_3d_brain():
     path_test_output = os.path.join(settings.path_to_general_out_folder,
                                     "temp_3d_pet_images_reconstructed")
     create_directories([path_test_output])
-    images_used = "Pet"
+    images_used = "PET"
     # Regions loader
     regions_used = "all"
     list_regions = session.select_regions_to_evaluate(regions_used)

@@ -76,8 +76,10 @@ for region_selected in list_regions:
     reconstruction_per_region[region_selected] = decode_out
 
 # reshape to 3d images
-whole_reconstruction = reconstruct_from_flat_regions_to_full_3d_brain(reconstruction_per_region)
-origin_image = reconstruct_from_flat_regions_to_full_3d_brain(stack_region_to_voxels)
+whole_reconstruction = reconstruct_from_flat_regions_to_full_3d_brain(
+    reconstruction_per_region, images_used)
+origin_image = reconstruct_from_flat_regions_to_full_3d_brain(
+    stack_region_to_voxels, images_used)
 
 for i in range(0, n_samples):
     path_3D_original_image = os.path.join(path_3dsamples, "sample:{}_original".format(i))
