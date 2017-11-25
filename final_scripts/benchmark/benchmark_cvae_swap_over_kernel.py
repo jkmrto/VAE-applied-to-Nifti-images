@@ -45,7 +45,7 @@ list_regions = session.select_regions_to_evaluate(regions_used)
 
 # Vae settings
 # Net Configuration
-kernel_list = [8, 7, 6, 5, 4, 3, 2]
+kernel_list = [10, 9, 8, 7, 6, 5, 4, 3, 2]
 
 # SVM_over_regions_threshold = None
 SVM_over_regions_threshold = 0 # Middle value
@@ -60,7 +60,7 @@ hyperparams = {
     'activation_layer': ops.lrelu,
     'features_depth': [1, 16, 32],
     'decay_rate': 0.002,
-    'learning_rate': 0.0001,
+    'learning_rate': 0.001,
    # "cvae_model": "3layers",
     "cvae_model": "2layers",
     'stride': 2,
@@ -70,7 +70,7 @@ hyperparams = {
 cvae_session_conf = {
     "batch_size": 32,
     "bool_normalized": False,
-    "n_iters": 200,
+    "n_iters": 100,
     "save_meta_bool": False,
     "show_error_iter": 10,
 }
