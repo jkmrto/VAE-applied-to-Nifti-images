@@ -1,3 +1,7 @@
-# VAN-applied-to-Nifti-images
+# VAE-applied-to-Nifti-images
 
-#Juan Carlos Martinez de la Torre
+# Introduction
+Variational Autoencoder applied to MRI/PET images, to early diagnosis
+
+# Author
+Juan Carlos Martinez de la Torre
